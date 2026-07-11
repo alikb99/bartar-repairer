@@ -1,0 +1,9 @@
+/node_modules
+/.next
+/out
+/build
+*.tsbuildinfo
+next-env.d.ts
+# Never commit the giant DB dump
+bartar.sql
+.DS_Store

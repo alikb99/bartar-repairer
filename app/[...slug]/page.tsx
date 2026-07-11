@@ -1,0 +1,608 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import {
+  Phone,
+  ChevronLeft,
+  ListChecks,
+  Check,
+  MapPin,
+  Clock3,
+  ShieldCheck,
+  Wrench,
+  ArrowLeft,
+} from "lucide-react";
+import {
+  POSTS,
+  postBySegments,
+  breadcrumbs,
+  readingMinutes,
+  extractFaq,
+} from "@/lib/content";
+import { SITE } from "@/lib/data";
+import ContactCard from "@/components/ContactCard";
+import ContentEnhancer from "@/components/ContentEnhancer";
+import ReadingProgress from "@/components/ReadingProgress";
+import CustomLanding from "@/components/CustomLanding";
+import XiaomiLanding from "@/components/XiaomiLanding";
+import BrandLanding from "@/components/BrandLanding";
+import RelatedLinks from "@/components/RelatedLinks";
+import PillarArticles from "@/components/PillarArticles";
+import ContactPage from "@/components/ContactPage";
+import ServiceDeviceSceneLoader from "@/components/ServiceDeviceSceneLoader";
+
+// Flagship landing pages with a hand-tuned premium layout.
+const FLAGSHIP = new Set([
+  "/google-pixel-mobile-phone-repair/",
+  "/nothingphone-repair/",
+  "/motorola-mobile-repair-center/",
+]);
+
+// Brand "نمایندگی" pages rendered with the generic premium brand layout.
+const BRAND_PAGES = new Set([
+  "/nokia/",
+  "/htc/",
+  "/dell/",
+  "/sony/",
+  "/asus/",
+  "/lenovo/",
+  "/hp/",
+  "/apple/",
+  "/huawei/",
+  "/samsung/",
+]);
+
+export function generateStaticParams() {
+  // Exclude the empty WordPress "بلاگ" placeholder at /blog/ — that URL is
+  // served by the real articles listing route (app/blog).
+  return POSTS.filter((p) => p.path !== "/blog/").map((p) => ({
+    slug: p.segments,
+  }));
+}
+
+function faDate(d: string): string {
+  const dt = new Date(d.replace(" ", "T"));
+  if (isNaN(dt.getTime())) return "";
+  try {
+    return new Intl.DateTimeFormat("fa-IR-u-ca-persian", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(dt);
+  } catch {
+    return "";
+  }
+}
+
+// Best social-preview image for a page: its featured image, else the first
+// meaningful content image (skipping logos / decorative textures), else null
+// so the page inherits the branded default OG card.
+const DECORATIVE =
+  /abstract|grunge|texture|stucco|relief|decorative|background|pattern|placeholder|spacer|blank|logo/i;
+function ogImageFor(post: ReturnType<typeof postBySegments>): string | null {
+  if (!post) return null;
+  if (post.image) return post.image;
+  const cands = [...post.content.matchAll(/<img[^>]*>/gi)]
+    .map((t) => ({
+      src: (t[0].match(/src="([^"]*)"/) || [])[1] || "",
+      alt: (t[0].match(/alt="([^"]*)"/) || [])[1] || "",
+    }))
+    .filter((c) => c.src);
+  const good = cands.find((c) => !DECORATIVE.test(c.src) && c.alt.trim());
+  if (good) return good.src;
+  const ok = cands.find((c) => !DECORATIVE.test(c.src));
+  return ok ? ok.src : null;
+}
+
+function absoluteUrl(pathOrUrl: string): string {
+  if (!pathOrUrl) return "";
+  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+  return `${SITE.domain}${pathOrUrl.startsWith("/") ? "" : "/"}${pathOrUrl}`;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const post = postBySegments(slug);
+  if (!post) return {};
+  // Real content image when available, else the branded default OG card.
+  // (Setting openGraph here prevents the file-convention default from being
+  //  inherited automatically, so we reference it explicitly.)
+  const img = ogImageFor(post) || "/opengraph-image";
+  return {
+    title: post.metaTitle,
+    description: post.metaDesc,
+    alternates: { canonical: encodeURI(post.path) },
+    openGraph: {
+      type: post.type === "post" ? "article" : "website",
+      title: post.metaTitle,
+      description: post.metaDesc,
+      images: [{ url: img, width: 1200, height: 630, alt: post.title }],
+      url: `${SITE.domain}${encodeURI(post.path)}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.metaTitle,
+      description: post.metaDesc,
+      images: [img],
+    },
+  };
+}
+
+function Breadcrumb({
+  crumbs,
+}: {
+  crumbs: { title: string; path: string }[];
+}) {
+  return (
+    <nav
+      className="flex flex-wrap items-center gap-1 text-sm text-ink-500"
+      aria-label="مسیر"
+    >
+      <Link href="/" className="hover:text-accent">
+        خانه
+      </Link>
+      {crumbs.map((c, i) => (
+        <span key={c.path} className="flex items-center gap-1">
+          <ChevronLeft className="h-4 w-4 text-ink-300" />
+          {i === crumbs.length - 1 ? (
+            <span className="line-clamp-1 text-ink-700">{c.title}</span>
+          ) : (
+            <Link href={c.path} className="line-clamp-1 hover:text-accent">
+              {c.title}
+            </Link>
+          )}
+        </span>
+      ))}
+    </nav>
+  );
+}
+
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>;
+}) {
+  const { slug } = await params;
+  const post = postBySegments(slug);
+  if (!post) notFound();
+
+  if (post.path === "/contact/") return <ContactPage post={post} />;
+  if (post.path === "/xiaomi/") return <XiaomiLanding post={post} />;
+  if (BRAND_PAGES.has(post.path)) return <BrandLanding post={post} />;
+  if (FLAGSHIP.has(post.path)) return <CustomLanding post={post} />;
+
+  const crumbs = breadcrumbs(post);
+  const mins = readingMinutes(post.content);
+  const isArticle = post.type === "post";
+  const date = isArticle ? faDate(post.date) : "";
+
+  // Table of contents for articles: id every H2 and collect headings so readers
+  // (and SERP jump-links) can navigate long guides.
+  const toc: { id: string; text: string }[] = [];
+  let bodyHtml = post.content;
+  {
+    let n = 0;
+    bodyHtml = post.content.replace(/<h2\b[^>]*>([\s\S]*?)<\/h2>/gi, (_m, t) => {
+      const id = "sec-" + ++n;
+      const text = t.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+      toc.push({ id, text });
+      return `<h2 id="${id}">${t}</h2>`;
+    });
+  }
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${SITE.domain}${encodeURI(post.path)}#breadcrumb`,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "خانه", item: SITE.domain },
+      ...crumbs.map((c, i) => ({
+        "@type": "ListItem",
+        position: i + 2,
+        name: c.title,
+        item: `${SITE.domain}${encodeURI(c.path)}`,
+      })),
+    ],
+  };
+  const pageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${SITE.domain}${encodeURI(post.path)}#webpage`,
+    url: `${SITE.domain}${encodeURI(post.path)}`,
+    name: post.title,
+    description: post.metaDesc,
+    inLanguage: "fa-IR",
+    isPartOf: { "@id": SITE.websiteId },
+    about: { "@id": isArticle ? SITE.organizationId : SITE.localBusinessId },
+    breadcrumb: { "@id": `${SITE.domain}${encodeURI(post.path)}#breadcrumb` },
+    primaryImageOfPage: post.image
+      ? { "@type": "ImageObject", url: absoluteUrl(post.image) }
+      : undefined,
+  };
+  const articleSchema = isArticle
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "@id": `${SITE.domain}${encodeURI(post.path)}#article`,
+        headline: post.title,
+        image: post.image ? [absoluteUrl(post.image)] : undefined,
+        datePublished: post.date.replace(" ", "T"),
+        dateModified: post.modified.replace(" ", "T"),
+        author: { "@id": SITE.authorId },
+        publisher: { "@id": SITE.organizationId },
+        mainEntityOfPage: `${SITE.domain}${encodeURI(post.path)}`,
+        description: post.metaDesc,
+      }
+    : null;
+
+  const serviceSchema = !isArticle
+      ? {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "@id": `${SITE.domain}${encodeURI(post.path)}#service`,
+        name: post.title,
+        serviceType: post.title.split("|")[0].trim(),
+        areaServed: { "@type": "City", name: SITE.city },
+        // Reference the sitewide LocalBusiness node instead of duplicating it.
+        provider: { "@id": SITE.localBusinessId },
+        image: post.image
+          ? absoluteUrl(post.image)
+          : `${SITE.domain}/logo.png`,
+        url: `${SITE.domain}${encodeURI(post.path)}`,
+        description: post.metaDesc,
+      }
+    : null;
+
+  const faqs = extractFaq(post.content);
+  const faqSchema =
+    faqs.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "@id": `${SITE.domain}${encodeURI(post.path)}#faq`,
+          inLanguage: "fa-IR",
+          mainEntity: faqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }
+      : null;
+
+  const category = crumbs.length > 1 ? crumbs[0].title : "مقاله";
+
+  return (
+    <article>
+      {isArticle && <ReadingProgress />}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }}
+      />
+      {articleSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+        />
+      )}
+      {serviceSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+        />
+      )}
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
+
+      {isArticle ? (
+        /* ===== ARTICLE HEADER (ui: Article mockup) ===== */
+        <header className="bg-gradient-to-b from-white to-paper">
+          <div className="mx-auto max-w-[820px] px-4 pb-8 pt-8 sm:px-6">
+            <Breadcrumb crumbs={crumbs} />
+            <div className="mt-6">
+              <div className="mb-4 flex flex-wrap items-center gap-2.5">
+                <span className="rounded-lg bg-accent-tint px-3 py-1.5 text-xs font-extrabold text-accent">
+                  {category}
+                </span>
+                <span className="text-[13px] text-ink-300">
+                  {date && `${date} · `}
+                  {mins} دقیقه مطالعه
+                </span>
+              </div>
+              <h1 className="text-[28px] font-extrabold leading-[1.5] tracking-tight text-ink-900 sm:text-[38px]">
+                {post.title}
+              </h1>
+              <div className="mt-5 flex items-center gap-3">
+                <div className="grid h-[46px] w-[46px] place-items-center rounded-full bg-[#E4E7EC] text-base font-extrabold text-ink-500">
+                  ب
+                </div>
+                <div>
+                  <div className="text-[14.5px] font-extrabold text-ink-900">
+                    تیم تحریریه برتر
+                  </div>
+                  <div className="mt-0.5 text-[12.5px] text-ink-300">
+                    کارشناس تعمیرات
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+      ) : (
+        /* ===== SERVICE / PAGE HERO ===== */
+        <header className="relative overflow-hidden bg-[#F7F8FA]">
+          <div className="absolute inset-0 bg-finegrid opacity-70" />
+          <div className="absolute inset-x-0 top-0 h-px bg-line" />
+          <div className="relative mx-auto grid max-w-[1240px] gap-8 px-4 pb-14 pt-8 sm:px-6 lg:grid-cols-[minmax(0,1.03fr)_minmax(360px,.74fr)] lg:px-8 lg:pb-20">
+            <Breadcrumb crumbs={crumbs} />
+            <div className="max-w-2xl lg:col-start-1">
+              <span className="mb-5 inline-flex items-center gap-2.5 rounded-full border border-line bg-white px-4 py-2 shadow-[0_4px_14px_rgba(20,24,31,.05)]">
+                <span className="h-2 w-2 rounded-full bg-accent shadow-[0_0_0_4px_rgba(218,37,28,.14)]" />
+                <span className="text-[13px] font-bold text-ink-700">
+                  مرکز تخصصی تعمیرات در {SITE.city}
+                </span>
+              </span>
+              <h1 className="text-[30px] font-extrabold leading-[1.3] tracking-tight text-ink-900 sm:text-[44px]">
+                {post.title}
+              </h1>
+              <p className="mt-4 max-w-[560px] text-[17px] leading-9 text-ink-500">
+                {post.metaDesc}
+              </p>
+              <div className="mt-7 flex flex-wrap items-center gap-3">
+                <a
+                  href={SITE.phoneHref}
+                  className="flex items-center gap-2.5 rounded-[14px] bg-accent px-6 py-3.5 text-base font-bold text-white shadow-[0_10px_26px_rgba(218,37,28,.30)] transition hover:-translate-y-0.5 hover:bg-accent-deep"
+                >
+                  <Phone className="h-[19px] w-[19px]" />
+                  تماس و رزرو نوبت
+                </a>
+                <a
+                  href="#content"
+                  className="flex items-center gap-2 rounded-[14px] border-[1.5px] border-hairline bg-white px-6 py-3.5 text-base font-bold text-ink-900 transition hover:border-ink-900 hover:bg-ink-900 hover:text-white"
+                >
+                  مشاهده متن صفحه
+                  <ArrowLeft className="h-4 w-4" />
+                </a>
+              </div>
+              <div className="mt-8 grid max-w-xl grid-cols-3 gap-2.5 sm:gap-3">
+                {[
+                  { icon: Wrench, title: "عیب یابی", text: "رایگان" },
+                  { icon: ShieldCheck, title: "گارانتی", text: "۶ ماهه" },
+                  { icon: Clock3, title: "تحویل", text: "سریع" },
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    className="rounded-2xl border border-line bg-white/84 p-3 shadow-card backdrop-blur sm:p-4"
+                  >
+                    <item.icon className="h-5 w-5 text-accent" />
+                    <div className="mt-2 text-xs font-extrabold text-ink-900 sm:mt-3 sm:text-sm">
+                      {item.title}
+                    </div>
+                    <div className="mt-1 text-[11px] font-semibold text-ink-500 sm:text-xs">
+                      {item.text}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative min-h-[250px] overflow-hidden rounded-[28px] border border-white bg-ink-950 shadow-float sm:min-h-[320px] lg:col-start-2 lg:row-span-2 lg:min-h-[430px]">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,rgba(218,37,28,.34),transparent_38%),linear-gradient(145deg,#242936,#13161C)]" />
+              <ServiceDeviceSceneLoader />
+              <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/10 bg-white/[.08] p-4 text-white backdrop-blur-md">
+                <div className="text-sm font-extrabold">بررسی دقیق دستگاه قبل از تعمیر</div>
+                <div className="mt-1.5 text-xs leading-6 text-white/68">
+                  هزینه و زمان تعمیر پیش از شروع کار شفاف اعلام می شود.
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+      )}
+
+      {/* Body */}
+      {isArticle ? (
+        <div className="mx-auto max-w-3xl px-4 pb-24 sm:px-6 lg:px-8">
+          {post.image && (
+            <div className="mt-10">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={post.image}
+                alt={post.title}
+                width={896}
+                height={504}
+                className="aspect-[16/9] w-full rounded-3xl border border-line object-cover"
+              />
+            </div>
+          )}
+          {toc.length >= 3 && (
+            <nav
+              aria-label="فهرست مطالب"
+              className="mt-10 rounded-2xl border border-line bg-paper p-5"
+            >
+              <p className="flex items-center gap-2 text-sm font-bold text-ink-900">
+                <ListChecks className="h-4 w-4 text-accent" />
+                در این مقاله می خوانید
+              </p>
+              <ol className="mt-3 grid gap-1.5 sm:grid-cols-2">
+                {toc.map((t, i) => (
+                  <li key={t.id}>
+                    <a
+                      href={`#${t.id}`}
+                      className="flex items-start gap-2 rounded-lg px-2 py-1.5 text-sm text-ink-500 transition hover:bg-white hover:text-accent"
+                    >
+                      <span className="text-accent/60">
+                        {(i + 1).toLocaleString("fa-IR")}.
+                      </span>
+                      {t.text}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )}
+          <div
+            id="post-content"
+            className="prose-fa mt-10"
+            dangerouslySetInnerHTML={{ __html: bodyHtml }}
+          />
+          <ContentEnhancer targetId="post-content" />
+          <RelatedLinks post={post} />
+          <BottomCta />
+        </div>
+      ) : (
+        <div id="content" className="bg-paper">
+          <div className="mx-auto max-w-[1240px] px-4 pb-20 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 gap-8 py-10 lg:grid-cols-[minmax(0,1fr)_340px]">
+            <div className="min-w-0">
+              {post.image && (
+                <div className="mb-8">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    width={896}
+                    height={504}
+                    className="aspect-[16/9] w-full rounded-[26px] border border-line bg-white object-cover shadow-card"
+                  />
+                </div>
+              )}
+              {toc.length >= 3 && (
+                <nav
+                  aria-label="فهرست مطالب"
+                  className="mb-7 rounded-[22px] border border-line bg-white p-5 shadow-card"
+                >
+                  <p className="flex items-center gap-2 text-sm font-extrabold text-ink-900">
+                    <ListChecks className="h-4 w-4 text-accent" />
+                    فهرست این صفحه
+                  </p>
+                  <ol className="mt-4 grid gap-2 sm:grid-cols-2">
+                    {toc.map((t, i) => (
+                      <li key={t.id}>
+                        <a
+                          href={`#${t.id}`}
+                          className="flex items-start gap-2 rounded-xl border border-transparent px-3 py-2 text-sm leading-7 text-ink-500 transition hover:border-accent/20 hover:bg-accent/[.04] hover:text-accent"
+                        >
+                          <span className="text-accent/70">
+                            {(i + 1).toLocaleString("fa-IR")}.
+                          </span>
+                          {t.text}
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
+                </nav>
+              )}
+              <div className="rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8 lg:p-10">
+                <div
+                  id="post-content"
+                  className="prose-fa service-prose"
+                  dangerouslySetInnerHTML={{ __html: bodyHtml }}
+                />
+              </div>
+              <ContentEnhancer targetId="post-content" />
+              <RelatedLinks post={post} />
+            </div>
+
+            {/* Sticky sidebar */}
+            <aside className="lg:sticky lg:top-24 lg:self-start">
+              <div className="space-y-5">
+                <ContactCard />
+                <div className="overflow-hidden rounded-2xl border border-line bg-white p-5 shadow-card">
+                  <p className="text-sm font-extrabold text-ink-900">مراحل ثبت تعمیر</p>
+                  <ul className="mt-4 space-y-3 text-sm leading-7 text-ink-700">
+                    {["تماس و توضیح ایراد دستگاه", "عیب یابی و اعلام هزینه", "تعمیر و تحویل همراه گارانتی"].map((t) => (
+                      <li key={t} className="flex gap-2">
+                        <Check className="mt-1 h-4 w-4 shrink-0 text-accent" />
+                        <span>{t}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </aside>
+          </div>
+          </div>
+        </div>
+      )}
+      {!isArticle && <ServiceCtaBand title={post.title} />}
+      {!isArticle && <PillarArticles path={post.path} />}
+    </article>
+  );
+}
+
+/* Inline dark CTA inside articles (ui: Article mockup). */
+function BottomCta() {
+  return (
+    <div className="mt-12 flex flex-wrap items-center justify-between gap-5 rounded-[20px] bg-gradient-to-br from-[#22262F] to-ink-950 px-7 py-7 sm:px-8">
+      <div className="text-white">
+        <div className="text-[19px] font-extrabold">دستگاهت نیاز به تعمیر دارد؟</div>
+        <div className="mt-1.5 text-sm text-ink-300">
+          همین حالا برای عیب یابی رایگان با کارشناسان ما تماس بگیرید.
+        </div>
+      </div>
+      <a
+        href={SITE.phoneHref}
+        dir="ltr"
+        className="flex shrink-0 items-center gap-2 rounded-[13px] bg-accent px-6 py-3.5 text-[15px] font-bold text-white transition hover:bg-accent-deep"
+      >
+        <Phone className="h-4 w-4" />
+        {SITE.phone}
+      </a>
+    </div>
+  );
+}
+
+/* Dark CTA band with branch cards for service pages (ui: Mobile Repair mockup). */
+function ServiceCtaBand({ title }: { title: string }) {
+  const short = title.split(/\s+با\s+|\s*[|،–—-]\s*/)[0].trim();
+  return (
+    <section className="mx-auto max-w-[1240px] px-4 pb-20 sm:px-6 lg:px-8">
+      <div className="grid items-center gap-8 overflow-hidden rounded-[26px] bg-gradient-to-br from-[#22262F] to-ink-950 p-8 sm:p-11 lg:grid-cols-[1.3fr_1fr]">
+        <div className="text-white">
+          <h2 className="text-2xl font-extrabold tracking-tight sm:text-[30px]">
+            {short} را به متخصص بسپارید
+          </h2>
+          <p className="mt-3 max-w-md text-[15px] leading-8 text-ink-300">
+            همین حالا تماس بگیرید یا به نزدیک ترین شعبه مراجعه کنید. عیب یابی رایگان است.
+          </p>
+          <a
+            href={SITE.phoneHref}
+            dir="ltr"
+            className="mt-6 inline-flex items-center gap-2.5 rounded-[14px] bg-accent px-7 py-3.5 text-base font-extrabold text-white shadow-[0_10px_26px_rgba(218,37,28,.34)] transition hover:-translate-y-0.5 hover:bg-accent-deep"
+          >
+            <Phone className="h-[19px] w-[19px]" />
+            {SITE.phone}
+          </a>
+        </div>
+        <div className="flex flex-col gap-3.5">
+          {[
+            { name: "شعبه مرکزی", addr: SITE.address },
+            { name: "شعبه غرب", addr: SITE.addressWest },
+          ].map((b) => (
+            <div
+              key={b.name}
+              className="flex gap-3 rounded-2xl border border-white/10 bg-white/[.06] p-4"
+            >
+              <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-accent" />
+              <div>
+                <div className="mb-1 text-sm font-extrabold text-white">{b.name}</div>
+                <div className="text-[12.5px] leading-7 text-ink-300">{b.addr}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

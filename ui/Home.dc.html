@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:#F5F6F8;}
+  @keyframes btfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+  @keyframes btfloat2{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-22px) rotate(-4deg)}}
+  @keyframes btpulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:.85;transform:scale(1.05)}}
+  .bt-svccard:hover{transform:translateY(-6px);box-shadow:0 26px 50px rgba(20,24,31,.13) !important;border-color:#fff !important;}
+  .bt-svccard:hover .bt-svcarrow{transform:translateX(-6px);background:#DA251C !important;color:#fff !important;}
+  .bt-brandtile:hover{transform:translateY(-4px);border-color:#DA251C !important;box-shadow:0 14px 30px rgba(218,37,28,.10) !important;}
+  .bt-feat:hover{background:#fff !important;box-shadow:0 18px 40px rgba(20,24,31,.08) !important;transform:translateY(-4px);}
+  .bt-artcard:hover{transform:translateY(-6px);box-shadow:0 26px 50px rgba(20,24,31,.12) !important;}
+  .bt-artcard:hover .bt-artimg{transform:scale(1.06);}
+  .bt-pillbtn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(218,37,28,.34) !important;}
+  .bt-ghostbtn:hover{background:#171A21 !important;color:#fff !important;border-color:#171A21 !important;}
+</style>
+</helmet>
+<div dir="rtl" style="font-family:Vazirmatn,Tahoma,sans-serif;background:#F5F6F8;color:#1B1F27;overflow-x:hidden;">
+
+  <dc-import name="Header" active="home" hint-size="100%,132px"></dc-import>
+
+  <!-- ================= HERO ================= -->
+  <section style="position:relative;background:radial-gradient(1100px 520px at 18% -10%,rgba(218,37,28,.10),transparent 60%),linear-gradient(180deg,#FFFFFF 0%,#F5F6F8 100%);overflow:hidden;">
+    <div style="position:absolute;top:-120px;left:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(218,37,28,.16),transparent 70%);animation:btpulse 7s ease-in-out infinite;"></div>
+    <div style="max-width:1280px;margin:0 auto;padding:64px 24px 80px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:40px;" class="bt-hero">
+
+      <!-- copy -->
+      <div data-reveal>
+        <div style="display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid #EDEFF3;padding:8px 15px;border-radius:100px;box-shadow:0 4px 14px rgba(20,24,31,.05);">
+          <span style="width:8px;height:8px;border-radius:50%;background:#2BB673;box-shadow:0 0 0 4px rgba(43,182,115,.18);"></span>
+          <span style="font-size:13px;font-weight:700;color:#4A5160;">مرکز تخصصی تعمیر موبایل و لپ‌تاپ در تهران</span>
+        </div>
+        <h1 style="font-size:52px;line-height:1.25;font-weight:800;letter-spacing:-.8px;margin:22px 0 0;">
+          تعمیر مطمئن دستگاهت،<br>با <span style="color:#DA251C;position:relative;">ضمانت واقعی</span> و قطعات اصل
+        </h1>
+        <p style="font-size:17.5px;line-height:2;color:#5B6270;margin:20px 0 0;max-width:520px;">
+          از تعویض گلس و باتری تا تعمیر مادربرد؛ تمام برندهای موبایل و لپ‌تاپ را با عیب‌یابی رایگان و تحویل سریع تعمیر می‌کنیم.
+        </p>
+        <div style="display:flex;align-items:center;gap:13px;margin-top:30px;flex-wrap:wrap;">
+          <a href="tel:+982191300348" class="bt-pillbtn" style="display:flex;align-items:center;gap:9px;background:#DA251C;color:#fff;text-decoration:none;font-size:16px;font-weight:700;padding:16px 28px;border-radius:14px;box-shadow:0 10px 26px rgba(218,37,28,.30);transition:all .2s;">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            تماس فوری: ۹۱۳۰۰۳۴۸
+          </a>
+          <a href="#services" class="bt-ghostbtn" style="display:flex;align-items:center;gap:8px;background:#fff;color:#1B1F27;text-decoration:none;font-size:16px;font-weight:700;padding:16px 26px;border-radius:14px;border:1.5px solid #E2E5EA;transition:all .2s;">مشاهده خدمات</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:22px;margin-top:30px;flex-wrap:wrap;">
+          <div style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#4A5160;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2BB673" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>ضمانت کتبی تعمیر</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#4A5160;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2BB673" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>قطعات اصل و درجه‌یک</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#4A5160;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2BB673" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>تحویل همان‌روز</div>
+        </div>
+      </div>
+
+      <!-- visual: floating devices -->
+      <div data-reveal data-reveal-d="120" style="position:relative;height:480px;display:flex;align-items:center;justify-content:center;">
+        <div style="position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(218,37,28,.14),transparent 68%);"></div>
+
+        <!-- laptop placeholder -->
+        <div style="position:absolute;bottom:60px;left:8%;width:330px;animation:btfloat 6.5s ease-in-out infinite;">
+          <div style="background:#171A21;border-radius:14px 14px 4px 4px;padding:10px 10px 12px;box-shadow:0 30px 60px rgba(20,24,31,.28);">
+            <div style="border-radius:7px;overflow:hidden;background:repeating-linear-gradient(135deg,#23272F,#23272F 11px,#262B34 11px,#262B34 22px);height:192px;display:flex;align-items:center;justify-content:center;">
+              <span style="font-family:monospace;font-size:11px;color:#8A92A0;">[ تصویر لپ‌تاپ ]</span>
+            </div>
+          </div>
+          <div style="height:11px;background:linear-gradient(180deg,#2A2F39,#1B1F27);border-radius:0 0 12px 12px;margin:0 -14px;box-shadow:0 14px 24px rgba(20,24,31,.22);"></div>
+        </div>
+
+        <!-- phone placeholder -->
+        <div style="position:absolute;top:34px;right:14%;width:184px;animation:btfloat2 5.5s ease-in-out infinite;z-index:2;">
+          <div style="background:#171A21;border-radius:30px;padding:9px;box-shadow:0 34px 70px rgba(20,24,31,.34);">
+            <div style="position:relative;border-radius:23px;overflow:hidden;background:repeating-linear-gradient(135deg,#DA251C,#DA251C 12px,#c8211a 12px,#c8211a 24px);height:350px;display:flex;align-items:center;justify-content:center;">
+              <div style="position:absolute;top:9px;left:50%;transform:translateX(-50%);width:62px;height:16px;background:#171A21;border-radius:0 0 12px 12px;"></div>
+              <span style="font-family:monospace;font-size:11px;color:rgba(255,255,255,.85);text-align:center;">[ اسکرین<br>اپلیکیشن ]</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- floating badge -->
+        <div data-reveal data-reveal-d="320" style="position:absolute;bottom:34px;right:6%;background:#fff;border-radius:16px;padding:14px 18px;box-shadow:0 18px 40px rgba(20,24,31,.16);display:flex;align-items:center;gap:12px;z-index:3;">
+          <div style="width:44px;height:44px;border-radius:12px;background:rgba(43,182,115,.12);display:flex;align-items:center;justify-content:center;color:#2BB673;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+          </div>
+          <div><div style="font-size:18px;font-weight:800;line-height:1;">+۴۸٬۰۰۰</div><div style="font-size:12px;color:#6A7180;margin-top:4px;">تعمیر موفق</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STATS ================= -->
+  <section style="background:#13161C;">
+    <div style="max-width:1280px;margin:0 auto;padding:38px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;" class="bt-stats">
+      <div data-reveal style="text-align:center;color:#fff;">
+        <div style="font-size:38px;font-weight:800;color:#fff;">۱۲+</div>
+        <div style="font-size:14px;color:#9DA4B0;margin-top:6px;">سال تجربه تخصصی</div>
+      </div>
+      <div data-reveal data-reveal-d="80" style="text-align:center;color:#fff;border-right:1px solid #232831;">
+        <div style="font-size:38px;font-weight:800;color:#fff;">۴۸ هزار</div>
+        <div style="font-size:14px;color:#9DA4B0;margin-top:6px;">دستگاه تعمیرشده</div>
+      </div>
+      <div data-reveal data-reveal-d="160" style="text-align:center;color:#fff;border-right:1px solid #232831;">
+        <div style="font-size:38px;font-weight:800;color:#fff;">۲۰+</div>
+        <div style="font-size:14px;color:#9DA4B0;margin-top:6px;">برند تحت پوشش</div>
+      </div>
+      <div data-reveal data-reveal-d="240" style="text-align:center;color:#fff;border-right:1px solid #232831;">
+        <div style="font-size:38px;font-weight:800;color:#fff;">۹۸٪</div>
+        <div style="font-size:14px;color:#9DA4B0;margin-top:6px;">رضایت مشتری</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SERVICES ================= -->
+  <section id="services" style="max-width:1280px;margin:0 auto;padding:84px 24px 20px;">
+    <div data-reveal style="text-align:center;max-width:620px;margin:0 auto 48px;">
+      <div style="font-size:14px;font-weight:800;color:#DA251C;letter-spacing:.5px;margin-bottom:12px;">خدمات ما</div>
+      <h2 style="font-size:38px;font-weight:800;letter-spacing:-.5px;margin:0;">هرچه دستگاهت نیاز دارد، اینجاست</h2>
+      <p style="font-size:16px;line-height:1.9;color:#5B6270;margin:16px 0 0;">سه شاخه اصلی خدمات، با تیم تخصصی جداگانه برای هر حوزه.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;" class="bt-svc">
+
+      <a href="Mobile Repair.dc.html" data-reveal class="bt-svccard" style="display:block;background:#fff;border:1px solid #EDEFF3;border-radius:22px;padding:30px;text-decoration:none;color:inherit;transition:all .28s cubic-bezier(.22,.61,.36,1);box-shadow:0 2px 8px rgba(20,24,31,.04);">
+        <div style="width:62px;height:62px;border-radius:16px;background:rgba(218,37,28,.10);display:flex;align-items:center;justify-content:center;color:#DA251C;margin-bottom:20px;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+        </div>
+        <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">تعمیر موبایل</h3>
+        <p style="font-size:14.5px;line-height:1.95;color:#5B6270;margin:0 0 18px;">تعویض گلس، باتری، دوربین، برد و حل مشکلات نرم‌افزاری برای تمام برندها.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;">
+          <span style="font-size:12px;font-weight:600;color:#6A7180;background:#F5F6F8;padding:5px 11px;border-radius:8px;">سامسونگ</span>
+          <span style="font-size:12px;font-weight:600;color:#6A7180;background:#F5F6F8;padding:5px 11px;border-radius:8px;">اپل</span>
+          <span style="font-size:12px;font-weight:600;color:#6A7180;background:#F5F6F8;padding:5px 11px;border-radius:8px;">شیائومی</span>
+          <span style="font-size:12px;font-weight:600;color:#6A7180;background:#F5F6F8;padding:5px 11px;border-radius:8px;">+۷ برند</span>
+        </div>
+        <span style="display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:700;color:#DA251C;">مشاهده برندها
+          <span class="bt-svcarrow" style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;background:rgba(218,37,28,.10);color:#DA251C;transition:all .28s;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          </span>
+        </span>
+      </a>
+
+      <a href="Laptop Repair.dc.html" data-reveal data-reveal-d="100" class="bt-svccard" style="display:block;background:#fff;border:1px solid #EDEFF3;border-radius:22px;padding:30px;text-decoration:none;color:inherit;transition:all .28s cubic-bezier(.22,.61,.36,1);box-shadow:0 2px 8px rgba(20,24,31,.04);">
+        <div style="width:62px;height:62px;border-radius:16px;background:rgba(218,37,28,.10);display:flex;align-items:center;justify-content:center;color:#DA251C;margin-bottom:20px;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+        </div>
+        <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">تعمیر لپ‌تاپ</h3>
+        <p style="font-size:14.5px;line-height:1.95;color:#5B6270;margin:0 0 18px;">تعمیر مادربرد، تعویض صفحه‌نمایش، ارتقای سخت‌افزار و رفع مشکلات حرارتی.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;">
+          <span style="font-size:12px;font-weight:600;color:#6A7180;background:#F5F6F8;padding:5px 11px;border-radius:8px;">ایسوس</span>
+          <span style="font-size:12px;font-weight:600;color:#6A7180;background:#F5F6F8;padding:5px 11px;border-radius:8px;">لنوو</span>
+          <span style="font-size:12px;font-weight:600;color:#6A7180;background:#F5F6F8;padding:5px 11px;border-radius:8px;">اچ‌پی</span>
+          <span style="font-size:12px;font-weight:600;color:#6A7180;background:#F5F6F8;padding:5px 11px;border-radius:8px;">+۸ برند</span>
+        </div>
+        <span style="display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:700;color:#DA251C;">مشاهده برندها
+          <span class="bt-svcarrow" style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;background:rgba(218,37,28,.10);color:#DA251C;transition:all .28s;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          </span>
+        </span>
+      </a>
+
+      <a href="Brand Hub.dc.html" data-reveal data-reveal-d="200" class="bt-svccard" style="display:block;background:#fff;border:1px solid #EDEFF3;border-radius:22px;padding:30px;text-decoration:none;color:inherit;transition:all .28s cubic-bezier(.22,.61,.36,1);box-shadow:0 2px 8px rgba(20,24,31,.04);">
+        <div style="width:62px;height:62px;border-radius:16px;background:rgba(218,37,28,.10);display:flex;align-items:center;justify-content:center;color:#DA251C;margin-bottom:20px;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <h3 style="font-size:21px;font-weight:800;margin:0 0 10px;">نمایندگی برندها</h3>
+        <p style="font-size:14.5px;line-height:1.95;color:#5B6270;margin:0 0 18px;">خدمات کامل هر برند: موبایل، لپ‌تاپ، ساعت هوشمند و لوازم خانگی.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;">
+          <span style="font-size:12px;font-weight:600;color:#6A7180;background:#F5F6F8;padding:5px 11px;border-radius:8px;">شیائومی</span>
+          <span style="font-size:12px;font-weight:600;color:#6A7180;background:#F5F6F8;padding:5px 11px;border-radius:8px;">سامسونگ</span>
+          <span style="font-size:12px;font-weight:600;color:#6A7180;background:#F5F6F8;padding:5px 11px;border-radius:8px;">هواوی</span>
+          <span style="font-size:12px;font-weight:600;color:#6A7180;background:#F5F6F8;padding:5px 11px;border-radius:8px;">+۸ برند</span>
+        </div>
+        <span style="display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:700;color:#DA251C;">مشاهده نمایندگی‌ها
+          <span class="bt-svcarrow" style="display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;background:rgba(218,37,28,.10);color:#DA251C;transition:all .28s;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          </span>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= BRANDS ================= -->
+  <section style="max-width:1280px;margin:0 auto;padding:78px 24px;">
+    <div data-reveal style="text-align:center;max-width:620px;margin:0 auto 40px;">
+      <div style="font-size:14px;font-weight:800;color:#DA251C;letter-spacing:.5px;margin-bottom:12px;">برندهای تحت پوشش</div>
+      <h2 style="font-size:36px;font-weight:800;letter-spacing:-.5px;margin:0;">تعمیر تخصصی همه برندها</h2>
+    </div>
+
+    <div data-reveal style="margin-bottom:14px;font-size:14px;font-weight:800;color:#9098A6;">موبایل</div>
+    <div data-reveal style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:38px;" class="bt-brandgrid">
+      <sc-for list="{{ mobileBrands }}" as="b" hint-placeholder-count="10">
+        <a href="{{ b.href }}" class="bt-brandtile" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;border:1px solid #EDEFF3;border-radius:14px;height:72px;text-decoration:none;transition:all .25s;">
+          <span style="width:34px;height:34px;border-radius:9px;background:#F1F2F5;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#9098A6;">{{ b.initial }}</span>
+          <span style="font-size:14.5px;font-weight:700;color:#1B1F27;">{{ b.name }}</span>
+        </a>
+      </sc-for>
+    </div>
+
+    <div data-reveal style="margin-bottom:14px;font-size:14px;font-weight:800;color:#9098A6;">لپ‌تاپ</div>
+    <div data-reveal style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;" class="bt-brandgrid">
+      <sc-for list="{{ laptopBrands }}" as="b" hint-placeholder-count="11">
+        <a href="{{ b.href }}" class="bt-brandtile" style="display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;border:1px solid #EDEFF3;border-radius:14px;height:72px;text-decoration:none;transition:all .25s;">
+          <span style="width:34px;height:34px;border-radius:9px;background:#F1F2F5;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#9098A6;">{{ b.initial }}</span>
+          <span style="font-size:14.5px;font-weight:700;color:#1B1F27;">{{ b.name }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ================= WHY US ================= -->
+  <section style="background:#fff;border-top:1px solid #EDEFF3;border-bottom:1px solid #EDEFF3;">
+    <div style="max-width:1280px;margin:0 auto;padding:84px 24px;">
+      <div data-reveal style="text-align:center;max-width:620px;margin:0 auto 50px;">
+        <div style="font-size:14px;font-weight:800;color:#DA251C;letter-spacing:.5px;margin-bottom:12px;">چرا بارتر؟</div>
+        <h2 style="font-size:36px;font-weight:800;letter-spacing:-.5px;margin:0;">تعمیری که خیالت را راحت می‌کند</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;" class="bt-why">
+        <div data-reveal class="bt-feat" style="background:#F7F8FA;border-radius:18px;padding:26px;transition:all .26s;">
+          <div style="width:54px;height:54px;border-radius:14px;background:rgba(218,37,28,.10);display:flex;align-items:center;justify-content:center;color:#DA251C;margin-bottom:18px;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6z"/></svg>
+          </div>
+          <h3 style="font-size:17px;font-weight:800;margin:0 0 8px;">ضمانت کتبی</h3>
+          <p style="font-size:13.5px;line-height:1.9;color:#5B6270;margin:0;">روی هر تعمیر برگه ضمانت معتبر دریافت می‌کنید.</p>
+        </div>
+        <div data-reveal data-reveal-d="80" class="bt-feat" style="background:#F7F8FA;border-radius:18px;padding:26px;transition:all .26s;">
+          <div style="width:54px;height:54px;border-radius:14px;background:rgba(218,37,28,.10);display:flex;align-items:center;justify-content:center;color:#DA251C;margin-bottom:18px;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg>
+          </div>
+          <h3 style="font-size:17px;font-weight:800;margin:0 0 8px;">تحویل سریع</h3>
+          <p style="font-size:13.5px;line-height:1.9;color:#5B6270;margin:0;">بیشتر تعمیرات در همان روز مراجعه انجام می‌شود.</p>
+        </div>
+        <div data-reveal data-reveal-d="160" class="bt-feat" style="background:#F7F8FA;border-radius:18px;padding:26px;transition:all .26s;">
+          <div style="width:54px;height:54px;border-radius:14px;background:rgba(218,37,28,.10);display:flex;align-items:center;justify-content:center;color:#DA251C;margin-bottom:18px;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg>
+          </div>
+          <h3 style="font-size:17px;font-weight:800;margin:0 0 8px;">قطعات اصل</h3>
+          <p style="font-size:13.5px;line-height:1.9;color:#5B6270;margin:0;">فقط از قطعات اصل و درجه‌یک با اصالت مشخص استفاده می‌کنیم.</p>
+        </div>
+        <div data-reveal data-reveal-d="240" class="bt-feat" style="background:#F7F8FA;border-radius:18px;padding:26px;transition:all .26s;">
+          <div style="width:54px;height:54px;border-radius:14px;background:rgba(218,37,28,.10);display:flex;align-items:center;justify-content:center;color:#DA251C;margin-bottom:18px;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <h3 style="font-size:17px;font-weight:800;margin:0 0 8px;">عیب‌یابی رایگان</h3>
+          <p style="font-size:13.5px;line-height:1.9;color:#5B6270;margin:0;">قبل از هر هزینه‌ای، دستگاه رایگان بررسی و قیمت اعلام می‌شود.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROCESS ================= -->
+  <section style="max-width:1280px;margin:0 auto;padding:84px 24px;">
+    <div data-reveal style="text-align:center;max-width:620px;margin:0 auto 52px;">
+      <div style="font-size:14px;font-weight:800;color:#DA251C;letter-spacing:.5px;margin-bottom:12px;">مراحل کار</div>
+      <h2 style="font-size:36px;font-weight:800;letter-spacing:-.5px;margin:0;">از تماس تا تحویل، در ۴ قدم</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;" class="bt-proc">
+      <div data-reveal style="text-align:center;">
+        <div style="position:relative;width:74px;height:74px;margin:0 auto 18px;border-radius:20px;background:#13161C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;">۱</div>
+        <h3 style="font-size:17px;font-weight:800;margin:0 0 8px;">تماس و مشاوره</h3>
+        <p style="font-size:13.5px;line-height:1.9;color:#5B6270;margin:0;">با ما تماس بگیرید یا به نزدیک‌ترین شعبه مراجعه کنید.</p>
+      </div>
+      <div data-reveal data-reveal-d="90" style="text-align:center;">
+        <div style="position:relative;width:74px;height:74px;margin:0 auto 18px;border-radius:20px;background:#13161C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;">۲</div>
+        <h3 style="font-size:17px;font-weight:800;margin:0 0 8px;">عیب‌یابی رایگان</h3>
+        <p style="font-size:13.5px;line-height:1.9;color:#5B6270;margin:0;">کارشناس عیب را تشخیص و هزینه دقیق را اعلام می‌کند.</p>
+      </div>
+      <div data-reveal data-reveal-d="180" style="text-align:center;">
+        <div style="position:relative;width:74px;height:74px;margin:0 auto 18px;border-radius:20px;background:#13161C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;">۳</div>
+        <h3 style="font-size:17px;font-weight:800;margin:0 0 8px;">تعمیر تخصصی</h3>
+        <p style="font-size:13.5px;line-height:1.9;color:#5B6270;margin:0;">تعمیر با قطعات اصل توسط تکنسین متخصص همان برند.</p>
+      </div>
+      <div data-reveal data-reveal-d="270" style="text-align:center;">
+        <div style="position:relative;width:74px;height:74px;margin:0 auto 18px;border-radius:20px;background:#DA251C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;">۴</div>
+        <h3 style="font-size:17px;font-weight:800;margin:0 0 8px;">تحویل با ضمانت</h3>
+        <p style="font-size:13.5px;line-height:1.9;color:#5B6270;margin:0;">دستگاه سالم همراه با برگه ضمانت تحویل شما می‌شود.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIALS ================= -->
+  <section style="background:#fff;border-top:1px solid #EDEFF3;">
+    <div style="max-width:1280px;margin:0 auto;padding:84px 24px;">
+      <div data-reveal style="text-align:center;max-width:620px;margin:0 auto 50px;">
+        <div style="font-size:14px;font-weight:800;color:#DA251C;letter-spacing:.5px;margin-bottom:12px;">نظر مشتریان</div>
+        <h2 style="font-size:36px;font-weight:800;letter-spacing:-.5px;margin:0;">اعتماد بیش از ۴۸ هزار مشتری</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;" class="bt-svc">
+        <sc-for list="{{ reviews }}" as="r" hint-placeholder-count="3">
+          <div data-reveal style="background:#F7F8FA;border:1px solid #EDEFF3;border-radius:20px;padding:28px;">
+            <div style="display:flex;gap:3px;margin-bottom:16px;color:#F5A623;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+            </div>
+            <p style="font-size:15px;line-height:2;color:#3A4150;margin:0 0 22px;">{{ r.text }}</p>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="width:46px;height:46px;border-radius:50%;background:#E4E7EC;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#6A7180;">{{ r.initial }}</div>
+              <div><div style="font-size:14.5px;font-weight:800;">{{ r.name }}</div><div style="font-size:12.5px;color:#6A7180;margin-top:3px;">{{ r.meta }}</div></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ARTICLES ================= -->
+  <section style="max-width:1280px;margin:0 auto;padding:84px 24px;">
+    <div data-reveal style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:40px;flex-wrap:wrap;">
+      <div>
+        <div style="font-size:14px;font-weight:800;color:#DA251C;letter-spacing:.5px;margin-bottom:12px;">مقالات آموزشی</div>
+        <h2 style="font-size:36px;font-weight:800;letter-spacing:-.5px;margin:0;">راهنمای نگهداری دستگاه‌ها</h2>
+      </div>
+      <a href="Articles.dc.html" class="bt-ghostbtn" style="display:flex;align-items:center;gap:8px;background:#fff;color:#1B1F27;text-decoration:none;font-size:15px;font-weight:700;padding:13px 22px;border-radius:12px;border:1.5px solid #E2E5EA;transition:all .2s;">آرشیو مقالات</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;" class="bt-svc">
+      <sc-for list="{{ articles }}" as="a" hint-placeholder-count="3">
+        <a href="Article.dc.html" data-reveal class="bt-artcard" style="display:block;background:#fff;border:1px solid #EDEFF3;border-radius:20px;overflow:hidden;text-decoration:none;color:inherit;transition:all .28s cubic-bezier(.22,.61,.36,1);box-shadow:0 2px 8px rgba(20,24,31,.04);">
+          <div style="overflow:hidden;height:188px;">
+            <div class="bt-artimg" style="height:100%;background:repeating-linear-gradient(135deg,#EDEFF3,#EDEFF3 14px,#F5F6F8 14px,#F5F6F8 28px);display:flex;align-items:center;justify-content:center;transition:transform .4s ease;">
+              <span style="font-family:monospace;font-size:11px;color:#9098A6;">[ تصویر مقاله ]</span>
+            </div>
+          </div>
+          <div style="padding:22px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+              <span style="font-size:11.5px;font-weight:700;color:#DA251C;background:rgba(218,37,28,.08);padding:4px 10px;border-radius:7px;">{{ a.cat }}</span>
+              <span style="font-size:12px;color:#9098A6;">{{ a.date }}</span>
+            </div>
+            <h3 style="font-size:17.5px;font-weight:800;line-height:1.6;margin:0 0 10px;">{{ a.title }}</h3>
+            <p style="font-size:13.5px;line-height:1.9;color:#5B6270;margin:0;">{{ a.excerpt }}</p>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ================= FINAL CTA ================= -->
+  <section style="max-width:1280px;margin:0 auto;padding:0 24px 84px;">
+    <div data-reveal style="position:relative;overflow:hidden;background:linear-gradient(120deg,#DA251C 0%,#B3170F 100%);border-radius:28px;padding:60px 48px;text-align:center;color:#fff;">
+      <div style="position:absolute;top:-80px;right:-40px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,.10);"></div>
+      <div style="position:absolute;bottom:-100px;left:-60px;width:320px;height:320px;border-radius:50%;background:rgba(0,0,0,.08);"></div>
+      <div style="position:relative;">
+        <h2 style="font-size:38px;font-weight:800;letter-spacing:-.5px;margin:0 0 14px;">دستگاهت را به دست متخصص بسپار</h2>
+        <p style="font-size:17px;line-height:1.9;color:rgba(255,255,255,.92);margin:0 auto 30px;max-width:560px;">همین حالا تماس بگیر یا به یکی از دو شعبه ما در تهران مراجعه کن. عیب‌یابی کاملاً رایگان است.</p>
+        <div style="display:flex;align-items:center;justify-content:center;gap:13px;flex-wrap:wrap;">
+          <a href="tel:+982191300348" style="display:flex;align-items:center;gap:9px;background:#fff;color:#DA251C;text-decoration:none;font-size:16px;font-weight:800;padding:16px 30px;border-radius:14px;box-shadow:0 12px 30px rgba(0,0,0,.18);">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span style="direction:ltr;">۰۲۱ - ۹۱۳۰۰۳۴۸</span>
+          </a>
+          <a href="Contact.dc.html" style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.14);color:#fff;text-decoration:none;font-size:16px;font-weight:700;padding:16px 28px;border-radius:14px;border:1.5px solid rgba(255,255,255,.35);">آدرس شعب و مسیریابی</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,560px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  componentDidMount() {
+    // responsive overrides
+    if (!document.getElementById('bt-home-resp')) {
+      const el = document.createElement('style');
+      el.id = 'bt-home-resp';
+      el.textContent = `
+        @media(max-width:980px){
+          .bt-hero{grid-template-columns:1fr !important;gap:20px !important;padding-top:40px !important;padding-bottom:48px !important;}
+          .bt-hero h1{font-size:38px !important;}
+          .bt-svc{grid-template-columns:1fr 1fr !important;}
+          .bt-why{grid-template-columns:1fr 1fr !important;}
+          .bt-proc{grid-template-columns:1fr 1fr !important;gap:32px 20px !important;}
+          .bt-brandgrid{grid-template-columns:repeat(3,1fr) !important;}
+          .bt-stats{grid-template-columns:1fr 1fr !important;gap:30px 24px !important;}
+          .bt-stats > div{border-right:none !important;}
+        }
+        @media(max-width:600px){
+          .bt-hero h1{font-size:31px !important;}
+          .bt-svc{grid-template-columns:1fr !important;}
+          .bt-why{grid-template-columns:1fr !important;}
+          .bt-proc{grid-template-columns:1fr !important;}
+          .bt-brandgrid{grid-template-columns:1fr 1fr !important;}
+          section h2{font-size:27px !important;}
+        }
+      `;
+      document.head.appendChild(el);
+    }
+
+    // scroll reveal
+    const nodes = Array.from(this.el ? this.el.querySelectorAll('[data-reveal]') : document.querySelectorAll('[data-reveal]'));
+    nodes.forEach(n => {
+      n.style.opacity = '0';
+      n.style.transform = 'translateY(28px)';
+      n.style.transition = 'opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1)';
+      const d = parseInt(n.getAttribute('data-reveal-d') || '0', 10);
+      n.style.transitionDelay = (d / 1000) + 's';
+    });
+    const reveal = (n) => { n.style.opacity = '1'; n.style.transform = 'none'; };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      nodes.forEach(n => io.observe(n));
+      // reveal anything already in view immediately
+      setTimeout(() => nodes.forEach(n => {
+        const r = n.getBoundingClientRect();
+        if (r.top < window.innerHeight) reveal(n);
+      }), 60);
+    } else {
+      nodes.forEach(reveal);
+    }
+  }
+
+  renderVals() {
+    return {
+      mobileBrands: ['سامسونگ','اپل','شیائومی','هواوی','ناتینگ فون','گوگل پیکسل','نوکیا','موتورولا','ایسوس','HTC'].map(n => ({ name: n, initial: n.slice(0,1), href: 'Mobile Repair.dc.html' })),
+      laptopBrands: ['ایسوس','لنوو','اچ پی','دل','هواوی','MSI','ایسر','سونی','اپل','شیائومی','سامسونگ'].map(n => ({ name: n, initial: n.slice(0,1), href: 'Laptop Repair.dc.html' })),
+      reviews: [
+        { text: 'گوشی سامسونگم آب خورده بود و همه گفته بودن غیرقابل تعمیره. تو بارتر همون‌روز درستش کردن. واقعاً حرفه‌ای بودن.', initial: 'م', name: 'مهدی رضایی', meta: 'تعمیر برد سامسونگ' },
+        { text: 'صفحه لپ‌تاپ ایسوسم رو تعویض کردن، قیمت منصفانه و کارشون تمیز بود. برگه ضمانت هم دادن.', initial: 'س', name: 'سارا کریمی', meta: 'تعویض ال‌سی‌دی لپ‌تاپ' },
+        { text: 'برای تعمیر آیفونم رفتم، برخورد و راهنماییشون عالی بود و دقیقاً همون چیزی که گفتن انجام شد.', initial: 'ع', name: 'علی محمدی', meta: 'تعویض باتری آیفون' },
+      ],
+      articles: [
+        { cat: 'موبایل', date: '۳ خرداد ۱۴۰۴', title: 'چطور عمر باتری گوشی را دو برابر کنیم؟', excerpt: '۷ عادت ساده که باعث می‌شود باتری موبایل شما مدت بیشتری دوام بیاورد.' },
+        { cat: 'لپ‌تاپ', date: '۲۸ اردیبهشت ۱۴۰۴', title: 'علت داغ شدن لپ‌تاپ و راه‌حل آن', excerpt: 'دلایل اصلی گرم شدن بیش از حد لپ‌تاپ و روش‌های پیشگیری و تعمیر.' },
+        { cat: 'راهنما', date: '۱۵ اردیبهشت ۱۴۰۴', title: 'قبل از تعمیر گوشی این کارها را انجام دهید', excerpt: 'بکاپ‌گیری، خروج از حساب‌ها و نکاتی که باید پیش از تحویل دستگاه بدانید.' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

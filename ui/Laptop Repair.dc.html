@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:#F5F6F8;}
+  .bt-fault:hover{transform:translateY(-5px);box-shadow:0 22px 44px rgba(20,24,31,.12) !important;border-color:#fff !important;}
+  .bt-fault:hover .bt-faulticon{background:#DA251C !important;color:#fff !important;}
+  .bt-pillbtn:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(218,37,28,.36) !important;}
+  .bt-ghostbtn:hover{background:#171A21 !important;color:#fff !important;border-color:#171A21 !important;}
+  .bt-faqitem:hover{border-color:#D5D9E0 !important;}
+  .bt-relchip:hover{border-color:#DA251C !important;color:#DA251C !important;transform:translateY(-2px);}
+</style>
+</helmet>
+<div dir="rtl" style="font-family:Vazirmatn,Tahoma,sans-serif;background:#F5F6F8;color:#1B1F27;overflow-x:hidden;">
+
+  <dc-import name="Header" active="laptop" hint-size="100%,132px"></dc-import>
+
+  <!-- ===== HERO ===== -->
+  <section style="position:relative;background:radial-gradient(900px 460px at 88% -10%,rgba(218,37,28,.12),transparent 60%),linear-gradient(180deg,#FFFFFF,#F5F6F8);overflow:hidden;">
+    <div style="max-width:1280px;margin:0 auto;padding:30px 24px 64px;">
+      <nav style="display:flex;align-items:center;gap:8px;font-size:13px;color:#8A92A0;margin-bottom:30px;">
+        <a href="Home.dc.html" style="color:#8A92A0;text-decoration:none;">خانه</a><span>/</span>
+        <span style="color:#8A92A0;">تعمیر لپ‌تاپ</span><span>/</span>
+        <span style="color:#1B1F27;font-weight:700;">{{ brand }}</span>
+      </nav>
+      <div style="display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:40px;" class="bt-hero">
+        <div data-reveal>
+          <div style="display:inline-flex;align-items:center;gap:9px;background:#fff;border:1px solid #EDEFF3;padding:8px 15px;border-radius:100px;box-shadow:0 4px 14px rgba(20,24,31,.05);margin-bottom:20px;">
+            <span style="width:30px;height:30px;border-radius:8px;background:#F1F2F5;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#6A7180;">{{ brandInitial }}</span>
+            <span style="font-size:13px;font-weight:700;color:#4A5160;">مرکز تخصصی تعمیر لپ‌تاپ {{ brand }}</span>
+          </div>
+          <h1 style="font-size:46px;line-height:1.3;font-weight:800;letter-spacing:-.6px;margin:0;">تعمیر تخصصی لپ‌تاپ <span style="color:#DA251C;">{{ brand }}</span></h1>
+          <p style="font-size:17px;line-height:2;color:#5B6270;margin:18px 0 0;max-width:520px;">از تعمیر مادربرد و تعویض صفحه‌نمایش تا رفع مشکلات حرارتی و ارتقای سخت‌افزار؛ تمام مدل‌های لپ‌تاپ {{ brand }} با تجهیزات تخصصی تعمیر می‌شوند.</p>
+          <div style="display:flex;align-items:center;gap:13px;margin-top:28px;flex-wrap:wrap;">
+            <a href="tel:+982191300348" class="bt-pillbtn" style="display:flex;align-items:center;gap:9px;background:#DA251C;color:#fff;text-decoration:none;font-size:16px;font-weight:700;padding:15px 26px;border-radius:14px;box-shadow:0 10px 26px rgba(218,37,28,.30);transition:all .2s;">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              تماس و رزرو نوبت
+            </a>
+            <a href="#faults" class="bt-ghostbtn" style="display:flex;align-items:center;gap:8px;background:#fff;color:#1B1F27;text-decoration:none;font-size:16px;font-weight:700;padding:15px 24px;border-radius:14px;border:1.5px solid #E2E5EA;transition:all .2s;">مشاهده خدمات</a>
+          </div>
+          <div style="display:flex;align-items:center;gap:20px;margin-top:26px;flex-wrap:wrap;">
+            <span style="display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:#4A5160;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2BB673" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>عیب‌یابی رایگان</span>
+            <span style="display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:#4A5160;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2BB673" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>تعمیر در سطح قطعه</span>
+            <span style="display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:#4A5160;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2BB673" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>ضمانت تعمیر</span>
+          </div>
+        </div>
+        <div data-reveal data-reveal-d="120" style="position:relative;height:380px;display:flex;align-items:center;justify-content:center;">
+          <div style="position:absolute;width:320px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(218,37,28,.14),transparent 68%);"></div>
+          <div style="position:relative;width:360px;">
+            <div style="background:#171A21;border-radius:14px 14px 4px 4px;padding:11px 11px 13px;box-shadow:0 30px 60px rgba(20,24,31,.28);">
+              <div style="border-radius:8px;overflow:hidden;background:repeating-linear-gradient(135deg,#EDEFF3,#EDEFF3 14px,#F5F6F8 14px,#F5F6F8 28px);height:218px;display:flex;align-items:center;justify-content:center;">
+                <span style="font-family:monospace;font-size:11px;color:#9098A6;text-align:center;">[ تصویر لپ‌تاپ<br>{{ brand }} ]</span>
+              </div>
+            </div>
+            <div style="height:12px;background:linear-gradient(180deg,#2A2F39,#1B1F27);border-radius:0 0 14px 14px;margin:0 -16px;box-shadow:0 16px 26px rgba(20,24,31,.22);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAULTS ===== -->
+  <section id="faults" style="max-width:1280px;margin:0 auto;padding:78px 24px 20px;">
+    <div data-reveal style="text-align:center;max-width:640px;margin:0 auto 46px;">
+      <div style="font-size:14px;font-weight:800;color:#DA251C;letter-spacing:.5px;margin-bottom:12px;">خدمات تعمیر</div>
+      <h2 style="font-size:34px;font-weight:800;letter-spacing:-.5px;margin:0;">رایج‌ترین مشکلات لپ‌تاپ {{ brand }}</h2>
+      <p style="font-size:16px;line-height:1.9;color:#5B6270;margin:14px 0 0;">از مشکلات سخت‌افزاری تا نرم‌افزاری، همه را پوشش می‌دهیم.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;" class="bt-grid4">
+      <sc-for list="{{ faults }}" as="f" hint-placeholder-count="8">
+        <div data-reveal class="bt-fault" style="background:#fff;border:1px solid #EDEFF3;border-radius:18px;padding:24px;transition:all .26s;box-shadow:0 2px 8px rgba(20,24,31,.04);">
+          <div class="bt-faulticon" style="width:52px;height:52px;border-radius:14px;background:rgba(218,37,28,.10);display:flex;align-items:center;justify-content:center;color:#DA251C;margin-bottom:16px;transition:all .26s;" data-om-raster>
+            <span style="font-size:22px;">{{ f.icon }}</span>
+          </div>
+          <h3 style="font-size:16.5px;font-weight:800;margin:0 0 8px;">{{ f.title }}</h3>
+          <p style="font-size:13px;line-height:1.85;color:#5B6270;margin:0;">{{ f.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ===== CONTENT + IMAGE ===== -->
+  <section style="max-width:1280px;margin:0 auto;padding:60px 24px;">
+    <div data-reveal style="display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;" class="bt-split">
+      <div>
+        <h2 style="font-size:30px;font-weight:800;letter-spacing:-.4px;margin:0 0 18px;">تعمیر لپ‌تاپ {{ brand }} در سطح تخصصی</h2>
+        <div style="display:flex;flex-direction:column;gap:18px;">
+          <div style="display:flex;gap:14px;">
+            <span style="flex-shrink:0;width:42px;height:42px;border-radius:12px;background:rgba(218,37,28,.10);display:flex;align-items:center;justify-content:center;color:#DA251C;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg></span>
+            <div><div style="font-size:16px;font-weight:800;margin-bottom:5px;">تعمیر مادربرد و چیپ‌ست</div><p style="font-size:14px;line-height:1.9;color:#5B6270;margin:0;">تعمیر در سطح قطعه با تجهیزات هیتر، ریبال و میکروسکوپ تخصصی.</p></div>
+          </div>
+          <div style="display:flex;gap:14px;">
+            <span style="flex-shrink:0;width:42px;height:42px;border-radius:12px;background:rgba(218,37,28,.10);display:flex;align-items:center;justify-content:center;color:#DA251C;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7h7v7"/><path d="M21 7l-9 9-4-4-6 6"/></svg></span>
+            <div><div style="font-size:16px;font-weight:800;margin-bottom:5px;">ارتقای کارایی</div><p style="font-size:14px;line-height:1.9;color:#5B6270;margin:0;">افزایش رم، تعویض هارد با SSD و بهینه‌سازی سیستم خنک‌کننده.</p></div>
+          </div>
+          <div style="display:flex;gap:14px;">
+            <span style="flex-shrink:0;width:42px;height:42px;border-radius:12px;background:rgba(218,37,28,.10);display:flex;align-items:center;justify-content:center;color:#DA251C;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+            <div><div style="font-size:16px;font-weight:800;margin-bottom:5px;">بازیابی اطلاعات</div><p style="font-size:14px;line-height:1.9;color:#5B6270;margin:0;">بازیابی اطلاعات از هاردهای آسیب‌دیده با حفظ محرمانگی.</p></div>
+          </div>
+        </div>
+      </div>
+      <div style="border-radius:22px;overflow:hidden;height:380px;background:repeating-linear-gradient(135deg,#EDEFF3,#EDEFF3 16px,#F5F6F8 16px,#F5F6F8 32px);display:flex;align-items:center;justify-content:center;border:1px solid #EDEFF3;">
+        <span style="font-family:monospace;font-size:12px;color:#9098A6;">[ تصویر تعمیر برد {{ brand }} ]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODELS ===== -->
+  <section style="background:#fff;border-top:1px solid #EDEFF3;border-bottom:1px solid #EDEFF3;">
+    <div style="max-width:1280px;margin:0 auto;padding:64px 24px;text-align:center;">
+      <h2 data-reveal style="font-size:30px;font-weight:800;letter-spacing:-.4px;margin:0 0 12px;">تعمیر تمام سری‌های لپ‌تاپ {{ brand }}</h2>
+      <p data-reveal style="font-size:16px;color:#5B6270;margin:0 auto 30px;max-width:560px;line-height:1.9;">از مدل‌های اداری و دانشجویی تا لپ‌تاپ‌های گیمینگ و ورک‌استیشن.</p>
+      <div data-reveal style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
+        <sc-for list="{{ modelChips }}" as="m" hint-placeholder-count="6">
+          <span style="font-size:14px;font-weight:700;color:#3A4150;background:#F5F6F8;border:1px solid #EDEFF3;padding:11px 20px;border-radius:100px;">{{ m }}</span>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROCESS ===== -->
+  <section style="max-width:1280px;margin:0 auto;padding:78px 24px;">
+    <div data-reveal style="text-align:center;max-width:600px;margin:0 auto 50px;">
+      <div style="font-size:14px;font-weight:800;color:#DA251C;letter-spacing:.5px;margin-bottom:12px;">مراحل کار</div>
+      <h2 style="font-size:32px;font-weight:800;letter-spacing:-.5px;margin:0;">سپردن لپ‌تاپ در ۴ قدم ساده</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;" class="bt-grid4">
+      <div data-reveal style="text-align:center;"><div style="width:70px;height:70px;margin:0 auto 16px;border-radius:20px;background:#13161C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;">۱</div><h3 style="font-size:16px;font-weight:800;margin:0 0 7px;">تماس / مراجعه</h3><p style="font-size:13px;line-height:1.85;color:#5B6270;margin:0;">تماس بگیرید یا به شعبه مراجعه کنید.</p></div>
+      <div data-reveal data-reveal-d="90" style="text-align:center;"><div style="width:70px;height:70px;margin:0 auto 16px;border-radius:20px;background:#13161C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;">۲</div><h3 style="font-size:16px;font-weight:800;margin:0 0 7px;">عیب‌یابی رایگان</h3><p style="font-size:13px;line-height:1.85;color:#5B6270;margin:0;">تشخیص و اعلام هزینه دقیق.</p></div>
+      <div data-reveal data-reveal-d="180" style="text-align:center;"><div style="width:70px;height:70px;margin:0 auto 16px;border-radius:20px;background:#13161C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;">۳</div><h3 style="font-size:16px;font-weight:800;margin:0 0 7px;">تعمیر تخصصی</h3><p style="font-size:13px;line-height:1.85;color:#5B6270;margin:0;">تعمیر با قطعات اصل.</p></div>
+      <div data-reveal data-reveal-d="270" style="text-align:center;"><div style="width:70px;height:70px;margin:0 auto 16px;border-radius:20px;background:#DA251C;color:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;">۴</div><h3 style="font-size:16px;font-weight:800;margin:0 0 7px;">تحویل با ضمانت</h3><p style="font-size:13px;line-height:1.85;color:#5B6270;margin:0;">تحویل دستگاه سالم + ضمانت.</p></div>
+    </div>
+  </section>
+
+  <!-- ===== CTA BAND ===== -->
+  <section style="max-width:1280px;margin:0 auto;padding:0 24px 78px;">
+    <div data-reveal style="position:relative;overflow:hidden;background:linear-gradient(120deg,#22262F,#13161C);border-radius:26px;padding:46px;display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center;" class="bt-ctaband">
+      <div style="color:#fff;">
+        <h2 style="font-size:30px;font-weight:800;letter-spacing:-.4px;margin:0 0 12px;">لپ‌تاپ {{ brand }} شما منتظر تعمیر است</h2>
+        <p style="font-size:16px;line-height:1.9;color:#AEB4BF;margin:0;">همین حالا تماس بگیرید یا به نزدیک‌ترین شعبه مراجعه کنید. عیب‌یابی رایگان است.</p>
+        <a href="tel:+982191300348" class="bt-pillbtn" style="display:inline-flex;align-items:center;gap:9px;margin-top:24px;background:#DA251C;color:#fff;text-decoration:none;font-size:16px;font-weight:800;padding:15px 28px;border-radius:14px;box-shadow:0 10px 26px rgba(218,37,28,.34);transition:all .2s;">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span style="direction:ltr;">۰۲۱ - ۹۱۳۰۰۳۴۸</span>
+        </a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:16px;padding:18px;display:flex;gap:12px;">
+          <span style="flex-shrink:0;color:#DA251C;margin-top:2px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <div><div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:4px;">شعبه مرکزی</div><div style="font-size:12.5px;line-height:1.8;color:#AEB4BF;">خیابان مطهری، قائم‌مقام فراهانی، پلاک ۱۵۸</div></div>
+        </div>
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:16px;padding:18px;display:flex;gap:12px;">
+          <span style="flex-shrink:0;color:#DA251C;margin-top:2px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <div><div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:4px;">شعبه غرب</div><div style="font-size:12.5px;line-height:1.8;color:#AEB4BF;">سعادت‌آباد، میدان کاج، کوچه ۱۲، مجتمع کسری</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section style="background:#fff;border-top:1px solid #EDEFF3;">
+    <div style="max-width:860px;margin:0 auto;padding:78px 24px;">
+      <div data-reveal style="text-align:center;margin-bottom:40px;">
+        <div style="font-size:14px;font-weight:800;color:#DA251C;letter-spacing:.5px;margin-bottom:12px;">سوالات متداول</div>
+        <h2 style="font-size:32px;font-weight:800;letter-spacing:-.5px;margin:0;">پرسش‌های رایج درباره تعمیر لپ‌تاپ {{ brand }}</h2>
+      </div>
+      <div data-reveal style="display:flex;flex-direction:column;gap:12px;">
+        <sc-for list="{{ faqs }}" as="q" hint-placeholder-count="5">
+          <div class="bt-faqitem" style="background:#F7F8FA;border:1px solid #EDEFF3;border-radius:16px;overflow:hidden;transition:border-color .2s;">
+            <button onClick="{{ q.toggle }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:none;border:none;cursor:pointer;padding:20px 22px;text-align:right;font-family:inherit;">
+              <span style="font-size:16px;font-weight:700;color:#1B1F27;">{{ q.question }}</span>
+              <span style="flex-shrink:0;color:#DA251C;transform:{{ q.iconRotate }};transition:transform .25s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div style="max-height:{{ q.maxH }};overflow:hidden;transition:max-height .3s ease;">
+              <p style="font-size:14.5px;line-height:2;color:#5B6270;margin:0;padding:0 22px 20px;">{{ q.answer }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RELATED ===== -->
+  <section style="max-width:1280px;margin:0 auto;padding:64px 24px;">
+    <div data-reveal style="text-align:center;margin-bottom:30px;"><h2 style="font-size:26px;font-weight:800;margin:0;">تعمیر سایر برندهای لپ‌تاپ</h2></div>
+    <div data-reveal style="display:flex;flex-wrap:wrap;justify-content:center;gap:10px;">
+      <sc-for list="{{ otherBrands }}" as="b" hint-placeholder-count="10">
+        <a href="Laptop Repair.dc.html" class="bt-relchip" style="font-size:14px;font-weight:700;color:#3A4150;background:#fff;border:1px solid #EDEFF3;padding:11px 20px;border-radius:100px;text-decoration:none;transition:all .2s;">{{ b }}</a>
+      </sc-for>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,560px"></dc-import>
+
+  <!-- sticky mobile bar -->
+  <div class="bt-mobilebar" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:900;background:#fff;border-top:1px solid #E7E9EE;box-shadow:0 -8px 24px rgba(20,24,31,.10);padding:10px 14px;gap:10px;">
+    <a href="Contact.dc.html" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;background:#F5F6F8;color:#1B1F27;text-decoration:none;font-size:14px;font-weight:700;padding:13px;border-radius:12px;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>آدرس شعب
+    </a>
+    <a href="tel:+982191300348" style="flex:1.4;display:flex;align-items:center;justify-content:center;gap:7px;background:#DA251C;color:#fff;text-decoration:none;font-size:14px;font-weight:700;padding:13px;border-radius:12px;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>تماس فوری
+    </a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900},&quot;brand&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;ایسوس&quot;,&quot;لنوو&quot;,&quot;اچ پی&quot;,&quot;دل&quot;,&quot;هواوی&quot;,&quot;MSI&quot;,&quot;ایسر&quot;,&quot;سونی&quot;,&quot;اپل&quot;,&quot;شیائومی&quot;,&quot;سامسونگ&quot;],&quot;default&quot;:&quot;ایسوس&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { openFaq: 0 };
+
+  componentDidMount() {
+    if (!document.getElementById('bt-lr-resp')) {
+      const el = document.createElement('style');
+      el.id = 'bt-lr-resp';
+      el.textContent = `
+        @media(max-width:980px){
+          .bt-hero{grid-template-columns:1fr !important;gap:24px !important;}
+          .bt-hero h1{font-size:36px !important;}
+          .bt-grid4{grid-template-columns:1fr 1fr !important;}
+          .bt-split{grid-template-columns:1fr !important;gap:24px !important;}
+          .bt-ctaband{grid-template-columns:1fr !important;padding:32px !important;}
+        }
+        @media(max-width:600px){
+          .bt-hero h1{font-size:29px !important;}
+          .bt-grid4{grid-template-columns:1fr !important;}
+          .bt-mobilebar{display:flex !important;}
+          section h2{font-size:25px !important;}
+          body{padding-bottom:74px;}
+        }
+      `;
+      document.head.appendChild(el);
+    }
+    this._setupReveal();
+  }
+
+  _setupReveal() {
+    const nodes = Array.from(document.querySelectorAll('[data-reveal]'));
+    nodes.forEach(n => {
+      n.style.opacity = '0';
+      n.style.transform = 'translateY(26px)';
+      n.style.transition = 'opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1)';
+      const d = parseInt(n.getAttribute('data-reveal-d') || '0', 10);
+      n.style.transitionDelay = (d / 1000) + 's';
+    });
+    const reveal = (n) => { n.style.opacity = '1'; n.style.transform = 'none'; };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      nodes.forEach(n => io.observe(n));
+      setTimeout(() => nodes.forEach(n => { if (n.getBoundingClientRect().top < window.innerHeight) reveal(n); }), 60);
+    } else nodes.forEach(reveal);
+  }
+
+  renderVals() {
+    const brand = this.props.brand ?? 'ایسوس';
+    const open = this.state.openFaq;
+
+    const faqData = [
+      { question: 'عیب‌یابی لپ‌تاپ هزینه دارد؟', answer: 'خیر، عیب‌یابی اولیه رایگان است و پیش از تعمیر هزینه دقیق اعلام می‌شود.' },
+      { question: 'تعمیر مادربرد چقدر طول می‌کشد؟', answer: 'بسته به نوع ایراد معمولاً بین ۱ تا ۴ روز کاری زمان می‌برد. ایرادهای ساده‌تر سریع‌تر انجام می‌شوند.' },
+      { question: 'آیا اطلاعات روی هارد حفظ می‌شود؟', answer: 'بله در اغلب موارد اطلاعات حفظ می‌شود، اما توصیه می‌کنیم پیش از تحویل بکاپ بگیرید. خدمات بازیابی اطلاعات نیز ارائه می‌دهیم.' },
+      { question: 'تعویض صفحه‌نمایش ضمانت دارد؟', answer: 'بله، روی صفحه‌نمایش و سایر قطعات تعویض‌شده ضمانت کتبی ارائه می‌شود.' },
+      { question: 'امکان ارتقای رم و SSD هست؟', answer: 'بله، ارتقای رم، تعویض هارد با SSD و بهینه‌سازی سیستم خنک‌کننده از خدمات رایج ماست.' },
+    ];
+    const faqs = faqData.map((q, i) => ({
+      question: q.question, answer: q.answer,
+      maxH: open === i ? '240px' : '0px',
+      iconRotate: open === i ? 'rotate(180deg)' : 'rotate(0deg)',
+      toggle: () => this.setState(s => ({ openFaq: s.openFaq === i ? -1 : i })),
+    }));
+
+    const allBrands = ['ایسوس','لنوو','اچ پی','دل','هواوی','MSI','ایسر','سونی','اپل','شیائومی','سامسونگ'];
+
+    return {
+      brand,
+      brandInitial: brand.slice(0, 1),
+      faults: [
+        { icon: '🖥️', title: 'تعویض صفحه‌نمایش', desc: 'تعویض ال‌سی‌دی و ال‌ای‌دی شکسته یا خط‌افتاده.' },
+        { icon: '🧩', title: 'تعمیر مادربرد', desc: 'تعمیر در سطح قطعه و رفع روشن‌نشدن دستگاه.' },
+        { icon: '⌨️', title: 'تعویض کیبورد', desc: 'رفع خرابی و آب‌خوردگی کیبورد و تاچ‌پد.' },
+        { icon: '🔋', title: 'تعویض باتری', desc: 'رفع افت شارژ و شارژ نشدن با باتری اصل.' },
+        { icon: '🌡️', title: 'رفع داغ شدن', desc: 'تمیزکاری فن و تعویض خمیر سیلیکون.' },
+        { icon: '💾', title: 'ارتقا و SSD', desc: 'تعویض هارد با SSD و افزایش رم.' },
+        { icon: '🔌', title: 'جک شارژ و آداپتور', desc: 'تعمیر سوکت شارژ و رفع مشکلات تغذیه.' },
+        { icon: '🛠️', title: 'نصب ویندوز و درایور', desc: 'نصب سیستم‌عامل، درایور و رفع مشکلات نرم‌افزاری.' },
+      ],
+      modelChips: ['نوت‌بوک اداری', 'اولترابوک', 'گیمینگ', 'ورک‌استیشن', '۲ در ۱', 'مدل‌های قدیمی'],
+      faqs,
+      otherBrands: allBrands.filter(b => b !== brand),
+    };
+  }
+}
+</script>
+</body>
+</html>

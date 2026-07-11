@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;background:#F5F6F8;}
+  .bt-field:focus{border-color:#DA251C !important;box-shadow:0 0 0 4px rgba(218,37,28,.10) !important;outline:none;}
+  .bt-pillbtn:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(218,37,28,.36) !important;}
+  .bt-infocard:hover{border-color:#DA251C !important;transform:translateY(-3px);box-shadow:0 16px 34px rgba(20,24,31,.10) !important;}
+  .bt-social:hover{background:#DA251C !important;border-color:#DA251C !important;color:#fff !important;transform:translateY(-2px);}
+</style>
+</helmet>
+<div dir="rtl" style="font-family:Vazirmatn,Tahoma,sans-serif;background:#F5F6F8;color:#1B1F27;overflow-x:hidden;">
+
+  <dc-import name="Header" active="contact" hint-size="100%,132px"></dc-import>
+
+  <!-- ===== HERO ===== -->
+  <section style="position:relative;overflow:hidden;background:radial-gradient(800px 420px at 85% -20%,rgba(218,37,28,.12),transparent 60%),linear-gradient(180deg,#fff,#F5F6F8);">
+    <div style="max-width:1280px;margin:0 auto;padding:30px 24px 56px;">
+      <nav style="display:flex;align-items:center;gap:8px;font-size:13px;color:#8A92A0;margin-bottom:26px;">
+        <a href="Home.dc.html" style="color:#8A92A0;text-decoration:none;">خانه</a><span>/</span>
+        <span style="color:#1B1F27;font-weight:700;">تماس با ما</span>
+      </nav>
+      <div data-reveal style="max-width:620px;">
+        <h1 style="font-size:44px;line-height:1.3;font-weight:800;letter-spacing:-.6px;margin:0;">با ما در تماس باشید</h1>
+        <p style="font-size:17px;line-height:2;color:#5B6270;margin:16px 0 0;">برای رزرو نوبت، استعلام قیمت یا هر سوالی تماس بگیرید؛ کارشناسان ما همه‌روزه از ساعت ۹ تا ۲۱ پاسخگوی شما هستند.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FORM + INFO ===== -->
+  <section style="max-width:1280px;margin:0 auto;padding:10px 24px 30px;">
+    <div data-reveal style="display:grid;grid-template-columns:1.25fr .9fr;gap:30px;align-items:start;" class="bt-cgrid">
+
+      <!-- form -->
+      <div style="background:#fff;border:1px solid #EDEFF3;border-radius:22px;padding:34px;box-shadow:0 2px 10px rgba(20,24,31,.04);">
+        <h2 style="font-size:22px;font-weight:800;margin:0 0 6px;">فرم درخواست تعمیر</h2>
+        <p style="font-size:14px;color:#6A7180;margin:0 0 26px;">فرم را پر کنید، کارشناسان ما در اسرع وقت با شما تماس می‌گیرند.</p>
+
+        <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+          <div style="background:rgba(43,182,115,.08);border:1px solid rgba(43,182,115,.25);border-radius:16px;padding:28px;text-align:center;">
+            <div style="width:58px;height:58px;border-radius:50%;background:rgba(43,182,115,.14);display:flex;align-items:center;justify-content:center;color:#2BB673;margin:0 auto 14px;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+            <div style="font-size:18px;font-weight:800;margin-bottom:6px;">درخواست شما ثبت شد</div>
+            <p style="font-size:14px;color:#5B6270;margin:0;line-height:1.9;">به‌زودی با شما تماس می‌گیریم. برای تماس فوری با شماره ۹۱۳۰۰۳۴۸ تماس بگیرید.</p>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;" class="bt-formrow">
+              <div>
+                <label style="display:block;font-size:13.5px;font-weight:700;margin-bottom:8px;color:#3A4150;">نام و نام خانوادگی</label>
+                <input class="bt-field" type="text" placeholder="نام شما" style="width:100%;font-family:inherit;font-size:14.5px;padding:13px 15px;border:1.5px solid #E2E5EA;border-radius:12px;background:#FBFBFC;transition:all .2s;" />
+              </div>
+              <div>
+                <label style="display:block;font-size:13.5px;font-weight:700;margin-bottom:8px;color:#3A4150;">شماره تماس</label>
+                <input class="bt-field" type="tel" placeholder="۰۹۱۲ ..." style="width:100%;font-family:inherit;font-size:14.5px;padding:13px 15px;border:1.5px solid #E2E5EA;border-radius:12px;background:#FBFBFC;transition:all .2s;direction:ltr;text-align:right;" />
+              </div>
+            </div>
+            <div>
+              <label style="display:block;font-size:13.5px;font-weight:700;margin-bottom:8px;color:#3A4150;">نوع دستگاه</label>
+              <select class="bt-field" style="width:100%;font-family:inherit;font-size:14.5px;padding:13px 15px;border:1.5px solid #E2E5EA;border-radius:12px;background:#FBFBFC;transition:all .2s;color:#3A4150;">
+                <option>موبایل</option><option>لپ‌تاپ</option><option>تبلت</option><option>ساعت هوشمند</option><option>سایر</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block;font-size:13.5px;font-weight:700;margin-bottom:8px;color:#3A4150;">شرح مشکل</label>
+              <textarea class="bt-field" rows="4" placeholder="مشکل دستگاه خود را شرح دهید..." style="width:100%;font-family:inherit;font-size:14.5px;padding:13px 15px;border:1.5px solid #E2E5EA;border-radius:12px;background:#FBFBFC;transition:all .2s;resize:vertical;"></textarea>
+            </div>
+            <button onClick="{{ submit }}" class="bt-pillbtn" style="display:flex;align-items:center;justify-content:center;gap:9px;background:#DA251C;color:#fff;border:none;cursor:pointer;font-family:inherit;font-size:16px;font-weight:700;padding:16px;border-radius:13px;box-shadow:0 10px 26px rgba(218,37,28,.28);transition:all .2s;">ثبت درخواست تعمیر</button>
+          </div>
+        </sc-if>
+      </div>
+
+      <!-- info -->
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <a href="tel:+982191300348" class="bt-infocard" style="display:flex;align-items:center;gap:16px;background:#fff;border:1px solid #EDEFF3;border-radius:18px;padding:22px;text-decoration:none;color:inherit;transition:all .25s;">
+          <span style="flex-shrink:0;width:52px;height:52px;border-radius:14px;background:rgba(218,37,28,.10);display:flex;align-items:center;justify-content:center;color:#DA251C;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+          <div><div style="font-size:13px;color:#6A7180;margin-bottom:4px;">تماس تلفنی</div><div style="font-size:18px;font-weight:800;direction:ltr;text-align:right;">۰۲۱ - ۹۱۳۰۰۳۴۸</div></div>
+        </a>
+        <div class="bt-infocard" style="display:flex;align-items:center;gap:16px;background:#fff;border:1px solid #EDEFF3;border-radius:18px;padding:22px;transition:all .25s;">
+          <span style="flex-shrink:0;width:52px;height:52px;border-radius:14px;background:rgba(218,37,28,.10);display:flex;align-items:center;justify-content:center;color:#DA251C;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 14"/></svg></span>
+          <div><div style="font-size:13px;color:#6A7180;margin-bottom:4px;">ساعات کاری</div><div style="font-size:16px;font-weight:800;">همه‌روزه ۹ صبح تا ۹ شب</div></div>
+        </div>
+        <div style="background:#13161C;border-radius:18px;padding:22px;">
+          <div style="font-size:14px;font-weight:800;color:#fff;margin-bottom:14px;">ما را دنبال کنید</div>
+          <div style="display:flex;gap:10px;">
+            <a href="#" aria-label="اینستاگرام" class="bt-social" style="display:flex;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid #2A2F39;border-radius:12px;color:#C2C8D2;transition:all .2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+            <a href="#" aria-label="واتساپ" class="bt-social" style="display:flex;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid #2A2F39;border-radius:12px;color:#C2C8D2;transition:all .2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+            <a href="#" aria-label="تلگرام" class="bt-social" style="display:flex;align-items:center;justify-content:center;width:46px;height:46px;border:1px solid #2A2F39;border-radius:12px;color:#C2C8D2;transition:all .2s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BRANCHES ===== -->
+  <section style="max-width:1280px;margin:0 auto;padding:50px 24px 84px;">
+    <div data-reveal style="text-align:center;margin-bottom:36px;"><h2 style="font-size:30px;font-weight:800;letter-spacing:-.5px;margin:0;">شعب ما در تهران</h2></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="bt-cgrid">
+      <div data-reveal style="background:#fff;border:1px solid #EDEFF3;border-radius:20px;overflow:hidden;">
+        <div style="height:200px;background:repeating-linear-gradient(135deg,#EDEFF3,#EDEFF3 16px,#F5F6F8 16px,#F5F6F8 32px);display:flex;align-items:center;justify-content:center;position:relative;">
+          <span style="font-family:monospace;font-size:11px;color:#9098A6;">[ نقشه شعبه مرکزی ]</span>
+          <span style="position:absolute;color:#DA251C;"><svg width="34" height="34" viewBox="0 0 24 24" fill="#DA251C" stroke="#fff" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3" fill="#fff" stroke="none"/></svg></span>
+        </div>
+        <div style="padding:24px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><span style="font-size:11.5px;font-weight:800;color:#DA251C;background:rgba(218,37,28,.08);padding:4px 10px;border-radius:7px;">شعبه مرکزی</span></div>
+          <p style="font-size:15px;line-height:2;color:#3A4150;margin:0 0 16px;">تهران، خیابان مطهری، خیابان قائم‌مقام فراهانی، پلاک ۱۵۸</p>
+          <div style="display:flex;gap:10px;">
+            <a href="tel:+982191300348" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;background:#DA251C;color:#fff;text-decoration:none;font-size:14px;font-weight:700;padding:12px;border-radius:11px;">تماس</a>
+            <a href="#" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;background:#F5F6F8;color:#1B1F27;text-decoration:none;font-size:14px;font-weight:700;padding:12px;border-radius:11px;">مسیریابی</a>
+          </div>
+        </div>
+      </div>
+      <div data-reveal data-reveal-d="100" style="background:#fff;border:1px solid #EDEFF3;border-radius:20px;overflow:hidden;">
+        <div style="height:200px;background:repeating-linear-gradient(135deg,#EDEFF3,#EDEFF3 16px,#F5F6F8 16px,#F5F6F8 32px);display:flex;align-items:center;justify-content:center;position:relative;">
+          <span style="font-family:monospace;font-size:11px;color:#9098A6;">[ نقشه شعبه غرب ]</span>
+          <span style="position:absolute;color:#DA251C;"><svg width="34" height="34" viewBox="0 0 24 24" fill="#DA251C" stroke="#fff" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3" fill="#fff" stroke="none"/></svg></span>
+        </div>
+        <div style="padding:24px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;"><span style="font-size:11.5px;font-weight:800;color:#DA251C;background:rgba(218,37,28,.08);padding:4px 10px;border-radius:7px;">شعبه غرب</span></div>
+          <p style="font-size:15px;line-height:2;color:#3A4150;margin:0 0 16px;">تهران، سعادت‌آباد، میدان کاج، کوچه دوازدهم علی‌اکبر، پلاک ۳۰، مجتمع اداری کسری، طبقه اول، واحد ۵</p>
+          <div style="display:flex;gap:10px;">
+            <a href="tel:+982191300348" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;background:#DA251C;color:#fff;text-decoration:none;font-size:14px;font-weight:700;padding:12px;border-radius:11px;">تماس</a>
+            <a href="#" style="flex:1;display:flex;align-items:center;justify-content:center;gap:7px;background:#F5F6F8;color:#1B1F27;text-decoration:none;font-size:14px;font-weight:700;padding:12px;border-radius:11px;">مسیریابی</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,560px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { submitted: false };
+
+  componentDidMount() {
+    if (!document.getElementById('bt-ct-resp')) {
+      const el = document.createElement('style');
+      el.id = 'bt-ct-resp';
+      el.textContent = `
+        @media(max-width:900px){
+          .bt-cgrid{grid-template-columns:1fr !important;}
+          section h1{font-size:34px !important;}
+        }
+        @media(max-width:520px){
+          .bt-formrow{grid-template-columns:1fr !important;}
+          section h1{font-size:28px !important;}
+        }
+      `;
+      document.head.appendChild(el);
+    }
+    const nodes = Array.from(document.querySelectorAll('[data-reveal]'));
+    nodes.forEach(n => {
+      n.style.opacity = '0';
+      n.style.transform = 'translateY(26px)';
+      n.style.transition = 'opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1)';
+      const d = parseInt(n.getAttribute('data-reveal-d') || '0', 10);
+      n.style.transitionDelay = (d / 1000) + 's';
+    });
+    const reveal = (n) => { n.style.opacity = '1'; n.style.transform = 'none'; };
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((es) => es.forEach(e => { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } }), { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+      nodes.forEach(n => io.observe(n));
+      setTimeout(() => nodes.forEach(n => { if (n.getBoundingClientRect().top < window.innerHeight) reveal(n); }), 60);
+    } else nodes.forEach(reveal);
+  }
+
+  renderVals() {
+    return {
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      submit: () => this.setState({ submitted: true }),
+    };
+  }
+}
+</script>
+</body>
+</html>

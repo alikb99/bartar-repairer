@@ -1,0 +1,225 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.bartar-repairer.com"
+        }
+      ],
+      "destination": "https://bartar-repairer.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/samsung-tab-a9-repairs/",
+      "destination": "/samsung-tab-a9-repair/",
+      "permanent": true
+    },
+    {
+      "source": "/xiaomi/mobile/repair-poco-x6-pro/",
+      "destination": "/xiaomi/mobile/repair-poco-x6pro/",
+      "permanent": true
+    },
+    {
+      "source": "/acer-laptop-graphics-card-repair/",
+      "destination": "/acer-laptop-graphics-cardrepair/",
+      "permanent": true
+    },
+    {
+      "source": "/samsung-a24-repair/",
+      "destination": "/samsung-a24repair/",
+      "permanent": true
+    },
+    {
+      "source": "/replacing-the-battery-of-an-acer-laptop/",
+      "destination": "/replacing-the-battery-of-an-acerlaptop/",
+      "permanent": true
+    },
+    {
+      "source": "/htc-phone-hard-drive-repair/",
+      "destination": "/htc-phone-hard-drive-repairs/",
+      "permanent": true
+    },
+    {
+      "source": "/macbook-motherboard-repair/",
+      "destination": "/macbook-motherboardrepair/",
+      "permanent": true
+    },
+    {
+      "source": "/hide-number-on-whatsapp-for-contacts/feed/",
+      "destination": "/hide-number-on-whatsapp-for-contacts/",
+      "permanent": true
+    },
+    {
+      "source": "/services/laptop-repair/laptop-repair-on-site/",
+      "destination": "/services/laptop-repair/laptop-repair-onsite/",
+      "permanent": true
+    },
+    {
+      "source": "/asus-laptop-battery-replacement/",
+      "destination": "/asus-laptop-batteryreplacement/",
+      "permanent": true
+    },
+    {
+      "source": "/apple/mobile/iphone-x/",
+      "destination": "/apple/mobile-2/iphonex/",
+      "permanent": true
+    },
+    {
+      "source": "/replace-the-battery-of-the-samsung-tablet/",
+      "destination": "/replace-the-battery-of-the-samsungtablet/",
+      "permanent": true
+    },
+    {
+      "source": "/acer-laptop-repairs-in-niavaran/",
+      "destination": "/acer-laptop-repairs-inniavaran/",
+      "permanent": true
+    },
+    {
+      "source": "/huawei-y511-repair/",
+      "destination": "/huawei-y511-repairs/",
+      "permanent": true
+    },
+    {
+      "source": "/author/lotos/page/9/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/author/lotos/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/author/samqn/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/lenovo-laptop-lcd-replacement2/feed/",
+      "destination": "/lenovo-laptop-lcd-replacement2/",
+      "permanent": true
+    },
+    {
+      "source": "/category/ØªØ¹Ù…ÛŒØ±Ø§Øª-Ù„Ù¾-ØªØ§Ù¾/page/22/",
+      "destination": "/services/laptop-repair/",
+      "permanent": true
+    },
+    {
+      "source": "/category/uncategorized/page/3/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/wp-content/uploads/2022/12/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/wp-content/uploads/wpforms/",
+      "destination": "/contact/",
+      "permanent": true
+    },
+    {
+      "source": "/Ù…Ø´Ú©Ù„-Ú¯Ø§Ù„Ø±ÛŒ-Ú¯ÙˆØ´ÛŒ-Ø³Ø§Ù…Ø³ÙˆÙ†Ú¯/",
+      "destination": "/مشکل-گالری-گوشی-سامسونگ/",
+      "permanent": true
+    },
+    {
+      "source": "/iphone-repair-in-west-of-tehran/",
+      "destination": "/iphone-repair-in-west-oftehran/",
+      "permanent": true
+    },
+    {
+      "source": "/ØªØ¹Ù…ÛŒØ±-Ø¢Ø¨Ø®ÙˆØ±Ø¯Ú¯ÛŒ-Ù„Ù¾-ØªØ§Ù¾-Ø³ÙˆÙ†ÛŒ/",
+      "destination": "/تعمیرآبخوردگی-لپ-تاپ-سونی/",
+      "permanent": true
+    },
+    {
+      "source": "/huawei-tablet-speaker-repair/",
+      "destination": "/huawei-tablet-speakerrepair/",
+      "permanent": true
+    },
+    {
+      "source": "/ØªØ¹ÙˆÛŒØ¶-Ø¨Ø§ØªØ±ÛŒ-Ú¯ÙˆØ´ÛŒ-Ù‡Ø§ÛŒ-Ù¾Ø±Ø³ÛŒ/",
+      "destination": "/تعویض-باتری-گوشی-های-پرسی/",
+      "permanent": true
+    },
+    {
+      "source": "/ØªØ¹ÙˆÛŒØ¶-Ù‚Ø§Ø¨-Ù„Ù¾-ØªØ§Ù¾-Ø³Ø§Ù…Ø³ÙˆÙ†Ú¯/",
+      "destination": "/تعویض-قاب-لپتاپ-سامسونگ/",
+      "permanent": true
+    },
+    {
+      "source": "/htc-tablet-speaker-repair/feed/",
+      "destination": "/htc-tablet-speakerrepair/",
+      "permanent": true
+    },
+    {
+      "source": "/xiaomi/mobile/repair-xiaomi-14t/",
+      "destination": "/xiaomi/mobile/repair-xiaomi14t/",
+      "permanent": true
+    },
+    {
+      "source": "/samsung-mobile-phone-repairs-in-sadeghieh/",
+      "destination": "/samsung-mobile-phone-repairs-insadeghieh/",
+      "permanent": true
+    },
+    {
+      "source": "/lenovo-laptop-keyboard-replacement/",
+      "destination": "/lenovo-laptop-keyboardreplacement/",
+      "permanent": true
+    },
+    {
+      "source": "/motorola-mobile-repair-center/repair-motorola-g54/",
+      "destination": "/motorola-mobile-repair-center/",
+      "permanent": true
+    },
+    {
+      "source": "/nokia/repair-nokia-c30/",
+      "destination": "/nokia/repair-nokiac30/",
+      "permanent": true
+    },
+    {
+      "source": "/repair-honor-9x/",
+      "destination": "/repair-honor9x/",
+      "permanent": true
+    },
+    {
+      "source": "/services/category-mobile-phone-repair/realme-phone-repair/realme-c53-repair/",
+      "destination": "/services/category-mobile-phone-repair/realme-phone-repair/realme-c53repair/",
+      "permanent": true
+    },
+    {
+      "source": "/samsung-s8-phone-repair/",
+      "destination": "/samsung-s8-phonerepair/",
+      "permanent": true
+    },
+    {
+      "source": "/repairing-the-s7-edge-phone/",
+      "destination": "/repairing-the-s7-edgephone/",
+      "permanent": true
+    },
+    {
+      "source": "/Ù†Ù…Ø§ÛŒÙ†Ø¯Ú¯ÛŒ-ØªØ¹Ù…ÛŒØ±Ø§Øª-Ø³Ø§Ù…Ø³ÙˆÙ†Ú¯/",
+      "destination": "/samsung/",
+      "permanent": true
+    },
+    {
+      "source": "/2022/01/01/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/2021/10/09/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/wp-content/uploads/:year/:month/:file(.*\\.aso\\.bak)",
+      "destination": "/logo.png",
+      "permanent": true
+    }
+  ]
+}
