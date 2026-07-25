@@ -77,12 +77,16 @@ export function howToSchema(
     mainEntityOfPage: url,
     author: { "@id": authorId },
     ...(post.image ? { image: `${domain}${post.image}` } : {}),
+    // No per-step `url`. The optional HowToStep.url pointed at in-page
+    // anchors (#sec-N); Google then reported each section fragment as its own
+    // URL in Search Console, splitting one article's impressions across ~10
+    // phantom rows. HowTo rich results were deprecated in 2023, so the deep
+    // links bought nothing — name+text+position keep the schema valid.
     step: steps.map((s, i) => ({
       "@type": "HowToStep",
       position: i + 1,
       name: s.name,
       text: s.text,
-      url: `${url}#sec-${i + 1}`,
     })),
   };
 }
