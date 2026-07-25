@@ -2,6 +2,8 @@
 /.next
 /out
 /build
+# Build-output archives (exceed GitHub's 100MB limit)
+*.zip
 *.tsbuildinfo
 next-env.d.ts
 # Never commit the giant DB dump

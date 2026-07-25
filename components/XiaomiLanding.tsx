@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { breadcrumbs, type Post } from "@/lib/content";
 import { SITE } from "@/lib/data";
+import { clusterContentFor } from "@/lib/cluster-content";
+import ClusterContent from "@/components/ClusterContent";
 import PillarArticles from "@/components/PillarArticles";
 
 /*
@@ -247,7 +249,10 @@ export default function XiaomiLanding({ post }: { post: Post }) {
 
   // ---- FAQ ----
   const faqSec = find(secs, "پرسش های متداول");
-  const faqs = faqSec
+  const clusterFaqs = clusterContentFor(post.path)?.faq ?? [];
+  const faqs = [
+    ...clusterFaqs,
+    ...(faqSec
     ? [
         ...faqSec.inner.matchAll(
           /<details[^>]*>[\s\S]*?<summary[^>]*>([\s\S]*?)<\/summary>([\s\S]*?)<\/details>/gi,
@@ -256,7 +261,8 @@ export default function XiaomiLanding({ post }: { post: Post }) {
         q: txt(m[1]),
         a: paras(m[2]).map((p) => txt(p)).join(" "),
       }))
-    : [];
+    : []),
+  ];
 
   // ---------- schema ----------
   const breadcrumbSchema = {
@@ -278,7 +284,7 @@ export default function XiaomiLanding({ post }: { post: Post }) {
     name: post.title,
     serviceType: "تعمیر محصولات شیائومی",
     areaServed: { "@type": "City", name: SITE.city },
-    provider: { "@type": "LocalBusiness", "@id": SITE.domain, name: SITE.name },
+    provider: { "@type": "LocalBusiness", "@id": SITE.localBusinessId, name: SITE.name },
     image: post.image ? `${SITE.domain}${post.image}` : `${SITE.domain}/logo.png`,
     url: `${SITE.domain}${encodeURI(post.path)}`,
     description: post.metaDesc,
@@ -391,6 +397,15 @@ export default function XiaomiLanding({ post }: { post: Post }) {
           </div>
         </div>
       </header>
+
+      {/* ===================== CLUSTER ANSWER ===================== */}
+      {clusterFaqs.length > 0 && (
+        <section className="border-b border-line bg-paper py-10 lg:py-14">
+          <div className="mx-auto max-w-[900px] px-4 sm:px-6 lg:px-8">
+            <ClusterContent path={post.path} />
+          </div>
+        </section>
+      )}
 
       {/* ===================== BENEFITS ===================== */}
       {benefitItems.length > 0 && (

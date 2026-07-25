@@ -2,15 +2,16 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
 import {
   Menu,
   X,
   Phone,
   Clock,
-  MapPin,
+  Search,
   ChevronDown,
   ArrowLeft,
+  Wrench,
+  Stethoscope,
 } from "lucide-react";
 import { SITE } from "@/lib/data";
 import type { NavItem } from "@/lib/content";
@@ -32,10 +33,21 @@ export default function Header({ nav }: { nav: NavItem[] }) {
   const active = megaItems.find((n) => n.title === openMega);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 18);
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        const next = window.scrollY > 18;
+        setScrolled((current) => (current === next ? current : next));
+        frame = 0;
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
 
   useEffect(() => {
@@ -66,13 +78,27 @@ export default function Header({ nav }: { nav: NavItem[] }) {
             </span>
           </a>
           <div className="hidden items-center gap-4 sm:flex">
-            <span className="flex items-center gap-1.5 text-[12.5px] text-[#A8AEBB]">
-              <Clock className="h-[15px] w-[15px] text-accent" />
-              همه روزه 9 تا 19
-            </span>
+            {/* Conversion tools sit here rather than in the nav bar, which was
+                overflowing onto a second line with ten top-level links. */}
+            <Link
+              href="/online-repair-request/"
+              className="flex items-center gap-1.5 text-[12.5px] font-semibold text-[#EDEFF3] transition hover:text-accent-soft"
+            >
+              <Wrench className="h-[15px] w-[15px] text-accent" />
+              ثبت درخواست تعمیر
+            </Link>
             <span className="h-4 w-px bg-[#3A3F4A]" />
-            <span className="flex items-center gap-1.5 text-[12.5px] text-[#A8AEBB]">
-              <MapPin className="h-[15px] w-[15px] text-accent" />۲ شعبه در تهران
+            <Link
+              href="/online-diagnosis/"
+              className="flex items-center gap-1.5 text-[12.5px] font-semibold text-[#EDEFF3] transition hover:text-accent-soft"
+            >
+              <Stethoscope className="h-[15px] w-[15px] text-accent" />
+              عیب یابی آنلاین
+            </Link>
+            <span className="hidden h-4 w-px bg-[#3A3F4A] xl:block" />
+            <span className="hidden items-center gap-1.5 text-[12.5px] text-[#A8AEBB] xl:flex">
+              <Clock className="h-[15px] w-[15px] text-accent" />
+              {SITE.hours}
             </span>
           </div>
         </div>
@@ -100,8 +126,8 @@ export default function Header({ nav }: { nav: NavItem[] }) {
           </Link>
 
           {/* Desktop nav */}
-          <ul className="hidden h-full items-center gap-1 lg:flex">
-            {NAV.filter((n) => n.slug !== "/contact/").map((item) => (
+          <ul className="hidden h-full items-center gap-0.5 lg:flex">
+            {NAV.filter((n) => n.slug !== "/contact/" && !n.secondary).map((item) => (
               <li
                 key={item.title}
                 className="flex h-full items-center"
@@ -111,7 +137,7 @@ export default function Header({ nav }: { nav: NavItem[] }) {
               >
                 <Link
                   href={item.slug}
-                  className={`group flex h-full items-center gap-1.5 px-3.5 text-[15px] font-semibold transition-colors ${
+                  className={`group flex h-full items-center gap-1.5 whitespace-nowrap px-3 text-[14.5px] font-semibold transition-colors ${
                     openMega === item.title ? "text-accent" : "text-ink-900 hover:text-accent"
                   }`}
                 >
@@ -130,6 +156,13 @@ export default function Header({ nav }: { nav: NavItem[] }) {
 
           {/* CTA + hamburger */}
           <div className="flex shrink-0 items-center gap-3">
+            <Link
+              href="/search/"
+              aria-label="جستجو در سایت"
+              className="hidden h-11 w-11 place-items-center rounded-xl border border-hairline bg-white text-ink-700 transition hover:border-accent hover:text-accent lg:grid"
+            >
+              <Search className="h-[19px] w-[19px]" />
+            </Link>
             {ctaItem && (
               <Link
                 href={ctaItem.slug}
@@ -151,14 +184,8 @@ export default function Header({ nav }: { nav: NavItem[] }) {
         </div>
 
         {/* ---- Mega panel ---- */}
-        <AnimatePresence>
-          {active && (
-            <motion.div
-              key={active.title}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+        {active && (
+            <div
               onMouseEnter={() => setOpenMega(active.title)}
               className="absolute inset-x-0 top-full z-[60] hidden border-t border-line bg-white shadow-[0_24px_50px_rgba(20,24,31,.14)] lg:block"
             >
@@ -211,27 +238,18 @@ export default function Header({ nav }: { nav: NavItem[] }) {
                   </a>
                 </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            </div>
+        )}
       </nav>
 
       {/* ---- Mobile drawer ---- */}
-      <AnimatePresence>
-        {mobileOpen && (
+      {mobileOpen && (
           <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+            <div
               onClick={() => setMobileOpen(false)}
               className="fixed inset-0 z-[1100] bg-ink-950/50 backdrop-blur-[2px] lg:hidden"
             />
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 0.32, ease: [0.4, 0, 0.2, 1] }}
+            <div
               className="fixed inset-y-0 right-0 z-[1101] flex w-[340px] max-w-[88vw] flex-col bg-white shadow-[-20px_0_50px_rgba(15,18,23,.2)] lg:hidden"
             >
               <div className="flex items-center justify-between border-b border-line px-5 py-4">
@@ -247,6 +265,14 @@ export default function Header({ nav }: { nav: NavItem[] }) {
               </div>
 
               <div className="flex-1 overflow-y-auto p-3">
+                <Link
+                  href="/search/"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center gap-3 rounded-xl px-4 py-3.5 text-[15.5px] font-bold text-ink-900 transition hover:bg-paper hover:text-accent"
+                >
+                  <Search className="h-5 w-5 text-accent" />
+                  جستجو در سایت
+                </Link>
                 {NAV.filter((n) => n.children.length === 0 && n.slug !== "/contact/").map(
                   (item) => (
                     <Link
@@ -279,14 +305,8 @@ export default function Header({ nav }: { nav: NavItem[] }) {
                         }`}
                       />
                     </button>
-                    <AnimatePresence>
-                      {openAccordion === item.title && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          className="overflow-hidden"
-                        >
+                    {openAccordion === item.title && (
+                        <div className="overflow-hidden">
                           <div className="grid grid-cols-2 gap-1 px-2 pb-2">
                             {item.children.map((c) => (
                               <Link
@@ -299,9 +319,8 @@ export default function Header({ nav }: { nav: NavItem[] }) {
                               </Link>
                             ))}
                           </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                        </div>
+                    )}
                   </div>
                 ))}
 
@@ -324,10 +343,9 @@ export default function Header({ nav }: { nav: NavItem[] }) {
                   <span dir="ltr">{SITE.phone}</span>
                 </a>
               </div>
-            </motion.div>
+            </div>
           </>
-        )}
-      </AnimatePresence>
+      )}
     </header>
   );
 }

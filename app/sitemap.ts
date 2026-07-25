@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
-import { POSTS, ARTICLE_POSTS } from "@/lib/content";
+import { POSTS, ARTICLE_POSTS, CANONICAL_TO } from "@/lib/content";
+import { LIVE_REPAIR_TYPES } from "@/lib/repair-types";
+import { LIVE_SERVICE_AREAS } from "@/lib/service-areas";
 import { SITE } from "@/lib/data";
 import { PER_PAGE } from "@/components/BlogListing";
 
@@ -20,35 +22,92 @@ const MONEY_PAGES = new Set([
   "/motorola-mobile-repair-center/", "/nothingphone-repair/",
   "/google-pixel-mobile-phone-repair/",
   "/services/category-mobile-phone-repair/", "/services/laptop-repair/",
-  "/agency/", "/contact/",
+  "/agency/", "/contact/", "/online-repair-request/",
+]);
+// Mirrors NOINDEX_PAGES in app/[...slug]/page.tsx — a noindex page must not be
+// advertised in the sitemap.
+const NOINDEX_PATHS = new Set([
+  "/home/",
+  "/تست-المنتور/",
+  "/home-appliances/air-conditioner-repair-agency/",
 ]);
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const latestModified = (posts: typeof ARTICLE_POSTS): Date | undefined => {
+    const times = posts
+      .map((p) => new Date(p.modified.replace(" ", "T")).getTime())
+      .filter(Number.isFinite);
+    return times.length ? new Date(Math.max(...times)) : undefined;
+  };
+  const firstPageModified = latestModified(ARTICLE_POSTS.slice(0, PER_PAGE));
   const entries: MetadataRoute.Sitemap = [
-    { url: `${SITE.domain}/`, lastModified: now, priority: 1 },
-    { url: `${SITE.domain}/blog/`, lastModified: now, priority: 0.8 },
+    { url: `${SITE.domain}/`, priority: 1 },
+    {
+      url: `${SITE.domain}/blog/`,
+      ...(firstPageModified ? { lastModified: firstPageModified } : {}),
+      priority: 0.8,
+    },
+    {
+      url: `${SITE.domain}/online-diagnosis/`,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    // Crawlable HTML directory: one shallow inbound link to every service page
+    // and article, so no page depends on deep blog pagination for discovery.
+    {
+      url: `${SITE.domain}/directory/`,
+      changeFrequency: "weekly",
+      priority: 0.4,
+    },
+    // Repair-type hubs: commercial cross-brand landing pages.
+    { url: `${SITE.domain}/team/`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE.domain}/repairs/`, changeFrequency: "weekly", priority: 0.9 },
+    ...LIVE_REPAIR_TYPES.map((t) => ({
+      url: `${SITE.domain}/repairs/${t.slug}/`,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    })),
+    // Service-area hubs: local landing pages for each covered neighbourhood.
+    { url: `${SITE.domain}/areas/`, changeFrequency: "monthly", priority: 0.8 },
+    ...LIVE_SERVICE_AREAS.map((a) => ({
+      url: `${SITE.domain}/areas/${a.slug}/`,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
   ];
+  const seen = new Set(entries.map((entry) => entry.url));
 
   // paginated blog listing pages (page 2 … N)
   const blogPages = Math.ceil(ARTICLE_POSTS.length / PER_PAGE);
   for (let n = 2; n <= blogPages; n++) {
+    const pageModified = latestModified(
+      ARTICLE_POSTS.slice((n - 1) * PER_PAGE, n * PER_PAGE),
+    );
     entries.push({
       url: `${SITE.domain}/blog/page/${n}/`,
-      lastModified: now,
+      ...(pageModified ? { lastModified: pageModified } : {}),
       changeFrequency: "weekly",
       priority: 0.3,
     });
+    seen.add(`${SITE.domain}/blog/page/${n}/`);
   }
 
   for (const p of POSTS) {
+    if (NOINDEX_PATHS.has(p.path)) continue;
+    // Never advertise a URL that canonicalises to a different page.
+    if (CANONICAL_TO[p.path]) continue;
+    const url = `${SITE.domain}${encodeURI(p.path)}`;
+    // /blog/ is served by the real archive route and the database contains a
+    // duplicate /repair-iphone-7plus/ record. Keep one canonical URL each.
+    if (seen.has(url)) continue;
+    seen.add(url);
     const priority = MONEY_PAGES.has(p.path)
       ? 0.9
       : p.type === "page"
         ? 0.7
         : 0.6;
     entries.push({
-      url: `${SITE.domain}${encodeURI(p.path)}`,
+      url,
       lastModified: new Date(p.modified.replace(" ", "T")),
       changeFrequency: p.type === "post" ? "monthly" : "weekly",
       priority,

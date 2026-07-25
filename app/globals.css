@@ -1,11 +1,160 @@
+@font-face {
+  font-family: "Vazirmatn";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/1abbc144918f74fd-s.p.woff2") format("woff2");
+  unicode-range: U+06??, U+0750-077F, U+0870-088E, U+0890-0891,
+    U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41,
+    U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E,
+    U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F,
+    U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37,
+    U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F,
+    U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F,
+    U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72,
+    U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89,
+    U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB,
+    U+1EEF0-1EEF1;
+}
+
+@font-face {
+  font-family: "Vazirmatn";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/8c96cc4bd2a39381-s.woff2") format("woff2");
+  unicode-range: U+00??, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   DESIGN TOKENS — single source of truth for colour, radius,
+   elevation and motion. Layer 1 primitives feed layer 2 semantic
+   aliases, which feed layer 3 component tokens further down.
+
+   Colours are stored as RGB channels, not hex, so tailwind.config.ts
+   can wrap them in rgb(... / <alpha-value>) and keep opacity
+   modifiers (border-accent/40, via-ink-950/86) working off the very
+   same values this file uses. One definition, two consumers.
+   ============================================================ */
+
 :root {
-  --bg: #f5f6f8;
-  --accent: #da251c;
-  --accent-deep: #b3170f;
+  /* ---- Layer 1: primitives ---- */
+
+  /* Brand red — the site's only accent hue */
+  --c-red-50: 251 234 233;
+  --c-red-400: 224 71 63;
+  --c-red-500: 218 37 28;
+  --c-red-600: 179 23 15;
+
+  /* Ink — blue-tinted neutral ramp.
+     950-850 dark surfaces, 800-500 text, 400-100 muted/disabled. */
+  --c-ink-950: 19 22 28;
+  --c-ink-925: 23 26 33;
+  --c-ink-900: 27 31 39;
+  --c-ink-875: 34 38 47;
+  --c-ink-850: 42 47 57;
+  --c-ink-800: 58 65 80;
+  --c-ink-700: 74 81 96;
+  --c-ink-500: 91 98 112;
+  --c-ink-400: 123 130 142;
+  --c-ink-300: 144 152 166;
+  --c-ink-200: 168 174 187;
+  --c-ink-100: 189 195 206;
+
+  /* Sand — light surface ramp, lightest to most sunken */
+  --c-white: 255 255 255;
+  --c-sand-50: 250 250 250;
+  --c-sand-100: 247 248 250;
+  --c-sand-200: 245 246 248;
+  --c-sand-300: 241 242 245;
+  --c-sand-400: 237 239 243;
+  --c-sand-500: 231 234 239;
+  --c-sand-700: 213 217 224;
+
+  /* Status. --c-whatsapp is a third-party brand colour: never re-theme. */
+  --c-green-500: 43 182 115;
+  --c-whatsapp: 37 211 102;
+
+  /* Radius */
+  --radius-sm: 0.65rem;
+  --radius-md: 0.8rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-pill: 999px;
+
+  /* Motion */
+  --duration-fast: 250ms;
+  --duration-normal: 350ms;
+  --duration-slow: 450ms;
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ---- Layer 2: semantic ---- */
+
+  --color-bg: rgb(var(--c-sand-200));
+  --color-surface: rgb(var(--c-white));
+  --color-surface-muted: rgb(var(--c-sand-50));
+  --color-surface-subtle: rgb(var(--c-sand-100));
+  --color-surface-sunken: rgb(var(--c-sand-300));
+
+  --color-heading: rgb(var(--c-ink-950));
+  --color-text: rgb(var(--c-ink-900));
+  --color-body: rgb(var(--c-ink-800));
+  --color-text-muted: rgb(var(--c-ink-700));
+  --color-text-subtle: rgb(var(--c-ink-300));
+
+  --color-border: rgb(var(--c-sand-500));
+  --color-border-subtle: rgb(var(--c-sand-400));
+  --color-border-strong: rgb(var(--c-sand-700));
+
+  --color-accent: rgb(var(--c-red-500));
+  --color-accent-hover: rgb(var(--c-red-600));
+  --color-accent-tint: rgb(var(--c-red-50));
+  --color-accent-wash: rgb(var(--c-red-500) / 0.08);
+  --color-on-accent: rgb(var(--c-white));
+
+  --shadow-card: 0 2px 12px -4px rgb(var(--c-ink-950) / 0.07);
+  --shadow-lift: 0 14px 34px -20px rgb(var(--c-ink-950) / 0.25);
+  --shadow-hover: 0 24px 60px -28px rgb(var(--c-ink-950) / 0.26);
+  --shadow-soft: 0 16px 50px -24px rgb(var(--c-ink-950) / 0.22);
+  --shadow-float: 0 30px 80px -40px rgb(var(--c-ink-950) / 0.3);
+  --shadow-inset: 0 18px 45px -32px rgb(var(--c-ink-950) / 0.35);
+}
+
+/* ---- Layer 3: component ---- */
+:root {
+  /* WordPress article body. The ramp is deliberate: lead paragraph sits
+     darkest, running text one step lighter, captions lightest. */
+  --prose-fg-lead: rgb(var(--c-ink-875));
+  --prose-fg: rgb(var(--c-ink-850));
+  --prose-fg-p: rgb(var(--c-ink-800));
+  --prose-fg-heading: rgb(var(--c-ink-950));
+  --prose-fg-quote: rgb(var(--c-ink-700));
+  --prose-fg-caption: rgb(var(--c-ink-300));
+
+  --card-surface: var(--color-surface);
+  --card-border: var(--color-border);
+  --card-radius: var(--radius-lg);
+
+  --table-head-bg: var(--color-accent);
+  --table-head-fg: var(--color-on-accent);
+  --table-stripe: var(--color-surface-muted);
+
+  --scrollbar-track: rgb(var(--c-sand-100));
+  --scrollbar-thumb: rgb(var(--c-sand-700));
+  --scrollbar-thumb-hover: rgb(var(--c-ink-100));
+  --scrollbar-thumb-thin: rgb(var(--c-ink-300) / 0.55);
+
+  /* Backdrop patterns — alpha over the darkest ink, not pure black */
+  --pattern-dot: rgb(var(--c-ink-950) / 0.08);
+  --pattern-dot-soft: rgb(var(--c-ink-950) / 0.05);
+  --pattern-grid: rgb(var(--c-ink-950) / 0.04);
+  --pattern-hairline: rgb(var(--c-ink-950) / 0.12);
 }
 
 * {
@@ -17,16 +166,60 @@ html {
 }
 
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
 }
 body {
-  background-color: var(--bg);
-  color: #1b1f27;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
+}
+
+/* Keep below-the-fold homepage content out of the initial style/layout pass.
+   The reserved block size is replaced before a section nears the viewport, so
+   the rendered design and document order stay unchanged while initial TBT is
+   substantially lower on mobile. */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto 760px;
+}
+
+@media (min-width: 1024px) {
+  .defer-render {
+    contain-intrinsic-block-size: auto 620px;
+  }
+}
+
+/* Keep the complete service/brand sidebar visible while its content column
+   continues. Taller sidebars get their own small scroll area so sticky never
+   fails merely because the card stack is higher than the viewport. */
+@media (min-width: 1024px) {
+  .sticky-sidebar {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+  }
+
+  .sticky-sidebar-content {
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-left: 0.25rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb-thin) transparent;
+  }
+
+  .sticky-sidebar-content::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .sticky-sidebar-content::-webkit-scrollbar-thumb {
+    border-radius: var(--radius-pill);
+    background: var(--scrollbar-thumb-thin);
+  }
 }
 /* Never let media or long words push the layout wider than the screen */
 img,
@@ -63,13 +256,13 @@ span {
 
 /* ---- Soft premium card hover (Apple/Dyson) ---- */
 .card-hover {
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.35s, box-shadow 0.45s;
+  transition: transform var(--duration-slow) var(--ease-premium),
+    border-color var(--duration-normal), box-shadow var(--duration-slow);
 }
 .card-hover:hover {
   transform: translateY(-5px);
-  border-color: rgba(181, 27, 27, 0.3);
-  box-shadow: 0 24px 60px -28px rgba(17, 17, 17, 0.26);
+  border-color: rgb(var(--c-red-500) / 0.3);
+  box-shadow: var(--shadow-hover);
 }
 
 /* ---- Hairline divider ---- */
@@ -78,26 +271,29 @@ span {
   background: linear-gradient(
     to left,
     transparent,
-    rgba(17, 17, 17, 0.12),
+    var(--pattern-hairline),
     transparent
   );
 }
 
 /* ---- Nothing.tech dot-matrix backdrop ---- */
 .bg-dotmatrix {
-  background-image: radial-gradient(rgba(17, 17, 17, 0.08) 1px, transparent 1px);
+  background-image: radial-gradient(var(--pattern-dot) 1px, transparent 1px);
   background-size: 18px 18px;
 }
 .bg-dotmatrix-soft {
-  background-image: radial-gradient(rgba(17, 17, 17, 0.05) 1px, transparent 1px);
+  background-image: radial-gradient(
+    var(--pattern-dot-soft) 1px,
+    transparent 1px
+  );
   background-size: 22px 22px;
 }
 
 /* ---- Fine grid (futuristic) ---- */
 .bg-finegrid {
   background-image:
-    linear-gradient(to right, rgba(17, 17, 17, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(17, 17, 17, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, var(--pattern-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--pattern-grid) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 
@@ -113,7 +309,7 @@ span {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: var(--accent);
+  color: var(--color-accent);
 }
 
 /* ---- Marquee track ---- */
@@ -136,7 +332,7 @@ span {
 
 /* ---- Underline link reveal ---- */
 .link-underline {
-  background-image: linear-gradient(var(--accent), var(--accent));
+  background-image: linear-gradient(var(--color-accent), var(--color-accent));
   background-size: 0% 1.5px;
   background-position: 100% 100%;
   background-repeat: no-repeat;
@@ -149,7 +345,7 @@ span {
 
 /* ---- WordPress article content (preserved HTML) ---- */
 .prose-fa {
-  color: #2b2b2b;
+  color: var(--prose-fg);
   font-size: 1.02rem;
   line-height: 2.1;
   overflow-wrap: anywhere;
@@ -164,26 +360,26 @@ span {
   letter-spacing: -0.02em;
   margin-top: 2.6rem;
   padding-right: 0.85rem;
-  border-right: 4px solid var(--accent);
-  color: #111;
+  border-right: 4px solid var(--color-accent);
+  color: var(--prose-fg-heading);
 }
 .prose-fa h3 {
   font-size: 1.3rem;
   font-weight: 700;
   margin-top: 2rem;
-  color: #111;
+  color: var(--prose-fg-heading);
 }
 .prose-fa h4 {
   font-size: 1.1rem;
   font-weight: 700;
   margin-top: 1.6rem;
-  color: #111;
+  color: var(--prose-fg-heading);
 }
 .prose-fa p {
-  color: #3a3a3a;
+  color: var(--prose-fg-p);
 }
 .prose-fa a {
-  color: var(--accent);
+  color: var(--color-accent);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -192,17 +388,17 @@ span {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--accent);
-  color: #fff;
+  background: var(--color-accent);
+  color: var(--color-on-accent);
   text-decoration: none;
   font-weight: 700;
   padding: 0.7rem 1.5rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   margin: 0.4rem 0;
-  transition: background 0.25s;
+  transition: background var(--duration-fast);
 }
 .prose-fa a[href^="tel:"]:hover {
-  background: var(--accent-deep, #8f1414);
+  background: var(--color-accent-hover);
 }
 /* Safety net: any leftover inline icon/svg stays small */
 .prose-fa svg {
@@ -231,8 +427,8 @@ span {
 .prose-fa img {
   display: block;
   margin: 1.25rem auto;
-  border-radius: 1rem;
-  border: 1px solid #eaeaea;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
   height: auto;
   max-width: min(100%, 340px);
 }
@@ -240,8 +436,8 @@ span {
   width: 100%;
   aspect-ratio: 16 / 9;
   height: auto;
-  border-radius: 1rem;
-  border: 1px solid #eaeaea;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
 }
 
 /* ---- Model card grid (built by ContentEnhancer) ---- */
@@ -255,14 +451,15 @@ span {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid #eaeaea;
-  border-radius: 1rem;
-  background: #fff;
-  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  background: var(--card-surface);
+  transition: border-color var(--duration-fast),
+    box-shadow var(--duration-fast), transform var(--duration-fast);
 }
 .prose-fa .model-card:hover {
-  border-color: rgba(181, 27, 27, 0.4);
-  box-shadow: 0 14px 34px -20px rgba(17, 17, 17, 0.25);
+  border-color: rgb(var(--c-red-500) / 0.4);
+  box-shadow: var(--shadow-lift);
   transform: translateY(-3px);
 }
 .prose-fa .model-card img {
@@ -270,10 +467,10 @@ span {
   width: 100%;
   height: 150px;
   object-fit: contain;
-  background: #fafafa;
+  background: var(--color-surface-muted);
   border: 0;
   border-radius: 0;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--card-border);
   max-width: 100%;
   padding: 0.6rem;
 }
@@ -287,24 +484,24 @@ span {
   text-align: center;
   font-weight: 700;
   font-size: 0.85rem;
-  color: #111;
+  color: var(--prose-fg-heading);
   text-decoration: none;
 }
 .prose-fa .model-card:hover .cap a {
-  color: var(--accent);
+  color: var(--color-accent);
 }
 
 /* ---- FAQ accordion (built by ContentEnhancer) ---- */
 .prose-fa .faq-item {
   margin-top: 0.75rem;
-  border: 1px solid #eaeaea;
-  border-radius: 1rem;
-  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  background: var(--card-surface);
   overflow: hidden;
 }
 .prose-fa .faq-item.open {
-  border-color: rgba(181, 27, 27, 0.35);
-  box-shadow: 0 14px 40px -26px rgba(17, 17, 17, 0.25);
+  border-color: rgb(var(--c-red-500) / 0.35);
+  box-shadow: 0 14px 40px -26px rgb(var(--c-ink-950) / 0.25);
 }
 .prose-fa .faq-q {
   display: flex;
@@ -320,11 +517,11 @@ span {
   font-weight: 700;
   font-size: 1.05rem;
   line-height: 1.9;
-  color: #111;
+  color: var(--prose-fg-heading);
   cursor: pointer;
 }
 .prose-fa .faq-item.open .faq-q {
-  color: var(--accent);
+  color: var(--color-accent);
 }
 .prose-fa .faq-ico {
   position: relative;
@@ -338,7 +535,7 @@ span {
   position: absolute;
   inset: 0;
   margin: auto;
-  background: var(--accent);
+  background: var(--color-accent);
   border-radius: 2px;
 }
 .prose-fa .faq-ico::before {
@@ -369,21 +566,21 @@ span {
 .prose-fa figcaption {
   text-align: center;
   font-size: 0.85rem;
-  color: #888;
+  color: var(--prose-fg-caption);
   margin-top: 0.5rem;
 }
 .prose-fa blockquote {
-  border-right: 3px solid var(--accent);
-  background: #fbeae9;
-  border-radius: 0.75rem;
+  border-right: 3px solid var(--color-accent);
+  background: var(--color-accent-tint);
+  border-radius: var(--radius-md);
   padding: 1rem 1.25rem;
-  color: #444;
+  color: var(--prose-fg-quote);
 }
 .prose-fa .table-wrap {
   margin: 1.6rem 0;
   overflow-x: auto;
-  border: 1px solid #eaeaea;
-  border-radius: 1rem;
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
 }
 .prose-fa table {
   width: 100%;
@@ -394,17 +591,17 @@ span {
 }
 .prose-fa th,
 .prose-fa td {
-  border: 1px solid #eaeaea;
+  border: 1px solid var(--card-border);
   padding: 0.75rem 0.95rem;
   text-align: right;
 }
 .prose-fa thead th {
-  background: var(--accent);
-  color: #fff;
+  background: var(--table-head-bg);
+  color: var(--table-head-fg);
   font-weight: 700;
 }
 .prose-fa tbody tr:nth-child(even) {
-  background: #fafafa;
+  background: var(--table-stripe);
 }
 
 /* Service pages: long database HTML inside a premium reading surface. */
@@ -415,26 +612,77 @@ span {
 .service-prose h2 {
   scroll-margin-top: 110px;
   border-right: 0;
-  border-radius: 1rem;
+  border-radius: var(--radius-lg);
   background:
-    linear-gradient(to left, rgba(218, 37, 28, 0.08), transparent 64%),
-    #f7f8fa;
+    linear-gradient(to left, var(--color-accent-wash), transparent 64%),
+    var(--color-surface-subtle);
   padding: 0.95rem 1.1rem;
 }
 .service-prose h3 {
   scroll-margin-top: 110px;
 }
 .service-prose > p:first-of-type {
-  border-bottom: 1px solid #edeff3;
+  border-bottom: 1px solid var(--color-border-subtle);
   padding-bottom: 1.1rem;
 }
 .service-prose img {
   max-width: min(100%, 520px);
-  border-radius: 1.25rem;
-  box-shadow: 0 18px 45px -32px rgba(17, 17, 17, 0.35);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-inset);
 }
 .service-prose .table-wrap {
-  background: #fff;
+  background: var(--color-surface);
+}
+
+/* ---- Sectioned service layout: each <h2> topic is its own card ---- */
+.svc-stack {
+  counter-reset: svc;
+}
+.svc-stack > * + * {
+  margin-top: 1.4rem;
+}
+.service-prose .svc-section {
+  counter-increment: svc;
+}
+/* Content now lives one level deeper than .prose-fa, so restore the vertical
+   rhythm the `.prose-fa > * + *` rule provided before sectioning. */
+.svc-body > * + * {
+  margin-top: 1.15rem;
+}
+/* Section heading: numbered chip + title on one row, flush with card top. */
+.service-prose .svc-body > h2:first-child {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 0;
+}
+.service-prose .svc-body > h2:first-child::before {
+  content: counter(svc, persian);
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-size: 1.05rem;
+  font-weight: 800;
+  box-shadow: 0 8px 18px -8px rgb(var(--c-red-500) / 0.55);
+}
+/* Lead card: the intro before the first heading reads slightly larger. */
+.service-prose .svc-lead > p:first-of-type {
+  font-size: 1.12rem;
+  line-height: 2.2;
+  color: var(--prose-fg-lead);
+}
+@media (max-width: 640px) {
+  .service-prose .svc-body > h2:first-child::before {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.65rem;
+    font-size: 0.95rem;
+  }
 }
 
 .brand-prose {
@@ -444,32 +692,32 @@ span {
 .brand-prose h2 {
   scroll-margin-top: 110px;
   border-right: 0;
-  border-radius: 1rem;
+  border-radius: var(--radius-lg);
   background:
-    linear-gradient(to left, rgba(218, 37, 28, 0.08), transparent 68%),
-    #f7f8fa;
+    linear-gradient(to left, var(--color-accent-wash), transparent 68%),
+    var(--color-surface-subtle);
   padding: 0.95rem 1.1rem;
 }
 .brand-prose h3 {
   scroll-margin-top: 110px;
-  border-bottom: 1px solid #edeff3;
+  border-bottom: 1px solid var(--color-border-subtle);
   padding-bottom: 0.45rem;
 }
 .brand-prose > p:first-of-type {
-  border-bottom: 1px solid #edeff3;
+  border-bottom: 1px solid var(--color-border-subtle);
   padding-bottom: 1.1rem;
 }
 .brand-prose img {
   max-width: min(100%, 560px);
-  border-radius: 1.25rem;
-  box-shadow: 0 18px 45px -32px rgba(17, 17, 17, 0.35);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-inset);
 }
 .brand-prose iframe {
   min-height: 280px;
-  box-shadow: 0 18px 45px -32px rgba(17, 17, 17, 0.35);
+  box-shadow: var(--shadow-inset);
 }
 .brand-prose .table-wrap {
-  background: #fff;
+  background: var(--color-surface);
 }
 
 @media (max-width: 640px) {
@@ -497,7 +745,7 @@ span {
 .prose-fa > p:first-of-type {
   font-size: 1.12rem;
   line-height: 2.15;
-  color: #222;
+  color: var(--prose-fg-lead);
 }
 
 /* Figures (image + caption) */
@@ -513,14 +761,14 @@ span {
 /* Native <details> FAQ accordions */
 .prose-fa details {
   margin-top: 0.75rem;
-  border: 1px solid #eaeaea;
-  border-radius: 1rem;
-  background: #fff;
+  border: 1px solid var(--card-border);
+  border-radius: var(--card-radius);
+  background: var(--card-surface);
   overflow: hidden;
 }
 .prose-fa details[open] {
-  border-color: rgba(181, 27, 27, 0.35);
-  box-shadow: 0 14px 40px -26px rgba(17, 17, 17, 0.25);
+  border-color: rgb(var(--c-red-500) / 0.35);
+  box-shadow: 0 14px 40px -26px rgb(var(--c-ink-950) / 0.25);
 }
 .prose-fa summary {
   list-style: none;
@@ -533,7 +781,7 @@ span {
   font-weight: 700;
   font-size: 1.05rem;
   line-height: 1.9;
-  color: #111;
+  color: var(--prose-fg-heading);
 }
 .prose-fa summary::-webkit-details-marker {
   display: none;
@@ -543,13 +791,13 @@ span {
   flex-shrink: 0;
   width: 9px;
   height: 9px;
-  border-right: 2.5px solid var(--accent);
-  border-bottom: 2.5px solid var(--accent);
+  border-right: 2.5px solid var(--color-accent);
+  border-bottom: 2.5px solid var(--color-accent);
   transform: rotate(45deg);
   transition: transform 0.3s ease;
 }
 .prose-fa details[open] summary {
-  color: var(--accent);
+  color: var(--color-accent);
 }
 .prose-fa details[open] summary::after {
   transform: rotate(-135deg);
@@ -563,14 +811,14 @@ span {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #f4f4f4;
+  background: var(--scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: #d6d6d6;
-  border-radius: 999px;
+  background: var(--scrollbar-thumb);
+  border-radius: var(--radius-pill);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #bfbfbf;
+  background: var(--scrollbar-thumb-hover);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -585,7 +833,36 @@ span {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
   border-radius: 6px;
+}
+
+/* Price tables carry 150+ rows. Repeating Tailwind utilities on every cell
+   added ~85KB of class attributes per page (doubled again by the RSC payload),
+   so the repeated cell styling lives here instead. */
+.price-table {
+  width: 100%;
+  min-width: 460px;
+  border-collapse: collapse;
+  text-align: right;
+}
+.price-table th {
+  background: var(--color-bg);
+  padding: 0.875rem 1.25rem;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--color-text);
+}
+.price-table td {
+  border-top: 1px solid var(--color-border-subtle);
+  padding: 0.875rem 1.25rem;
+  font-size: 13.5px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+.price-table td:first-child {
+  font-weight: 700;
+  color: var(--color-body);
+  white-space: normal;
 }

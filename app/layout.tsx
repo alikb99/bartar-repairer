@@ -1,17 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Vazirmatn } from "next/font/google";
 import "./globals.css";
 import { SITE } from "@/lib/data";
 import { NAV } from "@/lib/content";
+import { TECHNICIANS } from "@/lib/team";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CallFab from "@/components/CallFab";
-
-const vazir = Vazirmatn({
-  subsets: ["arabic"],
-  variable: "--font-vazir",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.domain),
@@ -22,10 +16,17 @@ export const metadata: Metadata = {
   description:
     "مرکز تخصصی تعمیرات برتر؛ تعمیر تخصصی موبایل، لپ تاپ، تبلت، ساعت هوشمند و تلویزیون در تهران با قطعات اصل و گارانتی معتبر.",
   alternates: { canonical: "/" },
+  // Google requires a square favicon that is a multiple of 48px; declare the
+  // PNG set explicitly (sizes attribute included) so the crawler picks it up.
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/icon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/icon-96.png", sizes: "96x96", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
     shortcut: "/favicon.ico",
-    apple: "/logo.png",
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
     type: "website",
@@ -71,6 +72,7 @@ const orgSchema = {
   "@type": "LocalBusiness",
   "@id": SITE.localBusinessId,
   name: SITE.name,
+  alternateName: SITE.brandName,
   image: `${SITE.domain}/logo.png`,
   logo: `${SITE.domain}/logo.png`,
   url: SITE.domain,
@@ -80,6 +82,7 @@ const orgSchema = {
     "@type": "PostalAddress",
     streetAddress: SITE.address,
     addressLocality: SITE.city,
+    postalCode: SITE.postalCode,
     addressCountry: "IR",
   },
   geo: {
@@ -89,6 +92,9 @@ const orgSchema = {
   },
   areaServed: { "@type": "City", name: SITE.city },
   openingHoursSpecification: openingHours,
+  hasMap: SITE.mapCentral,
+  sameAs: Object.values(SITE.socials),
+  parentOrganization: { "@id": SITE.organizationId },
   description: SITE.tagline,
 };
 
@@ -124,8 +130,10 @@ const organizationSchema = {
   "@type": "Organization",
   "@id": SITE.organizationId,
   name: SITE.name,
+  alternateName: SITE.brandName,
   url: SITE.domain,
   logo: `${SITE.domain}/logo.png`,
+  sameAs: Object.values(SITE.socials),
   contactPoint: {
     "@type": "ContactPoint",
     telephone: SITE.phoneIntl,
@@ -152,14 +160,22 @@ const websiteSchema = {
   },
 };
 
+// Site-wide author identity. Modelled as an OrganizationRole backed by the real
+// technicians in lib/team.ts rather than an anonymous "editorial team" — the
+// people named here are the ones who actually do the repairs, and /team/ lists
+// each with their specialty and years of experience.
 const authorSchema = {
   "@context": "https://schema.org",
-  "@type": "Person",
+  "@type": "Organization",
   "@id": SITE.authorId,
-  name: "تیم تحریریه تعمیرات برتر",
-  jobTitle: "کارشناس تعمیرات دستگاه های الکترونیکی",
-  worksFor: { "@id": SITE.organizationId },
-  url: SITE.domain,
+  name: `تیم فنی ${SITE.shortName}`,
+  url: `${SITE.domain}/team/`,
+  parentOrganization: { "@id": SITE.organizationId },
+  employee: TECHNICIANS.map((t) => ({
+    "@type": "Person",
+    name: t.name,
+    ...(t.specialty ? { jobTitle: t.specialty, knowsAbout: t.specialty } : {}),
+  })),
 };
 
 export default function RootLayout({
@@ -168,7 +184,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fa" dir="rtl" className={vazir.variable}>
+    <html lang="fa-IR" dir="rtl">
+      <head>
+        <link
+          rel="preload"
+          href="/fonts/1abbc144918f74fd-s.p.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className="font-sans antialiased">
         <script
           type="application/ld+json"

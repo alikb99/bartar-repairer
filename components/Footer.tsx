@@ -1,7 +1,60 @@
 import Link from "next/link";
-import { Phone, MapPin, Instagram, Send, MessageCircle } from "lucide-react";
+import { Phone, MapPin, Instagram, Youtube, MessageCircle } from "lucide-react";
 import { SITE } from "@/lib/data";
 import type { NavItem } from "@/lib/content";
+import { LIVE_SERVICE_AREAS } from "@/lib/service-areas";
+
+// Site-wide exact-match anchors to the money pages (brand hubs and
+// brand+device hubs). Every page links these, funneling internal authority to
+// the keywords each hub targets — the same pattern the top-ranking competitors
+// use in their footers.
+const KEYWORD_LINKS: { title: string; items: [string, string][] }[] = [
+  {
+    title: "نمایندگی تعمیرات",
+    items: [
+      ["نمایندگی تعمیرات سامسونگ", "/samsung/"],
+      ["نمایندگی تعمیرات اپل", "/apple/"],
+      ["نمایندگی تعمیرات شیائومی", "/xiaomi/"],
+      ["نمایندگی تعمیرات ایسوس", "/asus/"],
+      ["نمایندگی تعمیرات هواوی", "/huawei/"],
+      ["نمایندگی تعمیرات لنوو", "/lenovo/"],
+      ["نمایندگی تعمیرات اچ پی", "/hp/"],
+      ["نمایندگی تعمیرات سونی", "/sony/"],
+      ["نمایندگی تعمیرات دل", "/dell/"],
+      ["نمایندگی تعمیرات نوکیا", "/nokia/"],
+    ],
+  },
+  {
+    title: "تعمیر گوشی",
+    items: [
+      ["تعمیر گوشی سامسونگ", "/samsung/mobile/"],
+      ["تعمیر گوشی آیفون", "/apple/mobile-2/"],
+      ["تعمیر گوشی شیائومی", "/xiaomi/mobile/"],
+      ["تعمیر گوشی هواوی", "/huawei/mobile/"],
+      ["تعمیر گوشی ایسوس", "/asus/mobile/"],
+      ["تعمیر گوشی اچ تی سی", "/htc/mobile/"],
+      ["تعمیر گوشی گوگل پیکسل", "/google-pixel-mobile-phone-repair/"],
+      ["تعمیر گوشی موتورولا", "/motorola-mobile-repair-center/"],
+      ["تعمیر گوشی ناتینگ فون", "/nothingphone-repair/"],
+      ["تعمیر گوشی نوکیا", "/nokia/"],
+    ],
+  },
+  {
+    title: "تعمیر لپ تاپ",
+    items: [
+      ["تعمیر لپ تاپ ایسوس", "/asus/lap-top-2/"],
+      ["تعمیر لپ تاپ لنوو", "/lenovo/lap-top/"],
+      ["تعمیر لپ تاپ اچ پی", "/hp/lap-top/"],
+      ["تعمیر لپ تاپ دل", "/dell/lap-top/"],
+      ["تعمیر لپ تاپ ایسر", "/lap-top-acer/"],
+      ["تعمیر لپ تاپ سونی", "/sony/lap-top/"],
+      ["تعمیر لپ تاپ سامسونگ", "/samsung/lap-top/"],
+      ["تعمیر لپ تاپ شیائومی", "/xiaomi/lap-top/"],
+      ["تعمیر مک بوک", "/apple/macbook/"],
+      ["تعمیرات لپ تاپ", "/services/laptop-repair/"],
+    ],
+  },
+];
 
 export default function Footer({ nav }: { nav: NavItem[] }) {
   const NAV = nav;
@@ -49,13 +102,15 @@ export default function Footer({ nav }: { nav: NavItem[] }) {
           </p>
           <div className="mt-5 flex items-center gap-2.5">
             {[
-              { Icon: Instagram, label: "اینستاگرام" },
-              { Icon: MessageCircle, label: "واتساپ" },
-              { Icon: Send, label: "تلگرام" },
-            ].map(({ Icon, label }) => (
+              { Icon: Instagram, label: "اینستاگرام", href: SITE.socials.instagram },
+              { Icon: MessageCircle, label: "واتساپ", href: SITE.socials.whatsapp },
+              { Icon: Youtube, label: "یوتیوب", href: SITE.socials.youtube },
+            ].map(({ Icon, label, href }) => (
               <a
                 key={label}
-                href="#"
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer nofollow"
                 aria-label={label}
                 className="grid h-[42px] w-[42px] place-items-center rounded-xl border border-[#2A2F39] text-[#C2C8D2] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white"
               >
@@ -140,6 +195,49 @@ export default function Footer({ nav }: { nav: NavItem[] }) {
               </div>
             </div>
           </div>
+          {/* Local landing pages — sitewide inbound links so neighbourhood
+              pages are never more than two clicks from any page. */}
+          <div className="mt-6">
+            <div className="mb-3 text-[13.5px] font-bold text-[#E7EAEF]">
+              مناطق تحت پوشش
+            </div>
+            <div className="flex flex-wrap gap-x-3 gap-y-2">
+              {LIVE_SERVICE_AREAS.map((a) => (
+                <Link
+                  key={a.slug}
+                  href={`/areas/${a.slug}/`}
+                  className="text-[12.5px] text-ink-300 transition hover:text-white"
+                >
+                  {a.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Keyword links band: exact-match anchors to the commercial hubs */}
+      <div className="border-t border-[#20242D]">
+        <div className="mx-auto grid max-w-[1280px] gap-8 px-6 py-10 sm:grid-cols-3">
+          {KEYWORD_LINKS.map((col) => (
+            <nav key={col.title} aria-label={col.title}>
+              <div className="mb-4 text-[14px] font-extrabold text-[#E7EAEF]">
+                {col.title}
+              </div>
+              <ul className="flex flex-col gap-2.5">
+                {col.items.map(([label, href]) => (
+                  <li key={href + label}>
+                    <Link
+                      href={href}
+                      className="text-[13px] text-ink-300 transition hover:pr-1 hover:text-white"
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
       </div>
 
@@ -149,7 +247,21 @@ export default function Footer({ nav }: { nav: NavItem[] }) {
           <div className="text-[13px] text-[#7B828E]">
             © تمامی حقوق برای {SITE.shortName} محفوظ است — ۱۴۰۴
           </div>
-          <div className="text-[13px] text-[#7B828E]">bartar-repairer.com</div>
+          <div className="flex flex-wrap items-center gap-4 text-[13px] text-[#7B828E]">
+            <Link href="/team/" className="transition hover:text-white">
+              تیم فنی
+            </Link>
+            <Link href="/directory/" className="transition hover:text-white">
+              فهرست کامل صفحات
+            </Link>
+            <Link href="/privacy-policy/" className="transition hover:text-white">
+              حریم خصوصی
+            </Link>
+            <Link href="/terms-and-conditions/" className="transition hover:text-white">
+              قوانین و مقررات
+            </Link>
+            <span>bartar-repairer.com</span>
+          </div>
         </div>
       </div>
     </footer>

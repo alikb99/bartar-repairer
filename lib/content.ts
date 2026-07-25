@@ -42,7 +42,14 @@ const uploadExistsCache = new Map<string, boolean>();
 function uploadExists(src: string): boolean {
   if (!src) return false;
   const clean = src.split("?")[0].split("#")[0];
-  if (!clean.startsWith("/wp-content/")) return true; // external / non-upload
+  // Hotlinked off-site images rot: the host renames or expires the file and the
+  // article then ships a broken image. Two Yandex thumbnails already 404 and the
+  // rest are decorative thumbs borrowed from other sites. Only our own domain is
+  // trusted; anything else is dropped like a missing local upload.
+  if (/^https?:\/\//i.test(clean)) {
+    return clean.startsWith(`${SITE.domain}/`) || clean.startsWith("https://www.bartar-repairer.com/");
+  }
+  if (!clean.startsWith("/wp-content/")) return true; // non-upload local path
   const cached = uploadExistsCache.get(clean);
   if (cached !== undefined) return cached;
   let rel = clean;
@@ -154,6 +161,11 @@ const LINK_FIXES: [string, string][] = [
   ["/xiaomi-mobile-lcd-replacement/", "/xiaomi-mobile-lcdreplacement/"],
   ["/xiaomi/mobile/repair-xiaomi-battery/", "/repair-xiaomi-battery/"],
   ["/xiaomi/mobile/xiaomi-phone-lcd-repair/", "/xiaomi-phone-lcd-repair/"],
+  ["/iphone-xs-repair/", "/iphone-xs-repairs/"],
+  [
+    "/samsung-mobile-phone-repairs-in-sattarkhan/",
+    "/samsung-mobile-phone-repairs-in-sattarkhan-2/",
+  ],
   [
     "/%D8%AA%D8%B9%D9%85%DB%8C%D8%B1-%D8%A2%D8%A8%D8%AE%D9%88%D8%B1%D8%AF%DA%AF%DB%8C-%D9%84%D9%BE%D8%AA%D8%A7%D9%BE-%D8%A7%D9%BE%D9%84/",
     "/apple/macbook/",
@@ -225,12 +237,74 @@ function cleanContent(html: string): string {
 }
 
 const escAttr = (s: string) => s.replace(/"/g, "&quot;").trim();
-// Add alt text (from the page title) to any image missing it.
+
+// Brand logo filenames used in the "برندهای قابل تعمیر" grids. These carry no
+// Persian text in the filename, so they need an explicit label.
+const LOGO_ALT: [RegExp, string][] = [
+  [/^samsung\b/i, "تعمیر گوشی سامسونگ"],
+  [/^apple\b/i, "تعمیر گوشی آیفون"],
+  [/^xiaomi\b/i, "تعمیر گوشی شیائومی"],
+  [/^huawei\b/i, "تعمیر گوشی هواوی"],
+  [/^realme\b/i, "تعمیر گوشی ریلمی"],
+  [/^oppo\b/i, "تعمیر گوشی اوپو"],
+  [/^oneplus\b/i, "تعمیر گوشی وان پلاس"],
+  [/^vivo\b/i, "تعمیر گوشی ویوو"],
+  [/^nokia\b/i, "تعمیر گوشی نوکیا"],
+  [/^motorola\b/i, "تعمیر گوشی موتورولا"],
+  [/^sony\b/i, "تعمیر گوشی سونی"],
+  [/^htc\b/i, "تعمیر گوشی اچ تی سی"],
+  [/^asus\b/i, "تعمیر گوشی ایسوس"],
+  [/^lenovo\b/i, "تعمیر لپ تاپ لنوو"],
+  [/^(hp|acer|dell|msi)\b/i, "تعمیر لپ تاپ"],
+  [/^nothing/i, "تعمیر گوشی ناتینگ فون"],
+];
+
+// Filenames that describe nothing (985.jpg, 4445.jpg, Picture3-2.png …).
+const MEANINGLESS = /^(picture|placeholder|img|image|dsc|screenshot)?[\d\-_.]*$/i;
+
+/**
+ * Best alt text for an image, in order of how much it actually tells a reader:
+ *   1. a Persian filename ("تعویض-گلس-فنی.webp" → "تعویض گلس فنی")
+ *   2. a known brand logo
+ *   3. the page title, as a last resort
+ * Never invents detail the filename does not carry.
+ */
+function altFromSrc(src: string, title: string): string {
+  let base = "";
+  try {
+    base = decodeURIComponent(src.split("/").pop() || "");
+  } catch {
+    base = src.split("/").pop() || "";
+  }
+  base = base.replace(/\.[a-z0-9]+$/i, "").replace(/-\d+x\d+$/, "");
+
+  for (const [re, label] of LOGO_ALT) if (re.test(base)) return label;
+
+  // Persian filenames are descriptive — turn the slug back into a phrase.
+  if (/[؀-ۿ]/.test(base)) {
+    const phrase = base.replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
+    if (phrase.length > 2) return phrase;
+  }
+
+  if (MEANINGLESS.test(base)) return title;
+
+  // Latin but descriptive (samsung-s8-repair, tamirat-loptop …).
+  const words = base.replace(/[-_]+/g, " ").replace(/\s+/g, " ").trim();
+  return words.length > 3 && /[a-z]{3}/i.test(words) ? `${title} — ${words}` : title;
+}
+
+// Fill alt on images that have none AND on images carrying an empty alt="".
+// The WordPress export left 552 images with alt="" — an empty attribute reads
+// as "decorative" to screen readers, which these content images are not.
 function addAltText(html: string, title: string): string {
-  return html.replace(
-    /<img(?![^>]*\balt=)([^>]*?)>/gi,
-    (_m, attrs) => `<img${attrs} alt="${escAttr(title)}">`,
-  );
+  return html.replace(/<img\b([^>]*)>/gi, (full, attrs: string) => {
+    const hasReal = /\balt="[^"]+"/i.test(attrs);
+    if (hasReal) return full;
+    const src = (attrs.match(/\bsrc="([^"]*)"/i) || [])[1] || "";
+    const alt = escAttr(altFromSrc(src, title));
+    const cleaned = attrs.replace(/\s*\balt="[^"]*"/gi, "");
+    return `<img${cleaned} alt="${alt}">`;
+  });
 }
 function firstParagraph(html: string): string {
   const m = html.match(/<p[^>]*>([\s\S]*?)<\/p>/i);
@@ -262,6 +336,57 @@ function resolveTitle(seo: string, title: string): string {
     .replace(/^[\s|–—-]+|[\s|–—-]+$/g, "") // trim stray separators
     .trim();
   return t || title;
+}
+
+// ---- Meta TITLE refinement (every page WITHOUT a hand override) ----
+// The WordPress/Yoast export left long, repetitive tails on most titles
+// ("… | نمایندگی تعمیرات فوق تخصصی huawei", "… - برتر سرویس"). Google truncates
+// past ~60 chars, so those tails only burn the SERP snippet. refineTitle trims
+// generic tails, keeps trust/CTR tails (گارانتی/قیمت/رایگان), and reframes a
+// retail-sounding "نمایندگی X" as the owner's preferred "نمایندگی تعمیرات X".
+// Only the <title>/OG string is touched — the visible H1 uses post.title and
+// stays byte-identical to the database (same policy as TITLE_OVERRIDES).
+const TITLE_MAXLEN = 65;
+// Generic trailing segments that add no click value.
+const TITLE_FILLER =
+  /^(?:نمایندگی\s+)?(?:تعمیرات\s+)?(?:فوق\s*تخصصی|حرفه\s*ای)|^نمایندگی تعمیرات$|^مرکز تعمیرات|^مرکز تخصصی تعمیرات|^تعمیرات (?:نرم افزاری|سخت افزاری|نرم افزرای)|^انواع تعمیرات|^خدمات پس از فروش و|^با گارانتی$|^برتر سرویس$|^سرویس$/;
+// A trailing segment that is essentially a bare latin brand token.
+const TITLE_LATIN_TAIL =
+  /^(?:تعمیر(?:ات)?\s+)?(?:نرم افزاری|سخت افزاری|و|های|گوشی|لپ تاپ|محصولات|برند|موبایل|تبلت)?[\s\S]{0,40}?\b(huawei|samsung|acer|hp|lenovo|sony|asus|htc|dell|xiaomi|apple|msi|nokia|vaio)\b[\s\S]{0,12}$/i;
+// Words that make a trailing segment worth keeping (trust / CTR signals).
+const TITLE_VALUE =
+  /گارانتی|ضمانت|قیمت|هزینه|همان روز|پیک|اصل|اورجینال|رایگان|روزه|شفاف|فوری/;
+
+function refineTitle(t: string): string {
+  const parts = t.split("|").map((x) => x.trim()).filter(Boolean);
+  // Drop generic filler / bare-latin-brand tails (never the first segment).
+  while (parts.length > 1) {
+    const last = parts[parts.length - 1];
+    if (TITLE_FILLER.test(last) || TITLE_LATIN_TAIL.test(last)) {
+      parts.pop();
+      continue;
+    }
+    break;
+  }
+  // Value-aware length trim: drop the last NON-value segment first so a
+  // گارانتی/قیمت/رایگان tail survives; fall back to the last segment otherwise.
+  while (parts.length > 1 && [...parts.join(" | ")].length > TITLE_MAXLEN) {
+    let idx = -1;
+    for (let i = parts.length - 1; i >= 1; i--) {
+      if (!TITLE_VALUE.test(parts[i])) {
+        idx = i;
+        break;
+      }
+    }
+    parts.splice(idx === -1 ? parts.length - 1 : idx, 1);
+  }
+  let s = parts.join(" | ");
+  // Reframe retail "نمایندگی X" (no تعمیر anywhere) → "نمایندگی تعمیرات X".
+  // Runs last so trimming a تعمیرات tail cannot leave a bare retail title.
+  if (/نمایندگی/.test(s) && !/تعمیر/.test(s)) {
+    s = s.replace(/نمایندگی/g, "نمایندگی تعمیرات");
+  }
+  return s.trim();
 }
 
 // ---- build posts with hierarchical paths ----
@@ -351,6 +476,7 @@ const INTERNAL_LINKS: [string, string][] = [
   ["تعمیر هوآوی", "/huawei/"],
   // HP
   ["تعمیر لپ تاپ اچ پی", "/hp/lap-top/"],
+  ["نمایندگی تعمیرات اچ پی", "/hp/"],
   ["نمایندگی اچ پی", "/hp/"],
   ["تعمیرات اچ پی", "/hp/"],
   ["تعمیر اچ پی", "/hp/"],
@@ -371,24 +497,30 @@ const INTERNAL_LINKS: [string, string][] = [
   // Sony
   ["تعمیر لپ تاپ سونی", "/sony/lap-top/"],
   ["تعمیر تلویزیون سونی", "/sony/tv/"],
+  ["نمایندگی تعمیرات سونی", "/sony/"],
   ["نمایندگی سونی", "/sony/"],
   ["تعمیرات سونی", "/sony/"],
   // Lenovo
   ["تعمیر لپ تاپ لنوو", "/lenovo/lap-top/"],
+  ["تعمیر تبلت لنوو", "/lenovo/tablet/"],
+  ["نمایندگی تعمیرات لنوو", "/lenovo/"],
   ["نمایندگی لنوو", "/lenovo/"],
   ["تعمیرات لنوو", "/lenovo/"],
   // Dell
   ["تعمیر لپ تاپ دل", "/dell/lap-top/"],
+  ["نمایندگی تعمیرات دل", "/dell/"],
   ["نمایندگی دل", "/dell/"],
   ["تعمیرات دل", "/dell/"],
   // Nokia
   ["تعمیر گوشی نوکیا", "/nokia/"],
+  ["نمایندگی تعمیرات نوکیا", "/nokia/"],
   ["نمایندگی نوکیا", "/nokia/"],
   ["تعمیرات نوکیا", "/nokia/"],
   // HTC
   ["تعمیر گوشی اچ تی سی", "/htc/mobile/"],
   ["تعمیر تبلت اچ تی سی", "/htc/tablet-repair/"],
   ["تعمیر ساعت هوشمند اچ تی سی", "/htc/smart-watch/"],
+  ["نمایندگی تعمیرات اچ تی سی", "/htc/"],
   ["نمایندگی اچ تی سی", "/htc/"],
   ["تعمیرات اچ تی سی", "/htc/"],
   // Motorola
@@ -408,6 +540,197 @@ const INTERNAL_LINKS: [string, string][] = [
   ["تعمیر تبلت", "/services/category-mobile-phone-repair/"],
   ["تعمیر تلویزیون", "/home-appliances/tv-repair-in-tehran/"],
 ];
+
+// ---- Duplicate-title consolidation ----
+// The WordPress export contains pages with byte-identical titles competing for
+// the same query ("تعمیر کیبورد لپ تاپ ایسوس" exists twice). Google splits the
+// signals and ranks neither well. Each entry below points a weaker duplicate at
+// the version that keeps the ranking; the URL itself stays live and reachable
+// (a rel=canonical, not a redirect), so no existing link ever breaks.
+//
+// The keeper was chosen by inbound internal links first, then content depth.
+// Groups whose titles differ in SEARCH INTENT are deliberately absent — e.g.
+// "هزینه آموزش تعمیرات موبایل" is a different query from "آموزش تخصصی تعمیر
+// موبایل", and consolidating them would throw away a ranking page.
+export const CANONICAL_TO: Record<string, string> = {
+  // تعمیر کیبورد لپ تاپ ایسوس
+  "/asus-laptop-keyboardrepair/": "/asus-laptop-keyboard/",
+  // تعمیر فن لپ تاپ ایسوس
+  "/asus-laptop-fan-repair/": "/asus-laptop-fan/",
+  // تعویض باتری مک بوک
+  "/macbook-batteryreplacement/": "/macbook-battery-replacements/",
+  // تعویض ال سی دی مک بوک
+  "/macbook-lcdreplacement/": "/macbook-lcd-replacements1/",
+  // تعویض باتری گوشی هواوی — keep the English slug: 58% more content and it
+  // matches its siblings (/huawei-phone-lcd-replacement/ …).
+  "/تعویض-باتری-موبایل-هوآوی/": "/huawei-phone-battery-replacement/",
+  // تعویض باتری گوشی شیائومی
+  "/xiaomi-phone-batteryreplacement/": "/repair-xiaomi-battery/",
+  // تعویض ال سی دی لپ تاپ ایسر (three copies)
+  "/acer-laptop-lcd-replacement2/": "/acer-laptop-lcdreplacement/",
+  "/aser-laptop-lcd-replacement/": "/acer-laptop-lcdreplacement/",
+  // تعویض ال سی دی لپ تاپ اچ پی
+  "/replacement-of-hp-laptoplcd/": "/replacement-of-hp-laptop-lcd2/",
+  // تعویض ال سی دی لپ تاپ سامسونگ
+  "/samsung-laptop-lcdreplacement/": "/samsung-laptop-lcd-replacement2/",
+  // تعویض باتری تبلت لنوو
+  "/replace-the-battery-of-the-lenovo-tablet/":
+    "/lenovo-tablet-batteryreplacement/",
+  // تعمیر لپ تاپ ایسر در شمال تهران
+  "/acer-laptop-repair-in-the-north-of-tehran/":
+    "/acer-laptop-repair-agency-in-the-north-oftehran/",
+  // لپ تاپ گیمینگ ایسوس
+  "/asus-gaminglaptop/": "/asus-gaming-laptop-repair/",
+  // تعمیر لپ تاپ شیائومی — the hub carries 916 inbound links.
+  "/xiaomi-laptop-repair-intehran/": "/xiaomi/lap-top/",
+  // ویژگی های بهترین مرکز تعمیرات اپل در تهران
+  "/2the-best-apple-repair-center/": "/best-apple-repair-center-in-tehran/",
+};
+
+// ---- CTR-focused meta TITLE overrides ----
+// Hand-written titles for the commercial (money) pages. Keyword stays first,
+// followed by a concrete USP so the SERP snippet earns the click. Only the
+// <title> meta is replaced — page URLs, H1s and body content stay untouched.
+const TITLE_OVERRIDES: Record<string, string> = {
+  "/services/category-mobile-phone-repair/":
+    "تعمیر موبایل در تهران | تعمیر همان روز با قطعات اصل و ۶ ماه گارانتی",
+  "/services/laptop-repair/":
+    "تعمیر لپ تاپ در تهران | عیب یابی رایگان، قطعات اصل و ۶ ماه گارانتی",
+  "/samsung/mobile/":
+    "تعمیر گوشی سامسونگ در تهران | تعویض ال سی دی و باتری همان روز + گارانتی",
+  "/xiaomi/mobile/":
+    "تعمیر گوشی شیائومی در تهران | تعمیر همان روز با قطعات اصل و گارانتی",
+  "/apple/mobile-2/":
+    "تعمیر گوشی آیفون در تهران | قطعات اصل، پیک رایگان و ۶ ماه گارانتی",
+  "/huawei/mobile/":
+    "تعمیر گوشی هواوی در تهران | عیب یابی رایگان و ۶ ماه گارانتی تعمیر",
+  "/asus/mobile/":
+    "تعمیر گوشی ایسوس در تهران | تعمیر تخصصی با قطعات اصل و گارانتی معتبر",
+  "/htc/mobile/":
+    "تعمیر گوشی اچ تی سی در تهران | قطعات اورجینال و ۶ ماه گارانتی کتبی",
+  "/samsung/":
+    "نمایندگی تعمیرات سامسونگ در تهران | قیمت ۷۹ مدل و ۶ ماه گارانتی",
+  // Was the single word "تماس" (4 chars) — a wasted SERP slot for a business
+  // with two walk-in branches.
+  "/contact/":
+    "آدرس و شماره تعمیرات برتر | شعبه مطهری و سعادت آباد تهران",
+  // Emoji stripped (CLAUDE.md forbids them and Google usually drops them).
+  "/nothingphone-repair/":
+    "نمایندگی ناتینگ فون در تهران | تعمیر گوشی با قطعه اصل و گارانتی",
+  // Removed the duplicated "نمایندگی". This page ranks 3rd at 20.59% CTR, so
+  // only the repetition is touched — the structure stays as-is.
+  "/motorola-mobile-repair-center/":
+    "نمایندگی تعمیرات گوشی موتورولا در تهران | قطعه موجود و ۶ ماه گارانتی",
+  // "کولر گازی" (با فاصله) ۱۷۱ ایمپرشن دارد و "کولرگازی" سرهم عملاً هیچ.
+  "/home-appliances/hisense-air-conditioner-repair/":
+    "تعمیر کولر گازی هایسنس در تهران | نشت یابی، شارژ گاز و تعمیر برد",
+  "/apple/":
+    "نمایندگی تعمیرات اپل در تهران | پیک رایگان دستگاه و گارانتی ۶ ماهه",
+  "/xiaomi/":
+    "نمایندگی تعمیرات شیائومی در تهران | قطعات اصل و ۶ ماه گارانتی کتبی",
+  "/huawei/":
+    "نمایندگی تعمیرات هواوی در تهران | عیب یابی رایگان و گارانتی معتبر",
+  "/iphone-battery-replacement/":
+    "تعویض باتری آیفون با باتری اصلی | نصب همان روز و گارانتی ۶ ماهه",
+  "/replacing-the-iphone-lcd/":
+    "تعویض ال سی دی آیفون با قطعه اصل | اعلام قیمت قبل از تعمیر + گارانتی",
+  "/samsung-phone-lcd-replacement/":
+    "تعویض ال سی دی گوشی سامسونگ | قیمت شفاف، نصب همان روز و ۶ ماه گارانتی",
+  "/samsung-mobile-phone-battery-replacement/":
+    "تعویض باتری گوشی سامسونگ با قطعه اصل | همان روز و با گارانتی کتبی",
+  "/smart-watch-repair/":
+    "تعمیر ساعت هوشمند در تهران | همه برندها با پیک رایگان و گارانتی",
+  "/asus/lap-top-2/":
+    "تعمیر لپ تاپ ایسوس در تهران | عیب یابی رایگان و ۶ ماه گارانتی کتبی",
+  "/lenovo/lap-top/":
+    "تعمیر لپ تاپ لنوو در تهران | تعمیر مادربرد و تعویض قطعات با گارانتی",
+  "/hp/lap-top/":
+    "تعمیر لپ تاپ اچ پی در تهران | قطعات اصل، هزینه شفاف و ۶ ماه گارانتی",
+  "/dell/lap-top/":
+    "تعمیر لپ تاپ دل در تهران | عیب یابی رایگان و تعمیر تخصصی با گارانتی",
+  "/lap-top-acer/":
+    "تعمیر لپ تاپ ایسر در تهران | تعمیر مادربرد و ال سی دی با ۶ ماه گارانتی",
+  "/online-repair-request/":
+    "ثبت آنلاین درخواست تعمیر | اعلام هزینه پیش از تعمیر، بدون هیچ هزینه ثبت",
+  // Titles that ran past ~75 characters and were cut off mid-word in the SERP.
+  // Shortened with the primary keyword kept first.
+  "/apple/mobile-2/iphone-11-promax/":
+    "تعمیر گوشی آیفون 11 پرو مکس | قطعات اصل و ۶ ماه گارانتی",
+  "/connecting-xiaomi-phone-to-tv/":
+    "اتصال گوشی شیائومی به تلویزیون | راهنمای کامل و تصویری",
+  "/dell-laptop-troubleshootingtutorial/":
+    "عیب یابی لپ تاپ دل | ۱۰ روش تشخیص و رفع مشکلات سخت افزاری",
+  "/enter-and-exit-safe-mode/":
+    "حالت ایمن گوشی چیست؟ ورود و خروج از Safe Mode گام به گام",
+  "/huawei/mobile/mate-40pro/":
+    "تعمیر گوشی هواوی Mate 40 Pro | قطعات اصل و ۶ ماه گارانتی",
+  "/iphone-16-pro-max-lcd-replacement/":
+    "تعویض ال سی دی آیفون 16 پرو مکس | استعلام هزینه و گارانتی",
+  "/repairing-a-worn-samsungphone/":
+    "تعمیر گوشی آب خورده سامسونگ | عیب یابی، مراحل و هزینه ها",
+  "/samsung-mobile-software-repairs/":
+    "تعمیرات نرم افزاری موبایل سامسونگ | رفع هنگ، بوت لوپ و فلش",
+  "/samsung-phone-repair-agency-in-the-west-oftehran/":
+    "نمایندگی تعمیرات سامسونگ غرب تهران | پیک رایگان و گارانتی",
+  "/symptoms-of-iphone-batteryfailure/":
+    "علائم خرابی باتری آیفون | از کجا بفهمیم باتری خراب است؟",
+  "/xiaomi-mobile-software-repair/":
+    "تعمیر نرم افزاری شیائومی | آپدیت MIUI و رفع مشکلات سیستمی",
+  // --- Brand hubs that still shipped retail-sounding Yoast titles ("نمایندگی
+  // اچ پی | فروش…"). Reframed to the owner's "نمایندگی تعمیرات …" + a USP. ---
+  "/hp/":
+    "نمایندگی تعمیرات اچ پی در تهران | قطعات اصل و ۶ ماه گارانتی",
+  "/dell/":
+    "نمایندگی تعمیرات دل در تهران | عیب یابی رایگان و ۶ ماه گارانتی",
+  "/lenovo/":
+    "نمایندگی تعمیرات لنوو در تهران | لپ تاپ و تبلت با ۶ ماه گارانتی",
+  "/sony/":
+    "نمایندگی تعمیرات سونی در تهران | لپ تاپ و تلویزیون با گارانتی",
+  "/htc/":
+    "نمایندگی تعمیرات اچ تی سی در تهران | قطعات اصل و گارانتی کتبی",
+  "/nokia/":
+    "نمایندگی تعمیرات نوکیا در تهران | قطعات اصل و گارانتی معتبر تعمیر",
+  "/asus/":
+    "نمایندگی تعمیرات ایسوس در تهران | لپ تاپ و گوشی با ۶ ماه گارانتی",
+  // Branch/agency listing — was the broken auto title "نمایندگی تعمیرات ها".
+  "/agency/":
+    "نمایندگی تعمیرات برتر سرویس در تهران | آدرس و تلفن دو شعبه",
+  // --- Device / appliance hubs and top money pages ---
+  "/home-appliances/":
+    "تعمیر لوازم خانگی در تهران | تعمیر در محل با گارانتی و قیمت مناسب",
+  "/home-appliances/tv-repair-in-tehran/":
+    "تعمیر تلویزیون در تهران در محل شما | همه برندها با گارانتی کیفیت",
+  "/game-console-repair/":
+    "تعمیر کنسول بازی در تهران | PS4، PS5 و Xbox با گارانتی",
+  "/change-gorilla-glass/":
+    "ترمیم شیشه شکسته گوشی و تعویض گلس فنی | قیمت مناسب و گارانتی",
+  "/services/laptop-repair/repair-msi-laptop/":
+    "تعمیر لپ تاپ MSI در تهران | تعمیر تخصصی گیمینگ با ۶ ماه گارانتی",
+  "/services/laptop-repair/surface-laptop-repair/":
+    "تعمیر سرفیس مایکروسافت | تعمیر تخصصی Surface با قطعات اصل",
+  "/services/mobile-tablet-subspecialty-courses/":
+    "آموزش تعمیرات موبایل در تهران | دوره تخصصی صفر تا صد با مدرک",
+  "/apple/macbook/":
+    "تعمیر مک بوک در تهران | تعمیر برد، باتری و ال سی دی با گارانتی",
+  // --- High-demand model / part pages with long or retail titles ---
+  "/repair-iphone-7plus/":
+    "تعمیر آیفون 7 پلاس در تهران | قطعات اصل و ۶ ماه گارانتی",
+  "/apple/mobile-2/iphone-7/":
+    "تعمیر آیفون 7 در تهران | قطعات اصل و ۶ ماه گارانتی کتبی",
+  "/apple/mobile-2/iphonex/":
+    "تعمیر آیفون X در تهران | قطعات اصل و ۶ ماه گارانتی",
+  "/apple/mobile-2/iphone-8plus/":
+    "تعمیر آیفون 8 پلاس در تهران | قطعات اصل و ۶ ماه گارانتی",
+  "/iphone-xs-repairs/":
+    "تعمیر آیفون XS در تهران | قطعات اصل و ۶ ماه گارانتی کتبی",
+  "/iphone-16-pro-max-battery-replacement/":
+    "تعویض باتری آیفون 16 پرو مکس | باتری اصل و ۶ ماه گارانتی",
+  "/huawei-phone-case-replacement/":
+    "تعویض قاب گوشی هواوی | قطعات اورجینال، اعلام قیمت و گارانتی",
+  // Auto-refine left a long, doubled "نمایندگی تعمیرات … نمایندگی تعمیرات" here.
+  "/xiaomi-repairs-in-sadeghieh2/":
+    "نمایندگی تعمیرات شیائومی در صادقیه | گارانتی رسمی و خدمات VIP",
+};
 
 // ---- CTR-focused meta description overrides ----
 // Hand-written, click-worthy descriptions for high-impression / low-CTR pages
@@ -431,11 +754,57 @@ const META_OVERRIDES: Record<string, string> = {
   "/fixing-the-problem-of-the-iphone-being-silent/":
     "آیفون در حالت سایلنت گیر کرده یا صدا ندارد؟ علت بی صدا شدن آیفون و راه خارج کردن از حالت سکوت با کلید کناری و تنظیمات، گام به گام.",
   "/samsung/":
-    "نمایندگی تعمیرات سامسونگ در تهران؛ تعمیر گوشی، تبلت، تلویزیون و لپ تاپ سامسونگ با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی همراه پیک رایگان.",
+    "نمایندگی تعمیرات سامسونگ در تهران؛ قیمت تعمیر ۷۹ مدل سامسونگ را ببینید. تعمیر گوشی، تبلت، تلویزیون و لپ تاپ با عیب یابی رایگان و ۶ ماه گارانتی کتبی.",
+  "/motorola-mobile-repair-center/":
+    "نمایندگی تعمیرات گوشی موتورولا در تهران؛ تعویض ال سی دی و باتری سری Moto G و Edge با قطعه موجود، عیب یابی رایگان و ۶ ماه گارانتی کتبی.",
+  "/contact/":
+    "آدرس دو شعبه تعمیرات برتر در تهران: شعبه مرکزی خیابان مطهری و شعبه غرب سعادت آباد میدان کاج. شماره تماس مستقیم هر شعبه و ساعت کاری.",
+  "/home-appliances/hisense-air-conditioner-repair/":
+    "تعمیر کولر گازی هایسنس در محل؛ نشت یابی پیش از شارژ گاز، تعمیر برد و رفع مشکل کنترل. بازدید با هماهنگی تلفنی و ۶ ماه گارانتی روی قطعه و اجرت.",
   "/apple/":
     "نمایندگی تعمیرات اپل در تهران؛ تعمیر تخصصی آیفون، آیپد، مک بوک و اپل واچ با قطعات اصل و ۶ ماه گارانتی، عیب یابی رایگان و دریافت پیک رایگان.",
   "/huawei/":
     "نمایندگی تعمیرات هواوی در تهران؛ تعمیر گوشی، تبلت و لپ تاپ هواوی و آنر با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی همراه پیک رایگان.",
+  "/xiaomi/":
+    "نمایندگی تعمیرات شیائومی در تهران؛ تعمیر گوشی، تبلت، لپ تاپ و ساعت شیائومی با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی همراه پیک رایگان.",
+  "/asus/":
+    "نمایندگی تعمیرات ایسوس در تهران؛ تعمیر لپ تاپ، گوشی و تبلت ایسوس با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی به همراه پیک رایگان.",
+  "/lenovo/":
+    "نمایندگی تعمیرات لنوو در تهران؛ تعمیر لپ تاپ و تبلت لنوو با قطعات اصل، عیب یابی رایگان، اعلام هزینه قبل از تعمیر و ۶ ماه گارانتی.",
+  "/hp/":
+    "نمایندگی تعمیرات اچ پی در تهران؛ تعمیر تخصصی لپ تاپ HP با قطعات اصل، عیب یابی رایگان، اعلام هزینه شفاف و ۶ ماه گارانتی همراه پیک رایگان.",
+  "/dell/":
+    "نمایندگی تعمیرات دل در تهران؛ تعمیر تخصصی لپ تاپ Dell با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی. دریافت و تحویل با پیک رایگان.",
+  "/sony/":
+    "نمایندگی تعمیرات سونی در تهران؛ تعمیر لپ تاپ و تلویزیون سونی با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی به همراه پیک رایگان.",
+  "/htc/":
+    "نمایندگی تعمیرات اچ تی سی در تهران؛ تعمیر گوشی، تبلت و ساعت هوشمند HTC با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی تعمیرات.",
+  "/nokia/":
+    "نمایندگی تعمیرات نوکیا در تهران؛ تعمیر تخصصی گوشی نوکیا با قطعات اصل، عیب یابی رایگان، اعلام هزینه قبل از تعمیر و ۶ ماه گارانتی.",
+  "/samsung/mobile/":
+    "تعمیر گوشی سامسونگ در تهران با قطعات اصل و ۶ ماه گارانتی؛ تعویض ال سی دی، باتری و تعمیر برد همه مدل های گلکسی با عیب یابی رایگان.",
+  "/xiaomi/mobile/":
+    "تعمیر گوشی شیائومی در تهران؛ تعویض ال سی دی، باتری و تعمیر برد همه مدل های شیائومی، ردمی و پوکو با قطعات اصل و ۶ ماه گارانتی.",
+  "/apple/mobile-2/":
+    "تعمیر گوشی آیفون در تهران با قطعات اصل و ۶ ماه گارانتی؛ تعویض ال سی دی، باتری، گلس پشت و تعمیر برد همه مدل های آیفون با عیب یابی رایگان.",
+  "/huawei/mobile/":
+    "تعمیر گوشی هواوی در تهران؛ تعویض ال سی دی، باتری و تعمیر برد همه مدل های هواوی و آنر با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی.",
+  "/asus/lap-top-2/":
+    "تعمیر لپ تاپ ایسوس در تهران؛ تعمیر مادربرد، تعویض ال سی دی و باتری، رفع آب خوردگی و سرویس فن با قطعات اصل و ۶ ماه گارانتی.",
+  "/lenovo/lap-top/":
+    "تعمیر لپ تاپ لنوو در تهران؛ تعمیر مادربرد، تعویض ال سی دی، باتری و کیبورد با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی تعمیرات.",
+  "/hp/lap-top/":
+    "تعمیر لپ تاپ اچ پی در تهران؛ تعمیر مادربرد، تعویض ال سی دی، باتری و کیبورد HP با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی.",
+  "/dell/lap-top/":
+    "تعمیر لپ تاپ دل در تهران؛ تعمیر مادربرد، تعویض ال سی دی و باتری لپ تاپ Dell با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی.",
+  "/lap-top-acer/":
+    "تعمیر لپ تاپ ایسر در تهران؛ تعمیر مادربرد، تعویض ال سی دی و باتری لپ تاپ Acer با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی.",
+  "/apple/macbook/":
+    "تعمیر مک بوک در تهران؛ تعمیر برد، تعویض ال سی دی، باتری و کیبورد مک بوک ایر و پرو با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی.",
+  "/services/category-mobile-phone-repair/":
+    "تعمیرات موبایل در تهران برای همه برندها؛ تعویض ال سی دی، باتری، تعمیر برد و رفع آب خوردگی با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی.",
+  "/services/laptop-repair/":
+    "تعمیرات لپ تاپ در تهران برای همه برندها؛ تعمیر مادربرد، تعویض ال سی دی و باتری، رفع آب خوردگی و سرویس فن با ۶ ماه گارانتی و عیب یابی رایگان.",
   "/silence-of-the-phone-after-water-damage/":
     "گوشی بعد از آب خوردگی بی صدا شده؟ علت قطع شدن صدای اسپیکر و میکروفون پس از خیس شدن گوشی و راهکار خشک کردن و تعمیر، به صورت گام به گام.",
   "/the-screen-does-not-turn-on-during-a-call/":
@@ -448,6 +817,26 @@ const META_OVERRIDES: Record<string, string> = {
     "فضای دوم (Second Space) گوشی چیست و چه کاربردی دارد؟ آموزش فعال سازی و استفاده از اسپیس دوم اندروید برای جداسازی حساب ها و حفظ حریم خصوصی.",
   "/touch-phone-problem-while-charging/":
     "تاچ گوشی هنگام شارژ پرش می کند یا کار نمی کند؟ علت به هم ریختن لمس صفحه هنگام اتصال شارژر و ۶ راه حل از تعویض شارژر تا تعمیر، گام به گام.",
+  "/htc/mobile/":
+    "تعمیر گوشی اچ تی سی در تهران؛ تعویض ال سی دی، باتری و تعمیر برد همه مدل های HTC با قطعات اورجینال، عیب یابی رایگان و ۶ ماه گارانتی کتبی.",
+  "/asus/mobile/":
+    "تعمیر گوشی ایسوس در تهران؛ تعویض ال سی دی، باتری و تعمیر برد انواع Zenfone و ROG Phone با قطعات اصل، عیب یابی رایگان و ۶ ماه گارانتی.",
+  "/iphone-battery-replacement/":
+    "تعویض باتری آیفون با باتری اصلی و نمایش سلامت ۱۰۰٪؛ نصب همان روز در حضور شما، اعلام قیمت قبل از تعویض و ۶ ماه گارانتی کتبی. پیک رایگان در تهران.",
+  "/replacing-the-iphone-lcd/":
+    "تعویض ال سی دی آیفون با پنل اصل و تست کامل تاچ و True Tone؛ اعلام هزینه قبل از تعمیر، نصب همان روز و ۶ ماه گارانتی. پیک رایگان در سراسر تهران.",
+  "/samsung-phone-lcd-replacement/":
+    "تعویض ال سی دی گوشی سامسونگ با پنل اورجینال؛ قیمت شفاف قبل از تعمیر، نصب همان روز و ۶ ماه گارانتی کتبی. راهنمای تشخیص خرابی تاچ و LCD را بخوانید.",
+  "/samsung-mobile-phone-battery-replacement/":
+    "تعویض باتری گوشی سامسونگ با قطعه اصل در کمتر از یک ساعت؛ رفع خاموشی ناگهانی و افت شارژ با اعلام هزینه قبل از تعویض و ۶ ماه گارانتی کتبی.",
+  "/smart-watch-repair/":
+    "تعمیر ساعت هوشمند اپل واچ، سامسونگ، شیائومی و هواوی در تهران؛ تعویض باتری و صفحه با قطعات اورجینال، پیک رایگان و ۶ ماه گارانتی کتبی.",
+  "/iphone-technical-glass-replacement/":
+    "تعویض گلس آیفون با دستگاه لمینت و OCA بدون آسیب به تاچ و ال سی دی اصلی؛ اعلام قیمت قبل از تعمیر، تحویل همان روز و گارانتی کتبی خدمات.",
+  "/xiaomi-phone-glass-replacement/":
+    "تعویض گلس گوشی شیائومی بدون تعویض ال سی دی؛ ترمیم شیشه شکسته با دستگاه لمینت، قیمت مناسب، تحویل همان روز و گارانتی کتبی در تهران.",
+  "/online-repair-request/":
+    "درخواست تعمیر موبایل، لپ تاپ و تبلت را آنلاین ثبت کنید؛ کارشناس ما تماس می گیرد و بازه هزینه را پیش از تعمیر اعلام می کند. ثبت درخواست رایگان است.",
 };
 
 const ARTICLE_UPDATES: Record<string, string> = {
@@ -547,20 +936,27 @@ function linkifyInternal(html: string, selfPath: string): string {
     (m, open: string, inner: string, close: string) => {
       if (added >= MAX) return m;
       if (/<a\b/i.test(inner)) return m; // never touch paragraphs that already link
+      // Search only text nodes. Replacing inside raw `inner` can corrupt an
+      // image alt/title attribute when it contains a target phrase.
+      const parts = inner.split(/(<[^>]+>)/g);
       for (const [phrase, path] of targets) {
         if (linked.has(path)) continue;
-        const idx = inner.indexOf(phrase);
-        if (idx >= 0) {
-          inner =
-            inner.slice(0, idx) +
+        const textIndex = parts.findIndex(
+          (part, index) => index % 2 === 0 && part.includes(phrase),
+        );
+        if (textIndex >= 0) {
+          const text = parts[textIndex];
+          const idx = text.indexOf(phrase);
+          parts[textIndex] =
+            text.slice(0, idx) +
             `<a href="${path}">${phrase}</a>` +
-            inner.slice(idx + phrase.length);
+            text.slice(idx + phrase.length);
           linked.add(path);
           added++;
           break; // at most one injected link per paragraph
         }
       }
-      return open + inner + close;
+      return open + parts.join("") + close;
     },
   );
 }
@@ -569,8 +965,13 @@ export const POSTS: Post[] = raw.map((p) => {
   const segments = buildSegments(p);
   const selfPath = "/" + segments.join("/") + "/";
   let content = addAltText(cleanContent(p.content), p.title);
-  // Only enrich article bodies; brand landing pages are parsed structurally.
-  if (p.type === "post") content = linkifyInternal(content, selfPath);
+  // Inject contextual in-body links to the commercial hubs. Runs on BOTH article
+  // and service/model pages so every cluster page funnels in-body link equity up
+  // to its brand/device hub (e.g. a Samsung model page links the phrase
+  // "تعمیر گوشی سامسونگ" → /samsung/mobile/, "تعمیرات سامسونگ" → /samsung/). The
+  // landing components render this HTML verbatim and only parse <h2>, so an <a>
+  // injected inside a <p> is safe. Self-links are already excluded by selfPath.
+  content = linkifyInternal(content, selfPath);
   if (p.type === "post") content = appendArticleUpdate(selfPath, content);
   // Ignore Yoast description templates (e.g. %%excerpt%%) — fall back to real text.
   const cleanSeoDesc = p.seoDesc && !p.seoDesc.includes("%%") ? p.seoDesc : "";
@@ -594,35 +995,44 @@ export const POSTS: Post[] = raw.map((p) => {
     excerpt: deZwnjHtml(localizeUrls(p.excerpt)),
     segments,
     path: selfPath,
-    metaTitle: deZwnj(resolveTitle(p.seoTitle, p.title)),
+    metaTitle: deZwnj(
+      TITLE_OVERRIDES[selfPath] ||
+        refineTitle(deZwnj(resolveTitle(p.seoTitle, p.title))),
+    ),
     metaDesc: deZwnj(metaDesc),
   };
 });
 
 // Guarantee unique <title> values (disambiguate with parent brand, then city,
-// then a counter as a last resort).
+// then a counter as a last resort). Two records that resolve to the SAME URL
+// (the export has a few slug duplicates, e.g. a page + a post both at
+// /repair-iphone-7plus/) keep an identical title — only one is ever rendered,
+// so appending "| تهران" to the phantom would just uglify the live page.
 {
-  const used = new Set<string>();
+  const usedBy = new Map<string, string>(); // title -> first path that claimed it
   for (const p of POSTS) {
     let t = p.metaTitle;
-    if (used.has(t)) {
+    const owner = usedBy.get(t);
+    if (owner !== undefined && owner !== p.path) {
       const parent = p.parent ? rawById.get(p.parent) : undefined;
       const brand = parent
         ? deZwnj(parent.title).split(/[|\-–—]/)[0].trim().split(/\s+/).slice(0, 3).join(" ")
         : "";
       const candidates = [
         brand ? `${t} | ${brand}` : "",
-        `${t} | ${SITE.city}`,
+        // Skip the city suffix when the title already names تهران (avoids the
+        // redundant "… در تهران | تهران").
+        t.includes(SITE.city) ? "" : `${t} | ${SITE.city}`,
       ].filter(Boolean);
-      let chosen = candidates.find((c) => !used.has(c));
+      let chosen = candidates.find((c) => !usedBy.has(c));
       if (!chosen) {
         let n = 2;
-        while (used.has(`${t} (${n})`)) n++;
+        while (usedBy.has(`${t} (${n})`)) n++;
         chosen = `${t} (${n})`;
       }
       t = chosen;
     }
-    used.add(t);
+    if (!usedBy.has(t)) usedBy.set(t, p.path);
     p.metaTitle = t;
   }
 }
@@ -753,9 +1163,46 @@ function classify(p: Post): { brand?: string; device?: string } {
   return { brand, device };
 }
 
+// ---------- Mobile repair landing detection ----------
+// Every service PAGE whose topic is mobile-phone repair renders with the
+// premium MobileRepairLanding layout (ui/Mobile Repair.dc.html). The Persian
+// brand label drives the hero copy ("تعمیر تخصصی موبایل {برند}").
+const MOBILE_BRAND_FA: [string, string[]][] = [
+  ["سامسونگ", ["سامسونگ", "samsung", "گلکسی", "galaxy"]],
+  ["آیفون", ["آیفون", "ایفون", "iphone", "اپل", "apple"]],
+  ["شیائومی", ["شیائومی", "xiaomi", "پوکو", "poco", "ردمی", "redmi"]],
+  ["هواوی", ["هواوی", "هوآوی", "huawei", "آنر", "honor"]],
+  ["ناتینگ فون", ["ناتینگ", "nothing"]],
+  ["گوگل پیکسل", ["پیکسل", "pixel"]],
+  ["نوکیا", ["نوکیا", "nokia"]],
+  ["موتورولا", ["موتورولا", "motorola"]],
+  ["ایسوس", ["ایسوس", "asus", "zenfone"]],
+  ["اچ تی سی", ["اچ تی سی", "htc"]],
+  ["اوپو", ["اوپو", "oppo"]],
+  ["وان پلاس", ["وان پلاس", "oneplus"]],
+  ["ریلمی", ["ریلمی", "realme"]],
+  ["سونی", ["سونی", "sony", "اکسپریا", "xperia"]],
+  ["زد تی ای", ["زد تی ای", "zte"]],
+  ["ورتو", ["ورتو", "vertu"]],
+  ["لنوو", ["لنوو", "lenovo"]],
+  ["ال جی", ["ال جی", "lg "]],
+];
+
+export type MobileRepairInfo = { brandFa: string | null };
+
+/** Non-null when a service PAGE should render the mobile-repair landing. */
+export function mobileRepairInfo(post: Post): MobileRepairInfo | null {
+  if (post.type !== "page") return null;
+  if (classify(post).device !== "mobile") return null;
+  const t = `${post.title} ${post.slugDecoded} ${post.slug}`.toLowerCase();
+  const hit = MOBILE_BRAND_FA.find(([, kws]) =>
+    kws.some((k) => t.includes(k.toLowerCase())),
+  );
+  return { brandFa: hit ? hit[0] : null };
+}
+
 const existingPillars = PILLAR_DEFS.filter((d) => postByPath.has(d.path));
-function pillarForPost(p: Post): PillarDef | null {
-  if (p.type !== "post") return null;
+function matchingPillar(p: Post): PillarDef | null {
   const { brand, device } = classify(p);
   if (!brand && !device) return null;
   const find = (pred: (d: PillarDef) => boolean) => existingPillars.find(pred);
@@ -769,6 +1216,16 @@ function pillarForPost(p: Post): PillarDef | null {
   );
 }
 
+function pillarForPost(p: Post): PillarDef | null {
+  return p.type === "post" ? matchingPillar(p) : null;
+}
+
+function pillarForServicePage(p: Post): PillarDef | null {
+  if (p.type !== "page" || existingPillars.some((d) => d.path === p.path))
+    return null;
+  return matchingPillar(p);
+}
+
 const pillarByPostId = new Map<number, PillarDef>();
 const clusterIndex = new Map<string, Post[]>();
 for (const p of POSTS) {
@@ -779,6 +1236,21 @@ for (const p of POSTS) {
   const arr = clusterIndex.get(pl.path);
   if (arr) arr.push(p);
   else clusterIndex.set(pl.path, [p]);
+}
+
+// Root-level WordPress service pages often have no parent even though their
+// title/slug clearly belongs to a brand or device hub. Build a second index so
+// those pages receive both an inbound hub link and a contextual up-link without
+// altering the database content or URL.
+const servicePillarByPageId = new Map<number, PillarDef>();
+const serviceClusterIndex = new Map<string, Post[]>();
+for (const p of POSTS) {
+  const pl = pillarForServicePage(p);
+  if (!pl) continue;
+  servicePillarByPageId.set(p.id, pl);
+  const arr = serviceClusterIndex.get(pl.path);
+  if (arr) arr.push(p);
+  else serviceClusterIndex.set(pl.path, [p]);
 }
 
 /** The topical pillar a cluster article belongs to (or null for general posts). */
@@ -800,6 +1272,28 @@ export function clusterSiblings(post: Post, limit = 6): Post[] {
   const pl = pillarByPostId.get(post.id);
   if (!pl) return [];
   return (clusterIndex.get(pl.path) ?? [])
+    .filter((p) => p.id !== post.id)
+    .slice(0, limit);
+}
+
+/** Service/detail pages assigned to a commercial hub (newest first). */
+export function clusterServices(pillarPath: string, limit = 60): Post[] {
+  return (serviceClusterIndex.get(pillarPath) ?? []).slice(0, limit);
+}
+
+/** Commercial hub assigned to a flat service page. */
+export function servicePillarFor(
+  post: Post,
+): { path: string; label: string } | null {
+  const pl = servicePillarByPageId.get(post.id);
+  return pl ? { path: pl.path, label: pl.label } : null;
+}
+
+/** Other service pages that share the same commercial hub. */
+export function serviceSiblings(post: Post, limit = 8): Post[] {
+  const pl = servicePillarByPageId.get(post.id);
+  if (!pl) return [];
+  return (serviceClusterIndex.get(pl.path) ?? [])
     .filter((p) => p.id !== post.id)
     .slice(0, limit);
 }
@@ -933,10 +1427,17 @@ export type NavItem = {
   icon: string;
   blurb?: string;
   children: NavChild[];
+  /**
+   * Hide from the desktop nav bar. Ten top-level links wrapped onto two lines
+   * and broke words apart; secondary destinations move to the utility bar,
+   * mega menus and footer instead, while staying in the mobile menu.
+   */
+  secondary?: boolean;
 };
 
 export const NAV: NavItem[] = [
-  { title: "خانه", slug: "/", icon: "Home", children: [] },
+  // The logo already links home, so this stays out of the desktop bar.
+  { title: "خانه", slug: "/", icon: "Home", children: [], secondary: true },
   {
     title: "تعمیرات موبایل",
     slug: "/services/category-mobile-phone-repair/",
@@ -994,7 +1495,46 @@ export const NAV: NavItem[] = [
       { title: "نمایندگی نوکیا", slug: "/nokia/" },
     ],
   },
+  {
+    title: "خدمات تعمیر",
+    slug: "/repairs/",
+    icon: "Wrench",
+    blurb: "همه خدمات بر اساس نوع ایراد دستگاه",
+    children: [
+      { title: "همه خدمات تعمیر", slug: "/repairs/" },
+      { title: "تعویض ال سی دی و تاچ", slug: "/repairs/lcd-replacement/" },
+      { title: "تعویض باتری", slug: "/repairs/battery-replacement/" },
+      { title: "تعمیر برد و مادربرد", slug: "/repairs/board-repair/" },
+      { title: "تعمیر آب خوردگی", slug: "/repairs/water-damage/" },
+      { title: "تعویض درب پشت و قاب", slug: "/repairs/back-cover-replacement/" },
+      { title: "تعمیر دوربین", slug: "/repairs/camera-repair/" },
+      // NOTE: every slug here must be a route that actually builds. Repair-type
+      // hubs only render above the LIVE_REPAIR_TYPES threshold (6+ collected
+      // pages), so "تعمیر سوکت شارژ" is deliberately absent — only 2 articles
+      // match it, so /repairs/charging-port-repair/ is never generated and the
+      // menu link 404'd. Re-add it once enough charging-port pages exist.
+      { title: "تعمیر اسپیکر و میکروفون", slug: "/repairs/speaker-microphone-repair/" },
+      { title: "تعمیر نرم افزاری و فلش", slug: "/repairs/software-repair/" },
+      { title: "تعمیر کیبورد لپ تاپ", slug: "/repairs/keyboard-repair/" },
+      { title: "رفع داغ شدن و سرویس فن", slug: "/repairs/overheating-fan-repair/" },
+    ],
+  },
+  // Conversion tools live in the dark utility bar above the nav.
+  {
+    title: "عیب یابی آنلاین",
+    slug: "/online-diagnosis/",
+    icon: "Stethoscope",
+    children: [],
+    secondary: true,
+  },
+  {
+    title: "ثبت درخواست",
+    slug: "/online-repair-request/",
+    icon: "Wrench",
+    children: [],
+    secondary: true,
+  },
   { title: "مقالات", slug: "/blog", icon: "Newspaper", children: [] },
-  { title: "درباره ما", slug: "/about/", icon: "Info", children: [] },
+  { title: "درباره ما", slug: "/about/", icon: "Info", children: [], secondary: true },
   { title: "تماس با ما", slug: "/contact/", icon: "Phone", children: [] },
 ];

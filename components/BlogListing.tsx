@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { Post } from "@/lib/content";
+import { LIVE_REPAIR_TYPES, repairTypeContent } from "@/lib/repair-types";
 import { SITE } from "@/lib/data";
 import Reveal from "@/components/Reveal";
 import PostCard from "@/components/PostCard";
@@ -91,10 +92,87 @@ export default function BlogListing({
           <p className="mt-4 text-sm font-semibold text-accent">
             {totalCount.toLocaleString("fa-IR")} مقاله تخصصی
           </p>
+          {/* Topic entry points. Deep pagination alone left most guides 20+
+              clicks from the first page — these hubs group them by subject so
+              both readers and crawlers reach any article in two clicks. */}
+          <div className="mt-7">
+            <p className="mb-3 text-[13px] font-bold text-ink-700">
+              جستجو بر اساس موضوع
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {LIVE_REPAIR_TYPES.map((t) => (
+                <Link
+                  key={t.slug}
+                  href={`/repairs/${t.slug}/`}
+                  className="rounded-full border border-line bg-white px-4 py-2 text-[13px] font-bold text-ink-800 transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
+                >
+                  {t.title}
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* Page 1 only — keeps paginated pages from duplicating this copy. */}
+      {page === 1 && (
+        <section className="border-b border-line bg-white">
+          <div className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-10">
+            <div className="max-w-3xl">
+              <h2 className="text-2xl font-extrabold text-ink-900 sm:text-[32px]">
+                این راهنماها به چه دردی می خورند
+              </h2>
+              <p className="mt-4 text-[15px] leading-9 text-ink-700">
+                بخش زیادی از دستگاه هایی که به ما می رسند، ایرادی دارند که
+                صاحبش می توانست خودش تشخیص بدهد و گاهی بدون هزینه رفع کند. این
+                مقالات برای همان نوشته شده اند: اینکه بفهمید مشکل از کجاست،
+                هزینه تقریبی چقدر است و آیا اصلاً ارزش تعمیر دارد یا نه.
+              </p>
+              <p className="mt-4 text-[15px] leading-9 text-ink-700">
+                هرجا کاری خطرناک یا پرریسک بوده، صریح گفته ایم که خودتان انجام
+                ندهید. باز کردن گوشی آب خورده یا دست زدن به باتری باد کرده در
+                خانه، معمولاً هزینه را بیشتر می کند نه کمتر.
+              </p>
+            </div>
+
+            <h2 className="mt-12 text-2xl font-extrabold text-ink-900 sm:text-[32px]">
+              موضوع ها به تفکیک نوع خرابی
+            </h2>
+            <p className="mt-3 text-[15px] leading-9 text-ink-700">
+              {totalCount.toLocaleString("fa-IR")} مقاله در{" "}
+              {LIVE_REPAIR_TYPES.length.toLocaleString("fa-IR")} دسته. عدد جلوی
+              هر دسته تعداد مقاله های همان موضوع است.
+            </p>
+            <ul className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {LIVE_REPAIR_TYPES.map((t) => {
+                const n = repairTypeContent(t.slug).articles.length;
+                return (
+                  <li key={t.slug}>
+                    <Link
+                      href={`/repairs/${t.slug}/`}
+                      className="flex items-center justify-between gap-3 rounded-2xl border border-line bg-paper px-4 py-3 transition hover:border-accent/40 hover:bg-white"
+                    >
+                      <span className="text-[15px] font-bold text-ink-900">
+                        {t.title}
+                      </span>
+                      <span className="shrink-0 text-[13px] font-bold text-accent">
+                        {n.toLocaleString("fa-IR")} مقاله
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </section>
+      )}
+
       <div className="mx-auto max-w-[1400px] px-4 py-14 sm:px-6 lg:px-10">
+        {page === 1 && (
+          <h2 className="mb-8 text-2xl font-extrabold text-ink-900 sm:text-[32px]">
+            تازه ترین مقالات
+          </h2>
+        )}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {posts.map((p, i) => (
             <Reveal key={p.id} delay={(i % 4) * 0.05}>

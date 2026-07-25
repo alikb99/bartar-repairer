@@ -11,6 +11,7 @@ import {
   MapPin,
   ChevronLeft,
   Clock,
+  Package,
 } from "lucide-react";
 import { SITE } from "@/lib/data";
 import { type Post } from "@/lib/content";
@@ -19,14 +20,18 @@ import { type Post } from "@/lib/content";
 const INTRO =
   "نمایندگی تعمیرات برتر با بیش از 15 سال سابقه تعمیرات موبایل، لپ تاپ، تبلت و لوازم خانگی آماده خدمت رسانی به شما عزیزان میباشد. شما میتوانید به صورت حضوری به یکی از شعب ما مراجعه کنید و یا اگر امکان مراجعه حضوری ندارید تنها کافی است با شماره نمایندگی برتر تماس بگیرید تا از خدمات تعمیر در محل و پیک رایگان تعمیرات بهرمند شوید. در صورتی که شما عزیزان بنا به هر دلیلی دسترسی به اپلیکیشن های خارجی ندارید میتوانید پیام خود را از طریق بله، روبیکا و ایتا به شماره 09046972370 ارسال نمایید تا کارشناسان برتر سرویس پاسخگو سوال شما عزیزان باشند.";
 
+// Postal shipping note — customers outside Tehran can mail their device in.
+const POSTAL_NOTE =
+  "اگر امکان مراجعه حضوری ندارید یا خارج از تهران هستید، می توانید دستگاه خود را از طریق پست به آدرس شعبه مرکزی با کد پستی 1586983711 ارسال کنید. پس از دریافت، دستگاه به صورت رایگان عیب یابی می شود و هزینه تعمیر قبل از شروع کار به شما اعلام خواهد شد.";
+
 const SOCIALS = [
-  { label: "اینستاگرام", href: "https://www.instagram.com/bartar_repairer?igsh=MTJ5aXJhcW00cmFyMA==", icon: Instagram },
-  { label: "یوتیوب", href: "https://www.youtube.com/@bartar_services", icon: Youtube },
-  { label: "ایکس (توییتر)", href: "https://x.com/Bartar_repairer", icon: Twitter },
-  { label: "فیسبوک", href: "https://www.facebook.com/people/%D8%A8%D8%B1%D8%AA%D8%B1-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3/pfbid02MAe5xVUQdSiJozu9SHA5sS3zTkPk2iJYz3capxQC3N617jmdxrhuPbUVPMHJvLuMl/", icon: Facebook },
-  { label: "پینترست", href: "https://www.pinterest.com/bartar_repairer/", icon: Globe },
-  { label: "لینکدین", href: "https://ir.linkedin.com/in/bartar-repairer", icon: Linkedin },
-  { label: "واتساپ", href: "https://wa.me/09046972370", icon: MessageCircle },
+  { label: "اینستاگرام", href: SITE.socials.instagram, icon: Instagram },
+  { label: "یوتیوب", href: SITE.socials.youtube, icon: Youtube },
+  { label: "ایکس (توییتر)", href: SITE.socials.twitter, icon: Twitter },
+  { label: "فیسبوک", href: SITE.socials.facebook, icon: Facebook },
+  { label: "پینترست", href: SITE.socials.pinterest, icon: Globe },
+  { label: "لینکدین", href: SITE.socials.linkedin, icon: Linkedin },
+  { label: "واتساپ", href: SITE.socials.whatsapp, icon: MessageCircle },
 ];
 
 const BRANCHES = [
@@ -34,17 +39,20 @@ const BRANCHES = [
     name: "شعبه مرکزی تهران",
     address:
       "تهران ، خیابان مطهری ، ابتدای خیابان قائم مقام فراهانی جنوبی ، پلاک 158 ساختمان برتر سرویس",
-    map: "https://balad.ir/p/%D8%A8%D8%B1%D8%AA%D8%B1-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3-tehran-nei-sanaei_electronic-equipment-repair-4TyjywJEshQMcD#15/35.72402/51.42398",
+    postal: SITE.postalCode,
+    map: SITE.mapCentral,
   },
   {
     name: "شعبه شرق تهران",
     address: "میدال هلال احمر جنب میدان 91 مرکز خدمات پس از فروش برترسرویس",
+    postal: "",
     map: "",
   },
   {
     name: "شعبه غرب تهران",
     address:
       "تهران، سعادت آباد، میدان کاج، کوچه دوازدهم علی اکبر، پلاک 30، مجتمع اداری کسری، طبقه اول واحد 5",
+    postal: "",
     map: "",
   },
 ];
@@ -86,6 +94,20 @@ export default function ContactPage({ post }: { post: Post }) {
           <p className="mx-auto mt-6 max-w-3xl text-base leading-9 text-ink-500">
             {INTRO}
           </p>
+          <p className="mx-auto mt-4 max-w-3xl text-base leading-9 text-ink-500">
+            {POSTAL_NOTE}
+          </p>
+          <div className="mx-auto mt-7 inline-flex flex-wrap items-center justify-center gap-3 rounded-2xl border border-accent/25 bg-white px-5 py-3.5 shadow-card">
+            <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent-tint text-accent">
+              <Package className="h-5 w-5" />
+            </span>
+            <span className="text-sm font-bold text-ink-900">
+              کد پستی برای ارسال دستگاه جهت تعمیر:
+            </span>
+            <span dir="ltr" className="text-lg font-extrabold tracking-wider text-accent">
+              {SITE.postalCode}
+            </span>
+          </div>
         </div>
       </header>
 
@@ -126,7 +148,7 @@ export default function ContactPage({ post }: { post: Post }) {
           </a>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
             <a
-              href="https://wa.me/09046972370"
+              href={SITE.socials.whatsapp}
               target="_blank"
               rel="noopener noreferrer nofollow"
               className="inline-flex items-center gap-2 rounded-full bg-white/15 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/25"
@@ -161,6 +183,12 @@ export default function ContactPage({ post }: { post: Post }) {
                 <p className="mt-4 flex-1 text-sm leading-8 text-ink-600">
                   {b.address}
                 </p>
+                {b.postal && (
+                  <p className="mt-2 flex items-center gap-2 text-sm font-semibold text-ink-700">
+                    <Package className="h-4 w-4 text-accent" />
+                    کد پستی: <span dir="ltr" className="tracking-wider">{b.postal}</span>
+                  </p>
+                )}
                 <div className="mt-5 flex flex-wrap gap-2">
                   <a
                     href={SITE.phoneHref}

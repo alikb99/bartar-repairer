@@ -18,25 +18,27 @@ import {
   breadcrumbs,
   readingMinutes,
   extractFaq,
+  mobileRepairInfo,
+  CANONICAL_TO,
 } from "@/lib/content";
+import { howToSchema } from "@/lib/howto";
+import { pricesForPage } from "@/lib/pricing";
 import { SITE } from "@/lib/data";
+import { clusterContentFor } from "@/lib/cluster-content";
 import ContactCard from "@/components/ContactCard";
+import ClusterContent from "@/components/ClusterContent";
+import PagePriceTable from "@/components/PagePriceTable";
 import ContentEnhancer from "@/components/ContentEnhancer";
 import ReadingProgress from "@/components/ReadingProgress";
-import CustomLanding from "@/components/CustomLanding";
 import XiaomiLanding from "@/components/XiaomiLanding";
 import BrandLanding from "@/components/BrandLanding";
+import MobileRepairLanding from "@/components/MobileRepairLanding";
 import RelatedLinks from "@/components/RelatedLinks";
 import PillarArticles from "@/components/PillarArticles";
+import RepairTypeLinks from "@/components/RepairTypeLinks";
 import ContactPage from "@/components/ContactPage";
+import RepairRequestPage from "@/components/RepairRequestPage";
 import ServiceDeviceSceneLoader from "@/components/ServiceDeviceSceneLoader";
-
-// Flagship landing pages with a hand-tuned premium layout.
-const FLAGSHIP = new Set([
-  "/google-pixel-mobile-phone-repair/",
-  "/nothingphone-repair/",
-  "/motorola-mobile-repair-center/",
-]);
 
 // Brand "نمایندگی" pages rendered with the generic premium brand layout.
 const BRAND_PAGES = new Set([
@@ -50,6 +52,15 @@ const BRAND_PAGES = new Set([
   "/apple/",
   "/huawei/",
   "/samsung/",
+]);
+
+// Keep legacy URLs reachable as required, while keeping pages with no real
+// content out of Google's index: a duplicate homepage, an Elementor test page,
+// and an empty service page that was never written.
+const NOINDEX_PAGES = new Set([
+  "/home/",
+  "/تست-المنتور/",
+  "/home-appliances/air-conditioner-repair-agency/",
 ]);
 
 export function generateStaticParams() {
@@ -112,16 +123,25 @@ export async function generateMetadata({
   // (Setting openGraph here prevents the file-convention default from being
   //  inherited automatically, so we reference it explicitly.)
   const img = ogImageFor(post) || "/opengraph-image";
+  // Duplicate-title pages point at the version that should rank; the URL stays
+  // live so no inbound link breaks.
+  const canonicalPath =
+    post.path === "/home/" ? "/" : CANONICAL_TO[post.path] ?? post.path;
   return {
-    title: post.metaTitle,
+    // Database/Yoast titles are already complete. `absolute` prevents the
+    // root template from appending a second brand suffix to every legacy URL.
+    title: { absolute: post.metaTitle },
     description: post.metaDesc,
-    alternates: { canonical: encodeURI(post.path) },
+    alternates: { canonical: encodeURI(canonicalPath) },
+    robots: NOINDEX_PAGES.has(post.path)
+      ? { index: false, follow: true }
+      : { index: true, follow: true },
     openGraph: {
       type: post.type === "post" ? "article" : "website",
       title: post.metaTitle,
       description: post.metaDesc,
       images: [{ url: img, width: 1200, height: 630, alt: post.title }],
-      url: `${SITE.domain}${encodeURI(post.path)}`,
+      url: `${SITE.domain}${encodeURI(canonicalPath)}`,
     },
     twitter: {
       card: "summary_large_image",
@@ -171,9 +191,13 @@ export default async function Page({
   if (!post) notFound();
 
   if (post.path === "/contact/") return <ContactPage post={post} />;
+  if (post.path === "/online-repair-request/")
+    return <RepairRequestPage post={post} />;
   if (post.path === "/xiaomi/") return <XiaomiLanding post={post} />;
   if (BRAND_PAGES.has(post.path)) return <BrandLanding post={post} />;
-  if (FLAGSHIP.has(post.path)) return <CustomLanding post={post} />;
+  // Every mobile-repair service page (hub, brand page or model page) renders
+  // with the premium mobile landing (ui/Mobile Repair.dc.html).
+  if (mobileRepairInfo(post)) return <MobileRepairLanding post={post} />;
 
   const crumbs = breadcrumbs(post);
   const mins = readingMinutes(post.content);
@@ -192,6 +216,23 @@ export default async function Page({
       toc.push({ id, text });
       return `<h2 id="${id}">${t}</h2>`;
     });
+  }
+
+  // Service pages: split the long database HTML at every <h2> so each topic
+  // renders as its own numbered card instead of one unbroken wall of text.
+  // The markup inside each section is preserved byte-for-byte.
+  const svcSections: { id: string; html: string }[] = [];
+  let svcLead = "";
+  if (!isArticle) {
+    const parts = bodyHtml.split(/(?=<h2\b)/i);
+    if (parts.length && !/^<h2\b/i.test(parts[0])) svcLead = parts.shift() || "";
+    for (const part of parts) {
+      const idm = part.match(/<h2\b[^>]*id="([^"]+)"/i);
+      svcSections.push({
+        id: idm ? idm[1] : `sec-x${svcSections.length}`,
+        html: part,
+      });
+    }
   }
 
   const breadcrumbSchema = {
@@ -239,6 +280,8 @@ export default async function Page({
       }
     : null;
 
+  // Real prices for this exact page (brand + repair type), when available.
+  const pagePrices = !isArticle ? pricesForPage(post.title, post.path) : null;
   const serviceSchema = !isArticle
       ? {
         "@context": "https://schema.org",
@@ -254,10 +297,32 @@ export default async function Page({
           : `${SITE.domain}/logo.png`,
         url: `${SITE.domain}${encodeURI(post.path)}`,
         description: post.metaDesc,
+        ...(pagePrices
+          ? {
+              offers: {
+                "@type": "AggregateOffer",
+                priceCurrency: "IRT",
+                lowPrice: Math.min(...pagePrices.rows.map((p) => p.from)),
+                highPrice: Math.max(
+                  ...pagePrices.rows.map((p) => p.to ?? p.from),
+                ),
+                offerCount: pagePrices.rows.length,
+                availability: "https://schema.org/InStock",
+                url: `${SITE.domain}${encodeURI(post.path)}`,
+              },
+            }
+          : {}),
       }
     : null;
 
-  const faqs = extractFaq(post.content);
+  // HowTo markup for articles that genuinely describe a procedure. Steps come
+  // from the article's own ordered list or step headings.
+  const howTo = isArticle ? howToSchema(post, SITE.domain, SITE.authorId) : null;
+
+  const faqs = [
+    ...(clusterContentFor(post.path)?.faq ?? []),
+    ...extractFaq(post.content),
+  ];
   const faqSchema =
     faqs.length > 0
       ? {
@@ -298,6 +363,12 @@ export default async function Page({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
         />
       )}
+      {howTo && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(howTo) }}
+        />
+      )}
       {faqSchema && (
         <script
           type="application/ld+json"
@@ -323,19 +394,23 @@ export default async function Page({
               <h1 className="text-[28px] font-extrabold leading-[1.5] tracking-tight text-ink-900 sm:text-[38px]">
                 {post.title}
               </h1>
-              <div className="mt-5 flex items-center gap-3">
+              <Link
+                href="/team/"
+                className="mt-5 flex w-fit items-center gap-3 rounded-xl transition hover:opacity-80"
+                aria-label="مشاهده تیم فنی تعمیرات برتر"
+              >
                 <div className="grid h-[46px] w-[46px] place-items-center rounded-full bg-[#E4E7EC] text-base font-extrabold text-ink-500">
                   ب
                 </div>
                 <div>
                   <div className="text-[14.5px] font-extrabold text-ink-900">
-                    تیم تحریریه برتر
+                    تیم فنی تعمیرات برتر
                   </div>
                   <div className="mt-0.5 text-[12.5px] text-ink-300">
-                    کارشناس تعمیرات
+                    مشاهده تخصص تکنسین ها
                   </div>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
         </header>
@@ -421,10 +496,12 @@ export default async function Page({
                 alt={post.title}
                 width={896}
                 height={504}
+                fetchPriority="high"
                 className="aspect-[16/9] w-full rounded-3xl border border-line object-cover"
               />
             </div>
           )}
+          <ClusterContent path={post.path} />
           {toc.length >= 3 && (
             <nav
               aria-label="فهرست مطالب"
@@ -457,6 +534,7 @@ export default async function Page({
             dangerouslySetInnerHTML={{ __html: bodyHtml }}
           />
           <ContentEnhancer targetId="post-content" />
+          <RepairTypeLinks post={post} />
           <RelatedLinks post={post} />
           <BottomCta />
         </div>
@@ -473,6 +551,7 @@ export default async function Page({
                     alt={post.title}
                     width={896}
                     height={504}
+                    fetchPriority="high"
                     className="aspect-[16/9] w-full rounded-[26px] border border-line bg-white object-cover shadow-card"
                   />
                 </div>
@@ -503,20 +582,41 @@ export default async function Page({
                   </ol>
                 </nav>
               )}
-              <div className="rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8 lg:p-10">
-                <div
-                  id="post-content"
-                  className="prose-fa service-prose"
-                  dangerouslySetInnerHTML={{ __html: bodyHtml }}
-                />
+              <ClusterContent path={post.path} />
+              <PagePriceTable title={post.title} path={post.path} />
+              <div id="post-content" className="prose-fa service-prose svc-stack">
+                {svcLead.trim() && (
+                  <div
+                    className="svc-body svc-lead rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8"
+                    dangerouslySetInnerHTML={{ __html: svcLead }}
+                  />
+                )}
+                {svcSections.map((s) => (
+                  <section
+                    key={s.id}
+                    className="svc-section rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8"
+                  >
+                    <div
+                      className="svc-body"
+                      dangerouslySetInnerHTML={{ __html: s.html }}
+                    />
+                  </section>
+                ))}
+                {!svcLead.trim() && svcSections.length === 0 && (
+                  <div
+                    className="svc-body rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8 lg:p-10"
+                    dangerouslySetInnerHTML={{ __html: bodyHtml }}
+                  />
+                )}
               </div>
               <ContentEnhancer targetId="post-content" />
+              <RepairTypeLinks post={post} />
               <RelatedLinks post={post} />
             </div>
 
             {/* Sticky sidebar */}
-            <aside className="lg:sticky lg:top-24 lg:self-start">
-              <div className="space-y-5">
+            <aside className="sticky-sidebar">
+              <div className="sticky-sidebar-content space-y-5">
                 <ContactCard />
                 <div className="overflow-hidden rounded-2xl border border-line bg-white p-5 shadow-card">
                   <p className="text-sm font-extrabold text-ink-900">مراحل ثبت تعمیر</p>

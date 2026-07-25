@@ -18,10 +18,14 @@ import {
   type Post,
 } from "@/lib/content";
 import { SITE } from "@/lib/data";
+import { clusterContentFor } from "@/lib/cluster-content";
 import ContactCard from "@/components/ContactCard";
+import ClusterContent from "@/components/ClusterContent";
 import ContentEnhancer from "@/components/ContentEnhancer";
+import PagePriceTable from "@/components/PagePriceTable";
 import PillarArticles from "@/components/PillarArticles";
 import RelatedLinks from "@/components/RelatedLinks";
+import RepairTypeLinks from "@/components/RepairTypeLinks";
 import ServiceDeviceSceneLoader from "@/components/ServiceDeviceSceneLoader";
 
 type TocItem = { id: string; text: string };
@@ -145,7 +149,10 @@ function ServicesGrid({ post, children }: { post: Post; children: Post[] }) {
 export default function BrandLanding({ post }: { post: Post }) {
   const crumbs = breadcrumbs(post);
   const childPages = POSTS.filter((c) => c.parent === post.id);
-  const faqs = extractFaq(post.content);
+  const cluster = clusterContentFor(post.path);
+  // Hand-written cluster answers join the FAQs mined from the legacy body, so
+  // both show up in the FAQPage schema.
+  const faqs = [...(cluster?.faq ?? []), ...extractFaq(post.content)];
   const heroImg = post.image ? { src: post.image, alt: post.title } : firstImage(post.content);
   const { html: bodyHtml, toc } = withHeadingIds(post.content);
   const brandName = post.title.split(/\s+با\s+|\s*[|،–—-]\s*/)[0].trim();
@@ -174,7 +181,7 @@ export default function BrandLanding({ post }: { post: Post }) {
     name: post.title,
     serviceType: brandName || post.title,
     areaServed: { "@type": "City", name: SITE.city },
-    provider: { "@type": "LocalBusiness", "@id": SITE.domain, name: SITE.name },
+    provider: { "@type": "LocalBusiness", "@id": SITE.localBusinessId, name: SITE.name },
     image: heroImg?.src ? `${SITE.domain}${heroImg.src}` : `${SITE.domain}/logo.png`,
     url: `${SITE.domain}${encodeURI(post.path)}`,
     description: post.metaDesc,
@@ -333,6 +340,8 @@ export default function BrandLanding({ post }: { post: Post }) {
               </nav>
             )}
 
+            <ClusterContent path={post.path} />
+            <PagePriceTable title={post.title} path={post.path} />
             <div className="rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8 lg:p-10">
               <div
                 id="post-content"
@@ -341,11 +350,12 @@ export default function BrandLanding({ post }: { post: Post }) {
               />
             </div>
             <ContentEnhancer targetId="post-content" />
+            <RepairTypeLinks post={post} />
             <RelatedLinks post={post} />
           </main>
 
-          <aside className="lg:sticky lg:top-24 lg:self-start">
-            <div className="space-y-5">
+          <aside className="sticky-sidebar">
+            <div className="sticky-sidebar-content space-y-5">
               <ContactCard />
               <div className="overflow-hidden rounded-2xl border border-line bg-white p-5 shadow-card">
                 <p className="text-sm font-extrabold text-ink-900">شعب فعال</p>

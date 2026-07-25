@@ -1,4 +1,15 @@
 {
+  "headers": [
+    {
+      "source": "/:asset*\\.(js|css|woff2|png|jpg|jpeg|webp|avif|svg|ico)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
   "redirects": [
     {
       "source": "/:path*",
@@ -9,6 +20,21 @@
         }
       ],
       "destination": "https://bartar-repairer.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/xiaomi/mobile/xiaomi-phone-lcd-repair/",
+      "destination": "/xiaomi-phone-lcd-repair/",
+      "permanent": true
+    },
+    {
+      "source": "/samsung-mobile-phone-repairs-in-sattarkhan/",
+      "destination": "/samsung-mobile-phone-repairs-in-sattarkhan-2/",
+      "permanent": true
+    },
+    {
+      "source": "/iphone-xs-repair/",
+      "destination": "/iphone-xs-repairs/",
       "permanent": true
     },
     {

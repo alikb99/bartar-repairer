@@ -71,6 +71,9 @@ export default function ContentEnhancer({ targetId }: { targetId: string }) {
     }
 
     // ---------- 3) Model card grids ----------
+    // Runs per content container: the root itself, or — on sectioned service
+    // pages — every .svc-body card, since image/caption pairs sit at the top
+    // level of each section rather than of the root.
     try {
       const isCard = (el: Element | null) =>
         !!el &&
@@ -78,28 +81,32 @@ export default function ContentEnhancer({ targetId }: { targetId: string }) {
         el.nextElementSibling?.tagName === "P" &&
         !!el.nextElementSibling.querySelector("a[href]");
 
-      let child = root.firstElementChild;
-      while (child) {
-        if (isCard(child)) {
-          const grid = document.createElement("div");
-          grid.className = "model-grid";
-          child.parentElement?.insertBefore(grid, child);
+      const bodies = root.querySelectorAll<HTMLElement>(".svc-body");
+      const scopes = bodies.length ? Array.from(bodies) : [root];
+      for (const scope of scopes) {
+        let child = scope.firstElementChild;
+        while (child) {
+          if (isCard(child)) {
+            const grid = document.createElement("div");
+            grid.className = "model-grid";
+            child.parentElement?.insertBefore(grid, child);
 
-          let cur: Element | null = child;
-          while (cur && isCard(cur)) {
-            const img = cur as HTMLElement;
-            const cap = cur.nextElementSibling as HTMLElement;
-            const next = cap.nextElementSibling;
-            const card = document.createElement("div");
-            card.className = "model-card";
-            cap.classList.add("cap");
-            card.append(img, cap);
-            grid.append(card);
-            cur = next;
+            let cur: Element | null = child;
+            while (cur && isCard(cur)) {
+              const img = cur as HTMLElement;
+              const cap = cur.nextElementSibling as HTMLElement;
+              const next = cap.nextElementSibling;
+              const card = document.createElement("div");
+              card.className = "model-card";
+              cap.classList.add("cap");
+              card.append(img, cap);
+              grid.append(card);
+              cur = next;
+            }
+            child = grid.nextElementSibling;
+          } else {
+            child = child.nextElementSibling;
           }
-          child = grid.nextElementSibling;
-        } else {
-          child = child.nextElementSibling;
         }
       }
     } catch {

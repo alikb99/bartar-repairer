@@ -1,143 +1,181 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Phone, Check, BadgeCheck } from "lucide-react";
+import { Phone, Check, ArrowLeft, ShieldCheck, Wrench } from "lucide-react";
 import { SITE } from "@/lib/data";
+import { LIVE_REPAIR_TYPES } from "@/lib/repair-types";
+import Icon from "./Icon";
 
-const rise = {
-  hidden: { opacity: 0, y: 22 },
-  show: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: 0.08 * i, duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-  }),
-};
+const GUARANTEES = [
+  "۶ ماه گارانتی کتبی",
+  "قطعات اصل و درجه یک",
+  "عیب یابی رایگان",
+  "تحویل همان روز",
+];
 
-const GUARANTEES = ["گارانتی کتبی تعمیر", "قطعات اصل و درجه یک", "تحویل همان روز"];
+// The eight problems people actually search for. Links point at the existing
+// repair-type hubs so the hero adds internal links instead of dead decoration.
+// LIVE_ and not REPAIR_TYPES: hubs below the content threshold never build, and
+// slicing the raw list linked the homepage to a 404 (/repairs/charging-port-repair/).
+const QUICK = LIVE_REPAIR_TYPES.slice(0, 8);
 
 export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-[radial-gradient(1100px_520px_at_18%_-10%,rgba(218,37,28,.10),transparent_60%),linear-gradient(180deg,#FFFFFF_0%,#F5F6F8_100%)]">
-      {/* pulsing accent orb */}
       <div className="pointer-events-none absolute -left-20 -top-32 h-[420px] w-[420px] animate-btpulse rounded-full bg-[radial-gradient(circle,rgba(218,37,28,.16),transparent_70%)]" />
 
-      <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-4 pb-20 pt-16 sm:px-6 lg:grid-cols-[1.05fr_.95fr]">
-        {/* Copy */}
-        <div>
-          <motion.div custom={0} initial="hidden" animate="show" variants={rise}>
-            <span className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white px-4 py-2 shadow-[0_4px_14px_rgba(20,24,31,.05)]">
-              <span className="h-2 w-2 rounded-full bg-[#2BB673] shadow-[0_0_0_4px_rgba(43,182,115,.18)]" />
-              <span className="text-[13px] font-bold text-ink-700">
+      <div className="relative mx-auto max-w-[1280px] px-4 pb-8 pt-6 sm:px-6 lg:pb-12 lg:pt-10">
+        {/* ---- Copy + phone card ---- */}
+        <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_.9fr]">
+          <div>
+            <span className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3.5 py-1.5 shadow-card">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+              <span className="text-[12.5px] font-bold text-ink-700">
                 مرکز تخصصی تعمیر موبایل و لپ تاپ در {SITE.city}
               </span>
             </span>
-          </motion.div>
 
-          <motion.h1
-            custom={1}
-            initial="hidden"
-            animate="show"
-            variants={rise}
-            className="mt-6 text-[2rem] font-extrabold leading-[1.25] tracking-tight text-ink-900 sm:text-[42px] lg:text-[52px]"
-          >
-            تعمیر مطمئن دستگاهت،
-            <br />
-            با <span className="text-accent">گارانتی واقعی</span> و قطعات اصل
-          </motion.h1>
+            <h1 className="mt-4 text-[1.75rem] font-extrabold leading-[1.3] tracking-tight text-ink-900 sm:text-[38px] lg:text-[44px]">
+              تعمیر مطمئن دستگاهت،
+              <br />
+              با <span className="text-accent">گارانتی واقعی</span> و قطعات اصل
+            </h1>
 
-          <motion.p
-            custom={2}
-            initial="hidden"
-            animate="show"
-            variants={rise}
-            className="mt-5 max-w-[520px] text-[17px] leading-9 text-ink-500"
-          >
-            از تعویض گلس و باتری تا تعمیر مادربرد؛ تمام برندهای موبایل و لپ تاپ را با
-            عیب یابی رایگان و تحویل سریع تعمیر می کنیم.
-          </motion.p>
+            <p className="mt-3 max-w-[540px] text-[15px] leading-7 text-ink-500">
+              از تعویض گلس و باتری تا تعمیر مادربرد؛ تمام برندهای موبایل و لپ تاپ
+              را با عیب یابی رایگان تعمیر می کنیم.
+            </p>
 
-          <motion.div
-            custom={3}
-            initial="hidden"
-            animate="show"
-            variants={rise}
-            className="mt-8 flex flex-wrap items-center gap-3"
-          >
-            <a
-              href={SITE.phoneHref}
-              className="flex items-center gap-2.5 rounded-[14px] bg-accent px-7 py-4 text-[16px] font-bold text-white shadow-[0_10px_26px_rgba(218,37,28,.30)] transition hover:-translate-y-0.5 hover:bg-accent-deep hover:shadow-[0_14px_30px_rgba(218,37,28,.34)]"
-            >
-              <Phone className="h-[19px] w-[19px]" />
-              <span dir="ltr">تماس فوری: {SITE.phone}</span>
-            </a>
-            <Link
-              href="#services"
-              className="flex items-center gap-2 rounded-[14px] border-[1.5px] border-hairline bg-white px-6 py-4 text-[16px] font-bold text-ink-900 transition hover:border-ink-900 hover:bg-ink-900 hover:text-white"
-            >
-              مشاهده خدمات
-            </Link>
-          </motion.div>
+            <div className="mt-5 grid grid-cols-1 gap-2.5 sm:flex sm:flex-wrap sm:items-center">
+              <a
+                href={SITE.phoneHref}
+                className="flex w-full items-center justify-center gap-2.5 rounded-[14px] bg-accent px-6 py-3.5 text-[15.5px] font-bold text-white shadow-[0_10px_26px_rgba(218,37,28,.30)] transition duration-normal ease-premium hover:-translate-y-0.5 hover:bg-accent-deep sm:w-auto"
+              >
+                <Phone className="h-[18px] w-[18px]" />
+                <span dir="ltr">{SITE.phone}</span>
+              </a>
+              <Link
+                href="/online-repair-request/"
+                className="flex w-full items-center justify-center gap-2 rounded-[14px] border-[1.5px] border-hairline bg-white px-5 py-3.5 text-[15.5px] font-bold text-ink-900 transition duration-normal ease-premium hover:border-ink-900 hover:bg-ink-900 hover:text-white sm:w-auto"
+              >
+                <Wrench className="h-[17px] w-[17px]" />
+                ثبت درخواست آنلاین
+              </Link>
+            </div>
 
-          <motion.div
-            custom={4}
-            initial="hidden"
-            animate="show"
-            variants={rise}
-            className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3"
+            <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-2.5 sm:flex sm:flex-wrap sm:gap-x-6">
+              {GUARANTEES.map((g) => (
+                <div
+                  key={g}
+                  className="flex items-center gap-1.5 text-[13px] font-semibold text-ink-700"
+                >
+                  <Check
+                    className="h-4 w-4 shrink-0 text-accent"
+                    strokeWidth={3}
+                  />
+                  {g}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Device mock — decorative, desktop only. No text baked into the
+              screens: the previous version wrote "تعمیر موبایل" onto the mock,
+              which read as an unfinished placeholder. */}
+          <div
+            aria-hidden
+            className="relative hidden h-[330px] items-center justify-center lg:flex"
           >
-            {GUARANTEES.map((g) => (
-              <div key={g} className="flex items-center gap-2 text-sm font-semibold text-ink-700">
-                <Check className="h-5 w-5 text-[#2BB673]" strokeWidth={2.4} />
-                {g}
+            <div className="absolute h-[300px] w-[300px] rounded-full bg-[radial-gradient(circle,rgba(218,37,28,.14),transparent_68%)]" />
+
+            <div className="absolute bottom-6 left-[6%] w-[300px] animate-btfloat">
+              {/* lid */}
+              <div className="rounded-t-[14px] rounded-b-[4px] bg-gradient-to-b from-ink-850 to-ink-925 p-[7px] pb-2.5 shadow-float">
+                <div className="relative h-[172px] overflow-hidden rounded-[8px] bg-[linear-gradient(150deg,#2A2F39_0%,#171A21_65%)]">
+                  {/* abstract screen content — suggests a diagnostics panel */}
+                  <div className="absolute inset-0 p-3.5">
+                    <div className="h-1.5 w-10 rounded-full bg-accent/70" />
+                    <div className="mt-3 h-1.5 w-32 rounded-full bg-white/12" />
+                    <div className="mt-2 h-1.5 w-24 rounded-full bg-white/8" />
+                    <div className="mt-5 flex gap-2">
+                      <div className="h-11 flex-1 rounded-md bg-white/[.055]" />
+                      <div className="h-11 flex-1 rounded-md bg-white/[.055]" />
+                      <div className="h-11 flex-1 rounded-md bg-accent/15" />
+                    </div>
+                  </div>
+                  {/* glass sheen */}
+                  <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_36%,rgba(255,255,255,.07)_46%,transparent_56%)]" />
+                </div>
               </div>
-            ))}
-          </motion.div>
+              {/* base: front edge catches light, notch centred */}
+              <div className="-mx-4 h-3.5 rounded-b-[13px] bg-[linear-gradient(180deg,#3A4150_0%,#22262F_55%,#171A21_100%)] shadow-lift">
+                <div className="mx-auto h-1 w-14 rounded-b-full bg-ink-950/60" />
+              </div>
+              {/* ground shadow so it sits in space instead of floating flat */}
+              <div className="mx-auto mt-2 h-4 w-[78%] rounded-[50%] bg-[radial-gradient(ellipse,rgba(19,22,28,.22),transparent_70%)] blur-[2px]" />
+            </div>
+
+            <div className="absolute right-[12%] top-2 z-[2] w-[166px] animate-btfloat2">
+              <div className="relative rounded-[32px] bg-[linear-gradient(150deg,#3A4150_0%,#171A21_38%)] p-[3px] shadow-float">
+                {/* side button */}
+                <span className="absolute -left-[2px] top-[86px] h-9 w-[3px] rounded-l-sm bg-ink-850" />
+                <div className="rounded-[29px] bg-ink-950 p-1.5">
+                  <div className="relative h-[318px] overflow-hidden rounded-[24px] bg-[linear-gradient(160deg,#E0473F_0%,#DA251C_45%,#B3170F_100%)]">
+                    <span className="absolute left-1/2 top-1.5 z-[2] h-[18px] w-[54px] -translate-x-1/2 rounded-full bg-ink-950" />
+                    {/* inner bezel highlight + sheen */}
+                    <div className="absolute inset-0 rounded-[24px] ring-1 ring-inset ring-white/15" />
+                    <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_38%,rgba(255,255,255,.18)_48%,transparent_58%)]" />
+                  </div>
+                </div>
+              </div>
+              <div className="mx-auto mt-3 h-4 w-[70%] rounded-[50%] bg-[radial-gradient(ellipse,rgba(19,22,28,.26),transparent_70%)] blur-[2px]" />
+            </div>
+
+            <div className="absolute bottom-2 right-[4%] z-[3] flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-soft">
+              <div className="grid h-10 w-10 place-items-center rounded-xl bg-accent-tint text-accent">
+                <ShieldCheck className="h-[21px] w-[21px]" />
+              </div>
+              <div>
+                <div className="text-[17px] font-extrabold leading-none text-ink-900">
+                  ۴۸٬۰۰۰+
+                </div>
+                <div className="mt-1 text-xs text-ink-500">تعمیر موفق</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Visual: floating devices */}
-        <motion.div
-          custom={2}
-          initial="hidden"
-          animate="show"
-          variants={rise}
-          className="relative hidden h-[480px] items-center justify-center lg:flex"
-        >
-          <div className="absolute h-[340px] w-[340px] rounded-full bg-[radial-gradient(circle,rgba(218,37,28,.14),transparent_68%)]" />
-
-          {/* Laptop */}
-          <div className="absolute bottom-16 left-[8%] w-[330px] animate-btfloat">
-            <div className="rounded-t-[14px] rounded-b-[4px] bg-[#171A21] p-2.5 pb-3 shadow-[0_30px_60px_rgba(20,24,31,.28)]">
-              <div className="flex h-[192px] items-center justify-center overflow-hidden rounded-[7px] bg-[repeating-linear-gradient(135deg,#23272F,#23272F_11px,#262B34_11px,#262B34_22px)]">
-                <span className="font-mono text-[11px] text-[#8A92A0]">تعمیر لپ تاپ</span>
-              </div>
-            </div>
-            <div className="-mx-3.5 h-3 rounded-b-[12px] bg-gradient-to-b from-[#2A2F39] to-[#1B1F27] shadow-[0_14px_24px_rgba(20,24,31,.22)]" />
+        {/* ---- Quick repair picker: the first screen now answers "what's
+             wrong with my device?" instead of ending at a CTA. ---- */}
+        <div className="mt-6 lg:mt-10">
+          <div className="mb-3.5 flex items-end justify-between gap-4">
+            <h2 className="text-[17px] font-extrabold text-ink-900 sm:text-xl">
+              مشکل دستگاهت چیست؟
+            </h2>
+            <Link
+              href="/repairs/"
+              className="flex shrink-0 items-center gap-1.5 text-[13px] font-bold text-accent"
+            >
+              همه خدمات تعمیر
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
           </div>
 
-          {/* Phone */}
-          <div className="absolute right-[14%] top-9 z-[2] w-[184px] animate-btfloat2">
-            <div className="rounded-[30px] bg-[#171A21] p-2.5 shadow-[0_34px_70px_rgba(20,24,31,.34)]">
-              <div className="relative flex h-[350px] items-center justify-center overflow-hidden rounded-[23px] bg-[repeating-linear-gradient(135deg,#DA251C,#DA251C_12px,#c8211a_12px,#c8211a_24px)]">
-                <span className="absolute left-1/2 top-2 h-4 w-[62px] -translate-x-1/2 rounded-b-[12px] bg-[#171A21]" />
-                <span className="text-center font-mono text-[11px] text-white/85">
-                  تعمیر موبایل
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
+            {QUICK.map((t) => (
+              <Link
+                key={t.slug}
+                href={`/repairs/${t.slug}/`}
+                className="group flex min-h-[68px] items-center gap-3 rounded-2xl border border-line bg-white p-3 shadow-card transition duration-normal ease-premium hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-lift"
+              >
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent-tint text-accent transition duration-normal group-hover:bg-accent group-hover:text-white">
+                  <Icon name={t.icon} className="h-[21px] w-[21px]" />
                 </span>
-              </div>
-            </div>
+                <span className="text-[13px] font-bold leading-[1.6] text-ink-900">
+                  {t.title}
+                </span>
+              </Link>
+            ))}
           </div>
-
-          {/* Floating badge */}
-          <div className="absolute bottom-9 right-[6%] z-[3] flex items-center gap-3 rounded-2xl bg-white px-4 py-3.5 shadow-[0_18px_40px_rgba(20,24,31,.16)]">
-            <div className="grid h-11 w-11 place-items-center rounded-xl bg-[rgba(43,182,115,.12)] text-[#2BB673]">
-              <BadgeCheck className="h-[22px] w-[22px]" />
-            </div>
-            <div>
-              <div className="text-[18px] font-extrabold leading-none">۴۸٬۰۰۰+</div>
-              <div className="mt-1 text-xs text-ink-500">تعمیر موفق</div>
-            </div>
-          </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

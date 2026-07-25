@@ -106,7 +106,7 @@ export default function CustomLanding({ post }: { post: Post }) {
     name: post.title,
     serviceType: post.title,
     areaServed: { "@type": "City", name: SITE.city },
-    provider: { "@type": "LocalBusiness", "@id": SITE.domain, name: SITE.name },
+    provider: { "@type": "LocalBusiness", "@id": SITE.localBusinessId, name: SITE.name },
     image: post.image ? `${SITE.domain}${post.image}` : `${SITE.domain}/logo.png`,
     url: `${SITE.domain}${encodeURI(post.path)}`,
     description: post.metaDesc,
@@ -227,8 +227,8 @@ export default function CustomLanding({ post }: { post: Post }) {
           </div>
 
           {/* Sidebar */}
-          <aside className="lg:sticky lg:top-24 lg:self-start">
-            <div className="space-y-5">
+          <aside className="sticky-sidebar">
+            <div className="sticky-sidebar-content space-y-5">
               {toc.length > 2 && (
                 <nav className="rounded-2xl border border-line bg-white p-5">
                   <p className="flex items-center gap-2 text-sm font-bold text-ink-900">

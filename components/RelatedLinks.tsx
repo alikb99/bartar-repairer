@@ -7,6 +7,8 @@ import {
   clusterSiblings,
   pillarFor,
   pageCluster,
+  servicePillarFor,
+  serviceSiblings,
   type Post,
 } from "@/lib/content";
 
@@ -19,6 +21,7 @@ export default function RelatedLinks({ post }: { post: Post }) {
   // Same-brand cluster for hub pages: up-link to the brand hub + sibling
   // device hubs (e.g. /samsung/mobile/ → /samsung/, /samsung/tv/ …).
   const cluster = post.type === "page" ? pageCluster(post) : { parent: null, siblings: [] };
+  const servicePillar = post.type === "page" ? servicePillarFor(post) : null;
 
   let title = "خدمات مرتبط";
   let items: { title: string; slug: string }[] = [];
@@ -45,6 +48,16 @@ export default function RelatedLinks({ post }: { post: Post }) {
         title: `مشاهده صفحه نمایندگی: ${cluster.parent.title}`,
         path: cluster.parent.path,
       };
+  } else if (servicePillar) {
+    title = `سایر خدمات ${servicePillar.label}`;
+    items = serviceSiblings(post, 8).map((p) => ({
+      title: p.title,
+      slug: p.path,
+    }));
+    upLink = {
+      title: `مشاهده صفحه اصلی: ${servicePillar.label}`,
+      path: servicePillar.path,
+    };
   } else if (related) {
     title = `سایر خدمات ${related.title}`;
     items = related.items.slice(0, 8);

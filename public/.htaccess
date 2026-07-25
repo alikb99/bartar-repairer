@@ -1,6 +1,56 @@
 RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.bartar-repairer\.com$ [NC]
+RewriteRule ^ https://bartar-repairer.com%{REQUEST_URI} [R=301,L]
 RewriteRule ^wp-content/uploads/[0-9]{4}/[0-9]{2}/(.+)\.aso\.bak$ /logo.png [R=301,L]
 
+# Compress text responses (HTML/CSS/JS/JSON/SVG). With a ~1.2s TTFB on this
+# host, smaller transfers are the main lever we control for FCP/LCP.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/json application/xml application/rss+xml
+  AddOutputFilterByType DEFLATE image/svg+xml application/ld+json font/ttf
+</IfModule>
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/css text/xml
+  AddOutputFilterByType BROTLI_COMPRESS application/javascript application/json
+  AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(?:js|css|woff2|png|jpg|jpeg|webp|avif|svg)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Favicons: cacheable but re-checkable so a replaced icon propagates.
+  <FilesMatch "\.(?:ico)$|^(?:icon-\d+|apple-icon)\.png$">
+    Header set Cache-Control "public, max-age=86400"
+  </FilesMatch>
+  # HTML: serve fresh after deploys while letting repeat views revalidate.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+  # The repair-request handler must never be cached.
+  <FilesMatch "\.php$">
+    Header set Cache-Control "no-store"
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/avif "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
+
+Redirect 301 /home/ /
+Redirect 301 /xiaomi/mobile/xiaomi-phone-lcd-repair/ /xiaomi-phone-lcd-repair/
+Redirect 301 /samsung-mobile-phone-repairs-in-sattarkhan/ /samsung-mobile-phone-repairs-in-sattarkhan-2/
+Redirect 301 /iphone-xs-repair/ /iphone-xs-repairs/
 Redirect 301 /samsung-tab-a9-repairs/ /samsung-tab-a9-repair/
 Redirect 301 /xiaomi/mobile/repair-poco-x6-pro/ /xiaomi/mobile/repair-poco-x6pro/
 Redirect 301 /acer-laptop-graphics-card-repair/ /acer-laptop-graphics-cardrepair/

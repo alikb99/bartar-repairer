@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import Faq from "@/components/Faq";
+import Reviews from "@/components/Reviews";
 import {
   Stats,
   Services,
   Brands,
   WhyUs,
   Steps,
-  Testimonials,
   Articles,
   CTA,
 } from "@/components/Sections";
@@ -73,7 +73,12 @@ export default function Home() {
       <Brands />
       <WhyUs />
       <Steps />
-      <Testimonials />
+      {/* Renders only once real customer reviews exist in lib/pricing.ts. The
+          previous placeholder testimonials (invented names, invented quotes)
+          were removed — presenting them as real customer feedback misleads
+          visitors, and adding rating schema to them would breach Google's
+          structured-data policy. */}
+      <Reviews />
       <Articles />
       <Faq />
       <CTA />

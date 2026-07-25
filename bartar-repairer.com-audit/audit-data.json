@@ -1,0 +1,296 @@
+{
+  "summary": {
+    "health_score": 76,
+    "business_type": "Local Service — electronics repair, two physical branches in Tehran",
+    "audit_scope": "15 sample pages of 893 sitemap URLs, robots.txt, sitemap.xml, HTTP headers, llms.txt",
+    "limitations": [
+      "seo-audit skill ships no scripts/ directory — render_page.py, google_auth.py and backlinks_auth.py were unavailable",
+      "No CrUX field data, no Search Console indexation data, no backlink profile",
+      "Live site audited; uncommitted local changes from 2026-07-19 are not reflected"
+    ],
+    "top_findings": [
+      "TTFB 1.04-1.11s on static HTML — caps LCP across all 893 pages",
+      "No security headers at all (HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy)",
+      "~40 images missing alt text; 25 of 51 (49%) on the mobile hub page",
+      "/contact/ title is 4 characters — wasted SERP slot for a local business",
+      "Hub pages emit 421KB raw HTML with heavy DOM (58 images, 35 H2s on /samsung/mobile/)"
+    ],
+    "quick_wins": [
+      "Set Cache-Control and enable Brotli on nginx",
+      "Add Persian alt text to ~40 brand logo images",
+      "Rewrite /contact/ title and meta",
+      "Add four security headers to nginx config",
+      "Remove emoji from /nothingphone-repair/ title"
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 78,
+      "weight": 0.22,
+      "what_works": [
+        "All 15 sampled pages return 200 with no redirect chains",
+        "Self-referencing canonical correct on every page",
+        "robots meta is index, follow sitewide",
+        "sitemap.xml lists 893 URLs with priority, lastmod, changefreq",
+        "Exactly one H1 per page across all samples",
+        "gzip active: /samsung/ compresses 421KB to 80KB"
+      ],
+      "findings": [
+        {
+          "title": "TTFB around 1.1s on static HTML",
+          "severity": "Critical",
+          "description": "Three consecutive homepage measurements: 1.114s, 1.042s, 1.099s to first byte. Interior pages 253-551ms. For a fully static export served by nginx this originates in hosting, not the application.",
+          "recommendation": "Put the domain behind a CDN with in-country nodes, or move to faster hosting. Target sub-200ms. No front-end work can bring LCP under 2.5s while TTFB is ~1s."
+        },
+        {
+          "title": "No security headers present",
+          "severity": "High",
+          "description": "Server response carries only Server, Vary and Cache-Control. HSTS, X-Content-Type-Options, X-Frame-Options and Referrer-Policy are all absent.",
+          "recommendation": "Add the four headers to the nginx server block with the always flag."
+        },
+        {
+          "title": "HTML cache policy forces revalidation",
+          "severity": "Medium",
+          "description": "Cache-Control: public, max-age=0, must-revalidate on HTML. Combined with ~1s TTFB every repeat visit pays full latency.",
+          "recommendation": "Use public, max-age=600, stale-while-revalidate=86400."
+        },
+        {
+          "title": "Hashed static assets cached for only 14 days",
+          "severity": "Medium",
+          "description": "/_next/static/chunks/webpack-10031099b5931091.js returns max-age=1209600 despite having a content hash in the filename.",
+          "recommendation": "Set max-age=31536000, immutable for /_next/static/."
+        },
+        {
+          "title": "Brotli not enabled",
+          "severity": "Low",
+          "description": "Server negotiates gzip only. Brotli is typically 15-20% smaller, material on 400KB HTML documents.",
+          "recommendation": "Enable brotli for text/html, css, js, json, svg."
+        }
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "score": 72,
+      "weight": 0.23,
+      "what_works": [
+        "Hub pages run 4,359 to 10,996 words, deeper than most competitors",
+        "Rich heading structure: 35 H2s on /samsung/mobile/, 27 on /samsung/",
+        "FAQ section on nearly every service page, aligned with FAQPage schema",
+        "NAP consistent sitewide across two branches"
+      ],
+      "findings": [
+        {
+          "title": "Generic boilerplate on the money pages",
+          "severity": "High",
+          "description": "/samsung/ carries 10,749 words including sections like '9 reasons we are the best choice' built from unverifiable claims. That page holds 15,430 monthly impressions but sits at position ~17, consistent with Helpful Content demotion of high-volume low-specificity copy.",
+          "recommendation": "Partially addressed 2026-07-19 (not yet deployed): a direct-answer block, facts table, real price ranges for 79 models and a 'when we do not recommend repair' section now sit above the legacy copy. Continue by trimming the unverifiable claim sections."
+        },
+        {
+          "title": "Blog listing page is thin",
+          "severity": "Medium",
+          "description": "/blog/ has 679 words and zero H2 elements.",
+          "recommendation": "Group posts under topical H2s with a short intro per group."
+        },
+        {
+          "title": "No real customer reviews",
+          "severity": "Medium",
+          "description": "CUSTOMER_REVIEWS in lib/pricing.ts is intentionally empty so no aggregateRating is emitted. Correct call, but the site lacks a strong local signal competitors have.",
+          "recommendation": "Collect genuine reviews post-handover or via Google Business Profile, then enable aggregateRating from real data only."
+        },
+        {
+          "title": "Author signal is generic",
+          "severity": "Low",
+          "description": "Person schema points to a general editorial identity rather than named technicians with verifiable expertise.",
+          "recommendation": "Build a technician team page using the real workshop photo library."
+        }
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 80,
+      "weight": 0.2,
+      "what_works": [
+        "Most titles fall in the 54-71 character range",
+        "Meta descriptions 104-149 characters, none missing",
+        "Titles lead with the keyword then a concrete benefit",
+        "Open Graph and Twitter Card present on all sampled pages",
+        "BreadcrumbList schema on every interior page"
+      ],
+      "findings": [
+        {
+          "title": "/contact/ title is 4 characters",
+          "severity": "High",
+          "description": "Title is simply the word for 'contact'. For a two-branch local business this page should compete for address and phone queries that appear in the 438-keyword list.",
+          "recommendation": "Rewrite to include both branch names and the business name."
+        },
+        {
+          "title": "Hisense title short and uses low-volume spelling",
+          "severity": "Medium",
+          "description": "30-character title spelling the term without a space, while the 171-impression query uses the spaced form.",
+          "recommendation": "Fixed 2026-07-19, pending deploy."
+        },
+        {
+          "title": "Duplicated word in Motorola title",
+          "severity": "Medium",
+          "description": "Title repeats the same word twice. This page is the site's best performer at position 3 with 20.59% CTR.",
+          "recommendation": "Remove the duplicate only. Do not restructure a page that is already winning."
+        },
+        {
+          "title": "Emoji in title tag",
+          "severity": "Low",
+          "description": "/nothingphone-repair/ includes a phone emoji, contrary to the project's own content rules in CLAUDE.md.",
+          "recommendation": "Strip the emoji."
+        }
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 90,
+      "weight": 0.1,
+      "what_works": [
+        "No JSON-LD parse errors across 15 sampled pages",
+        "LocalBusiness, Organization, WebSite, Person on every page",
+        "BreadcrumbList on 14 pages, Service on 10, FAQPage on 9",
+        "HowTo on the repair request page, CollectionPage plus ItemList on the blog index"
+      ],
+      "findings": [
+        {
+          "title": "Price tables not marked up as Offer",
+          "severity": "Medium",
+          "description": "260 real price rows render as HTML tables with no Offer or AggregateOffer markup.",
+          "recommendation": "Emit AggregateOffer with minPrice and maxPrice per model to earn rich results and AI citations."
+        },
+        {
+          "title": "aggregateRating absent",
+          "severity": "Low",
+          "description": "Deliberate and correct while no genuine reviews exist.",
+          "recommendation": "Enable once real reviews are collected. Never populate from invented data."
+        }
+      ]
+    },
+    {
+      "name": "Performance (CWV)",
+      "score": 62,
+      "weight": 0.1,
+      "what_works": [
+        "Explicit width and height on 100% of images — CLS effectively protected",
+        "Lazy loading active on below-fold images",
+        "WebP format sitewide"
+      ],
+      "findings": [
+        {
+          "title": "TTFB sets the LCP ceiling",
+          "severity": "Critical",
+          "description": "At ~1s to first byte, LCP cannot realistically drop below 1.5-2s even with perfect rendering, and will exceed 2.5s on Iranian mobile networks.",
+          "recommendation": "Same fix as the technical finding: CDN or faster origin."
+        },
+        {
+          "title": "Heavy DOM on hub pages",
+          "severity": "Medium",
+          "description": "/samsung/mobile/ renders 58 images and 35 H2s in one document, 416KB raw HTML.",
+          "recommendation": "Collapse lower sections into accordions to cut DOM cost without removing content."
+        }
+      ]
+    },
+    {
+      "name": "AI Search Readiness",
+      "score": 82,
+      "weight": 0.1,
+      "what_works": [
+        "robots.txt explicitly allows GPTBot, OAI-SearchBot, ChatGPT-User, PerplexityBot, ClaudeBot, Claude-User, Google-Extended, Applebot-Extended and CCBot",
+        "/llms.txt returns 200",
+        "FAQPage schema on 9 pages",
+        "Content present in rendered HTML via static export, no JS dependency"
+      ],
+      "findings": [
+        {
+          "title": "Pages did not open with a direct answer",
+          "severity": "Medium",
+          "description": "Pages opened with brand introductions rather than self-contained quotable statements.",
+          "recommendation": "Fixed 2026-07-19 on 8 target pages, pending deploy."
+        },
+        {
+          "title": "Numbers locked inside tables",
+          "severity": "Medium",
+          "description": "Prices existed only in HTML table cells, which models cite less readily than in-sentence figures.",
+          "recommendation": "Fixed 2026-07-19: real price ranges now appear inside prose, pending deploy."
+        }
+      ]
+    },
+    {
+      "name": "Images",
+      "score": 60,
+      "weight": 0.05,
+      "what_works": [
+        "WebP sitewide",
+        "Explicit dimensions on every image",
+        "Lazy loading below the fold"
+      ],
+      "findings": [
+        {
+          "title": "Roughly 40 images missing alt text",
+          "severity": "High",
+          "description": "Mobile hub 25 of 51 (49%), /samsung/mobile/ 10 of 58, /samsung/ 9 of 35, /apple/ 2 of 24, /hp/lap-top/ 2 of 19, /smart-watch-repair/ 1 of 17. Affected files are brand logos: realme.webp, oppo.webp, oneplus.webp, vivo.webp, samsung.webp, apple-1-150x150.webp.",
+          "recommendation": "Script alt injection into content/posts.json by filename match."
+        }
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {
+        "name": "Phase 0: Deploy completed work",
+        "timeframe": "Today",
+        "items": [
+          "Commit and deploy the cluster content blocks on 8 target pages",
+          "Deploy 14 workshop photos (1.8MB)",
+          "Deploy Hisense and Motorola title/meta fixes"
+        ]
+      },
+      {
+        "name": "Phase 1: Critical Fixes",
+        "timeframe": "Week 1",
+        "items": [
+          "Reduce TTFB below 200ms via CDN or faster origin",
+          "Add HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy",
+          "Fix Cache-Control policy and enable Brotli"
+        ]
+      },
+      {
+        "name": "Phase 2: High-Impact Improvements",
+        "timeframe": "Weeks 2-3",
+        "items": [
+          "Add Persian alt text to ~40 brand logo images",
+          "Rewrite /contact/ title and meta for local queries",
+          "Remove emoji and duplicated word from two titles",
+          "Strengthen /blog/ with topical H2 grouping"
+        ]
+      },
+      {
+        "name": "Phase 3: Content & Authority",
+        "timeframe": "Month 2",
+        "items": [
+          "Collect genuine customer reviews, then enable aggregateRating",
+          "Mark up the 260-row price data with AggregateOffer",
+          "Build a technician team page from the real photo library",
+          "Cover remaining clusters: Acer, MSI, Asus, Huawei, Lenovo, Nothing Phone"
+        ]
+      },
+      {
+        "name": "Phase 4: Monitoring & Iteration",
+        "timeframe": "Ongoing",
+        "items": [
+          "Connect Google Search Console and CrUX APIs for field data",
+          "Capture a drift baseline before further changes",
+          "Track the Samsung cluster monthly (15,430 impressions, position 17)",
+          "Measure whether the new content blocks moved CTR"
+        ]
+      }
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "screenshots_dir": "screenshots/"
+  }
+}

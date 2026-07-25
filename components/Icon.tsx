@@ -13,6 +13,18 @@ import {
   Home,
   Info,
   Phone,
+  Stethoscope,
+  BatteryCharging,
+  Camera,
+  CircuitBoard,
+  Cpu,
+  Droplets,
+  Fan,
+  Keyboard,
+  Layers,
+  PlugZap,
+  Volume2,
+  Wrench,
   type LucideProps,
 } from "lucide-react";
 
@@ -31,6 +43,18 @@ const MAP = {
   Home,
   Info,
   Phone,
+  Stethoscope,
+  BatteryCharging,
+  Camera,
+  CircuitBoard,
+  Cpu,
+  Droplets,
+  Fan,
+  Keyboard,
+  Layers,
+  PlugZap,
+  Volume2,
+  Wrench,
 } as const;
 
 export type IconName = keyof typeof MAP;

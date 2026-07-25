@@ -67,7 +67,7 @@ export function Stats() {
 /* ---------------- Services (3 big cards) ---------------- */
 export function Services() {
   return (
-    <section id="services" className="mx-auto max-w-[1280px] px-4 pb-6 pt-20 sm:px-6 lg:pt-24">
+    <section id="services" className="defer-render mx-auto max-w-[1280px] px-4 pb-6 pt-20 sm:px-6 lg:pt-24">
       <Reveal>
         <SectionHead
           eyebrow="خدمات ما"
@@ -155,7 +155,7 @@ function BrandGrid({ label, items }: { label: string; items: { title: string; sl
 
 export function Brands() {
   return (
-    <section className="mx-auto max-w-[1280px] px-4 py-20 sm:px-6">
+    <section className="defer-render mx-auto max-w-[1280px] px-4 py-20 sm:px-6">
       <Reveal>
         <SectionHead eyebrow="برندهای تحت پوشش" title="تعمیر تخصصی همه برندها" />
       </Reveal>
@@ -181,7 +181,7 @@ const WHY = [
 
 export function WhyUs() {
   return (
-    <section className="border-y border-line bg-white">
+    <section className="defer-render border-y border-line bg-white">
       <div className="mx-auto max-w-[1280px] px-4 py-20 sm:px-6 lg:py-24">
         <Reveal>
           <SectionHead eyebrow="چرا برتر؟" title="تعمیری که خیالت را راحت می کند" />
@@ -207,7 +207,7 @@ export function WhyUs() {
 /* ---------------- Steps ---------------- */
 export function Steps() {
   return (
-    <section className="mx-auto max-w-[1280px] px-4 py-20 sm:px-6 lg:py-24">
+    <section className="defer-render mx-auto max-w-[1280px] px-4 py-20 sm:px-6 lg:py-24">
       <Reveal>
         <SectionHead eyebrow="مراحل کار" title="از تماس تا تحویل، در ۴ قدم" />
       </Reveal>
@@ -234,67 +234,11 @@ export function Steps() {
   );
 }
 
-/* ---------------- Testimonials ---------------- */
-const REVIEWS = [
-  {
-    text: "گوشی سامسونگم آب خورده بود و همه گفته بودن غیرقابل تعمیره. تو برتر همان روز درستش کردن. واقعاً حرفه ای بودن.",
-    initial: "م",
-    name: "مهدی رضایی",
-    meta: "تعمیر برد سامسونگ",
-  },
-  {
-    text: "صفحه لپ تاپ ایسوسم رو تعویض کردن، قیمت منصفانه و کارشون تمیز بود. برگه گارانتی هم دادن.",
-    initial: "س",
-    name: "سارا کریمی",
-    meta: "تعویض ال سی دی لپ تاپ",
-  },
-  {
-    text: "برای تعمیر آیفونم رفتم، برخورد و راهنماییشون عالی بود و دقیقاً همان چیزی که گفتن انجام شد.",
-    initial: "ع",
-    name: "علی محمدی",
-    meta: "تعویض باتری آیفون",
-  },
-];
-
-export function Testimonials() {
-  return (
-    <section className="border-t border-line bg-white">
-      <div className="mx-auto max-w-[1280px] px-4 py-20 sm:px-6 lg:py-24">
-        <Reveal>
-          <SectionHead eyebrow="نظر مشتریان" title="اعتماد بیش از ۴۸ هزار مشتری" />
-        </Reveal>
-        <div className="mt-12 grid gap-5 md:grid-cols-3">
-          {REVIEWS.map((r, i) => (
-            <Reveal key={r.name} delay={(i % 3) * 0.08}>
-              <div className="h-full rounded-[20px] border border-line bg-paper p-7">
-                <div className="mb-4 flex gap-0.5 text-[#F5A623]">
-                  {Array.from({ length: 5 }).map((_, k) => (
-                    <Star key={k} className="h-[18px] w-[18px] fill-current" />
-                  ))}
-                </div>
-                <p className="text-[15px] leading-8 text-ink-800">{r.text}</p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div className="grid h-[46px] w-[46px] place-items-center rounded-full bg-[#E4E7EC] text-base font-extrabold text-ink-500">
-                    {r.initial}
-                  </div>
-                  <div>
-                    <div className="text-[14.5px] font-extrabold text-ink-900">{r.name}</div>
-                    <div className="mt-0.5 text-[12.5px] text-ink-500">{r.meta}</div>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ---------------- Articles ---------------- */
 export function Articles() {
   return (
-    <section className="mx-auto max-w-[1280px] px-4 py-20 sm:px-6 lg:py-24">
+    <section className="defer-render mx-auto max-w-[1280px] px-4 py-20 sm:px-6 lg:py-24">
       <Reveal>
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <SectionHead
@@ -326,7 +270,7 @@ export function Articles() {
 /* ---------------- CTA ---------------- */
 export function CTA() {
   return (
-    <section className="mx-auto max-w-[1280px] px-4 pb-24 sm:px-6">
+    <section className="defer-render mx-auto max-w-[1280px] px-4 pb-24 sm:px-6">
       <Reveal>
         <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-accent to-accent-deep px-6 py-14 text-center text-white sm:px-12 sm:py-16">
           <div className="pointer-events-none absolute -right-10 -top-20 h-[300px] w-[300px] rounded-full bg-white/10" />

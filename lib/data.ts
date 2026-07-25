@@ -4,6 +4,9 @@
 export const SITE = {
   name: "مرکز تخصصی تعمیرات برتر",
   shortName: "تعمیرات برتر",
+  // Trade/brand name the business is known by (used in DB titles). Kept as an
+  // alternateName in schema for NAP consistency without changing the legal name.
+  brandName: "برتر سرویس",
   domain: "https://bartar-repairer.com",
   organizationId: "https://bartar-repairer.com/#organization",
   localBusinessId: "https://bartar-repairer.com/#localbusiness",
@@ -19,12 +22,27 @@ export const SITE = {
   phoneWestHref: "tel:02122129170",
   geoWest: { lat: 35.782578745007484, lng: 51.37508182469265 },
   city: "تهران",
+  // کد پستی شعبه مرکزی — برای ارسال پستی دستگاه جهت تعمیر.
+  postalCode: "1586983711",
   address:
     "تهران، خیابان مطهری، خیابان قائم مقام فراهانی جنوبی، پلاک ۱۵۸",
   addressWest:
     "تهران، سعادت آباد، میدان کاج، کوچه دوازدهم علی اکبر، پلاک ۳۰، مجتمع اداری کسری، طبقه اول واحد ۵",
   email: "info@bartar-repairer.com",
   hours: "شنبه تا چهارشنبه ۹ تا ۱۸:۳۰ — پنجشنبه ۹ تا ۱۵",
+  mapCentral:
+    "https://balad.ir/p/%D8%A8%D8%B1%D8%AA%D8%B1-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3-tehran-nei-sanaei_electronic-equipment-repair-4TyjywJEshQMcD#15/35.72402/51.42398",
+  socials: {
+    instagram:
+      "https://www.instagram.com/bartar_repairer?igsh=MTJ5aXJhcW00cmFyMA==",
+    youtube: "https://www.youtube.com/@bartar_services",
+    twitter: "https://x.com/Bartar_repairer",
+    facebook:
+      "https://www.facebook.com/people/%D8%A8%D8%B1%D8%AA%D8%B1-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3/pfbid02MAe5xVUQdSiJozu9SHA5sS3zTkPk2iJYz3capxQC3N617jmdxrhuPbUVPMHJvLuMl/",
+    pinterest: "https://www.pinterest.com/bartar_repairer/",
+    linkedin: "https://ir.linkedin.com/in/bartar-repairer",
+    whatsapp: "https://wa.me/09046972370",
+  },
   tagline: "تعمیر تخصصی دستگاه های الکترونیکی با گارانتی واقعی",
 };
 

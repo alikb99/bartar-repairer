@@ -1,5 +1,11 @@
 import type { Config } from "tailwindcss";
 
+/* Colours live as RGB channels in app/globals.css (the single source of truth)
+   so the hand-written CSS there and these utilities can never drift apart.
+   The channel form is what keeps opacity modifiers (`border-accent/40`,
+   `via-ink-950/86`) working — Tailwind substitutes <alpha-value> per usage. */
+const c = (token: string) => `rgb(var(${token}) / <alpha-value>)`;
+
 const config: Config = {
   content: [
     "./app/**/*.{ts,tsx}",
@@ -11,36 +17,65 @@ const config: Config = {
       colors: {
         // Single accent color used across the entire site (ui design system)
         accent: {
-          DEFAULT: "#DA251C",
-          soft: "#E0473F",
-          deep: "#B3170F",
-          tint: "#FBEAE9",
+          DEFAULT: c("--c-red-500"),
+          soft: c("--c-red-400"),
+          deep: c("--c-red-600"),
+          tint: c("--c-red-50"),
         },
+        // Blue-tinted neutral ramp. 950-850 are dark surfaces, 800-500 body
+        // text, 400-100 muted text, borders on dark, and disabled states.
         ink: {
-          950: "#13161C",
-          900: "#1B1F27",
-          800: "#3A4150",
-          700: "#4A5160",
-          500: "#5B6270",
-          300: "#9098A6",
+          950: c("--c-ink-950"),
+          925: c("--c-ink-925"),
+          900: c("--c-ink-900"),
+          875: c("--c-ink-875"),
+          850: c("--c-ink-850"),
+          800: c("--c-ink-800"),
+          700: c("--c-ink-700"),
+          500: c("--c-ink-500"),
+          400: c("--c-ink-400"),
+          300: c("--c-ink-300"),
+          200: c("--c-ink-200"),
+          100: c("--c-ink-100"),
         },
-        paper: "#F5F6F8",
-        line: "#EDEFF3",
-        hairline: "#E7E9EE",
+        // Light surfaces, lightest to most sunken.
+        surface: {
+          DEFAULT: c("--c-white"),
+          muted: c("--c-sand-50"),
+          subtle: c("--c-sand-100"),
+          sunken: c("--c-sand-300"),
+        },
+        paper: c("--c-sand-200"),
+        line: c("--c-sand-400"),
+        hairline: c("--c-sand-500"),
+        edge: c("--c-sand-700"),
+        // Status. `whatsapp` is a third-party brand colour: never re-theme it.
+        success: c("--c-green-500"),
+        whatsapp: c("--c-whatsapp"),
       },
       fontFamily: {
-        sans: ["var(--font-vazir)", "system-ui", "sans-serif"],
+        sans: ["Vazirmatn", "system-ui", "sans-serif"],
       },
       letterSpacing: {
         tightest: "-0.04em",
       },
+      borderRadius: {
+        pill: "var(--radius-pill)",
+      },
       boxShadow: {
-        soft: "0 16px 50px -24px rgba(17,17,17,0.22)",
-        card: "0 2px 12px -4px rgba(17,17,17,0.07)",
-        float: "0 30px 80px -40px rgba(17,17,17,0.3)",
+        soft: "var(--shadow-soft)",
+        card: "var(--shadow-card)",
+        float: "var(--shadow-float)",
+        lift: "var(--shadow-lift)",
+        inset: "var(--shadow-inset)",
       },
       transitionTimingFunction: {
-        premium: "cubic-bezier(0.22, 1, 0.36, 1)",
+        premium: "var(--ease-premium)",
+      },
+      transitionDuration: {
+        fast: "var(--duration-fast)",
+        normal: "var(--duration-normal)",
+        slow: "var(--duration-slow)",
       },
       keyframes: {
         floaty: {
