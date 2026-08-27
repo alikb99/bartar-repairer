@@ -29,13 +29,16 @@ export async function generateMetadata({
   const resolvedPage = Math.min(Math.max(page || 1, 1), TOTAL_PAGES);
   const isLegacyOverflow = page > TOTAL_PAGES;
   return {
-    title: `مقالات و راهنماهای تعمیرات — صفحه ${resolvedPage}`,
-    description:
-      "راهنماها و مقالات تخصصی تعمیر موبایل، لپ تاپ، تبلت و سایر دستگاه های الکترونیکی.",
+    title: `مقالات و راهنماهای تعمیرات - صفحه ${resolvedPage}`,
+    // Page number leads the description so paginated listings do not all share
+    // one snippet in the SERP.
+    description: `صفحه ${resolvedPage} از راهنماها و مقالات تخصصی تعمیر موبایل، لپ تاپ، تبلت، ساعت هوشمند و تلویزیون؛ عیب یابی، علت خرابی و هزینه تعمیر به زبان ساده.`,
     alternates: { canonical: resolvedPage <= 1 ? "/blog/" : `/blog/page/${resolvedPage}/` },
-    // page 2+ are thin/duplicate-leaning listings — keep them crawlable but
-    // signal the article links are what matter.
-    robots: { index: !isLegacyOverflow, follow: true },
+    // Pagination pages carry no content of their own — only links to articles
+    // that are indexed on their own URLs. Keep them crawlable so the links are
+    // followed, but out of the index (and out of the sitemap, which must never
+    // advertise a noindex URL).
+    robots: { index: false, follow: true },
   };
 }
 

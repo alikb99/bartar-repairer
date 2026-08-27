@@ -7,7 +7,7 @@ import {
   Smartphone,
   ListChecks,
 } from "lucide-react";
-import { breadcrumbs, type Post } from "@/lib/content";
+import { breadcrumbs, h1For, type Post } from "@/lib/content";
 import { SITE } from "@/lib/data";
 import ContactCard from "@/components/ContactCard";
 import TrustBadges from "@/components/TrustBadges";
@@ -161,7 +161,7 @@ export default function CustomLanding({ post }: { post: Post }) {
             </span>
 
             <h1 className="display mt-5 text-3xl font-extrabold leading-tight text-ink-900 sm:text-5xl">
-              {post.title}
+              {h1For(post.path, post.title)}
             </h1>
 
             <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center">

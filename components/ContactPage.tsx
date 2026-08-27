@@ -12,6 +12,8 @@ import {
   ChevronLeft,
   Clock,
   Package,
+  Send,
+  Video,
 } from "lucide-react";
 import { SITE } from "@/lib/data";
 import { type Post } from "@/lib/content";
@@ -24,9 +26,13 @@ const INTRO =
 const POSTAL_NOTE =
   "اگر امکان مراجعه حضوری ندارید یا خارج از تهران هستید، می توانید دستگاه خود را از طریق پست به آدرس شعبه مرکزی با کد پستی 1586983711 ارسال کنید. پس از دریافت، دستگاه به صورت رایگان عیب یابی می شود و هزینه تعمیر قبل از شروع کار به شما اعلام خواهد شد.";
 
+// Must stay in step with SITE.socials — the same set is emitted as schema
+// sameAs in app/layout.tsx and linked from the footer on every page.
 const SOCIALS = [
   { label: "اینستاگرام", href: SITE.socials.instagram, icon: Instagram },
+  { label: "تلگرام", href: SITE.socials.telegram, icon: Send },
   { label: "یوتیوب", href: SITE.socials.youtube, icon: Youtube },
+  { label: "آپارات", href: SITE.socials.aparat, icon: Video },
   { label: "ایکس (توییتر)", href: SITE.socials.twitter, icon: Twitter },
   { label: "فیسبوک", href: SITE.socials.facebook, icon: Facebook },
   { label: "پینترست", href: SITE.socials.pinterest, icon: Globe },

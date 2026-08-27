@@ -11,7 +11,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE.domain),
   title: {
     default: `${SITE.name} | ${SITE.tagline}`,
-    template: `%s | ${SITE.shortName}`,
+    // The brand suffix is the trade name "برتر سرویس", not the legal name —
+    // mandated site-wide from 2026-08-01 and carried by every live <title>.
+    template: `%s | ${SITE.brandName}`,
   },
   description:
     "مرکز تخصصی تعمیرات برتر؛ تعمیر تخصصی موبایل، لپ تاپ، تبلت، ساعت هوشمند و تلویزیون در تهران با قطعات اصل و گارانتی معتبر.",

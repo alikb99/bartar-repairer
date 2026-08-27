@@ -4,6 +4,15 @@
 import fs from "node:fs";
 import path from "node:path";
 import { SITE } from "./data";
+// Replays the SEO surface of the 2026-08-16 production build, whose source was
+// never committed (see docs/00-CRITICAL-source-location.md in the deploy repo).
+// Layered ON TOP of the hand tables below rather than merged into them, because
+// a duplicate key in a single object literal is dropped silently, not flagged.
+import {
+  TITLE_OVERRIDES_RECOVERED,
+  META_OVERRIDES_RECOVERED,
+  H1_OVERRIDES_RECOVERED,
+} from "./recovered-overrides";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const PUBLIC_DIR = path.join(process.cwd(), "public");
@@ -16,7 +25,12 @@ const readJson = (f: string) =>
 //  - deZwnj: plain text (titles, meta, excerpt).
 //  - deZwnjHtml: HTML bodies — only touches TEXT between tags, never attribute
 //    values, so Persian image/file URLs that contain a ZWNJ are not corrupted.
-const deZwnj = (s: string): string => (s ? s.replace(/‌/g, " ") : s);
+// A ZWNJ often sits NEXT to a real space in the export ("می‌ دهد"), so a
+// naive swap leaves a double space that shows up in the rendered H1, the meta
+// description and llms.txt. Collapse runs of plain spaces/tabs afterwards —
+// but not newlines, which still separate block content in HTML bodies.
+const deZwnj = (s: string): string =>
+  s ? s.replace(/‌/g, " ").replace(/[ 	]{2,}/g, " ") : s;
 const deZwnjHtml = (s: string): string =>
   s
     ? s
@@ -408,6 +422,14 @@ function decodeSeg(s: string): string {
     return s;
   }
 }
+// The one sanctioned way to change a published URL. Used only where the slug
+// contradicted the page's own content — /a57-lcd-replacement/ was entirely
+// about the A56 — since a wrong model in the URL costs more than the redirect.
+// Every entry needs a matching `RedirectMatch 301` in .htaccess.
+const PATH_RENAMES: Record<string, string> = {
+  "/a57-lcd-replacement/": "/a56-lcd-replacement/",
+};
+
 // Segments are DECODED (Persian) so the exported folders/URLs read as
 // "/مشکل-گالری-گوشی-سامسونگ/" instead of percent-encoded gibberish.
 function buildSegments(p: RawPost): string[] {
@@ -553,6 +575,9 @@ const INTERNAL_LINKS: [string, string][] = [
 // "هزینه آموزش تعمیرات موبایل" is a different query from "آموزش تخصصی تعمیر
 // موبایل", and consolidating them would throw away a ranking page.
 export const CANONICAL_TO: Record<string, string> = {
+  // تعویض باتری لپ تاپ ایسوس — same pairing as the keyboard/fan duplicates
+  // below; recovered from the live build, where it already canonicalises.
+  "/asus-laptop-batteryreplacement/": "/asus-laptop-battery/",
   // تعمیر کیبورد لپ تاپ ایسوس
   "/asus-laptop-keyboardrepair/": "/asus-laptop-keyboard/",
   // تعمیر فن لپ تاپ ایسوس
@@ -564,6 +589,9 @@ export const CANONICAL_TO: Record<string, string> = {
   // تعویض باتری گوشی هواوی — keep the English slug: 58% more content and it
   // matches its siblings (/huawei-phone-lcd-replacement/ …).
   "/تعویض-باتری-موبایل-هوآوی/": "/huawei-phone-battery-replacement/",
+  // تعمیر ال سی دی لپ تاپ ایسوس — same Persian/English duplicate pattern;
+  // the English slug is the one that ranks.
+  "/تعمیر-ال-سی-دی-لپتاپ-ایسوس/": "/asus-laptop-lcd/",
   // تعویض باتری گوشی شیائومی
   "/xiaomi-phone-batteryreplacement/": "/repair-xiaomi-battery/",
   // تعویض ال سی دی لپ تاپ ایسر (three copies)
@@ -592,6 +620,10 @@ export const CANONICAL_TO: Record<string, string> = {
 // followed by a concrete USP so the SERP snippet earns the click. Only the
 // <title> meta is replaced — page URLs, H1s and body content stay untouched.
 const TITLE_OVERRIDES: Record<string, string> = {
+  // Keyed by the post-rename URL (see PATH_RENAMES) so it is not silently
+  // orphaned: the recovered tables never saw this path because the July build
+  // still published it as /a57-lcd-replacement/.
+  "/a56-lcd-replacement/": "تعویض ال سی دی A56 سامسونگ | برتر سرویس",
   "/services/category-mobile-phone-repair/":
     "تعمیر موبایل در تهران | تعمیر همان روز با قطعات اصل و ۶ ماه گارانتی",
   "/services/laptop-repair/":
@@ -737,6 +769,9 @@ const TITLE_OVERRIDES: Record<string, string> = {
 // (from Search Console). Titles are left untouched; only the description meta
 // is replaced to lift SERP click-through.
 const META_OVERRIDES: Record<string, string> = {
+  // Post-rename URL — the database excerpt still describes the A57.
+  "/a56-lcd-replacement/":
+    "تعویض ال سی دی A56 سامسونگ؛ صفحه Super AMOLED یکپارچه، پس اگر تصویر و لمس سالم است تعویض گلس کافی است. عیب یابی رایگان و ۶ ماه گارانتی کتبی.",
   "/why-isnt-google-play-working/":
     "گوگل پلی باز نمی شود یا دانلود نمی کند؟ علت کار نکردن Google Play و ۹ راه حل قطعی برای رفع خطا و توقف برنامه در گوشی اندروید را گام به گام بخوانید.",
   "/fix-4g-phone-internet/":
@@ -962,8 +997,13 @@ function linkifyInternal(html: string, selfPath: string): string {
 }
 
 export const POSTS: Post[] = raw.map((p) => {
-  const segments = buildSegments(p);
-  const selfPath = "/" + segments.join("/") + "/";
+  const rawSegments = buildSegments(p);
+  const rawPath = "/" + rawSegments.join("/") + "/";
+  const renamedPath = PATH_RENAMES[rawPath];
+  const selfPath = renamedPath ?? rawPath;
+  const segments = renamedPath
+    ? renamedPath.split("/").filter(Boolean)
+    : rawSegments;
   let content = addAltText(cleanContent(p.content), p.title);
   // Inject contextual in-body links to the commercial hubs. Runs on BOTH article
   // and service/model pages so every cluster page funnels in-body link equity up
@@ -976,7 +1016,8 @@ export const POSTS: Post[] = raw.map((p) => {
   // Ignore Yoast description templates (e.g. %%excerpt%%) — fall back to real text.
   const cleanSeoDesc = p.seoDesc && !p.seoDesc.includes("%%") ? p.seoDesc : "";
   const metaDesc = clampDesc(
-    META_OVERRIDES[selfPath] ||
+    META_OVERRIDES_RECOVERED[selfPath] ||
+      META_OVERRIDES[selfPath] ||
       cleanSeoDesc ||
       p.excerpt ||
       firstParagraph(content) ||
@@ -996,7 +1037,8 @@ export const POSTS: Post[] = raw.map((p) => {
     segments,
     path: selfPath,
     metaTitle: deZwnj(
-      TITLE_OVERRIDES[selfPath] ||
+      TITLE_OVERRIDES_RECOVERED[selfPath] ||
+        TITLE_OVERRIDES[selfPath] ||
         refineTitle(deZwnj(resolveTitle(p.seoTitle, p.title))),
     ),
     metaDesc: deZwnj(metaDesc),
@@ -1035,6 +1077,14 @@ export const POSTS: Post[] = raw.map((p) => {
     if (!usedBy.has(t)) usedBy.set(t, p.path);
     p.metaTitle = t;
   }
+}
+
+// Visible H1 override. Deliberately NOT applied to post.title: that string also
+// drives the breadcrumb label, internal-link anchors and /repairs/* + /areas/*
+// hub membership, so rewriting it would silently reshape the link graph. The
+// landing components call this at render time instead.
+export function h1For(pathname: string, fallback: string): string {
+  return H1_OVERRIDES_RECOVERED[pathname] || fallback;
 }
 
 export const CATEGORIES = categoriesJson as Category[];

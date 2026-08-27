@@ -15,6 +15,7 @@ import {
   NAV,
   breadcrumbs,
   extractFaq,
+  h1For,
   type Post,
 } from "@/lib/content";
 import { SITE } from "@/lib/data";
@@ -260,7 +261,7 @@ export default function BrandLanding({ post }: { post: Post }) {
               نمایندگی تخصصی تعمیرات در {SITE.city}
             </span>
             <h1 className="mt-6 text-[32px] font-extrabold leading-[1.35] tracking-tight text-white sm:text-[48px]">
-              {post.title}
+              {h1For(post.path, post.title)}
             </h1>
             <p className="mt-5 max-w-2xl text-[16px] leading-9 text-white/74 sm:text-[17px]">
               {post.metaDesc}

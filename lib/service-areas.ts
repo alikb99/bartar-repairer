@@ -23,6 +23,15 @@ export const SERVICE_AREAS: ServiceArea[] = [
   { slug: "sattarkhan", name: "ستارخان", aliases: ["ستارخان"], branch: "west" },
   { slug: "west-tehran", name: "غرب تهران", aliases: ["غرب تهران"], branch: "west" },
   { slug: "niavaran", name: "نیاوران", aliases: ["نیاوران"], branch: "central" },
+  // Covers the streets around the Motahari branch. Named by neighbourhood
+  // rather than by "مرکز تهران" alone because no page title carries that
+  // phrase — the pages say هفت تیر / سهروردی / شادمان.
+  {
+    slug: "central-tehran",
+    name: "مرکز تهران",
+    aliases: ["هفت تیر", "سهروردی", "شادمان"],
+    branch: "central",
+  },
   { slug: "jomhouri", name: "خیابان جمهوری", aliases: ["جمهوری"], branch: "central" },
   { slug: "east-tehran", name: "شرق تهران", aliases: ["شرق تهران"], branch: "central" },
   { slug: "north-tehran", name: "شمال تهران", aliases: ["شمال تهران"], branch: "central" },

@@ -14,7 +14,7 @@ import {
   ArrowLeft,
   PhoneCall,
 } from "lucide-react";
-import { breadcrumbs, type Post } from "@/lib/content";
+import { breadcrumbs, h1For, type Post } from "@/lib/content";
 import { SITE } from "@/lib/data";
 import { clusterContentFor } from "@/lib/cluster-content";
 import ClusterContent from "@/components/ClusterContent";
@@ -364,7 +364,7 @@ export default function XiaomiLanding({ post }: { post: Post }) {
           </span>
 
           <h1 className="display mt-5 max-w-3xl text-3xl font-extrabold leading-tight sm:text-5xl">
-            {post.title}
+            {h1For(post.path, post.title)}
           </h1>
 
           {heroParas.map((p, i) => (

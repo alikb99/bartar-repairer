@@ -4,7 +4,7 @@ import { ChevronLeft, Wrench, BookOpen } from "lucide-react";
 import { SITE } from "@/lib/data";
 import { buildDirectory } from "@/lib/site-index";
 
-const TITLE = "فهرست کامل صفحات سایت | خدمات تعمیر و راهنماها";
+const TITLE = "فهرست کامل صفحات سایت - خدمات تعمیر و راهنماها | برتر سرویس";
 const DESC =
   "فهرست کامل خدمات تعمیر و راهنماهای برتر سرویس در یک صفحه؛ همه صفحات تعمیر گوشی، لپ تاپ، تبلت و مقالات تخصصی به تفکیک برند و نوع خرابی.";
 
@@ -49,23 +49,32 @@ const pageSchema = {
   about: { "@id": SITE.localBusinessId },
 };
 
+// Only a preview of each group is rendered here; the full list lives on the
+// group's own /directory/{slug}/ page. Linking all ~870 URLs from this one
+// document produced a 1.2 MB page — more links than Google reliably follows.
+const PREVIEW = 6;
+
 function Group({
+  slug,
   title,
   items,
 }: {
+  slug: string;
   title: string;
   items: { path: string; label: string }[];
 }) {
   return (
     <section className="break-inside-avoid rounded-2xl border border-line bg-white p-5 shadow-card">
       <h3 className="flex items-center justify-between gap-2 text-[15px] font-extrabold text-ink-900">
-        <span>{title}</span>
+        <Link className="hover:text-accent" href={`/directory/${slug}/`}>
+          {title}
+        </Link>
         <span className="shrink-0 text-[12px] font-bold text-accent">
           {items.length.toLocaleString("fa-IR")}
         </span>
       </h3>
       <ul className="mt-4 flex flex-col gap-2">
-        {items.map((it) => (
+        {items.slice(0, PREVIEW).map((it) => (
           <li key={it.path}>
             <Link
               href={it.path}
@@ -131,8 +140,8 @@ export default function DirectoryPage() {
         </h2>
         <div className="mt-7 gap-5 [column-gap:1.25rem] sm:columns-2 lg:columns-3 xl:columns-4">
           {serviceGroups.map((g) => (
-            <div key={g.title} className="mb-5">
-              <Group title={g.title} items={g.items} />
+            <div key={g.slug} className="mb-5">
+              <Group slug={g.slug} title={g.title} items={g.items} />
             </div>
           ))}
         </div>
@@ -147,8 +156,8 @@ export default function DirectoryPage() {
           </h2>
           <div className="mt-7 gap-5 [column-gap:1.25rem] sm:columns-2 lg:columns-3 xl:columns-4">
             {articleGroups.map((g) => (
-              <div key={g.title} className="mb-5">
-                <Group title={g.title} items={g.items} />
+              <div key={g.slug} className="mb-5">
+                <Group slug={g.slug} title={g.title} items={g.items} />
               </div>
             ))}
           </div>

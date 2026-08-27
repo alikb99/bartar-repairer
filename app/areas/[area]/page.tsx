@@ -40,7 +40,7 @@ export async function generateMetadata({
   const { area } = await params;
   const a = serviceAreaBy(area);
   if (!a) return {};
-  const title = `تعمیرات موبایل و لپ تاپ در ${a.name} | مرکز تعمیرات برتر`;
+  const title = `نمایندگی تعمیرات موبایل و لپ تاپ در ${a.name} | برتر سرویس`;
   const desc = `تعمیر تخصصی موبایل، لپ تاپ و تبلت در ${a.name}؛ عیب یابی رایگان، قطعات اصل و ۶ ماه گارانتی کتبی. نزدیک ترین شعبه و شماره تماس مستقیم.`;
   return {
     title: { absolute: title },

@@ -33,15 +33,22 @@ export const SITE = {
   mapCentral:
     "https://balad.ir/p/%D8%A8%D8%B1%D8%AA%D8%B1-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3-tehran-nei-sanaei_electronic-equipment-repair-4TyjywJEshQMcD#15/35.72402/51.42398",
   socials: {
-    instagram:
-      "https://www.instagram.com/bartar_repairer?igsh=MTJ5aXJhcW00cmFyMA==",
+    // Canonical profile URLs. Keep them free of share/tracking parameters:
+    // sameAs is an identity claim, so the URL should be the one the platform
+    // itself canonicalises to, not a per-share link that can rotate.
+    instagram: "https://www.instagram.com/bartar_repairer/",
+    telegram: "https://t.me/bartar_repairer",
     youtube: "https://www.youtube.com/@bartar_services",
+    aparat: "https://www.aparat.com/bartar_service",
     twitter: "https://x.com/Bartar_repairer",
-    facebook:
-      "https://www.facebook.com/people/%D8%A8%D8%B1%D8%AA%D8%B1-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3/pfbid02MAe5xVUQdSiJozu9SHA5sS3zTkPk2iJYz3capxQC3N617jmdxrhuPbUVPMHJvLuMl/",
+    // Numeric profile.php id — the stable form. The previous /people/…/pfbid…
+    // link embeds a rotating token that eventually 404s.
+    facebook: "https://www.facebook.com/profile.php?id=61593924380746",
     pinterest: "https://www.pinterest.com/bartar_repairer/",
-    linkedin: "https://ir.linkedin.com/in/bartar-repairer",
-    whatsapp: "https://wa.me/09046972370",
+    linkedin: "https://www.linkedin.com/in/bartar-repairer/",
+    // wa.me needs the full international number with no leading zero —
+    // "09046972370" silently fails to open a chat.
+    whatsapp: "https://wa.me/989046972370",
   },
   tagline: "تعمیر تخصصی دستگاه های الکترونیکی با گارانتی واقعی",
 };
@@ -80,9 +87,9 @@ export const BRAND_LINKS: Record<string, string | null> = {
 };
 
 export const STATS = [
-  { value: "۱۲", label: "سال تجربه تخصصی" },
-  { value: "۴۸٬۰۰۰", label: "دستگاه تعمیر شده" },
-  { value: "۹۸٪", label: "رضایت مشتریان" },
+  { value: "۱۵", label: "سال تجربه تخصصی" },
+  { value: "۹۴٬۰۰۰", label: "دستگاه تعمیر شده" },
+  { value: "۹۵٪", label: "رضایت مشتریان" },
   { value: "۶ ماه", label: "گارانتی تعمیرات" },
 ];
 

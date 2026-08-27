@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prebuild": "node scripts/clean-output.mjs",
+    "prebuild": "node scripts/check-overrides.mjs && node scripts/clean-output.mjs",
+    "check": "node scripts/check-overrides.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

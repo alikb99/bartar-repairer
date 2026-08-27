@@ -5,7 +5,7 @@ import TroubleshootWizard from "@/components/TroubleshootWizard";
 import { SITE } from "@/lib/data";
 import { TS_DEVICES } from "@/lib/troubleshoot";
 
-const TITLE = "عیب یابی آنلاین دستگاه | راهنمای گام به گام رفع مشکل";
+const TITLE = "عیب یابی آنلاین دستگاه - راهنمای گام به گام رایگان | برتر سرویس";
 const DESC =
   "دستگاه، برند و ایراد را انتخاب کنید تا راهنمای گام به گام رفع مشکل را ببینید. عیب یابی آنلاین رایگان گوشی، لپ تاپ، تبلت، ساعت هوشمند، تلویزیون و کنسول بازی.";
 

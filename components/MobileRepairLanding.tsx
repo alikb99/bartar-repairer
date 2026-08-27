@@ -20,6 +20,7 @@ import {
   POSTS,
   NAV,
   extractFaq,
+  h1For,
   mobileRepairInfo,
   type Post,
 } from "@/lib/content";
@@ -211,10 +212,12 @@ export default function MobileRepairLanding({ post }: { post: Post }) {
   const isBrandLevel =
     post.path === MOBILE_HUB ||
     (mobileGroup?.children ?? []).some((c) => c.slug === post.path);
-  const heroTitle =
+  const heroTitle = h1For(
+    post.path,
     isBrandLevel && brand
       ? `تعمیر تخصصی موبایل ${brand}`
-      : post.title.split(/\s*[|]\s*/)[0].trim();
+      : post.title.split(/\s*[|]\s*/)[0].trim(),
+  );
   const heroLead =
     isBrandLevel && brand
       ? `از تعویض گلس و باتری تا تعمیر برد و رفع خیس شدگی؛ تمام مدل های موبایل ${brand} توسط تکنسین متخصص و با قطعات اصل تعمیر می شوند.`

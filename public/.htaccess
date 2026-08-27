@@ -3,6 +3,18 @@ RewriteCond %{HTTP_HOST} ^www\.bartar-repairer\.com$ [NC]
 RewriteRule ^ https://bartar-repairer.com%{REQUEST_URI} [R=301,L]
 RewriteRule ^wp-content/uploads/[0-9]{4}/[0-9]{2}/(.+)\.aso\.bak$ /logo.png [R=301,L]
 
+# Android app package: serve with the correct MIME type so browsers download it
+# instead of mis-handling it, and force a download rather than inline handling.
+<IfModule mod_mime.c>
+  AddType application/vnd.android.package-archive .apk
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.apk$">
+    Header set Content-Disposition "attachment"
+    Header set Cache-Control "public, max-age=3600"
+  </FilesMatch>
+</IfModule>
+
 # Compress text responses (HTML/CSS/JS/JSON/SVG). With a ~1.2s TTFB on this
 # host, smaller transfers are the main lever we control for FCP/LCP.
 <IfModule mod_deflate.c>
@@ -25,14 +37,51 @@ RewriteRule ^wp-content/uploads/[0-9]{4}/[0-9]{2}/(.+)\.aso\.bak$ /logo.png [R=3
   <FilesMatch "\.(?:ico)$|^(?:icon-\d+|apple-icon)\.png$">
     Header set Cache-Control "public, max-age=86400"
   </FilesMatch>
-  # HTML: serve fresh after deploys while letting repeat views revalidate.
+  # HTML: a short browser TTL so a repeat view inside one session is instant,
+  # while `must-revalidate` still forces a conditional request afterwards. The
+  # ArvanCloud edge caches these independently of this value.
   <FilesMatch "\.html$">
-    Header set Cache-Control "public, max-age=0, must-revalidate"
+    Header set Cache-Control "public, max-age=300, must-revalidate"
   </FilesMatch>
   # The repair-request handler must never be cached.
   <FilesMatch "\.php$">
     Header set Cache-Control "no-store"
   </FilesMatch>
+</IfModule>
+
+# Security headers. ArvanCloud's panel has no field for these, so they are set
+# at the origin and pass through the edge. `always` is required — without it
+# Apache skips the header on redirects and error responses.
+<IfModule mod_headers.c>
+  # HSTS: every request already 301s to HTTPS, so the only thing left to remove
+  # is that first insecure hop. No includeSubDomains — subdomains of this
+  # domain are not all on HTTPS, and the directive would break them. No preload
+  # either: getting off the preload list takes months.
+  Header always set Strict-Transport-Security "max-age=31536000"
+
+  # Stop browsers from guessing a MIME type different from what we send. The
+  # .apk download and the JSON-LD blocks both depend on their declared type.
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Send the full URL to our own pages, only the origin to third parties. Keeps
+  # referrer analytics working for the balad map and outbound brand links
+  # without leaking Persian query strings to them.
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Clickjacking. frame-ancestors is the modern form; X-Frame-Options stays for
+  # older browsers that ignore CSP.
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # Deliberately minimal CSP. A full policy would have to enumerate the inline
+  # JSON-LD blocks, Next's inline bootstrap and the Google PSE / balad.ir
+  # iframes — one mistake there blanks the site. These two directives cannot
+  # break a page that already works: they only forbid being framed elsewhere
+  # and upgrade any stray http:// subresource.
+  Header always set Content-Security-Policy "frame-ancestors 'self'; upgrade-insecure-requests"
+
+  # Browser features this site never uses. Denying them removes the permission
+  # prompts entirely rather than relying on the user to decline.
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()"
 </IfModule>
 
 <IfModule mod_expires.c>
@@ -49,7 +98,8 @@ RewriteRule ^wp-content/uploads/[0-9]{4}/[0-9]{2}/(.+)\.aso\.bak$ /logo.png [R=3
 
 Redirect 301 /home/ /
 Redirect 301 /xiaomi/mobile/xiaomi-phone-lcd-repair/ /xiaomi-phone-lcd-repair/
-Redirect 301 /samsung-mobile-phone-repairs-in-sattarkhan/ /samsung-mobile-phone-repairs-in-sattarkhan-2/
+# _wp_old_slug says this old URL belongs to ...-insattarkhan, not ...-sattarkhan-2.
+RedirectMatch 301 ^/samsung-mobile-phone-repairs-in-sattarkhan/?$ /samsung-mobile-phone-repairs-insattarkhan/
 Redirect 301 /iphone-xs-repair/ /iphone-xs-repairs/
 Redirect 301 /samsung-tab-a9-repairs/ /samsung-tab-a9-repair/
 Redirect 301 /xiaomi/mobile/repair-poco-x6-pro/ /xiaomi/mobile/repair-poco-x6pro/
@@ -92,3 +142,465 @@ Redirect 301 /repairing-the-s7-edge-phone/ /repairing-the-s7-edgephone/
 Redirect 301 /Ù†Ù…Ø§ÛŒÙ†Ø¯Ú¯ÛŒ-ØªØ¹Ù…ÛŒØ±Ø§Øª-Ø³Ø§Ù…Ø³ÙˆÙ†Ú¯/ /samsung/
 Redirect 301 /2022/01/01/ /blog/
 Redirect 301 /2021/10/09/ /blog/
+
+# ---------------------------------------------------------------------------
+# Recovered WordPress URLs (2026-08-08).
+#
+# 531 URLs that Google still has indexed were returning 404: the migration kept
+# only one of each duplicate WordPress post, and in most pairs it kept the one
+# with LESS search history. Together the dead URLs carried 115,338 impressions
+# and 3,797 clicks over the last 16 months.
+#
+# Sources come from the Search Console page dimension (16 months) filtered to
+# URLs that answer 404 on the live site; every destination below was verified
+# to answer 200. RedirectMatch (anchored) is used instead of Redirect so a rule
+# cannot match by prefix and swallow deeper paths.
+# ---------------------------------------------------------------------------
+RedirectMatch 301 ^/a12-repairs/?$ /a12-repair/
+# These three would otherwise fall through to the generic /feed/ and trailing-
+# punctuation rules below and land on a slug that does not exist.
+RedirectMatch 301 ^/acer/lap-top/\)/?$ /lap-top-acer/
+RedirectMatch 301 ^/full-service-hp-laptop/feed/?$ /full-service-hplaptop/
+RedirectMatch 301 ^/تعمیر-هارد-لپ-تاپ-شیائومی/feed/?$ /تعمیرهارد-لپ-تاپ-شیائومی/
+
+RedirectMatch 301 ^/about/terms-and-conditions/?$ /terms-and-conditions/
+RedirectMatch 301 ^/acer-after-sales-service-in-tehran/?$ /acer-after-sales-service-intehran/
+RedirectMatch 301 ^/acer-laptop-fan-repair/?$ /acer-laptop-fanrepair/
+RedirectMatch 301 ^/acer-laptop-flat-repair/?$ /acer-laptop-flatrepair/
+RedirectMatch 301 ^/acer-laptop-keyboard-repair/?$ /acer-laptop-keyboardrepair/
+RedirectMatch 301 ^/acer-laptop-lcd-replacement-2/?$ /acer-laptop-lcdreplacement/
+RedirectMatch 301 ^/acer-laptop-lcd-replacement/?$ /acer-laptop-lcdreplacement/
+RedirectMatch 301 ^/acer-laptop-motherboard-repair/?$ /acer-laptop-motherboardrepair/
+RedirectMatch 301 ^/acer-laptop-repair-agency-in-the-north-of-tehran/?$ /acer-laptop-repair-agency-in-the-north-oftehran/
+RedirectMatch 301 ^/acer-laptop-repair-in-ayatollah-kashani/?$ /acer-laptop-repair-in-ayatollahkashani/
+RedirectMatch 301 ^/acer-laptop-repair-in-punk/?$ /acer-laptop-repair-inpunk/
+RedirectMatch 301 ^/acer-laptop-repair-in-sadeghieh/?$ /acer-laptop-repair-insadeghieh/
+RedirectMatch 301 ^/acer-laptop-repair-in-the-republic/?$ /acer-laptop-repair-in-therepublic/
+RedirectMatch 301 ^/acer-laptop-review-nitro5/?$ /acer-laptop-reviewnitro5/
+RedirectMatch 301 ^/acer-laptop-touchpad-repair/?$ /acer-laptop-touchpadrepair/
+RedirectMatch 301 ^/acer-nitro-5-laptop/?$ /lap-top-acer/nitro5/
+RedirectMatch 301 ^/acer-repairs-in-sattar-khan/?$ /acer-repairs-in-sattarkhan/
+RedirectMatch 301 ^/acer-tablet-board-repair/?$ /acer-tablet-boardrepair/
+RedirectMatch 301 ^/acer/lap-top/?$ /lap-top-acer/
+RedirectMatch 301 ^/acer/lap-top/a315/?$ /lap-top-acer/a315-repair/
+RedirectMatch 301 ^/acer/lap-top/aspire-7/?$ /lap-top-acer/aspire7/
+RedirectMatch 301 ^/acer/lap-top/nitro-5/?$ /lap-top-acer/nitro5/
+RedirectMatch 301 ^/acer/lap-top/travelmate-5744z/?$ /lap-top-acer/travelmate5744z/
+RedirectMatch 301 ^/agencies/?$ /agency/
+# Target taken from the post's own _wp_old_slug record, not guessed: /repairs/
+# was my heuristic fallback, but the DB says this slug belongs to /apple-mobile-part/.
+RedirectMatch 301 ^/apple-mobile-parts/?$ /apple-mobile-part/
+RedirectMatch 301 ^/apple-mobile-phone-repairs-in-niavaran/?$ /apple-mobile-phone-repairs-inniavaran/
+RedirectMatch 301 ^/apple-mobile-phone-repairs-in-suhrawardi/?$ /apple-mobile-phone-repairs-insuhrawardi/
+RedirectMatch 301 ^/apple-repairs-in-east-tehran/?$ /apple-repairs-in-easttehran/
+RedirectMatch 301 ^/apple-repairs-in-saadatabad/?$ /apple-repairs-insaadatabad/
+RedirectMatch 301 ^/apple-repairs-in-sadeghieh/?$ /apple-repairs-insadeghieh/
+RedirectMatch 301 ^/apple-repairs-in-sattar-khan/?$ /apple-repairs-in-sattarkhan/
+RedirectMatch 301 ^/apple-repairs-in-tehranpars/?$ /apple-repairs-intehranpars/
+RedirectMatch 301 ^/apple-repairs-in-west-town/?$ /apple-repairs-in-westtown/
+RedirectMatch 301 ^/apple-repairs-north-of-tehran/?$ /apple-repairs-north-oftehran/
+RedirectMatch 301 ^/apple-repairs-on-petal-street/?$ /apple-repairs-on-petalstreet/
+RedirectMatch 301 ^/apple-repairs-on-republic-street/?$ /apple-repair-on-republic-street/
+RedirectMatch 301 ^/apple-repairs-on-site/?$ /apple-repairs-onsite/
+RedirectMatch 301 ^/apple-watch-board-repairs/?$ /apple-watch-board-repair/
+RedirectMatch 301 ^/apple/apple-tv-2/?$ /apple/apple-tv2/
+RedirectMatch 301 ^/apple/mobile-2/iphone-11-pro-max/?$ /apple/mobile-2/iphone-11-promax/
+RedirectMatch 301 ^/apple/mobile-2/iphone-12-mini/?$ /apple/mobile-2/iphone-12mini/
+RedirectMatch 301 ^/apple/mobile-2/iphone-12-pro-max/?$ /apple/mobile-2/iphone-12-promax/
+RedirectMatch 301 ^/apple/mobile-2/iphone-14-promax/?$ /apple/mobile-2/iphone-14promax/
+RedirectMatch 301 ^/apple/mobile-2/iphone-8-plus/?$ /apple/mobile-2/iphone-8plus/
+RedirectMatch 301 ^/apple/mobile-2/iphone-x/?$ /apple/mobile-2/iphonex/
+RedirectMatch 301 ^/apple/mobile-2/iphone7/?$ /apple/mobile-2/iphone-7/
+RedirectMatch 301 ^/apple/mobile/iphone-11-pro-max/?$ /apple/mobile-2/iphone-11-promax/
+RedirectMatch 301 ^/apple/mobile/iphone-14-promax/?$ /apple/mobile-2/iphone-14promax/
+RedirectMatch 301 ^/apple/repair-iphone-16-promax/?$ /apple/repair-iphone-16promax/
+RedirectMatch 301 ^/aser/?$ /acer/
+RedirectMatch 301 ^/asus-gaming-laptop/?$ /asus-gaming-laptop-repair/
+RedirectMatch 301 ^/asus-laptop-flat-repair/?$ /asus-laptop-flatrepair/
+RedirectMatch 301 ^/asus-laptop-graphics-card-repair/?$ /asus-laptop-graphics-cardrepair/
+RedirectMatch 301 ^/asus-laptop-keyboard-repair/?$ /asus-laptop-keyboard/
+RedirectMatch 301 ^/asus-laptop-repair-in-tehranpars/?$ /asus-laptop-repair-intehranpars/
+RedirectMatch 301 ^/asus-laptop-repair-in-west-town/?$ /asus-laptop-repair-in-westtown/
+RedirectMatch 301 ^/asus-laptop-repairs-in-niavaran/?$ /asus-laptop-repairs-inniavaran/
+RedirectMatch 301 ^/asus-laptop-touchpad-repair/?$ /asus-laptop-touchpadrepair/
+RedirectMatch 301 ^/asus-laptops-service/?$ /asus-laptop-service/
+RedirectMatch 301 ^/asus-mobile-battery-replacement/?$ /asus-mobile-batteryreplacement/
+RedirectMatch 301 ^/asus-mobile-lcd-replacement/?$ /asus-mobile-lcdreplacement/
+RedirectMatch 301 ^/asus-phone-hard-drive-repair/?$ /asus-phone-hard-drive-repairs/
+RedirectMatch 301 ^/asus-repair-agency-in-west-tehran/?$ /2asus-repair-agency-in-west-tehran/
+RedirectMatch 301 ^/asus-tablet-board-repair/?$ /asus-tablet-board-repairs/
+RedirectMatch 301 ^/asus/lap-top-2/chromebook-flip-c100pa/?$ /asus/lap-top-2/chromebook-flipc100pa/
+RedirectMatch 301 ^/asus/lap-top-2/x543ma-n4000/?$ /asus/lap-top-2/x543man4000/
+RedirectMatch 301 ^/asus/lap-top-2/zenbook-ux334flc-zx/?$ /asus/lap-top-2/zenbook-ux334flczx/
+RedirectMatch 301 ^/asus/lap-top-2/تعمیر-لپ-تاپ-ایسوس-vivobook-x540ua/?$ /asus/lap-top-2/تعمیر-لپتاپ-ایسوس-vivobook-x540ua/
+RedirectMatch 301 ^/case-study/?$ /
+RedirectMatch 301 ^/causes-of-not-charging-the-phone/?$ /causes-of-not-charging-thephone/
+RedirectMatch 301 ^/certificates/?$ /about/
+RedirectMatch 301 ^/dell-5010-laptop-repair/?$ /dell-5010-laptoprepair/
+RedirectMatch 301 ^/dell-laptop-battery-replacement/?$ /dell-laptop-batteryreplacement/
+RedirectMatch 301 ^/dell-laptop-fan-repair/?$ /dell-laptop-fanrepair/
+RedirectMatch 301 ^/dell-laptop-flat-repair/?$ /dell-laptop-flatrepair/
+RedirectMatch 301 ^/dell-laptop-keyboard-repair/?$ /dell-laptop-keyboardrepair/
+RedirectMatch 301 ^/dell-laptop-lcd-replacement/?$ /dell-laptop-lcdreplacement/
+RedirectMatch 301 ^/dell-laptop-repair-in-dealership/?$ /dell-laptop-repair-indealership/
+RedirectMatch 301 ^/dell-laptop-repair-in-sattarkhan/?$ /dell-laptop-repair-insattarkhan/
+RedirectMatch 301 ^/dell-laptop-repair-in-the-republic/?$ /dell-laptop-repair-in-therepublic/
+RedirectMatch 301 ^/dell-laptop-repair-in-west-town/?$ /dell-laptop-repair-in-westtown/
+RedirectMatch 301 ^/dell-laptop-troubleshooting-tutorial/?$ /dell-laptop-troubleshootingtutorial/
+RedirectMatch 301 ^/dell/lap-top/alienware-m17-r3/?$ /dell/lap-top/alienware-m17r3/
+RedirectMatch 301 ^/dell/lap-top/dell-latitude-d830-laptop/?$ /dell/lap-top/dell-latitude-d830laptop/
+RedirectMatch 301 ^/dell/lap-top/xps-9300/?$ /dell/lap-top/xps9300/
+RedirectMatch 301 ^/elementor-24759/?$ /
+RedirectMatch 301 ^/full-service-acer-laptop/?$ /full-service-acerlaptop/
+RedirectMatch 301 ^/full-service-asus-laptop/?$ /full-service-asuslaptop/
+RedirectMatch 301 ^/full-service-hp-laptop/?$ /full-service-hplaptop/
+RedirectMatch 301 ^/full-service-hp-laptop/1000/?$ /full-service-hplaptop/
+RedirectMatch 301 ^/full-service-macbook/?$ /full-servicemacbook/
+RedirectMatch 301 ^/full-service-sony-laptop/?$ /full-service-sonylaptop/
+RedirectMatch 301 ^/hamsterkombat/?$ /hamster-kombat/
+RedirectMatch 301 ^/heart-repairs-in-the-east-of-tehran/?$ /heart-repairs-in-the-east-oftehran/
+RedirectMatch 301 ^/home-appliances/washing-machine-repair/samsung-washing-machine/?$ /samsung/samsung-washing-machine/
+RedirectMatch 301 ^/hp-laptop-fan-repair/?$ /hp-laptop-fanrepair/
+RedirectMatch 301 ^/hp-laptop-graphics-card-repair/?$ /hp-laptop-graphics-cardrepair/
+RedirectMatch 301 ^/hp-laptop-repair-in-tehranpars/?$ /hp-laptop-repairin-tehranpars/
+RedirectMatch 301 ^/hp-laptop-repairs-in-niavaran/?$ /hp-laptop-repairs-inniavaran/
+RedirectMatch 301 ^/hp-laptop-touchpad-repair/?$ /hp-laptop-touchpadrepair/
+RedirectMatch 301 ^/hp-mobile-board-repair/?$ /hp-mobile-boardrepair/
+RedirectMatch 301 ^/hp-mobile-camera-repair/?$ /hp-mobile-camerarepair/
+RedirectMatch 301 ^/hp-repairs-in-sattar-khan/?$ /hp-repairs-in-sattarkhan/
+RedirectMatch 301 ^/hp-tablet-lcd-replacement/?$ /hp-tablet-lcdreplacement/
+RedirectMatch 301 ^/hp-tablet-software-repair/?$ /hp-tablet-softwarerepair/
+RedirectMatch 301 ^/hp/lap-top/envy-x360-13z/?$ /hp/lap-top/envy-x36013z/
+RedirectMatch 301 ^/hp/lap-top/omen-15/?$ /hp/lap-top/omen15/
+RedirectMatch 301 ^/hp/lap-top/spectre-x360/?$ /hp/lap-top/spectrex360/
+RedirectMatch 301 ^/hp/lap-top/zbook-firefly/?$ /hp/lap-top/zbookfirefly/
+RedirectMatch 301 ^/hp/manitor/?$ /hp/manitor-2/
+RedirectMatch 301 ^/hp/printer/?$ /hp/2-printer/
+RedirectMatch 301 ^/htc-after-sales-service-in-tehran/?$ /htc-after-sales-service-intehran/
+RedirectMatch 301 ^/htc-laptop-lcd-replacement/?$ /htc-laptop-lcdreplacement/
+RedirectMatch 301 ^/htc-mobile-board-repair/?$ /htc-mobile-boardrepair/
+RedirectMatch 301 ^/htc-mobile-camera-repair/?$ /htc-mobile-camerarepair/
+RedirectMatch 301 ^/htc-tablet-board-repair/?$ /htc-tablet-boardrepair/
+RedirectMatch 301 ^/htc-tablet-speaker-repair/?$ /htc-tablet-speakerrepair/
+RedirectMatch 301 ^/htc-tehran-mobile-phone-repairs/?$ /htc-tehran-mobile-phone-repair/
+RedirectMatch 301 ^/htc/mobile/desire-20-pro/?$ /htc/mobile/desire-20pro/
+RedirectMatch 301 ^/htc/mobile/wildfire-e3/?$ /htc/mobile/wildfiree3/
+RedirectMatch 301 ^/htc/tablet/?$ /htc/
+RedirectMatch 301 ^/huawei-mobile-board-repair/?$ /huawei-mobile-boardrepair/
+RedirectMatch 301 ^/huawei-mobile-camera-repair/?$ /huawei-mobile-camerarepair/
+RedirectMatch 301 ^/huawei-mobile-lcd-replacement/?$ /huawei-mobile-lcdreplacement/
+RedirectMatch 301 ^/huawei-mobile-phone-repairs-in-sattarkhan/?$ /huawei-mobile-phone-repairs-insattarkhan/
+RedirectMatch 301 ^/huawei-mobile-phone-repairs-in-suhrawardi/?$ /huawei-mobile-phone-repairs-insuhrawardi/
+RedirectMatch 301 ^/huawei-mobile-repairs-in-niavaran/?$ /huawei-mobile-repairs-inniavaran/
+RedirectMatch 301 ^/huawei-mobile-software-repairs/?$ /huawei-mobile-software-repair/
+RedirectMatch 301 ^/huawei-p40-phone-repairs/?$ /huawei-p40-phone-repair/
+RedirectMatch 301 ^/huawei-phone-hard-drive-repair/?$ /huawei-phone-hard-driverepair/
+RedirectMatch 301 ^/huawei-repairs-in-saatabad/?$ /huawei-repairs-insaatabad/
+RedirectMatch 301 ^/huawei-repairs-in-sadeghieh/?$ /huawei-repairs-insadeghieh/
+RedirectMatch 301 ^/huawei-repairs-in-shadman/?$ /huawei-repairs-inshadman/
+RedirectMatch 301 ^/huawei-repairs-in-tehranpars/?$ /huawei-repairs-in-tehranpar/
+RedirectMatch 301 ^/huawei-repairs-in-west-town/?$ /huawei-repairs-in-westtown/
+RedirectMatch 301 ^/huawei-repairs-on-gulberg-street/?$ /huawei-repairs-on-gulbergstreet/
+RedirectMatch 301 ^/huawei-repairs-on-jomhouri-street/?$ /huawei-repairs-on-jomhouristreet/
+RedirectMatch 301 ^/huawei-tablet-battery-replacement/?$ /huawei-tablet-batteryreplacement/
+RedirectMatch 301 ^/huawei-tablet-camera-repair/?$ /huawei-tablet-camera-repairs/
+RedirectMatch 301 ^/huawei-tablet-lcd-replacement/?$ /huawei-tablet-lcdreplacement/
+RedirectMatch 301 ^/huawei-tablet-repair-model-tl-70lu/?$ /huawei-tablet-repair-model-tl70lu/
+RedirectMatch 301 ^/huawei-tablet-software-repair/?$ /huawei-tablet-softwarerepair/
+RedirectMatch 301 ^/huawei-water-repaired-phone-repair/?$ /huawei-water-repaired-phonerepair/
+RedirectMatch 301 ^/huawei-y5-phone-repair/?$ /huawei-y5-phonerepair/
+RedirectMatch 301 ^/huawei/mobile/honor-x10/?$ /huawei/mobile/honorx10/
+RedirectMatch 301 ^/huawei/mobile/huawei-y9a/?$ /huawei/mobile/huaweiy9a/
+RedirectMatch 301 ^/huawei/mobile/mate-40-pro/?$ /huawei/mobile/mate-40pro/
+RedirectMatch 301 ^/huawei/mobile/nova-7i/?$ /huawei/mobile/nova7i/
+RedirectMatch 301 ^/huawei/mobile/y8p/?$ /huawei/mobile/
+RedirectMatch 301 ^/huawei/mobile/تعمیر-گوشی-هوآوی-p40-pro/?$ /huawei/mobile/تعمیر-گوشی-هوآوی-p40pro/
+RedirectMatch 301 ^/immediate-iphone-repair/?$ /immediate-iphoneepair/
+RedirectMatch 301 ^/ipad-camera-repair/?$ /ipad-camerarepair/
+RedirectMatch 301 ^/ipad-lcd-replacement/?$ /ipad-lcdreplacement/
+RedirectMatch 301 ^/iphone-12-repaire/?$ /iphone-12-repair/
+RedirectMatch 301 ^/iphone-13-promax-repair/?$ /iphone-13-promaxrepair/
+RedirectMatch 301 ^/iphone-13-repair/?$ /iphone-13repair/
+RedirectMatch 301 ^/iphone-14-pro-repair/?$ /iphone-14-prorepair/
+RedirectMatch 301 ^/iphone-14-repair/?$ /iphone-14-repairs/
+RedirectMatch 301 ^/iphone-15-promax-repair/?$ /iphone-15-promaxrepair/
+RedirectMatch 301 ^/iphone-15-repair/?$ /iphone-15-repairs/
+RedirectMatch 301 ^/iphone-16/?$ /iphone16/
+RedirectMatch 301 ^/iphone-6-repair/?$ /iphone-6repair/
+RedirectMatch 301 ^/iphone-cant-power-on/?$ /iphone-cant-poweron/
+RedirectMatch 301 ^/iphone-front-camera-replacement-tutorial/?$ /iphone-front-camera-replacementtutorial/
+RedirectMatch 301 ^/iphone-hard-drive-repair/?$ /iphone-hard-driverepair/
+RedirectMatch 301 ^/iphone-lcd-replacement-tutorial-2/?$ /iphone-lcd-replacement-tutorial2/
+RedirectMatch 301 ^/iphone-mobile-vibration-motor-replacement-tutorial/?$ /iphone-mobile-vibration-motor-replacementtutorial/
+RedirectMatch 301 ^/iphone-rear-camera-replacement-tutorial/?$ /iphone-rear-camera-replacementtutorial/
+RedirectMatch 301 ^/iphone-se-repair/?$ /iphone-serepair/
+RedirectMatch 301 ^/iphone-sim-card-socket-replacement-tutorial/?$ /iphone-sim-card-socket-replacementtutorial/
+RedirectMatch 301 ^/iphone-software-repairs/?$ /iphone-software-repair/
+RedirectMatch 301 ^/iphone-speaker-replacement-tutorial/?$ /iphone-speaker-replacementtutorial/
+RedirectMatch 301 ^/laptop-repair-in-east-of-tehran/?$ /laptop-repair-in-east-oftehran/
+RedirectMatch 301 ^/laptop-repair-in-north-of-tehran/?$ /laptop-repairs-in-north-of-tehran/
+RedirectMatch 301 ^/lenovo-a3500-tablet-repair/?$ /lenovo-a3500-tabletrepair/
+RedirectMatch 301 ^/lenovo-laptop-battery-replacement/?$ /lenovo-laptop-batteryreplacement/
+RedirectMatch 301 ^/lenovo-laptop-fan-repair/?$ /lenovo-laptop-fanrepair/
+RedirectMatch 301 ^/lenovo-laptop-flat-repair/?$ /lenovo-laptop-flatrepair/
+RedirectMatch 301 ^/lenovo-laptop-graphics-card-repair/?$ /lenovo-laptop-graphics-cardrepair/
+RedirectMatch 301 ^/lenovo-laptop-lcd-replacement-2/?$ /lenovo-laptop-lcd-replacement2/
+RedirectMatch 301 ^/lenovo-laptop-lcd-replacement/?$ /lenovo-laptop-lcdreplacement/
+RedirectMatch 301 ^/lenovo-laptop-motherboard-repair/?$ /lenovo-laptop-motherboardrepair/
+RedirectMatch 301 ^/lenovo-laptop-repair-in-saadatabad/?$ /lenovo-laptop-repair-insaadatabad/
+RedirectMatch 301 ^/lenovo-laptop-repair-in-the-north-of-tehran/?$ /lenovo-laptop-repair-in-the-north-oftehran/
+RedirectMatch 301 ^/lenovo-laptop-repair-in-the-republic/?$ /lenovo-laptop-repairs-in-the-republic/
+RedirectMatch 301 ^/lenovo-laptop-repair-tehran/?$ /lenovo-laptop-repairtehran/
+RedirectMatch 301 ^/lenovo-laptop-repairS-in-the-republic/?$ /lenovo-laptop-repairs-in-the-republic/
+RedirectMatch 301 ^/lenovo-laptop-repairs-on-pistols/?$ /lenovo-laptop-repairs-onpistols/
+RedirectMatch 301 ^/lenovo-laptop-touchpad-repairs/?$ /lenovo-laptop-touchpadrepairs/
+RedirectMatch 301 ^/lenovo-mobile-battery-replacement/?$ /lenovo-mobile-batteryreplacement/
+RedirectMatch 301 ^/lenovo-mobile-board-repair/?$ /lenovo-mobile-boardrepair/
+RedirectMatch 301 ^/lenovo-mobile-lcd-replacement/?$ /lenovo-mobile-lcdreplacement/
+RedirectMatch 301 ^/lenovo-phone-hard-drive-repair/?$ /lenovo-phone-hard-driverepair/
+RedirectMatch 301 ^/lenovo-tablet-battery-replacement/?$ /lenovo-tablet-batteryreplacement/
+RedirectMatch 301 ^/lenovo-tablet-board-repair/?$ /lenovo-tablet-boardrepair/
+RedirectMatch 301 ^/lenovo-tablet-camera-repair/?$ /lenovo-tablet-camerarepair/
+RedirectMatch 301 ^/lenovo-tablet-lcd-replacement/?$ /lenovo-tablet-lcdreplacement/
+RedirectMatch 301 ^/lenovo-waterproof-phone-repair/?$ /lenovo-waterproof-phonerepair/
+RedirectMatch 301 ^/lenovo/lap-top/essential-g5080/?$ /lenovo/lap-top/essentialg5080/
+RedirectMatch 301 ^/lenovo/lap-top/legion-7i/?$ /lenovo/lap-top/legion7i/
+RedirectMatch 301 ^/lenovo/lap-top/thinkpad-t15/?$ /lenovo/lap-top/thinkpadt15/
+RedirectMatch 301 ^/lenovo/lap-top/تعمیرات-لپ-تاپ-لنوو-ideapad-330/?$ /lenovo/lap-top/تعمیرات-لپ-تاپ-لنوو-ideapad330/
+RedirectMatch 301 ^/lenovo/mobile/?$ /lenovo/2-mobile/
+RedirectMatch 301 ^/macbook-battery-replacement/?$ /macbook-battery-replacements/
+RedirectMatch 301 ^/macbook-fan-repair/?$ /macbook-fanrepair/
+RedirectMatch 301 ^/macbook-lcd-replacement/?$ /macbook-lcd-replacements1/
+RedirectMatch 301 ^/mobile-internet/?$ /mobileinternet/
+RedirectMatch 301 ^/mobile-repair-in-karaj/?$ /mobile-repair-inkaraj/
+RedirectMatch 301 ^/mobile/?$ /services/category-mobile-phone-repair/
+RedirectMatch 301 ^/mobilemosavi/?$ /mobile-mosavi/
+RedirectMatch 301 ^/nokia/nokia-g11plus-repair/?$ /nokia/nokia-g11plusrepair/
+RedirectMatch 301 ^/nokia/repair-nokia-g21/?$ /nokia/repair-nokiag21/
+RedirectMatch 301 ^/nothingphone-repair/nothingphone-2a-repair/?$ /nothingphone-repair/nothingphone-2arepair/
+RedirectMatch 301 ^/nothingphone-repair/nothingphone1-repair/?$ /nothingphone-repair/nothingphone1repair/
+RedirectMatch 301 ^/nothingphone-repair/nothingphone2-repair/?$ /nothingphone-repair/nothingphone2repair/
+RedirectMatch 301 ^/phone-buying-guide/?$ /phone-buyingguide/
+RedirectMatch 301 ^/poco-f2-pro-phone-repairs/?$ /poco-f2-pro-phone-repair/
+RedirectMatch 301 ^/poco-m3-pro-phone-repair/?$ /poco-m3-pro-phonerepair/
+RedirectMatch 301 ^/redmi-12-repair/?$ /redmi-12repair/
+RedirectMatch 301 ^/repair-and-replace-hp-laptop-battery/?$ /repair-and-replace-hp-laptopbattery/
+RedirectMatch 301 ^/repair-hp-laptop-in-the-presence-of-the-customer/?$ /repair-hp-laptop-in-the-presence-ofthe-customer/
+RedirectMatch 301 ^/repair-iphone-7-plus/?$ /repair-iphone-7plus/
+RedirectMatch 301 ^/repair-laptop-in-karaj/?$ /repair-laptop-inkaraj/
+RedirectMatch 301 ^/repair-of-hp-laptop-flat/?$ /repair-of-hp-laptopflat/
+RedirectMatch 301 ^/repair-of-hp-laptop-keyboard/?$ /repair-of-hp-laptopkeyboard/
+RedirectMatch 301 ^/repairing-a-worn-samsung-phone/?$ /repairing-a-worn-samsungphone/
+RedirectMatch 301 ^/repairing-hp-laptops-in-the-republic/?$ /repairing-hp-laptops-in-therepublic/
+RedirectMatch 301 ^/replace-the-battery-of-the-asus-tablet/?$ /replace-the-battery-of-the-asustablet/
+RedirectMatch 301 ^/replace-the-frame-of-the-apple-mobile-body/?$ /replace-the-frame-of-the-apple-mobilebody/
+RedirectMatch 301 ^/replacement-of-hp-laptop-lcd-2/?$ /replacement-of-hp-laptop-lcd2/
+RedirectMatch 301 ^/replacement-of-hp-laptop-lcd/?$ /replacement-of-hp-laptop-lcd2/
+RedirectMatch 301 ^/replacement-of-htc-mobile-battery/?$ /replacement-of-htc-mobilebattery/
+RedirectMatch 301 ^/replacing-the-battery-of-a-samsung-laptop/?$ /replacing-the-battery-of-a-samsunglaptop/
+RedirectMatch 301 ^/replacing-the-battery-of-the-hp-tablet/?$ /replacing-the-battery-of-the-hptablet/
+RedirectMatch 301 ^/replacing-the-iphone-battery/?$ /replacing-the-iphonebattery/
+RedirectMatch 301 ^/representation-of-the-heart-in-saadatabad/?$ /representation-of-the-heart-insaadatabad/
+RedirectMatch 301 ^/samsung-a10-phone-repair/?$ /samsung-a10-phonerepair/
+RedirectMatch 301 ^/samsung-a34-repair/?$ /samsung-a34repair/
+RedirectMatch 301 ^/samsung-a70-repairs/?$ /samsung-a70-repair/
+RedirectMatch 301 ^/samsung-dishwasher-repair/?$ /samsung/samsung-dishwasher-repair/
+RedirectMatch 301 ^/samsung-galaxy-book-pro-laptop/?$ /samsung-galaxy-book-prolaptop/
+RedirectMatch 301 ^/samsung-laptop-fan-repair/?$ /samsung-laptop-fanrepair/
+RedirectMatch 301 ^/samsung-laptop-flat-repair/?$ /samsung-laptop-flatrepair/
+RedirectMatch 301 ^/samsung-laptop-graphics-card-repair/?$ /samsung-laptop-graphics-cardrepair/
+RedirectMatch 301 ^/samsung-laptop-lcd-replacement-2/?$ /samsung-laptop-lcd-replacement2/
+RedirectMatch 301 ^/samsung-laptop-lcd-replacement/?$ /samsung-laptop-lcd-replacement2/
+RedirectMatch 301 ^/samsung-laptop-motherboard-repair/?$ /samsung-laptop-motherboard-repairs/
+RedirectMatch 301 ^/samsung-laptop-repairs-in-niavaran/?$ /samsung-laptop-repairs-inniavaran/
+RedirectMatch 301 ^/samsung-laptop-touchpad-repair/?$ /samsung-laptop-touchpadrepair/
+RedirectMatch 301 ^/samsung-m21-phone-repair/?$ /samsung-m21-phonerepair/
+RedirectMatch 301 ^/samsung-m32-phone-repairs/?$ /samsung-m32-phone-repair/
+RedirectMatch 301 ^/samsung-m62-phone-repair/?$ /samsung-m62-phonerepair/
+RedirectMatch 301 ^/samsung-mobile-lcd-replacement/?$ /samsung-mobile-lcdreplacement/
+RedirectMatch 301 ^/samsung-mobile-phone-repair-in-shadman/?$ /samsung-mobile-phone-repair-inshadman/
+RedirectMatch 301 ^/samsung-mobile-phone-repair-on-gulberg-street/?$ /samsung-mobile-phone-repair-on-gulbergstreet/
+RedirectMatch 301 ^/samsung-mobile-phone-repairs-in-suhrawardi/?$ /samsung-mobile-phone-repair-in-suhrawardi/
+RedirectMatch 301 ^/samsung-mobile-phone-repairs-in-the-north-of-tehran/?$ /samsung-mobile-phone-repairs-in-the-north-oftehran/
+RedirectMatch 301 ^/samsung-mobile-phone-repairs-in-west-town/?$ /samsung-mobile-phone-repairs-in-westtown/
+RedirectMatch 301 ^/samsung-mobile-repairs-on-site/?$ /samsung-mobile-repairs-onsite/
+RedirectMatch 301 ^/samsung-np300e5z-laptop-repair/?$ /samsung-np300e5z-laptoprepair/
+RedirectMatch 301 ^/samsung-np750-laptop-repair/?$ /samsung-np750-laptoprepair/
+RedirectMatch 301 ^/samsung-phone-repair-agency-in-the-west-of-tehran/?$ /samsung-phone-repair-agency-in-the-west-oftehran/
+RedirectMatch 301 ^/samsung-refrigerator-repair/?$ /samsung/samsung-refrigerator-repair/
+RedirectMatch 301 ^/samsung-repair-agency-in-west-tehran/?$ /samsung-repair-agency-in-westtehran/
+RedirectMatch 301 ^/samsung-s22-repair/?$ /samsung-s22repair/
+RedirectMatch 301 ^/samsung-tab-a8-repairs/?$ /samsung-tab-a8-repair/
+RedirectMatch 301 ^/samsung-tablet-board-repair/?$ /samsung-tablet-boardrepair/
+RedirectMatch 301 ^/samsung-tablet-camera-repair/?$ /samsung-tablet-camera-repairs/
+RedirectMatch 301 ^/samsung-tablet-speaker-repair/?$ /samsung-tablet-speaker-repairs/
+RedirectMatch 301 ^/samsung-vacuum-cleaner-repair-agency/?$ /samsung/samsung-vacuum-cleaner-repair-agency/
+RedirectMatch 301 ^/samsung/mobile/galaxy-a72/?$ /samsung/mobile/galaxya72/
+RedirectMatch 301 ^/samsung/mobile/note-10/?$ /samsung/mobile/note10/
+RedirectMatch 301 ^/samsung/mobile/repair-samsung-s24-ultra/?$ /samsung/mobile/repair-samsung-s24ultra/
+RedirectMatch 301 ^/samsung/mobile/repair-samsung-s25-ultra/?$ /samsung/mobile/repair-samsung-s25ultra/
+RedirectMatch 301 ^/samsung/mobile/s10/?$ /samsung/mobile/s10-repair/
+RedirectMatch 301 ^/samsung/mobile/s20-ultra/?$ /samsung/mobile/s20ultra/
+RedirectMatch 301 ^/samsung/mobile/s21-ultra/?$ /samsung/mobile/s21ultra/
+RedirectMatch 301 ^/samsung/mobile/samsung-a53-repair/?$ /samsung/mobile/samsung-a53repair/
+RedirectMatch 301 ^/samsung/mobile/samsung-m04-repair/?$ /samsung/mobile/samsung-m04repair/
+RedirectMatch 301 ^/services/category-mobile-phone-repair/oneplus-phone-repair/oneplus-ace-pro-repair/?$ /services/category-mobile-phone-repair/oneplus-phone-repair/oneplus-ace-pro-repairs/
+RedirectMatch 301 ^/services/category-mobile-phone-repair/oneplus-phone-repair/repair-oneplus-nord-n10/?$ /services/category-mobile-phone-repair/oneplus-phone-repair/repair-oneplus-nordn10/
+RedirectMatch 301 ^/services/category-mobile-phone-repair/oppo-repair/oppo-reno-10-phone-repair/?$ /services/category-mobile-phone-repair/oppo-repair/oppo-reno-10-phonerepair/
+RedirectMatch 301 ^/services/category-mobile-phone-repair/oppo-repair/repair-oppo-a16k/?$ /services/category-mobile-phone-repair/oppo-repair/repair-oppoa16k/
+RedirectMatch 301 ^/services/category-mobile-phone-repair/oppo-repair/repair-oppo-a38/?$ /services/category-mobile-phone-repair/oppo-repair/repair-oppoa38/
+RedirectMatch 301 ^/services/category-mobile-phone-repair/realme-phone-repair/repair-realme-c51/?$ /services/category-mobile-phone-repair/realme-phone-repair/repair-realmec51/
+RedirectMatch 301 ^/services/category-mobile-phone-repair/repair-iphone-battery/?$ /services/category-mobile-phone-repair/repair-iphonebattery/
+RedirectMatch 301 ^/services/laptop-repair/microsoft-laptop-repair/?$ /services/laptop-repair/surface-laptop-repair/
+RedirectMatch 301 ^/sony-laptop-battery-replacement/?$ /sony-laptop-batteryreplacement/
+RedirectMatch 301 ^/sony-laptop-flat-repair/?$ /sony-laptop-flatrepair/
+RedirectMatch 301 ^/sony-laptop-keyboard-lenovo/?$ /sony-laptop-keyboard-repair/
+RedirectMatch 301 ^/sony-laptop-lcd-replacement/?$ /sony-laptop-lcdreplacement/
+RedirectMatch 301 ^/sony-laptop-motherboard-repair/?$ /sony-laptop-motherboard-repairs/
+RedirectMatch 301 ^/sony-mobile-battery-replacement/?$ /sony-mobile-batteryreplacement/
+RedirectMatch 301 ^/sony-mobile-lcd-replacement-2/?$ /sony-mobile-lcdreplacement/
+RedirectMatch 301 ^/sony-mobile-lcd-replacement/?$ /sony-mobile-lcdreplacement/
+RedirectMatch 301 ^/sony-phone-hard-drive-repair/?$ /sony-phone-hard-driverepair/
+RedirectMatch 301 ^/sony-tv-repair/?$ /sony/tv/
+RedirectMatch 301 ^/sony/lap-top/vaio-cw-10/?$ /sony/lap-top/vaio-cw10/
+RedirectMatch 301 ^/sony/lap-top/vaio-e-14/?$ /sony/lap-top/vaio-e14/
+RedirectMatch 301 ^/sony/lap-top/vaio-fit-15e/?$ /sony/lap-top/vaio-fit15e/
+RedirectMatch 301 ^/sony/lap-top/vaio-s-vjs132x0511s/?$ /sony/lap-top/vaio-svjs132x0511s/
+RedirectMatch 301 ^/specialized-mobile-repair-training/?$ /specialized-mobile-repairtraining/
+RedirectMatch 301 ^/sudden-shutdown-of-the-phone/?$ /sudden-shutdown-of-thephone/
+RedirectMatch 301 ^/symptoms-of-iphone-battery-failure/?$ /symptoms-of-iphone-batteryfailure/
+RedirectMatch 301 ^/the-best-acer-laptop/?$ /the-best-acerlaptop/
+RedirectMatch 301 ^/the-best-asus-laptop/?$ /the-best-asuslaptop/
+RedirectMatch 301 ^/the-best-mobile-repairs/?$ /the-best-mobile-repair/
+RedirectMatch 301 ^/urgent-mobile-phone-repairs/?$ /urgent-mobile-phone-repair/
+RedirectMatch 301 ^/vertu-mobile-repair/repair-vertu-aster-p/?$ /vertu-mobile-repair/repair-vertu-asterp/
+RedirectMatch 301 ^/vertu-mobile-repair/repair-vertu-signature-s/?$ /vertu-mobile-repair/repair-vertu-signatures/
+RedirectMatch 301 ^/web/?$ /
+RedirectMatch 301 ^/xiaomi-hard-drive-replacement/?$ /xiaomi-hard-drivereplacement/
+RedirectMatch 301 ^/xiaomi-laptop-keyboard-repair/?$ /xiaomi-laptop-keyboardrepair/
+RedirectMatch 301 ^/xiaomi-laptop-lcd-replacement/?$ /xiaomi-laptop-lcdreplacement/
+RedirectMatch 301 ^/xiaomi-laptop-repair-in-tehran/?$ /full-service-xiaomi-laptop/
+RedirectMatch 301 ^/xiaomi-mi-a2-lite-phone-repair/?$ /xiaomi-mi-a2-lite-phonerepair/
+RedirectMatch 301 ^/xiaomi-mobile-board-repair/?$ /xiaomi-mobile-boardrepair/
+RedirectMatch 301 ^/xiaomi-mobile-camera-repair/?$ /xiaomi-mobile-camerarepair/
+RedirectMatch 301 ^/xiaomi-mobile-lcd-replacement/?$ /xiaomi-mobile-lcdreplacement/
+RedirectMatch 301 ^/xiaomi-mobile-repairs-in-niavaran/?$ /xiaomi-mobile-repairs-inniavaran/
+RedirectMatch 301 ^/xiaomi-mobile-repairs-in-suhrawardi/?$ /xiaomi-mobile-repairs-insuhrawardi/
+RedirectMatch 301 ^/xiaomi-mobile-software-repairs/?$ /xiaomi-mobile-software-repair/
+RedirectMatch 301 ^/xiaomi-phone-battery-replacement/?$ /xiaomi-note-11-battery-replacement/
+RedirectMatch 301 ^/xiaomi-phone-lcd-replacement/?$ /xiaomi-phone-lcd-repair/
+RedirectMatch 301 ^/xiaomi-phone-speaker/?$ /xiaomi-phone-speaker-problem/
+RedirectMatch 301 ^/xiaomi-repairs-in-east-tehran/?$ /xiaomi-repairs-in-tehranpars/
+RedirectMatch 301 ^/xiaomi-repairs-in-saadatabad/?$ /xiaomi-repairs-insaadatabad/
+RedirectMatch 301 ^/xiaomi-repairs-in-sadeghieh/?$ /xiaomi-repairs-in-sadeghieh2/
+RedirectMatch 301 ^/xiaomi-repairs-in-sattar-khan/?$ /xiaomi-repairs-in-sattarkhan/
+RedirectMatch 301 ^/xiaomi-repairs-in-shadman/?$ /xiaomi-repair-in-shadman/
+RedirectMatch 301 ^/xiaomi-repairs-in-the-republic/?$ /xiaomi-repair-in-the-republic/
+RedirectMatch 301 ^/xiaomi-repairs-in-west-town/?$ /xiaomi-repairs-in-westtown/
+RedirectMatch 301 ^/xiaomi-tablet-battery-replacement/?$ /xiaomi-tablet-batteryreplacement/
+RedirectMatch 301 ^/xiaomi-tablet-board-repair/?$ /xiaomi-tablet-boardrepair/
+RedirectMatch 301 ^/xiaomi-tablet-camera-repair/?$ /xiaomi-tablet-camerarepair/
+RedirectMatch 301 ^/xiaomi-tablet-lcd-replacement/?$ /xiaomi-tablet-lcdreplacement/
+RedirectMatch 301 ^/xiaomi/mobile/black-shark-4/?$ /xiaomi/mobile/black-shark4/
+RedirectMatch 301 ^/xiaomi/mobile/mi-10-lite/?$ /xiaomi/mobile/mi-10lite/
+RedirectMatch 301 ^/xiaomi/mobile/mi-11-ultra/?$ /xiaomi/mobile/mi-11ultra/
+RedirectMatch 301 ^/xiaomi/mobile/note-10/?$ /xiaomi/mobile/note10/
+RedirectMatch 301 ^/xiaomi/mobile/poco-x3/?$ /xiaomi/mobile/pocox3/
+RedirectMatch 301 ^/xiaomi/mobile/redmi-9t/?$ /xiaomi/mobile/redmi9t/
+RedirectMatch 301 ^/xiaomi/mobile/repair-poco-x3-pro/?$ /xiaomi/mobile/repair-poco-x3pro/
+RedirectMatch 301 ^/xiaomi/mobile/repair-redmi-note-13/?$ /xiaomi/mobile/repair-redmi-note13/
+RedirectMatch 301 ^/xiaomi/mobile/repair-xiaomi-battery/?$ /repair-xiaomi-battery/
+RedirectMatch 301 ^/آموزش-تعویض-باتری-ایفون/?$ /آموزش-تعویض-باتری-ایفون-2/
+RedirectMatch 301 ^/تعمیر-آبخوردگی-لپ-تاپ-اپل/?$ /تعمیر-آبخوردگی-لپ-تاپ-ایسر/
+RedirectMatch 301 ^/تعمیر-آبخوردگی-لپ-تاپ-اچ-پی/?$ /تعمیر-آبخوردگی-لپتاپ-اچ-پی/
+RedirectMatch 301 ^/تعمیر-آبخوردگی-لپ-تاپ-سونی/?$ /تعمیرآبخوردگی-لپ-تاپ-سونی/
+RedirectMatch 301 ^/تعمیر-آبخوردگی-لپتاپ-اپل/?$ /تعمیر-آبخوردگی-لپ-تاپ-ایسر/
+RedirectMatch 301 ^/تعمیر-ابخوردگی-لپ-تاپ-سامسونگ/?$ /تعمیر-ابخوردگی-لپتاپ-سامسونگ/
+RedirectMatch 301 ^/تعمیر-اسپیکر-لپ-تاپ-لنوو/?$ /تعمیر-اسپیکر-لپتاپ-لنوو/
+RedirectMatch 301 ^/تعمیر-ال-سی-دی-لپ-تاپ-ایسر/?$ /تعمیر-ال-سی-دی-لپتاپ-ایسر/
+RedirectMatch 301 ^/تعمیر-باتری-لپ-تاپ-ایسر/?$ /تعمیر-باتری-لپتاپ-ایسر/
+RedirectMatch 301 ^/تعمیر-تاچ-پد-لپ-تاپ-اپل-apple/?$ /تعمیر-تاچ-پد-لپتاپ-اپل-apple/
+RedirectMatch 301 ^/تعمیر-تاچ-پد-لپ-تاپ-سونی/?$ /تعمیر-تاچ-پد-لپتاپ-سونی/
+RedirectMatch 301 ^/تعمیر-تاچ-پد-لپ-تاپ-شیائومی-به-همراه-گار/?$ /تعمیر-تاچ-پد-لپتاپ-شیائومی-به-همراه-گار/
+RedirectMatch 301 ^/تعمیر-دوربین-موبایل-سونی/?$ /تعمیردوربین-موبایل-سونی/
+RedirectMatch 301 ^/تعمیر-نرم-افزاری-تبلت-سامسونگ/?$ /تعمیرنرم-افزاری-تبلت-سامسونگ/
+RedirectMatch 301 ^/تعمیر-هارد-لپ-تاپ-اپل-با-گارانتی/?$ /تعمیر-هارد-لپتاپ-اپل-با-گارانتی/
+RedirectMatch 301 ^/تعمیر-هارد-لپ-تاپ-اچ-پی/?$ /تعمیر-هارد-لپتاپ-اچ-پی/
+RedirectMatch 301 ^/تعمیر-هارد-لپ-تاپ-ایسر/?$ /تعمیرهارد-لپ-تاپ-ایسر/
+RedirectMatch 301 ^/تعمیر-هارد-لپ-تاپ-سونی/?$ /تعمیرهارد-لپ-تاپ-سونی/
+RedirectMatch 301 ^/تعمیر-هارد-لپ-تاپ-شیائومی/?$ /تعمیرهارد-لپ-تاپ-شیائومی/
+RedirectMatch 301 ^/تعمیر-کارت-گرافیک-لپ-تاپ-اپل/?$ /تعمیر-کارت-گرافیک-لپتاپ-اپل/
+RedirectMatch 301 ^/تعمیر-کارت-گرافیک-لپ-تاپ-سونی/?$ /تعمیر-کارت-گرافیک-لپتاپ-سونی/
+RedirectMatch 301 ^/تعمیر-کیبورد-لپ-تاپ-سامسونگ/?$ /تعمیر-کیبورد-لپتاپ-سامسونگ/
+RedirectMatch 301 ^/تعمیرات-کیبورد-مک-بوک/?$ /تعمیرات-کیبورد-مکبوک/
+RedirectMatch 301 ^/تعمیرات-گوشی-اپل-در-تهران/?$ /تعمیرات-گوشی-اپل-درتهران/
+RedirectMatch 301 ^/تعویض-فلت-ال-سی-دی-ایسوس/?$ /تعویض-فلت-السیدی-ایسوس/
+RedirectMatch 301 ^/تعویض-قاب-لپ-تاپ-اپل/?$ /تعویض-قاب-لپتاپ-اپل/
+RedirectMatch 301 ^/تعویض-قاب-لپ-تاپ-ایسر/?$ /تعویض-قاب-لپتاپ-ایسر/
+RedirectMatch 301 ^/تعویض-قاب-لپ-تاپ-سامسونگ/?$ /تعویض-قاب-لپتاپ-سامسونگ/
+RedirectMatch 301 ^/تعویض-قاب-لپ-تاپ-سونی-وایو/?$ /تعویض-قاب-لپتاپ-سونی-وایو/
+RedirectMatch 301 ^/مشکلات-هارد-لپ-تاپ-لنوو/?$ /مشکلات-هارد-لپتاپ-لنوو/
+
+# Archive and feed URLs that no longer exist in the static site. The optional
+# (/feed) group is what keeps /tag/x/feed/ from taking two hops: without it the
+# generic feed rule below would send it to /tag/x/, which then redirects again.
+RedirectMatch 301 ^/author/[^/]+(/page/[0-9]+)?(/feed)?/?$ /blog/
+RedirectMatch 301 ^/tag/[^/]+(/page/[0-9]+)?(/feed)?/?$ /blog/
+RedirectMatch 301 ^/category/[^/]+(/page/[0-9]+)?(/feed)?/?$ /blog/
+RedirectMatch 301 ^/blog/page/(2[4-9]|[3-9][0-9]|[0-9]{3,})/?$ /blog/
+RedirectMatch 301 ^/wp-admin(/.*)?$ /
+
+# Old slugs recovered from the WordPress _wp_old_slug table. These are the
+# mappings WordPress itself used to 301 before the static migration dropped
+# that behaviour, so they are authoritative rather than inferred.
+RedirectMatch 301 ^/5229-2/?$ /types-of-mobile-parts/
+RedirectMatch 301 ^/acer-tablet-lcdreplacement/?$ /acer-tablet-lcd-replacement/
+RedirectMatch 301 ^/apple-phone-hard-driverepair/?$ /apple-phone-hard-drive-repair/
+RedirectMatch 301 ^/iphone-boardrepair/?$ /iphone-board-repair/
+RedirectMatch 301 ^/laptop-hard-disk-problem/?$ /laptop-hard-drive-is-burned/
+RedirectMatch 301 ^/mobile-repair-in-karag/?$ /mobile-repair-inkaraj/
+RedirectMatch 301 ^/mobile-repair-in-north/?$ /mobile-repair-inkaraj/
+RedirectMatch 301 ^/repair-a-damagediphone/?$ /repair-a-damaged-iphone/
+RedirectMatch 301 ^/samsung-laptop-repairs-in-revolver/?$ /samsung-laptop-repairs-inrevolver/
+RedirectMatch 301 ^/samsung-phone-hard-driverepair/?$ /samsung-phone-hard-drive-repair/
+RedirectMatch 301 ^/xiaomi-laptop-lcd-replacement-2/?$ /xiaomi-laptop-lcdreplacement/
+RedirectMatch 301 ^/xiaomi-repair-in-east-tehran/?$ /xiaomi-repairs-in-tehranpars/
+RedirectMatch 301 ^/xiaomi-repairs-in-easttehran/?$ /xiaomi-repairs-in-tehranpars/
+RedirectMatch 301 ^/xiaomi-representative-office-in-westtehran/?$ /xiaomi-representative-office-in-west-tehran/
+RedirectMatch 301 ^/آشنایی-با-انواع-قطعات-موبایل/?$ /types-of-mobile-parts/
+RedirectMatch 301 ^/آموزش-تعویض-ال-سی-دی-ایفون/?$ /iphone-lcd-replacement-tutorial2/
+RedirectMatch 301 ^/آموزش-گام-به-گام-نصب-ویندوز-11-با-فلش/?$ /install-windows-11-by-usb/
+RedirectMatch 301 ^/افزایش-رم-مجازی-در-ویندوز-11-ویدیو-آموزش/?$ /increase-virtual-ram-in-windows/
+RedirectMatch 301 ^/بی-صدا-شدن-گوشی-بعد-از-افتادن-در-آب/?$ /silence-of-the-phone-after-water-damage/
+RedirectMatch 301 ^/تعمیر-لپ-تاپ-ایسوس-در-شرق-تهران/?$ /asus-laptop-repair-in-east-tehran/
+RedirectMatch 301 ^/تعمیر-لپ-تاپ-در-شمال-تهران/?$ /laptop-repairs-in-north-of-tehran/
+RedirectMatch 301 ^/تعمیر-هارد-لپ-تاپ-اپل-apple-با-گارانتی/?$ /تعمیر-هارد-لپتاپ-اپل-با-گارانتی/
+RedirectMatch 301 ^/دلایل-روشن-نشدن-لپ-تاپ-اچ-پی-چیست؟-راهنم/?$ /reasons-for-hp-laptop-not-turning-on/
+RedirectMatch 301 ^/راهنمای-استفاده-هوشمندانه-از-قابلیت-ه/?$ /smart-use-mobile-features-without-internet/
+RedirectMatch 301 ^/شکستن-ال-سی-دی-گوشی-،-بررسی-دلایل-و-روش-ت/?$ /can-a-broken-lcd-be-repaired/
+RedirectMatch 301 ^/مشکل-خاموشی-آیفون-دلیل-بالا-نیامدن-آیف/?$ /iphone-cant-poweron/
+RedirectMatch 301 ^/مشکل-وب-کم-لپ-تاپ-ایسوس/?$ /asus-laptop-webcam-problem/
+
+# The DB slug said A57 while the page's title and body are about the A56 and
+# no other A56 LCD page exists. Slug corrected in lib/content.ts PATH_RENAMES;
+# this keeps the 877 impressions the old URL earned.
+RedirectMatch 301 ^/a57-lcd-replacement/?$ /a56-lcd-replacement/
+
+# Found in the GSC coverage export (these carry no impressions, so the
+# impressions-based sweep above never saw them).
+RedirectMatch 301 ^/service/?$ /services/
+RedirectMatch 301 ^/samsung-washing-machine/?$ /samsung/samsung-washing-machine/
+RedirectMatch 301 ^/iphone-6-repair-2/?$ /iphone-6repair/
+RedirectMatch 301 ^/تعمیر-لپ-تاپ-سونی/?$ /sony/lap-top/
+
+# WordPress date archives (/2024/11/09/, /2022/01/, /2021/) and the old Persian
+# article index. None of these have an equivalent in the static site.
+RedirectMatch 301 ^/(19|20)[0-9]{2}(/[0-9]{2}){0,2}/?$ /blog/
+RedirectMatch 301 ^/مقالات/?$ /blog/
+RedirectMatch 301 ^/comprehensive-tutorial-on-using-a-laptop-as-a-monitor/?$ /blog/
+
+# Malformed inbound links: a trailing ")" or Persian comma got glued onto the
+# URL inside old post content, so Google crawled the punctuation as part of the
+# path. Strip it and serve the real page.
+RedirectMatch 301 "^(/.+?)/[)،]/?$" $1/
+RedirectMatch 301 ^(/.+?)/(feed|embed)/?$ $1/

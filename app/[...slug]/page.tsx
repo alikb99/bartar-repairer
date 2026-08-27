@@ -18,6 +18,7 @@ import {
   breadcrumbs,
   readingMinutes,
   extractFaq,
+  h1For,
   mobileRepairInfo,
   CANONICAL_TO,
 } from "@/lib/content";
@@ -392,7 +393,7 @@ export default async function Page({
                 </span>
               </div>
               <h1 className="text-[28px] font-extrabold leading-[1.5] tracking-tight text-ink-900 sm:text-[38px]">
-                {post.title}
+                {h1For(post.path, post.title)}
               </h1>
               <Link
                 href="/team/"
@@ -429,7 +430,7 @@ export default async function Page({
                 </span>
               </span>
               <h1 className="text-[30px] font-extrabold leading-[1.3] tracking-tight text-ink-900 sm:text-[44px]">
-                {post.title}
+                {h1For(post.path, post.title)}
               </h1>
               <p className="mt-4 max-w-[560px] text-[17px] leading-9 text-ink-500">
                 {post.metaDesc}

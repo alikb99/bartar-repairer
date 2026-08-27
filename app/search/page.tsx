@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { POSTS } from "@/lib/content";
 import { SITE } from "@/lib/data";
-import SearchClient, { type SearchItem } from "@/components/SearchClient";
+import PseSearch from "@/components/PseSearch";
 
 export const metadata: Metadata = {
   title: "جستجو در سایت",
@@ -14,12 +14,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
 };
 
-// Build the search index once at build time (server) and ship it inline.
-const INDEX: SearchItem[] = POSTS.filter((p) => p.path !== "/blog/").map((p) => ({
-  title: p.title,
-  path: p.path,
-  type: p.type,
-}));
+// Only the count is still needed — PSE does the searching. /blog/ is the
+// archive route rather than a page of its own, so it never counts.
+const PAGE_COUNT = POSTS.filter((p) => p.path !== "/blog/").length;
 
 export default function SearchPage() {
   return (
@@ -43,14 +40,14 @@ export default function SearchPage() {
             جستجو در {SITE.shortName}
           </h1>
           <p className="mt-3 text-sm text-ink-500">
-            میان {INDEX.length.toLocaleString("fa-IR")} صفحه خدمات و مقاله جستجو
+            میان {PAGE_COUNT.toLocaleString("fa-IR")} صفحه خدمات و مقاله جستجو
             کنید.
           </p>
         </div>
       </header>
 
       <div className="mx-auto max-w-3xl px-4 pb-24 pt-10 sm:px-6 lg:px-8">
-        <SearchClient items={INDEX} />
+        <PseSearch siteName={SITE.shortName} />
       </div>
     </article>
   );

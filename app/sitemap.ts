@@ -3,6 +3,7 @@ import { POSTS, ARTICLE_POSTS, CANONICAL_TO } from "@/lib/content";
 import { LIVE_REPAIR_TYPES } from "@/lib/repair-types";
 import { LIVE_SERVICE_AREAS } from "@/lib/service-areas";
 import { SITE } from "@/lib/data";
+import { CLUSTER_REVISED } from "@/lib/recovered-revised";
 import { PER_PAGE } from "@/components/BlogListing";
 
 export const dynamic = "force-static";
@@ -33,6 +34,16 @@ const NOINDEX_PATHS = new Set([
 ]);
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  // An enrichment batch rewrites the body without touching the WordPress
+  // `modified` column, so the raw value understates when the page last changed
+  // and Google stops re-crawling it. CLUSTER_REVISED carries the real date.
+  const modifiedOf = (p: { path: string; modified: string }): Date => {
+    const revised = CLUSTER_REVISED[p.path];
+    return new Date(revised ?? p.modified.replace(" ", "T"));
+  };
+  // The /blog/ listing dates from when its newest ARTICLE was published, not
+  // from when some article on it was later revised — deliberately the raw
+  // column, so a body rewrite does not keep re-dating the archive.
   const latestModified = (posts: typeof ARTICLE_POSTS): Date | undefined => {
     const times = posts
       .map((p) => new Date(p.modified.replace(" ", "T")).getTime())
@@ -67,6 +78,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly" as const,
       priority: 0.9,
     })),
+    // Pages shipped as pre-rendered HTML from public/ rather than as routes
+    // (see public/README-frozen-pages.md). They are indexable and must appear
+    // here, but nothing in POSTS knows about them.
+    {
+      url: `${SITE.domain}/acer/`,
+      lastModified: new Date("2026-08-13"),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    { url: `${SITE.domain}/prices/`, changeFrequency: "weekly", priority: 0.9 },
+    {
+      url: `${SITE.domain}/mobile-repair-online/`,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    { url: `${SITE.domain}/app/`, changeFrequency: "monthly", priority: 0.7 },
     // Service-area hubs: local landing pages for each covered neighbourhood.
     { url: `${SITE.domain}/areas/`, changeFrequency: "monthly", priority: 0.8 },
     ...LIVE_SERVICE_AREAS.map((a) => ({
@@ -77,20 +104,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
   const seen = new Set(entries.map((entry) => entry.url));
 
-  // paginated blog listing pages (page 2 … N)
-  const blogPages = Math.ceil(ARTICLE_POSTS.length / PER_PAGE);
-  for (let n = 2; n <= blogPages; n++) {
-    const pageModified = latestModified(
-      ARTICLE_POSTS.slice((n - 1) * PER_PAGE, n * PER_PAGE),
-    );
-    entries.push({
-      url: `${SITE.domain}/blog/page/${n}/`,
-      ...(pageModified ? { lastModified: pageModified } : {}),
-      changeFrequency: "weekly",
-      priority: 0.3,
-    });
-    seen.add(`${SITE.domain}/blog/page/${n}/`);
-  }
+  // Paginated blog listings (/blog/page/2… ) are deliberately absent: they are
+  // noindex, and a sitemap must never advertise a URL that says noindex.
+  // Google still reaches them by following /blog/, and every article they list
+  // is in the sitemap under its own URL.
 
   for (const p of POSTS) {
     if (NOINDEX_PATHS.has(p.path)) continue;
@@ -108,7 +125,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         : 0.6;
     entries.push({
       url,
-      lastModified: new Date(p.modified.replace(" ", "T")),
+      lastModified: modifiedOf(p),
       changeFrequency: p.type === "post" ? "monthly" : "weekly",
       priority,
     });

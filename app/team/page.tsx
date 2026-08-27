@@ -4,7 +4,8 @@ import { ChevronLeft, MapPin, Phone, Wrench } from "lucide-react";
 import { SITE } from "@/lib/data";
 import { TECHNICIANS, WORKSHOP_TOOLS, yearsLabel } from "@/lib/team";
 
-const TITLE = "تیم فنی تعمیرات برتر | تکنسین هایی که دستگاه شما را تعمیر می کنند";
+// Non-absolute: the root layout template appends " | برتر سرویس".
+const TITLE = "تیم فنی تعمیرگاه - تکنسین ها و تجهیزات کارگاه";
 const DESC =
   "تکنسین های تعمیرگاه برتر سرویس و تجهیزاتی که با آن کار می کنیم: میکروسکوپ، دوربین حرارتی، شست وشوی اولتراسونیک و ابزار ریزکاری برد.";
 

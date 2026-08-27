@@ -1,5 +1,17 @@
 import Link from "next/link";
-import { Phone, MapPin, Instagram, Youtube, MessageCircle } from "lucide-react";
+import {
+  Phone,
+  MapPin,
+  Instagram,
+  Youtube,
+  MessageCircle,
+  Send,
+  Video,
+  Facebook,
+  Linkedin,
+  Twitter,
+  Globe,
+} from "lucide-react";
 import { SITE } from "@/lib/data";
 import type { NavItem } from "@/lib/content";
 import { LIVE_SERVICE_AREAS } from "@/lib/service-areas";
@@ -97,21 +109,32 @@ export default function Footer({ nav }: { nav: NavItem[] }) {
             className="h-11 w-auto rounded-xl bg-white px-3 py-2"
           />
           <p className="mt-5 max-w-[330px] text-sm leading-8 text-ink-300">
-            مرکز تخصصی تعمیر موبایل و لپ تاپ و نمایندگی برندهای معتبر. با بیش از یک
-            دهه تجربه، خدمات تعمیراتی مطمئن همراه با گارانتی ارائه می دهیم.
+            مرکز تخصصی تعمیر موبایل و لپ تاپ و نمایندگی برندهای معتبر. با بیش از
+            ۱۵ سال تجربه، خدمات تعمیراتی مطمئن همراه با گارانتی ارائه می دهیم.
           </p>
-          <div className="mt-5 flex items-center gap-2.5">
+          {/* Every official profile is linked from every page, and the same set
+              is emitted as schema sameAs in app/layout.tsx — the two have to
+              agree for the profiles to read as one entity. No nofollow: these
+              are the site's own accounts, and the link is the corroboration. */}
+          <div className="mt-5 flex flex-wrap items-center gap-2.5">
             {[
               { Icon: Instagram, label: "اینستاگرام", href: SITE.socials.instagram },
+              { Icon: Send, label: "تلگرام", href: SITE.socials.telegram },
               { Icon: MessageCircle, label: "واتساپ", href: SITE.socials.whatsapp },
               { Icon: Youtube, label: "یوتیوب", href: SITE.socials.youtube },
+              { Icon: Video, label: "آپارات", href: SITE.socials.aparat },
+              { Icon: Twitter, label: "ایکس", href: SITE.socials.twitter },
+              { Icon: Facebook, label: "فیسبوک", href: SITE.socials.facebook },
+              { Icon: Linkedin, label: "لینکدین", href: SITE.socials.linkedin },
+              { Icon: Globe, label: "پینترست", href: SITE.socials.pinterest },
             ].map(({ Icon, label, href }) => (
               <a
                 key={label}
                 href={href}
                 target="_blank"
-                rel="noopener noreferrer nofollow"
+                rel="noopener noreferrer"
                 aria-label={label}
+                title={label}
                 className="grid h-[42px] w-[42px] place-items-center rounded-xl border border-[#2A2F39] text-[#C2C8D2] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white"
               >
                 <Icon className="h-[19px] w-[19px]" />
