@@ -38,7 +38,7 @@
 // Anything else that differs is reported, down to a single dot.
 import fs from "node:fs";
 import path from "node:path";
-import { ACCEPTED, classify } from "./accepted-differences.mjs";
+import { ACCEPTED, EDITS, classify } from "./accepted-differences.mjs";
 
 const args = process.argv.slice(2);
 const argOf = (flag, fallback) => {
@@ -256,7 +256,7 @@ for (const rel of all) {
   const accepted = new Set();
   const unresolved = [];
   for (const [axis, d] of Object.entries(diffs)) {
-    const ids = classify(axis, d);
+    const ids = classify(axis, d, rel);
     if (ids) ids.forEach((id) => accepted.add(id));
     else unresolved.push(axis);
   }
@@ -297,7 +297,22 @@ for (const k of [...SCALARS, "text", ...LISTS]) {
 console.log(`\naccepted differences in play`);
 for (const rule of ACCEPTED) {
   const n = report.filter((r) => r.accepted?.includes(rule.id)).length;
-  console.log(`  ${rule.id.padEnd(26)} ${String(n).padStart(4)} pages`);
+  console.log(`  ${rule.id.padEnd(32)} ${String(n).padStart(4)} pages`);
+}
+// One line per edit id, not per entry: a single change often shows up on two
+// axes (an edited heading moves both the text and the links on that page).
+const uniqueEdits = EDITS.filter(
+  (e, i, a) => a.findIndex((x) => x.id === e.id) === i,
+);
+for (const edit of uniqueEdits) {
+  const n = report.filter((r) => r.accepted?.includes(edit.id)).length;
+  const where = `/${edit.page.replace(/index\.html$/, "")}`;
+  const axes = [
+    ...new Set(EDITS.filter((e) => e.id === edit.id).map((e) => e.axis)),
+  ].join("+");
+  console.log(
+    `  ${edit.id.padEnd(34)} ${String(n).padStart(3)} page   ${axes.padEnd(11)} ${where}`,
+  );
 }
 
 if (differing.length) {

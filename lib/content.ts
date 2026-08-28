@@ -267,6 +267,31 @@ function cleanContent(html: string): string {
     const href = (m?.[1] ?? m?.[2] ?? m?.[3] ?? "").trim();
     return href ? full : `<span>${inner}</span>`;
   });
+  // HEADINGS WITH NO TEXT. Two shapes, both from the WordPress editor:
+  //   <h2></h2>            the heading's text was deleted, the block stayed
+  //   <h2><img …></h2>     a picture was dropped into a heading block
+  // Neither is a heading. Both render as a gap or a stray image, a screen
+  // reader announces "heading, level 2" with no name, and — because the
+  // article table of contents is built from the <h2>s — both put a blank
+  // numbered row into the contents list. The image is content, so it is kept
+  // and only its heading wrapper goes; a heading with nothing in it at all is
+  // removed outright.
+  out = out.replace(
+    /<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi,
+    (full, _level: string, inner: string) => {
+      if (inner.replace(/<[^>]+>/g, "").replace(/[\s\u200c]|&nbsp;/g, "")) return full;
+      return /<img\b/i.test(inner) ? inner : "";
+    },
+  );
+  // Outbound links opened from body content get rel="noopener". The pages come
+  // from a WordPress export where the editor set target="_blank" by hand and
+  // rel by accident; without it the opened tab can reach back through
+  // window.opener. Manufacturer links stay followed — they are cited as
+  // sources, and nofollowing asus.com or hp.com would be dishonest.
+  out = out.replace(/<a\b([^>]*href="https?:\/\/[^"]*"[^>]*)>/gi, (full, attrs: string) => {
+    if (/bartar-repairer\.com/i.test(attrs) || /\srel\s*=/i.test(attrs)) return full;
+    return `<a${attrs} rel="noopener">`;
+  });
   out = out.replace(/<figure\b[^>]*>\s*(?:<figcaption[^>]*>\s*<\/figcaption>)?\s*<\/figure>/gi, "");
   out = out.replace(/<img /gi, '<img loading="lazy" decoding="async" ');
   // Wrap tables so they scroll inside their box instead of overflowing the page.
@@ -646,6 +671,19 @@ export const CANONICAL_TO: Record<string, string> = {
 // Hand-written titles for the commercial (money) pages. Keyword stays first,
 // followed by a concrete USP so the SERP snippet earns the click. Only the
 // <title> meta is replaced — page URLs, H1s and body content stay untouched.
+// ---- Titles rewritten AFTER the 2026-08-16 deploy ----
+// TITLE_OVERRIDES_RECOVERED is a record of what the deployed site says, read
+// back out of its HTML, so it must not be edited to change a title — that
+// would destroy the only copy of the deployed value. Deliberate rewrites go
+// here instead and win over it. Each of these three was a two-or-three-word
+// title that spent a whole SERP line saying nothing: "خدمات" (18 characters),
+// "قطعات اپل" (22), "درباره ی ما" (24).
+const TITLE_REWRITES: Record<string, string> = {
+  "/about/": "درباره برتر سرویس | ۱۵ سال تعمیر تخصصی موبایل و لپ تاپ در تهران",
+  "/services/": "خدمات تعمیرات برتر سرویس | موبایل، لپ تاپ، تبلت و لوازم خانگی",
+  "/apple-mobile-part/": "قطعات اصل موبایل اپل | تشخیص قطعه اورجینال و گارانتی تعویض",
+};
+
 const TITLE_OVERRIDES: Record<string, string> = {
   // Keyed by the post-rename URL (see PATH_RENAMES) so it is not silently
   // orphaned: the recovered tables never saw this path because the July build
@@ -1108,6 +1146,46 @@ function promoteHeadings(html: string): string {
   );
 }
 
+// promoteHeadings fixes a body that starts too deep; this fixes one that skips
+// a level on the way down — an <h2> section whose sub-headings are <h4>,
+// which is what WordPress bodies look like when the editor picked heading
+// sizes by eye. The outline a crawler and a screen reader read then disagrees
+// with the one a person sees.
+//
+// The walk keeps a stack of (original level → level emitted). A heading comes
+// out one below its nearest surviving ancestor and never deeper than it
+// already was, so nothing is pushed down and siblings stay siblings. A body
+// with no gaps maps to itself, which is why this can run over every page and
+// only move the ones that are malformed.
+//
+// The stack is SEEDED WITH ONE LEVEL ABOVE THE BODY'S FIRST HEADING, which is
+// deliberate and load-bearing: seeding with the page <h1> instead would pull a
+// leading <h3> up to <h2>, and the article table of contents is built from the
+// <h2>s. That version rewrote the visible contents list on 60 pages and moved
+// their body text — a much bigger change than the one being made here. This
+// version can never create a new shallowest heading, so the contents list is
+// untouched and only genuinely skipped levels close up.
+function levelHeadings(html: string): string {
+  const first = html.match(/<h([1-6])\b/i);
+  if (!first) return html;
+  const base = Number(first[1]) - 1;
+  const stack: { orig: number; mapped: number }[] = [{ orig: base, mapped: base }];
+  return html.replace(
+    /<(\/?)h([1-6])\b([^>]*)>/gi,
+    (full, slash: string, level: string, attrs: string) => {
+      const orig = Number(level);
+      if (slash) {
+        const open = stack[stack.length - 1];
+        return open && open.orig === orig ? `</h${open.mapped}>` : full;
+      }
+      while (stack.length > 1 && stack[stack.length - 1].orig >= orig) stack.pop();
+      const mapped = Math.min(orig, stack[stack.length - 1].mapped + 1);
+      stack.push({ orig, mapped });
+      return `<h${mapped}${attrs}>`;
+    },
+  );
+}
+
 export const POSTS: Post[] = raw.map((p) => {
   const rawSegments = buildSegments(p);
   const rawPath = "/" + rawSegments.join("/") + "/";
@@ -1118,7 +1196,7 @@ export const POSTS: Post[] = raw.map((p) => {
     : rawSegments;
   let content = applyContentFixes(
     selfPath,
-    promoteHeadings(addAltText(cleanContent(p.content), p.title)),
+    levelHeadings(promoteHeadings(addAltText(cleanContent(p.content), p.title))),
   );
   // Inject contextual in-body links to the commercial hubs. Runs on BOTH article
   // and service/model pages so every cluster page funnels in-body link equity up
@@ -1152,7 +1230,8 @@ export const POSTS: Post[] = raw.map((p) => {
     segments,
     path: selfPath,
     metaTitle: deZwnj(
-      TITLE_OVERRIDES_RECOVERED[selfPath] ||
+      TITLE_REWRITES[selfPath] ||
+        TITLE_OVERRIDES_RECOVERED[selfPath] ||
         TITLE_OVERRIDES[selfPath] ||
         refineTitle(deZwnj(resolveTitle(p.seoTitle, p.title))),
     ),

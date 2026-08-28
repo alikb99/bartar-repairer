@@ -604,3 +604,9 @@ RedirectMatch 301 ^/comprehensive-tutorial-on-using-a-laptop-as-a-monitor/?$ /bl
 # path. Strip it and serve the real page.
 RedirectMatch 301 "^(/.+?)/[)،]/?$" $1/
 RedirectMatch 301 ^(/.+?)/(feed|embed)/?$ $1/
+
+# Retired page: an Elementor test draft ("تست المنتور") that was published by
+# accident, carried 11 words, was noindex and had no inbound link. 410 rather
+# than 404 or a redirect: it has no successor page to point at, and Gone tells
+# a crawler to stop asking instead of retrying for months.
+RedirectMatch 410 "^/%D8%AA%D8%B3%D8%AA-%D8%A7%D9%84%D9%85%D9%86%D8%AA%D9%88%D8%B1/$"

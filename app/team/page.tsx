@@ -16,6 +16,8 @@ const TITLE = "تیم فنی تعمیرگاه - تکنسین ها و تجهیز�
 const DESC =
   "تکنسین های تعمیرگاه برتر سرویس و تجهیزاتی که با آن کار می کنیم: میکروسکوپ، دوربین حرارتی، شست وشوی اولتراسونیک و ابزار ریزکاری برد.";
 
+const OG_ALT = "bartar-repairer.com — Electronics Repair, Tehran";
+
 export const metadata: Metadata = {
   title: TITLE,
   description: DESC,
@@ -25,8 +27,17 @@ export const metadata: Metadata = {
     description: DESC,
     url: `${SITE.domain}/team/`,
     type: "website",
+    // Declaring an openGraph object here replaces the parent's, which is what
+    // dropped the file-convention /opengraph-image this page should share with
+    // every other page on the site. Naming it back is the whole fix.
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: OG_ALT }],
   },
-  twitter: { card: "summary_large_image", title: TITLE, description: DESC },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESC,
+    images: ["/opengraph-image"],
+  },
 };
 
 export default function TeamPage() {

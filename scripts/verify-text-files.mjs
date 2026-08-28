@@ -44,10 +44,36 @@ const ACCEPTED = [
     matches: (live, build) =>
       live.replace(/ {2,}/g, " ") === build.replace(/ {2,}/g, " "),
   },
+  {
+    id: "empty-heading-blank-line",
+    file: "llms-full.txt",
+    // Declares that it reads a line present on one side only, which the
+    // explain() guard otherwise refuses to hand to a rule.
+    oneSided: true,
+    reason:
+      "Three article bodies carried an <h2></h2> — a heading block whose text " +
+      "was deleted but whose block stayed — and each wrote an empty line into " +
+      "this file. cleanContent drops empty headings now, so the blank lines " +
+      "are gone with them. This matches a line that is empty on the live side " +
+      "and absent from the build, and nothing else: a line with any content " +
+      "in it, on either side, is still unresolved.",
+    matches: (live, build) => build === null && live === "",
+  },
 ];
 
+// A line that exists on only one side arrives here as null, and coercing that
+// to "" made every rule see two strings. "zwnj-double-space" compares the two
+// with their space runs collapsed, so a REMOVED BLANK LINE — live "", build
+// null → ("", "") — matched it and was waved through as a whitespace tweak.
+// That is the exact failure this file exists to prevent, so a rule now has to
+// say out loud that it handles a one-sided line by setting oneSided.
 const explain = (file, live, build) =>
-  ACCEPTED.find((r) => r.file === file && r.matches(live ?? "", build ?? ""));
+  ACCEPTED.find(
+    (r) =>
+      r.file === file &&
+      (r.oneSided || (live !== null && build !== null)) &&
+      r.matches(live, build),
+  );
 
 let unresolved = 0;
 for (const name of FILES) {

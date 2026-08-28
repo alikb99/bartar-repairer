@@ -64,18 +64,27 @@ const BRAND_PAGES = new Set([
 ]);
 
 // Keep legacy URLs reachable as required, while keeping pages with no real
-// content out of Google's index: a duplicate homepage, an Elementor test page,
-// and an empty service page that was never written.
+// content out of Google's index: a duplicate homepage and an empty service
+// page that was never written. (The Elementor test page that used to be listed
+// here is no longer exported at all — see UNBUILT_PAGES.)
 const NOINDEX_PAGES = new Set([
   "/home/",
-  "/تست-المنتور/",
   "/home-appliances/air-conditioner-repair-agency/",
 ]);
 
+// Paths in POSTS that are deliberately not exported.
+//   /blog/            — an empty WordPress placeholder; the real articles
+//                       listing is the app/blog route, which owns that URL.
+//   /تست-المنتور/     — an Elementor test page: 11 words of body, "تست المنتور"
+//                       for a title, no inbound link from anywhere on the site,
+//                       and absent from the sitemap and llms.txt. It was
+//                       noindex, so dropping it costs no ranking; .htaccess
+//                       answers 410 so the URL is retired rather than left to
+//                       look like a broken page.
+const UNBUILT_PAGES = new Set(["/blog/", "/تست-المنتور/"]);
+
 export function generateStaticParams() {
-  // Exclude the empty WordPress "بلاگ" placeholder at /blog/ — that URL is
-  // served by the real articles listing route (app/blog).
-  return POSTS.filter((p) => p.path !== "/blog/").map((p) => ({
+  return POSTS.filter((p) => !UNBUILT_PAGES.has(p.path)).map((p) => ({
     slug: p.segments,
   }));
 }
