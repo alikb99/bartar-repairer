@@ -11,6 +11,7 @@ import {
   Articles,
   CTA,
 } from "@/components/Sections";
+import { HomeAbout, HomeTools } from "@/components/HomeBody";
 import { FAQS, SITE } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -72,6 +73,8 @@ export default function Home() {
       <Services />
       <Brands />
       <WhyUs />
+      <HomeAbout />
+      <HomeTools />
       <Steps />
       {/* Renders only once real customer reviews exist in lib/pricing.ts. The
           previous placeholder testimonials (invented names, invented quotes)

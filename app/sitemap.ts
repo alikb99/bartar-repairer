@@ -51,6 +51,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return times.length ? new Date(Math.max(...times)) : undefined;
   };
   const firstPageModified = latestModified(ARTICLE_POSTS.slice(0, PER_PAGE));
+  // Order matters: this list is emitted verbatim, and the deployed sitemap has
+  // this exact sequence. Keep the frozen public/ pages where they are.
   const entries: MetadataRoute.Sitemap = [
     { url: `${SITE.domain}/`, priority: 1 },
     {
@@ -63,6 +65,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    { url: `${SITE.domain}/app/`, changeFrequency: "monthly", priority: 0.7 },
     // Crawlable HTML directory: one shallow inbound link to every service page
     // and article, so no page depends on deep blog pagination for discovery.
     {
@@ -70,16 +73,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.4,
     },
-    // Repair-type hubs: commercial cross-brand landing pages.
-    { url: `${SITE.domain}/team/`, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${SITE.domain}/repairs/`, changeFrequency: "weekly", priority: 0.9 },
-    ...LIVE_REPAIR_TYPES.map((t) => ({
-      url: `${SITE.domain}/repairs/${t.slug}/`,
-      changeFrequency: "weekly" as const,
-      priority: 0.9,
-    })),
     // Pages shipped as pre-rendered HTML from public/ rather than as routes
-    // (see public/README-frozen-pages.md). They are indexable and must appear
+    // (see docs/frozen-pages.md). They are indexable and must appear
     // here, but nothing in POSTS knows about them.
     {
       url: `${SITE.domain}/acer/`,
@@ -87,13 +82,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    { url: `${SITE.domain}/team/`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE.domain}/prices/`, changeFrequency: "weekly", priority: 0.9 },
     {
       url: `${SITE.domain}/mobile-repair-online/`,
       changeFrequency: "monthly",
       priority: 0.8,
     },
-    { url: `${SITE.domain}/app/`, changeFrequency: "monthly", priority: 0.7 },
+    // Repair-type hubs: commercial cross-brand landing pages.
+    { url: `${SITE.domain}/repairs/`, changeFrequency: "weekly", priority: 0.9 },
+    ...LIVE_REPAIR_TYPES.map((t) => ({
+      url: `${SITE.domain}/repairs/${t.slug}/`,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    })),
     // Service-area hubs: local landing pages for each covered neighbourhood.
     { url: `${SITE.domain}/areas/`, changeFrequency: "monthly", priority: 0.8 },
     ...LIVE_SERVICE_AREAS.map((a) => ({

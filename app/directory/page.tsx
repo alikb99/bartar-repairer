@@ -86,6 +86,15 @@ function Group({
           </li>
         ))}
       </ul>
+      {items.length > PREVIEW && (
+        <Link
+          href={`/directory/${slug}/`}
+          className="mt-4 inline-flex items-center gap-1 text-[13px] font-bold text-accent hover:text-accent-deep"
+        >
+          مشاهده هر {items.length.toLocaleString("fa-IR")} صفحه {title}
+          <ChevronLeft className="h-3.5 w-3.5" />
+        </Link>
+      )}
     </section>
   );
 }

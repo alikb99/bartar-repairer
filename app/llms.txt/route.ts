@@ -10,8 +10,11 @@ export const dynamic = "force-static";
 // what it does, and links the pages worth citing. Kept build-time static so it
 // works with `output: "export"`.
 export function GET(): Response {
+  // Plain text has no renderer to collapse the double space a ZWNJ next to a
+  // real space leaves behind, so the line builder does it.
+  const tidy = (s: string) => s.replace(/ {2,}/g, " ");
   const line = (title: string, path: string, note?: string) =>
-    `- [${title}](${SITE.domain}${encodeURI(path)})${note ? `: ${note}` : ""}`;
+    `- [${tidy(title)}](${SITE.domain}${encodeURI(path)})${note ? `: ${tidy(note)}` : ""}`;
 
   const byPath = new Map(POSTS.map((p) => [p.path, p]));
   const pick = (path: string) => byPath.get(path);

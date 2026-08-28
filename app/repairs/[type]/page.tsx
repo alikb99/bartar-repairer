@@ -15,7 +15,7 @@ import {
   repairTypeBy,
   repairTypeContent,
 } from "@/lib/repair-types";
-import { pricesFor } from "@/lib/pricing";
+import { SCHEMA_CURRENCY, pricesFor, rial } from "@/lib/pricing";
 import { SITE } from "@/lib/data";
 import ClusterContent from "@/components/ClusterContent";
 import Icon from "@/components/Icon";
@@ -127,9 +127,9 @@ export default async function RepairTypeHub({
       ? {
           offers: {
             "@type": "AggregateOffer",
-            priceCurrency: "IRT",
-            lowPrice: Math.min(...prices.map((p) => p.from)),
-            highPrice: Math.max(...prices.map((p) => p.to ?? p.from)),
+            priceCurrency: SCHEMA_CURRENCY,
+            lowPrice: rial(Math.min(...prices.map((p) => p.from))),
+            highPrice: rial(Math.max(...prices.map((p) => p.to ?? p.from))),
             offerCount: prices.length,
             availability: "https://schema.org/InStock",
             url,

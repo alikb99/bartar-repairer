@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChevronLeft, MapPin, Phone, Wrench } from "lucide-react";
+import {
+  ChevronLeft,
+  Linkedin,
+  MapPin,
+  Phone,
+  UserRound,
+  Wrench,
+} from "lucide-react";
 import { SITE } from "@/lib/data";
 import { TECHNICIANS, WORKSHOP_TOOLS, yearsLabel } from "@/lib/team";
 
@@ -35,6 +42,37 @@ export default function TeamPage() {
     ...(t.certifications?.length ? { hasCredential: t.certifications } : {}),
   }));
 
+  // The supervisor is an employee of the business, not of the editorial team,
+  // so he gets his own Person node rather than joining the `people` list.
+  const manager = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: SITE.manager.name,
+    worksFor: { "@id": SITE.organizationId },
+    jobTitle: SITE.manager.jobTitle,
+  };
+
+  // The author identity this page is about, stated on the page it describes:
+  // same @id as the node in app/layout.tsx, with the profiles that corroborate
+  // it. Google reads sameAs as an identity claim, so it belongs where the team
+  // is actually presented.
+  const editorialTeam = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": SITE.authorId,
+    name: `تیم فنی ${SITE.shortName}`,
+    url: `${SITE.domain}/team/`,
+    sameAs: [
+      SITE.socials.linkedin,
+      SITE.socials.instagram,
+      SITE.socials.youtube,
+      SITE.socials.twitter,
+      SITE.socials.facebook,
+      SITE.socials.pinterest,
+      SITE.socials.whatsapp,
+    ],
+  };
+
   const breadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -54,6 +92,14 @@ export default function TeamPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(editorialTeam) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(manager) }}
       />
       {people.map((p) => (
         <script
@@ -91,6 +137,37 @@ export default function TeamPage() {
 
       <section className="bg-paper py-12 lg:py-16">
         <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+          {/* The person a customer can escalate to, named. A team page that
+              lists only technicians leaves no one accountable for the job. */}
+          <div className="mb-10 flex flex-col gap-5 rounded-[26px] border border-line bg-white p-5 shadow-card sm:flex-row sm:items-center sm:p-7">
+            <span
+              aria-hidden="true"
+              className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-accent-tint text-accent"
+            >
+              <UserRound className="h-7 w-7" />
+            </span>
+            <div className="min-w-0">
+              <span className="inline-flex rounded-lg bg-accent-tint px-3 py-1.5 text-xs font-extrabold text-accent">
+                {SITE.manager.jobTitle}
+              </span>
+              <h2 className="mt-3 text-xl font-extrabold leading-8 text-ink-900 sm:text-2xl">
+                {SITE.manager.name}
+              </h2>
+              <p className="mt-2 text-[15px] leading-9 text-ink-700">
+                {SITE.manager.bio}
+              </p>
+              <a
+                href={SITE.socials.linkedin}
+                target="_blank"
+                rel="noopener"
+                className="mt-4 inline-flex items-center gap-2 rounded-[12px] border border-line bg-paper px-4 py-2.5 text-sm font-bold text-ink-800 transition hover:border-accent hover:text-accent"
+              >
+                <Linkedin className="h-4 w-4 text-accent" />
+                پروفایل لینکدین {SITE.brandName}
+              </a>
+            </div>
+          </div>
+
           <h2 className="text-2xl font-extrabold text-ink-900 sm:text-[32px]">
             تعمیرکاران برتر سرویس
           </h2>

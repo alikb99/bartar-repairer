@@ -5,14 +5,11 @@ import {
   Instagram,
   Youtube,
   MessageCircle,
-  Send,
-  Video,
-  Facebook,
-  Linkedin,
-  Twitter,
-  Globe,
+  Download,
+  TrainFront,
+  Navigation,
 } from "lucide-react";
-import { SITE } from "@/lib/data";
+import { BRANCHES, SITE, directionsUrl } from "@/lib/data";
 import type { NavItem } from "@/lib/content";
 import { LIVE_SERVICE_AREAS } from "@/lib/service-areas";
 
@@ -68,8 +65,16 @@ const KEYWORD_LINKS: { title: string; items: [string, string][] }[] = [
   },
 ];
 
+/** "الف، ب، ج" → "الف، ب و ج" — reads as a sentence, not as a data field. */
+function metroPhrase(metro: string): string {
+  const stops = metro.split("، ").filter(Boolean);
+  if (stops.length < 2) return metro;
+  return `${stops.slice(0, -1).join("، ")} و ${stops[stops.length - 1]}`;
+}
+
 export default function Footer({ nav }: { nav: NavItem[] }) {
   const NAV = nav;
+  const central = BRANCHES[0];
   const services = NAV.filter((item) => item.children.length > 0);
   const quickLinks = NAV.filter((item) => item.children.length === 0);
 
@@ -102,7 +107,7 @@ export default function Footer({ nav }: { nav: NavItem[] }) {
         <div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/logo.png"
+            src="/logo.webp"
             alt={SITE.name}
             width={120}
             height={46}
@@ -112,21 +117,16 @@ export default function Footer({ nav }: { nav: NavItem[] }) {
             مرکز تخصصی تعمیر موبایل و لپ تاپ و نمایندگی برندهای معتبر. با بیش از
             ۱۵ سال تجربه، خدمات تعمیراتی مطمئن همراه با گارانتی ارائه می دهیم.
           </p>
-          {/* Every official profile is linked from every page, and the same set
-              is emitted as schema sameAs in app/layout.tsx — the two have to
-              agree for the profiles to read as one entity. No nofollow: these
+          {/* The channels the shop actually answers on. The full profile set,
+              including the ones that are only there to corroborate identity,
+              goes out as schema sameAs in app/layout.tsx — a footer row of
+              nine icons buys nothing a reader would use. No nofollow: these
               are the site's own accounts, and the link is the corroboration. */}
           <div className="mt-5 flex flex-wrap items-center gap-2.5">
             {[
               { Icon: Instagram, label: "اینستاگرام", href: SITE.socials.instagram },
-              { Icon: Send, label: "تلگرام", href: SITE.socials.telegram },
               { Icon: MessageCircle, label: "واتساپ", href: SITE.socials.whatsapp },
               { Icon: Youtube, label: "یوتیوب", href: SITE.socials.youtube },
-              { Icon: Video, label: "آپارات", href: SITE.socials.aparat },
-              { Icon: Twitter, label: "ایکس", href: SITE.socials.twitter },
-              { Icon: Facebook, label: "فیسبوک", href: SITE.socials.facebook },
-              { Icon: Linkedin, label: "لینکدین", href: SITE.socials.linkedin },
-              { Icon: Globe, label: "پینترست", href: SITE.socials.pinterest },
             ].map(({ Icon, label, href }) => (
               <a
                 key={label}
@@ -141,6 +141,13 @@ export default function Footer({ nav }: { nav: NavItem[] }) {
               </a>
             ))}
           </div>
+          <Link
+            href="/app/"
+            className="mt-5 inline-flex items-center gap-2 rounded-xl border border-[#2A2F39] px-4 py-2.5 text-[13.5px] font-bold text-[#E7EAEF] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white"
+          >
+            <Download className="h-[17px] w-[17px]" />
+            دانلود اپلیکیشن اندروید
+          </Link>
         </div>
 
         {/* Services */}
@@ -197,6 +204,12 @@ export default function Footer({ nav }: { nav: NavItem[] }) {
                 >
                   {SITE.phone}
                 </a>
+                {central.metro && (
+                  <div className="mt-2 flex items-start gap-1.5 text-[12.5px] leading-6 text-ink-300">
+                    <TrainFront className="mt-0.5 h-[15px] w-[15px] shrink-0 text-ink-300" />
+                    <span>نزدیک مترو {metroPhrase(central.metro)}</span>
+                  </div>
+                )}
               </div>
             </div>
             <div className="flex gap-3">
@@ -217,6 +230,35 @@ export default function Footer({ nav }: { nav: NavItem[] }) {
                 </a>
               </div>
             </div>
+          </div>
+          {/* Google's own embed, not Balad, because this one has to render for
+              crawlers and for visitors who arrive from Google Maps. Lazy: it is
+              below the fold on every page of the site. */}
+          <div className="mt-6">
+            <div className="mb-3 text-[13.5px] font-bold text-[#E7EAEF]">
+              موقعیت شعبه مرکزی روی نقشه
+            </div>
+            <div className="overflow-hidden rounded-xl border border-[#2A2F39]">
+              <iframe
+                title={`موقعیت شعبه مرکزی ${SITE.brandName} روی نقشه`}
+                src={`https://maps.google.com/maps?q=${central.geo.lat},${central.geo.lng}&z=16&hl=fa&output=embed`}
+                width="100%"
+                height="190"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="block h-[190px] w-full grayscale-[.2]"
+                style={{ border: 0 }}
+              />
+            </div>
+            <a
+              href={directionsUrl(central)}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="mt-2.5 inline-flex items-center gap-1.5 rounded-lg border border-[#2A2F39] px-3 py-1.5 text-[12.5px] font-bold text-[#E7EAEF] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white"
+            >
+              <Navigation className="h-[14px] w-[14px]" />
+              مسیریابی روی نقشه
+            </a>
           </div>
           {/* Local landing pages — sitewide inbound links so neighbourhood
               pages are never more than two clicks from any page. */}
@@ -271,6 +313,12 @@ export default function Footer({ nav }: { nav: NavItem[] }) {
             © تمامی حقوق برای {SITE.shortName} محفوظ است — ۱۴۰۴
           </div>
           <div className="flex flex-wrap items-center gap-4 text-[13px] text-[#7B828E]">
+            <Link href="/app/" className="transition hover:text-white">
+              دانلود اپلیکیشن
+            </Link>
+            <Link href="/prices/" className="transition hover:text-white">
+              قیمت تعمیر
+            </Link>
             <Link href="/team/" className="transition hover:text-white">
               تیم فنی
             </Link>

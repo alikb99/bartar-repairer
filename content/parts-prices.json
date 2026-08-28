@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-18",
+  "updated": "2026-08-13",
   "source": "supplier feed",
   "currency": "تومان",
   "labour": {
@@ -10,27 +10,84 @@
   "rows": [
     {
       "repairType": "back-cover-replacement",
-      "device": "سامسونگ A33",
-      "brand": "سامسونگ",
-      "from": 1050000,
-      "to": 2480000,
+      "device": "آیفون اپل — 13 Pro Max",
+      "brand": "اپل",
+      "from": 2000000,
+      "to": 3700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "back-cover-replacement",
-      "device": "سامسونگ A52 (SM-A525F)",
+      "device": "سامسونگ A07",
       "brand": "سامسونگ",
-      "aka": "سامسونگ A52",
-      "from": 500500,
-      "to": 2400000,
+      "from": 1250000,
+      "to": 2450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "back-cover-replacement",
-      "device": "سامسونگ A54 5G",
+      "device": "سامسونگ A16 (SM-A165F)",
       "brand": "سامسونگ",
-      "from": 1480000,
+      "aka": "سامسونگ A16",
+      "from": 1200000,
+      "to": 2350000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "back-cover-replacement",
+      "device": "سامسونگ A54 5G (SM-A546E)",
+      "brand": "سامسونگ",
+      "aka": "سامسونگ A54 5G",
+      "from": 1200000,
+      "to": 2900000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "back-cover-replacement",
+      "device": "سامسونگ Note 20 Ultra",
+      "brand": "سامسونگ",
+      "from": 1150000,
+      "to": 3500000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "back-cover-replacement",
+      "device": "شیائومی 11 Lite 5G NE",
+      "brand": "شیائومی",
+      "from": 1400000,
+      "to": 4000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "back-cover-replacement",
+      "device": "شیائومی 11T Pro",
+      "brand": "شیائومی",
+      "from": 1100000,
+      "to": 5300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "back-cover-replacement",
+      "device": "شیائومی شیائومی — Poco F3",
+      "brand": "شیائومی",
+      "from": 1300000,
       "to": 3000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "back-cover-replacement",
+      "device": "شیائومی MI 10 Lite",
+      "brand": "شیائومی",
+      "from": 1000000,
+      "to": 2300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "back-cover-replacement",
+      "device": "شیائومی MI 10T 5G",
+      "brand": "شیائومی",
+      "from": 1000000,
+      "to": 7000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -45,48 +102,72 @@
       "repairType": "back-cover-replacement",
       "device": "شیائومی MI 9T",
       "brand": "شیائومی",
-      "from": 1000000,
-      "to": 1850000,
+      "from": 1100000,
+      "to": 2300000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "back-cover-replacement",
-      "device": "شیائومی Poco M5S",
+      "device": "شیائومی Poco X4 Pro 5G",
       "brand": "شیائومی",
-      "from": 500600,
-      "to": 2480000,
+      "from": 880000,
+      "to": 3300000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "back-cover-replacement",
       "device": "شیائومی Redmi Note 13 4G",
       "brand": "شیائومی",
-      "from": 1480000,
-      "to": 3400000,
+      "from": 1500000,
+      "to": 3000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "back-cover-replacement",
-      "device": "شیائومی Redmi Note 8 Pro",
+      "device": "شیائومی Redmi Note 13 Pro Plus",
       "brand": "شیائومی",
-      "from": 1000000,
-      "to": 1710000,
+      "from": 1200000,
+      "to": 6000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "back-cover-replacement",
+      "device": "شیائومی Redmi Note 8",
+      "brand": "شیائومی",
+      "from": 1100000,
+      "to": 2300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "back-cover-replacement",
+      "device": "ناتینگ فون Nothing Phone 1",
+      "brand": "ناتینگ فون",
+      "from": 4000000,
+      "to": 5400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "آیفون 11",
       "brand": "اپل",
+      "from": 2300000,
+      "to": 4700000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "آیفون 11 Pro",
+      "brand": "اپل",
       "from": 3000000,
-      "to": 5290000,
+      "to": 5400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "آیفون 11 Pro Max",
       "brand": "اپل",
-      "from": 2400000,
-      "to": 4000000,
+      "from": 2800000,
+      "to": 5350000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -94,23 +175,23 @@
       "device": "آیفون 12 Mini",
       "brand": "اپل",
       "from": 2100000,
-      "to": 4000000,
+      "to": 3200000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "آیفون 12 Pro",
       "brand": "اپل",
-      "from": 2200000,
-      "to": 3700000,
+      "from": 2500000,
+      "to": 5300000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "آیفون 12 Pro Max",
       "brand": "اپل",
-      "from": 2600000,
-      "to": 4600000,
+      "from": 3000000,
+      "to": 5450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -118,7 +199,7 @@
       "device": "آیفون 13",
       "brand": "اپل",
       "from": 2300000,
-      "to": 4300000,
+      "to": 5640000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -126,76 +207,52 @@
       "device": "آیفون 13 Pro Max",
       "brand": "اپل",
       "from": 3000000,
-      "to": 4800000,
+      "to": 5900000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "آیفون 14 Pro",
+      "brand": "اپل",
+      "from": 3000000,
+      "to": 5700000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "آیفون 15 Pro Max",
+      "brand": "اپل",
+      "from": 3500000,
+      "to": 6000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "آیفون 16 Pro Max",
       "brand": "اپل",
-      "from": 4000000,
-      "to": 6400000,
+      "from": 4700000,
+      "to": 8000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "آیفون 6S",
       "brand": "اپل",
-      "from": 1400000,
-      "to": 2700000,
+      "from": 1500000,
+      "to": 3620000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "آیفون 7",
       "brand": "اپل",
-      "from": 1400000,
-      "to": 2800000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "آیفون 7 Plus",
-      "brand": "اپل",
-      "from": 1600000,
-      "to": 2940000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "آیفون 8",
-      "brand": "اپل",
-      "from": 1400000,
-      "to": 3100000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "آیفون 8 Plus",
-      "brand": "اپل",
-      "from": 1400000,
-      "to": 3100000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "آیفون SE 2016",
-      "brand": "اپل",
-      "from": 1300000,
-      "to": 2600000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "آیفون SE 2020/2022",
-      "brand": "اپل",
-      "from": 1600000,
+      "from": 1480000,
       "to": 3000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "آیفون X",
+      "device": "آیفون 7 Plus",
       "brand": "اپل",
       "from": 1800000,
       "to": 3300000,
@@ -203,10 +260,66 @@
     },
     {
       "repairType": "battery-replacement",
+      "device": "آیفون 8",
+      "brand": "اپل",
+      "from": 1700000,
+      "to": 3940000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "آیفون 8 Plus",
+      "brand": "اپل",
+      "from": 1700000,
+      "to": 3450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "آیفون SE 2016",
+      "brand": "اپل",
+      "from": 1300000,
+      "to": 2900000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "آیفون SE 2020/2022",
+      "brand": "اپل",
+      "from": 1700000,
+      "to": 3700000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "آیفون X",
+      "brand": "اپل",
+      "from": 2100000,
+      "to": 3600000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "آیفون XR",
+      "brand": "اپل",
+      "from": 1700000,
+      "to": 3450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "آیفون XS",
+      "brand": "اپل",
+      "from": 2200000,
+      "to": 4350000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
       "device": "آیفون XS Max",
       "brand": "اپل",
-      "from": 1900000,
-      "to": 3900000,
+      "from": 2200000,
+      "to": 4300000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -220,11 +333,67 @@
     },
     {
       "repairType": "battery-replacement",
+      "device": "سامسونگ A02S",
+      "brand": "سامسونگ",
+      "from": 1800000,
+      "to": 3300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ A03S",
+      "brand": "سامسونگ",
+      "from": 1800000,
+      "to": 3300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ A07",
+      "brand": "سامسونگ",
+      "from": 3400000,
+      "to": 5700000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ A10",
+      "brand": "سامسونگ",
+      "from": 1500000,
+      "to": 3000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
       "device": "سامسونگ A10 (SM-A105F)",
       "brand": "سامسونگ",
       "aka": "سامسونگ A10",
       "from": 1500000,
-      "to": 2400000,
+      "to": 2900000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ A10S",
+      "brand": "سامسونگ",
+      "from": 1500000,
+      "to": 3000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ A11",
+      "brand": "سامسونگ",
+      "from": 1700000,
+      "to": 3300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ A12",
+      "brand": "سامسونگ",
+      "from": 1600000,
+      "to": 3000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -232,6 +401,22 @@
       "device": "سامسونگ A14",
       "brand": "سامسونگ",
       "from": 1800000,
+      "to": 3200000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ A20S",
+      "brand": "سامسونگ",
+      "from": 1500000,
+      "to": 3000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ A21S",
+      "brand": "سامسونگ",
+      "from": 1600000,
       "to": 3000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
@@ -240,8 +425,26 @@
       "device": "سامسونگ A21s (SM-A217F)",
       "brand": "سامسونگ",
       "aka": "سامسونگ A21s",
+      "from": 1600000,
+      "to": 3200000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ A22 (SM-A225F)",
+      "brand": "سامسونگ",
+      "aka": "سامسونگ A22",
+      "from": 1900000,
+      "to": 3400000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ A22 5G (SM-A226B)",
+      "brand": "سامسونگ",
+      "aka": "سامسونگ A22 5G",
       "from": 1800000,
-      "to": 3350000,
+      "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -257,76 +460,77 @@
       "repairType": "battery-replacement",
       "device": "سامسونگ A31",
       "brand": "سامسونگ",
-      "from": 1700000,
-      "to": 3000000,
+      "from": 2100000,
+      "to": 3700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "سامسونگ A34 5G (SM-A346B)",
+      "device": "سامسونگ A32 4G",
       "brand": "سامسونگ",
-      "aka": "سامسونگ A34 5G",
-      "from": 1900000,
-      "to": 3200000,
+      "from": 2100000,
+      "to": 3600000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "سامسونگ A51",
+      "device": "سامسونگ A32 5G",
       "brand": "سامسونگ",
-      "from": 1700000,
-      "to": 2800000,
+      "from": 2100000,
+      "to": 3700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "سامسونگ A52 5G (SM-A526B)",
+      "device": "سامسونگ A35 5G (SM-A356E)",
       "brand": "سامسونگ",
-      "aka": "سامسونگ A52 5G",
+      "aka": "سامسونگ A35 5G",
+      "from": 2200000,
+      "to": 3900000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ A50 (SM-A505F)",
+      "brand": "سامسونگ",
+      "aka": "سامسونگ A50",
       "from": 1800000,
-      "to": 3000000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "سامسونگ A53 5G (SM-A536B)",
-      "brand": "سامسونگ",
-      "aka": "سامسونگ A53 5G",
-      "from": 2400000,
-      "to": 3250000,
+      "to": 3300000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "سامسونگ A54 5G",
       "brand": "سامسونگ",
-      "from": 3300000,
-      "to": 5400000,
+      "from": 1800000,
+      "to": 3700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "سامسونگ A55 5G (SM-A556E)",
+      "device": "سامسونگ A54 5G (SM-A546E)",
       "brand": "سامسونگ",
-      "aka": "سامسونگ A55 5G",
-      "from": 2400000,
-      "to": 4200000,
+      "aka": "سامسونگ A54 5G",
+      "from": 2200000,
+      "to": 5100000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "سامسونگ Galaxy A13",
+      "device": "سامسونگ A71 (SM-A715F)",
       "brand": "سامسونگ",
-      "from": 1600000,
-      "to": 2600000,
+      "aka": "سامسونگ A71",
+      "from": 1900000,
+      "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "سامسونگ Galaxy A7 2017",
+      "device": "سامسونگ A73 5G (SM-A736B)",
       "brand": "سامسونگ",
-      "from": 1500000,
-      "to": 2400000,
+      "aka": "سامسونگ A73 5G",
+      "from": 1900000,
+      "to": 3500000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -339,36 +543,42 @@
     },
     {
       "repairType": "battery-replacement",
-      "device": "سامسونگ Galaxy S21 5G",
+      "device": "سامسونگ Galaxy NOTE20 Ultra",
+      "brand": "سامسونگ",
+      "from": 2000000,
+      "to": 4400000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ Galaxy S21 FE",
+      "brand": "سامسونگ",
+      "from": 2200000,
+      "to": 4200000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ M10",
+      "brand": "سامسونگ",
+      "from": 1500000,
+      "to": 3000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ Note 10 Plus",
+      "brand": "سامسونگ",
+      "from": 720000,
+      "to": 4200000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ Note 20 Ultra",
       "brand": "سامسونگ",
       "from": 2100000,
-      "to": 4000000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "سامسونگ J6 Plus",
-      "brand": "سامسونگ",
-      "from": 1200000,
-      "to": 2300000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "سامسونگ J7 (SM-J700F)",
-      "brand": "سامسونگ",
-      "aka": "سامسونگ J7",
-      "from": 1000000,
-      "to": 1900000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "سامسونگ J7 Pro (SM-J730)",
-      "brand": "سامسونگ",
-      "aka": "سامسونگ J7 Pro",
-      "from": 1000000,
-      "to": 1900000,
+      "to": 4400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -383,8 +593,8 @@
       "repairType": "battery-replacement",
       "device": "سامسونگ S20 FE",
       "brand": "سامسونگ",
-      "from": 1800000,
-      "to": 3000000,
+      "from": 2000000,
+      "to": 3700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -397,10 +607,26 @@
     },
     {
       "repairType": "battery-replacement",
+      "device": "سامسونگ S22 Ultra",
+      "brand": "سامسونگ",
+      "from": 2800000,
+      "to": 5450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ S23 FE",
+      "brand": "سامسونگ",
+      "from": 3500000,
+      "to": 6740000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
       "device": "سامسونگ S23ULTRA",
       "brand": "سامسونگ",
       "from": 3100000,
-      "to": 5000000,
+      "to": 5350000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -408,6 +634,14 @@
       "device": "سامسونگ S24 FE",
       "brand": "سامسونگ",
       "from": 3400000,
+      "to": 5400000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ S24 Ultra",
+      "brand": "سامسونگ",
+      "from": 3200000,
       "to": 5400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
@@ -437,41 +671,209 @@
     },
     {
       "repairType": "battery-replacement",
+      "device": "سامسونگ S9 Plus",
+      "brand": "سامسونگ",
+      "from": 1700000,
+      "to": 3400000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ SM-A107F (موبایل)",
+      "brand": "سامسونگ",
+      "from": 1500000,
+      "to": 2900000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ SM-A115F",
+      "brand": "سامسونگ",
+      "from": 1600000,
+      "to": 3200000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ SM-A125F",
+      "brand": "سامسونگ",
+      "from": 1600000,
+      "to": 3200000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ SM-A245F",
+      "brand": "سامسونگ",
+      "from": 1800000,
+      "to": 3450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ SM-A256E",
+      "brand": "سامسونگ",
+      "from": 1800000,
+      "to": 3450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ SM-A336",
+      "brand": "سامسونگ",
+      "from": 2000000,
+      "to": 3600000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ SM-A515F",
+      "brand": "سامسونگ",
+      "from": 1800000,
+      "to": 3300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ SM-A528B",
+      "brand": "سامسونگ",
+      "from": 2000000,
+      "to": 3900000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ SM-A536F",
+      "brand": "سامسونگ",
+      "from": 2000000,
+      "to": 3600000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ SM-A705FN",
+      "brand": "سامسونگ",
+      "from": 1900000,
+      "to": 3450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "سامسونگ SM-A725F",
+      "brand": "سامسونگ",
+      "from": 1900000,
+      "to": 3450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی 11 Lite 5G NE",
+      "brand": "شیائومی",
+      "from": 2000000,
+      "to": 3700000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی 11T",
+      "brand": "شیائومی",
+      "from": 2500000,
+      "to": 4200000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی 11T Pro",
+      "brand": "شیائومی",
+      "from": 5900000,
+      "note": "شامل اجرت نصب"
+    },
+    {
+      "repairType": "battery-replacement",
       "device": "شیائومی 11T Pro 5G",
       "brand": "شیائومی",
-      "from": 3600000,
-      "to": 5200000,
+      "from": 3400000,
+      "to": 6060000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی 12",
+      "brand": "شیائومی",
+      "from": 2400000,
+      "to": 4450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی 12T",
+      "brand": "شیائومی",
+      "from": 2700000,
+      "to": 4300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی 12T Pro",
+      "brand": "شیائومی",
+      "from": 2700000,
+      "to": 4300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی A2+",
+      "brand": "شیائومی",
+      "from": 1800000,
+      "to": 3300000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی Black Shark 4",
       "brand": "شیائومی",
-      "from": 12500000,
-      "note": "شامل اجرت نصب"
+      "from": 5700000,
+      "to": 9320000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی MI 10 Lite",
       "brand": "شیائومی",
-      "from": 1500000,
-      "to": 2700000,
+      "from": 1900000,
+      "to": 3870000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی MI 10 Lite 5G",
+      "brand": "شیائومی",
+      "from": 1800000,
+      "to": 3200000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی MI 10T 5G",
       "brand": "شیائومی",
-      "from": 1600000,
-      "to": 2900000,
+      "from": 1900000,
+      "to": 3870000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی MI 10T Lite 5G",
+      "brand": "شیائومی",
+      "from": 2000000,
+      "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی MI 11 Lite",
       "brand": "شیائومی",
-      "from": 1700000,
-      "to": 3300000,
+      "from": 1900000,
+      "to": 3700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -479,15 +881,15 @@
       "device": "شیائومی MI 11 Lite 5G",
       "brand": "شیائومی",
       "from": 1700000,
-      "to": 3550000,
+      "to": 3900000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی MI 11 Ultra",
       "brand": "شیائومی",
-      "from": 2800000,
-      "to": 4800000,
+      "from": 2400000,
+      "to": 5000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -502,40 +904,24 @@
       "repairType": "battery-replacement",
       "device": "شیائومی MI 12 Pro",
       "brand": "شیائومی",
-      "from": 3400000,
-      "to": 4820000,
+      "from": 2700000,
+      "to": 5100000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی MI 12X",
       "brand": "شیائومی",
-      "from": 2400000,
-      "to": 4700000,
+      "from": 2800000,
+      "to": 5000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی MI 13T 5G",
       "brand": "شیائومی",
-      "from": 2700000,
-      "to": 5000000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "شیائومی MI 9 Lite",
-      "brand": "شیائومی",
-      "from": 1500000,
-      "to": 2700000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "شیائومی MI 9 SE",
-      "brand": "شیائومی",
-      "from": 1400000,
-      "to": 2600000,
+      "from": 3500000,
+      "to": 5700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -543,7 +929,7 @@
       "device": "شیائومی MI 9T",
       "brand": "شیائومی",
       "from": 1600000,
-      "to": 3200000,
+      "to": 3400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -556,73 +942,74 @@
     },
     {
       "repairType": "battery-replacement",
-      "device": "شیائومی MI A3",
+      "device": "شیائومی MI Note 10 Pro",
       "brand": "شیائومی",
-      "from": 1600000,
-      "to": 2400000,
+      "from": 1900000,
+      "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "شیائومی MI Note 5",
+      "device": "شیائومی Note 9S",
       "brand": "شیائومی",
-      "from": 1400000,
-      "to": 2400000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "شیائومی MI Play",
-      "brand": "شیائومی",
-      "from": 2400000,
-      "note": "شامل اجرت نصب"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "شیائومی Poco F2 Pro",
-      "brand": "شیائومی",
-      "from": 2200000,
-      "to": 3700000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "شیائومی Poco F3",
-      "brand": "شیائومی",
-      "from": 1700000,
-      "to": 3000000,
+      "from": 2000000,
+      "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی Poco F3 5G",
       "brand": "شیائومی",
-      "from": 1700000,
-      "to": 3000000,
+      "from": 2100000,
+      "to": 3400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "شیائومی Poco F4 4G",
+      "device": "شیائومی Poco F4 5G",
       "brand": "شیائومی",
       "from": 3000000,
-      "to": 4320000,
+      "to": 5300000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی Poco F4 GT",
       "brand": "شیائومی",
-      "from": 2200000,
-      "to": 4400000,
+      "from": 3200000,
+      "to": 5450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Poco F5",
+      "brand": "شیائومی",
+      "from": 3400000,
+      "to": 6000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Poco F5 Pro",
+      "brand": "شیائومی",
+      "from": 2600000,
+      "to": 5000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی Poco M3",
       "brand": "شیائومی",
-      "from": 1700000,
-      "to": 3000000,
+      "from": 1900000,
+      "to": 3650000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Poco M4 Pro",
+      "brand": "شیائومی",
+      "from": 1900000,
+      "to": 3600000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -630,15 +1017,7 @@
       "device": "شیائومی Poco M4 Pro 5G",
       "brand": "شیائومی",
       "from": 1700000,
-      "to": 3000000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "شیائومی Poco M5",
-      "brand": "شیائومی",
-      "from": 1700000,
-      "to": 3000000,
+      "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -646,87 +1025,167 @@
       "device": "شیائومی Poco X3",
       "brand": "شیائومی",
       "from": 1700000,
-      "to": 3300000,
+      "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی Poco X3 GT",
       "brand": "شیائومی",
-      "from": 2600000,
-      "to": 4400000,
+      "from": 2700000,
+      "to": 4000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "شیائومی Poco X4 Pro 5G",
+      "device": "شیائومی Poco X3 Pro",
       "brand": "شیائومی",
-      "from": 3000000,
-      "to": 4450000,
+      "from": 1700000,
+      "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی Poco X5 Pro 5G",
       "brand": "شیائومی",
-      "from": 2700000,
-      "to": 4300000,
+      "from": 3200000,
+      "to": 4500000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی Poco X6 5G",
       "brand": "شیائومی",
-      "from": 2800000,
-      "to": 4400000,
+      "from": 3100000,
+      "to": 5400000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Poco X7 Pro",
+      "brand": "شیائومی",
+      "from": 3500000,
+      "to": 6000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi 10",
+      "brand": "شیائومی",
+      "from": 1800000,
+      "to": 3450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi 10A",
+      "brand": "شیائومی",
+      "from": 1900000,
+      "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی Redmi 10C",
       "brand": "شیائومی",
-      "from": 2100000,
+      "from": 1900000,
       "to": 3480000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "شیائومی Redmi 9T",
+      "device": "شیائومی Redmi 12 4G",
       "brand": "شیائومی",
-      "from": 2200000,
+      "from": 1700000,
       "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "شیائومی Redmi K20 Pro",
+      "device": "شیائومی Redmi 12C",
+      "brand": "شیائومی",
+      "from": 3000000,
+      "to": 4200000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi 13C",
+      "brand": "شیائومی",
+      "from": 2200000,
+      "to": 3700000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi 14",
       "brand": "شیائومی",
       "from": 1900000,
-      "to": 4800000,
+      "to": 3450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi 8",
+      "brand": "شیائومی",
+      "from": 1900000,
+      "to": 3200000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi 8A",
+      "brand": "شیائومی",
+      "from": 1900000,
+      "to": 3200000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi 9",
+      "brand": "شیائومی",
+      "from": 1900000,
+      "to": 3450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi 9A",
+      "brand": "شیائومی",
+      "from": 1900000,
+      "to": 3400000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi A3",
+      "brand": "شیائومی",
+      "from": 1900000,
+      "to": 3450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi K40 Gaming",
+      "brand": "شیائومی",
+      "from": 2700000,
+      "to": 5200000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی Redmi Note 10",
       "brand": "شیائومی",
-      "from": 1700000,
-      "to": 2900000,
+      "from": 2000000,
+      "to": 3800000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "شیائومی Redmi Note 10 Pro 5G",
+      "device": "شیائومی Redmi Note 10 Pro",
       "brand": "شیائومی",
-      "from": 1700000,
-      "to": 3200000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "شیائومی Redmi Note 10S",
-      "brand": "شیائومی",
-      "from": 1700000,
-      "to": 2950000,
+      "from": 1900000,
+      "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -741,8 +1200,16 @@
       "repairType": "battery-replacement",
       "device": "شیائومی Redmi Note 11 Pro 4G",
       "brand": "شیائومی",
-      "from": 2700000,
-      "to": 4300000,
+      "from": 2500000,
+      "to": 4200000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi Note 11 Pro Plus 5G",
+      "brand": "شیائومی",
+      "from": 3000000,
+      "to": 4700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -750,7 +1217,7 @@
       "device": "شیائومی Redmi Note 11S",
       "brand": "شیائومی",
       "from": 2000000,
-      "to": 4000000,
+      "to": 3400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -758,31 +1225,79 @@
       "device": "شیائومی Redmi Note 12 4G",
       "brand": "شیائومی",
       "from": 1800000,
-      "to": 3300000,
+      "to": 3450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi Note 12 Pro 4G",
+      "brand": "شیائومی",
+      "from": 3200000,
+      "to": 4750000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi Note 12S",
+      "brand": "شیائومی",
+      "from": 1900000,
+      "to": 3600000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی Redmi Note 13 4G",
       "brand": "شیائومی",
-      "from": 2800000,
-      "to": 4350000,
+      "from": 3000000,
+      "to": 5550000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi Note 13 Pro 4G",
+      "brand": "شیائومی",
+      "from": 3100000,
+      "to": 4900000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi Note 14 Pro",
+      "brand": "شیائومی",
+      "from": 3300000,
+      "to": 4800000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی Redmi Note 8",
       "brand": "شیائومی",
-      "from": 1700000,
-      "to": 2950000,
+      "from": 2200000,
+      "to": 3450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi Note 8 Pro",
+      "brand": "شیائومی",
+      "from": 1900000,
+      "to": 3200000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "شیائومی Redmi Note 8T",
+      "brand": "شیائومی",
+      "from": 1900000,
+      "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی Redmi Note 9",
       "brand": "شیائومی",
-      "from": 1700000,
-      "to": 2800000,
+      "from": 1900000,
+      "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -790,46 +1305,68 @@
       "device": "شیائومی Redmi Note 9 Pro",
       "brand": "شیائومی",
       "from": 1700000,
-      "to": 2950000,
+      "to": 3400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
       "device": "شیائومی Redmi Note 9S",
       "brand": "شیائومی",
-      "from": 1700000,
-      "to": 2800000,
+      "from": 1900000,
+      "to": 3450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "موتورولا Edge 20 Pro",
-      "brand": "موتورولا",
-      "from": 3700000,
+      "device": "شیائومی Redmi Note 9T",
+      "brand": "شیائومی",
+      "from": 2000000,
+      "to": 3450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "گوگل Pixel 6",
+      "brand": "گوگل",
+      "from": 5500000,
+      "to": 9000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "گوگل Pixel 7",
+      "brand": "گوگل",
+      "from": 5500000,
+      "to": 13000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "گوگل Pixle 6 Pro",
+      "brand": "گوگل",
+      "from": 3400000,
       "to": 5400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "battery-replacement",
-      "device": "موتورولا Edge 30",
+      "device": "گوگل Pixle 7",
+      "brand": "گوگل",
+      "from": 9900000,
+      "note": "شامل اجرت نصب"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "موتورولا Adge 30 Pro",
       "brand": "موتورولا",
-      "from": 3700000,
-      "to": 5400000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+      "from": 3750000,
+      "note": "شامل اجرت نصب"
     },
     {
       "repairType": "battery-replacement",
       "device": "موتورولا G60",
       "brand": "موتورولا",
       "from": 3300000,
-      "to": 5000000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "battery-replacement",
-      "device": "موتورولا Moto G 5G",
-      "brand": "موتورولا",
-      "from": 3500000,
       "to": 5000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
@@ -845,8 +1382,8 @@
       "repairType": "battery-replacement",
       "device": "موتورولا Moto G54",
       "brand": "موتورولا",
-      "from": 3300000,
-      "to": 5350000,
+      "from": 3200000,
+      "to": 3720000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -859,178 +1396,141 @@
     },
     {
       "repairType": "battery-replacement",
-      "device": "هواوی NOVA3E",
-      "brand": "هواوی",
-      "from": 1450000,
-      "to": 2700000,
+      "device": "ناتینگ فون Nothing Phone 1",
+      "brand": "ناتینگ فون",
+      "from": 4000000,
+      "to": 8000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "نوکیا 6.2",
+      "brand": "نوکیا",
+      "from": 2700000,
+      "to": 4450000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "battery-replacement",
+      "device": "نوکیا 8.1",
+      "brand": "نوکیا",
+      "from": 1450000,
+      "to": 3100000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "camera-repair",
+      "device": "سامسونگ Galaxy A52",
+      "brand": "سامسونگ",
+      "from": 6000000,
+      "note": "تعویض دوربین سلفی، شامل اجرت"
+    },
+    {
+      "repairType": "camera-repair",
+      "device": "شیائومی MI 10T 5G",
+      "brand": "شیائومی",
+      "from": 1250000,
+      "note": "تعویض شیشه محافظ دوربین، شامل اجرت"
+    },
+    {
+      "repairType": "camera-repair",
+      "device": "شیائومی Poco X5 Pro",
+      "brand": "شیائومی",
+      "from": 2700000,
+      "to": 5400000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "camera-repair",
+      "device": "شیائومی Redmi Note 8",
+      "brand": "شیائومی",
+      "from": 1300000,
+      "note": "تعویض شیشه محافظ دوربین، شامل اجرت"
+    },
+    {
+      "repairType": "camera-repair",
+      "device": "شیائومی Redmi Note 9S",
+      "brand": "شیائومی",
+      "from": 4000000,
+      "note": "شامل اجرت نصب"
     },
     {
       "repairType": "charging-port-repair",
-      "device": "آیفون 8 Plus",
-      "brand": "اپل",
-      "from": 1000000,
-      "to": 1970000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+      "device": "شیائومی 12T Pro",
+      "brand": "شیائومی",
+      "from": 1300000,
+      "to": 2450000,
+      "note": "تعویض فلت مین همراه سوکت شارژ، شامل اجرت"
+    },
+    {
+      "repairType": "charging-port-repair",
+      "device": "شیائومی MI 10 Lite",
+      "brand": "شیائومی",
+      "from": 850000,
+      "to": 10000000,
+      "note": "تعویض فلت مین همراه سوکت شارژ، شامل اجرت"
+    },
+    {
+      "repairType": "charging-port-repair",
+      "device": "شیائومی Poco X3 Pro",
+      "brand": "شیائومی",
+      "from": 1350000,
+      "to": 1700000,
+      "note": "تعویض فلت مین همراه سوکت شارژ، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "آنر 8A",
-      "brand": "آنر",
-      "from": 2100000,
-      "to": 4200000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "آیفون 11",
+      "device": "آیفون 12 Pro",
       "brand": "اپل",
-      "from": 3000000,
-      "to": 8390000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "آیفون 11 Pro",
-      "brand": "اپل",
-      "from": 4200000,
-      "to": 14450000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "آیفون 11 Pro Max",
-      "brand": "اپل",
-      "from": 3800000,
-      "to": 14320000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "آیفون 12",
-      "brand": "اپل",
-      "from": 6100000,
-      "to": 14390000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "آیفون 12 Mini",
-      "brand": "اپل",
-      "from": 8200000,
-      "to": 16780000,
+      "from": 6500000,
+      "to": 18000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "آیفون 12 Pro",
       "brand": "اپل",
-      "from": 7900000,
-      "to": 17800000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+      "from": 4000000,
+      "to": 6500000,
+      "note": "تعویض گلس روی ال سی دی سالم، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "آیفون 13",
       "brand": "اپل",
-      "from": 7400000,
-      "to": 20350000,
+      "from": 6500000,
+      "to": 25900000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "آیفون 13 Pro",
+      "device": "آیفون 16 Pro Max",
       "brand": "اپل",
-      "from": 17900000,
-      "to": 30650000,
+      "from": 68700000,
+      "note": "شامل اجرت نصب"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "آیفون 17",
+      "brand": "اپل",
+      "from": 48000000,
+      "to": 59900000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "آیفون 13 Pro Max",
+      "device": "آیفون XR",
       "brand": "اپل",
-      "from": 23120000,
-      "to": 45620000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "آیفون 15 Pro Max",
-      "brand": "اپل",
-      "from": 18000000,
-      "to": 45770000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "آیفون 6S",
-      "brand": "اپل",
-      "from": 1800000,
-      "to": 3970000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "آیفون 7 Plus",
-      "brand": "اپل",
-      "from": 2300000,
-      "to": 4420000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "آیفون 8",
-      "brand": "اپل",
-      "from": 2200000,
-      "to": 6170000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "آیفون 8 Plus",
-      "brand": "اپل",
-      "from": 2000000,
-      "to": 6480000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "آیفون SE 2016",
-      "brand": "اپل",
-      "from": 1800000,
-      "to": 4370000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "آیفون SE 2020/2022",
-      "brand": "اپل",
-      "from": 2300000,
-      "to": 6170000,
+      "from": 7300000,
+      "to": 9450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "آیفون XS",
       "brand": "اپل",
-      "from": 4400000,
-      "to": 11470000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "آیفون XS Max",
-      "brand": "اپل",
-      "from": 6800000,
-      "to": 16320000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ A03",
-      "brand": "سامسونگ",
-      "from": 1800000,
-      "to": 4350000,
+      "from": 4000000,
+      "to": 11900000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1038,8 +1538,8 @@
       "device": "سامسونگ A05s (SM-A055F)",
       "brand": "سامسونگ",
       "aka": "سامسونگ A05s",
-      "from": 1900000,
-      "to": 4480000,
+      "from": 2400000,
+      "to": 4900000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1061,37 +1561,26 @@
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ A10 (SM-A105F)",
+      "device": "سامسونگ A10S",
       "brand": "سامسونگ",
-      "aka": "سامسونگ A10",
-      "from": 1600000,
-      "to": 3450000,
+      "from": 2300000,
+      "to": 4450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ A13 (SM-A135F)",
+      "device": "سامسونگ A12",
       "brand": "سامسونگ",
-      "aka": "سامسونگ A13",
-      "from": 2000000,
-      "to": 3650000,
+      "from": 2100000,
+      "to": 4400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ A14",
+      "device": "سامسونگ A16",
       "brand": "سامسونگ",
-      "from": 2200000,
-      "to": 4120000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ A16 (SM-A165F)",
-      "brand": "سامسونگ",
-      "aka": "سامسونگ A16",
-      "from": 3400000,
-      "to": 10380000,
+      "from": 3300000,
+      "to": 11290000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1105,81 +1594,26 @@
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ A22 (SM-A225F)",
+      "device": "سامسونگ A225F",
       "brand": "سامسونگ",
-      "aka": "سامسونگ A22",
-      "from": 2400000,
-      "to": 8380000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ A22 5G (SM-A226B)",
-      "brand": "سامسونگ",
-      "aka": "سامسونگ A22 5G",
-      "from": 2100000,
-      "to": 4250000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ A23 (SM-A235F)",
-      "brand": "سامسونگ",
-      "aka": "سامسونگ A23",
-      "from": 2200000,
-      "to": 3970000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ A26",
-      "brand": "سامسونگ",
-      "from": 3300000,
-      "to": 18350000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ A30s (SM-A307F)",
-      "brand": "سامسونگ",
-      "aka": "سامسونگ A30s",
       "from": 2700000,
-      "to": 13820000,
+      "to": 8400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ A31",
+      "device": "سامسونگ A30S",
       "brand": "سامسونگ",
-      "from": 2800000,
-      "to": 12480000,
+      "from": 3700000,
+      "to": 13200000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ A32 (SM-A325F)",
+      "device": "سامسونگ A35",
       "brand": "سامسونگ",
-      "aka": "سامسونگ A32",
-      "from": 5900000,
-      "to": 15450000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ A33 5G (SM-A336E)",
-      "brand": "سامسونگ",
-      "aka": "سامسونگ A33 5G",
-      "from": 3800000,
-      "to": 16480000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ A35 5G (SM-A356E)",
-      "brand": "سامسونگ",
-      "aka": "سامسونگ A35 5G",
-      "from": 12500000,
-      "to": 17100000,
+      "from": 3500000,
+      "to": 15400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1193,37 +1627,43 @@
     },
     {
       "repairType": "lcd-replacement",
+      "device": "سامسونگ A50",
+      "brand": "سامسونگ",
+      "from": 2700000,
+      "to": 12400000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
       "device": "سامسونگ A50 (SM-A505F)",
       "brand": "سامسونگ",
       "aka": "سامسونگ A50",
-      "from": 4000000,
-      "to": 13300000,
+      "from": 2500000,
+      "to": 5880000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "سامسونگ A51",
       "brand": "سامسونگ",
-      "from": 4450000,
-      "to": 16450000,
+      "from": 2700000,
+      "to": 15700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ A52 (SM-A525F)",
+      "device": "سامسونگ A52",
       "brand": "سامسونگ",
-      "aka": "سامسونگ A52",
-      "from": 3200000,
-      "to": 19980000,
+      "from": 3500000,
+      "to": 16300000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ A53 5G (SM-A536B)",
+      "device": "سامسونگ A54",
       "brand": "سامسونگ",
-      "aka": "سامسونگ A53 5G",
-      "from": 6600000,
-      "to": 17400000,
+      "from": 3500000,
+      "to": 14400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1236,68 +1676,41 @@
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ A54 5G (SM-A546E)",
+      "device": "سامسونگ A70",
       "brand": "سامسونگ",
-      "aka": "سامسونگ A54 5G",
-      "from": 3700000,
-      "to": 15950000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ A71 (SM-A715F)",
-      "brand": "سامسونگ",
-      "aka": "سامسونگ A71",
       "from": 4000000,
-      "to": 22500000,
+      "to": 16400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ A73 5G (SM-A736B)",
+      "device": "سامسونگ Galaxy A24",
       "brand": "سامسونگ",
-      "aka": "سامسونگ A73 5G",
-      "from": 3400000,
-      "to": 14350000,
+      "from": 3500000,
+      "to": 13300000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ Galaxy A13",
+      "device": "سامسونگ Galaxy A52",
       "brand": "سامسونگ",
-      "from": 2200000,
-      "to": 4180000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ Galaxy Tab A T295",
-      "brand": "سامسونگ",
-      "from": 2000000,
-      "to": 6250000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ Galaxy Tab T515",
-      "brand": "سامسونگ",
-      "from": 5300000,
-      "to": 9180000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ Galaxy Tab T865",
-      "brand": "سامسونگ",
-      "from": 53000000,
+      "from": 18700000,
       "note": "شامل اجرت نصب"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ M01",
+      "device": "سامسونگ J5 Prime",
       "brand": "سامسونگ",
-      "from": 2000000,
-      "to": 4480000,
+      "from": 2200000,
+      "to": 4400000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "سامسونگ M12",
+      "brand": "سامسونگ",
+      "from": 1900000,
+      "to": 4450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1305,88 +1718,15 @@
       "device": "سامسونگ M31",
       "brand": "سامسونگ",
       "from": 4400000,
-      "to": 12800000,
+      "to": 13700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ M31 (SM-M315F)",
-      "brand": "سامسونگ",
-      "aka": "سامسونگ M31",
-      "from": 4400000,
-      "to": 12740000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ M32 (SM-M325FV)",
-      "brand": "سامسونگ",
-      "aka": "سامسونگ M32",
-      "from": 3700000,
-      "to": 14000000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ Note 10 Plus",
-      "brand": "سامسونگ",
-      "from": 15000000,
-      "to": 38620000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ Note 10 Pro Max",
-      "brand": "سامسونگ",
-      "from": 3400000,
-      "to": 15780000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ Note 20 Ultra",
-      "brand": "سامسونگ",
-      "from": 32200000,
-      "to": 40000000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ Note 8",
-      "brand": "سامسونگ",
-      "from": 2300000,
-      "to": 4250000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ Note 8 Pro",
-      "brand": "سامسونگ",
-      "from": 2500000,
-      "to": 4720000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ S10",
-      "brand": "سامسونگ",
-      "from": 26820000,
-      "note": "شامل اجرت نصب"
     },
     {
       "repairType": "lcd-replacement",
       "device": "سامسونگ S20 FE5G",
       "brand": "سامسونگ",
-      "from": 4300000,
-      "to": 15460000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ S21 Ultra",
-      "brand": "سامسونگ",
-      "from": 39300000,
-      "to": 43720000,
+      "from": 7500000,
+      "to": 19300000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1399,58 +1739,80 @@
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ S23 FE",
+      "device": "سامسونگ SM-T505",
       "brand": "سامسونگ",
-      "from": 11600000,
-      "to": 20250000,
+      "from": 6000000,
+      "to": 9100000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ S23ULTRA",
+      "device": "سامسونگ SM-X900",
       "brand": "سامسونگ",
-      "from": 42000000,
-      "to": 58380000,
+      "from": 5700000,
+      "to": 57900000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "سامسونگ S24 5G",
-      "brand": "سامسونگ",
-      "from": 16800000,
-      "to": 22800000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ S24 FE",
-      "brand": "سامسونگ",
-      "from": 10700000,
-      "to": 18200000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "سامسونگ S24 Ultra",
-      "brand": "سامسونگ",
-      "from": 35600000,
-      "to": 50800000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی 11T Pro 5G",
+      "device": "شیائومی 12T Pro",
       "brand": "شیائومی",
-      "from": 3800000,
-      "to": 10320000,
+      "from": 4000000,
+      "to": 10060000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی C65",
+      "device": "شیائومی 13T",
       "brand": "شیائومی",
-      "from": 2200000,
-      "to": 4000000,
+      "from": 4400000,
+      "to": 11700000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "شیائومی 13T Pro",
+      "brand": "شیائومی",
+      "from": 4000000,
+      "to": 12800000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "شیائومی شیائومی — Poco F3",
+      "brand": "شیائومی",
+      "from": 3900000,
+      "to": 13400000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "شیائومی A2+",
+      "brand": "شیائومی",
+      "from": 2300000,
+      "to": 4400000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "شیائومی C456",
+      "brand": "شیائومی",
+      "from": 26090000,
+      "note": "شامل اجرت نصب"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "شیائومی C465",
+      "brand": "شیائومی",
+      "from": 26500000,
+      "note": "شامل اجرت نصب"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "شیائومی MI 10T 5G",
+      "brand": "شیائومی",
+      "from": 3200000,
+      "to": 5800000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1459,6 +1821,14 @@
       "brand": "شیائومی",
       "from": 3200000,
       "to": 6150000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "شیائومی MI 10T Pro 5G",
+      "brand": "شیائومی",
+      "from": 2700000,
+      "to": 5740000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1473,97 +1843,56 @@
       "repairType": "lcd-replacement",
       "device": "شیائومی MI 11 Ultra",
       "brand": "شیائومی",
-      "from": 16600000,
-      "to": 26900000,
+      "from": 16500000,
+      "to": 25900000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی MI 11T Pro",
+      "device": "شیائومی MI 11I",
       "brand": "شیائومی",
-      "from": 3200000,
-      "to": 10350000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی MI 12",
-      "brand": "شیائومی",
-      "from": 9000000,
-      "to": 11900000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی MI 12 Pro",
-      "brand": "شیائومی",
-      "from": 12500000,
-      "to": 19300000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی MI 12T Pro",
-      "brand": "شیائومی",
-      "from": 3800000,
-      "to": 12850000,
+      "from": 4000000,
+      "to": 10900000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "شیائومی MI 12X",
       "brand": "شیائومی",
-      "from": 7100000,
-      "to": 12850000,
+      "from": 9000000,
+      "to": 13100000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی MI 13 Lite",
+      "device": "شیائومی MI 12X",
       "brand": "شیائومی",
-      "from": 7700000,
-      "to": 10350000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی MI 13 Ultra",
-      "brand": "شیائومی",
-      "from": 19500000,
-      "to": 27000000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی MI 14 Pro",
-      "brand": "شیائومی",
-      "from": 18500000,
-      "to": 27500000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+      "from": 7500000,
+      "note": "تعویض گلس روی ال سی دی سالم، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "شیائومی MI 14T Pro",
       "brand": "شیائومی",
-      "from": 8300000,
-      "to": 12700000,
+      "from": 9000000,
+      "to": 11450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی MI 8 Lite",
+      "device": "شیائومی MI 8",
       "brand": "شیائومی",
-      "from": 2250000,
-      "to": 5400000,
+      "from": 2700000,
+      "to": 7000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی MI 9T Pro",
+      "device": "شیائومی MI 9T",
       "brand": "شیائومی",
-      "from": 3200000,
-      "to": 11000000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+      "from": 3000000,
+      "to": 4700000,
+      "note": "تعویض گلس روی ال سی دی سالم، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
@@ -1577,16 +1906,32 @@
       "repairType": "lcd-replacement",
       "device": "شیائومی MI A3",
       "brand": "شیائومی",
-      "from": 3100000,
-      "to": 7800000,
+      "from": 5300000,
+      "to": 11000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی MI Note 5",
+      "device": "شیائومی MI Note 10 Lite",
       "brand": "شیائومی",
-      "from": 2200000,
-      "to": 3700000,
+      "from": 7500000,
+      "to": 14400000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "شیائومی Note 10 Pro",
+      "brand": "شیائومی",
+      "from": 4000000,
+      "to": 14300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "شیائومی Note 12 Pro 4G",
+      "brand": "شیائومی",
+      "from": 4000000,
+      "to": 13900000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1599,42 +1944,17 @@
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی Note 9S",
+      "device": "شیائومی Poco",
       "brand": "شیائومی",
-      "from": 2300000,
-      "to": 5080000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+      "from": 11610000,
+      "note": "شامل اجرت نصب"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی Poco C40",
+      "device": "شیائومی Poco F3 5G",
       "brand": "شیائومی",
-      "from": 2300000,
-      "to": 4800000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Poco C75",
-      "brand": "شیائومی",
-      "from": 3000000,
-      "to": 5250000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Poco C85",
-      "brand": "شیائومی",
-      "from": 2200000,
-      "to": 4450000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Poco F3",
-      "brand": "شیائومی",
-      "from": 3900000,
-      "to": 13900000,
+      "from": 4000000,
+      "to": 12400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1642,23 +1962,7 @@
       "device": "شیائومی Poco F4 5G",
       "brand": "شیائومی",
       "from": 4100000,
-      "to": 12400000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Poco F4 GT",
-      "brand": "شیائومی",
-      "from": 10200000,
-      "to": 15450000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Poco F5 5G",
-      "brand": "شیائومی",
-      "from": 3400000,
-      "to": 11800000,
+      "to": 10000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1671,26 +1975,10 @@
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی Poco F6",
-      "brand": "شیائومی",
-      "from": 3400000,
-      "to": 10300000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
       "device": "شیائومی Poco M3",
       "brand": "شیائومی",
-      "from": 2100000,
-      "to": 3950000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Poco M4 Pro",
-      "brand": "شیائومی",
-      "from": 3200000,
-      "to": 14300000,
+      "from": 2600000,
+      "to": 3930000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1703,10 +1991,18 @@
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی Poco M6 4G",
+      "device": "شیائومی Poco M6 Pro 4G",
       "brand": "شیائومی",
-      "from": 3800000,
-      "to": 15350000,
+      "from": 4000000,
+      "to": 9300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "شیائومی Poco M6 Pro 5G",
+      "brand": "شیائومی",
+      "from": 2900000,
+      "to": 5700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1729,24 +2025,8 @@
       "repairType": "lcd-replacement",
       "device": "شیائومی Poco X3",
       "brand": "شیائومی",
-      "from": 2200000,
-      "to": 3780000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Poco X3 GT",
-      "brand": "شیائومی",
-      "from": 2300000,
-      "to": 4400000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Poco X3 Nfc",
-      "brand": "شیائومی",
       "from": 2400000,
-      "to": 4050000,
+      "to": 4610000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1754,7 +2034,7 @@
       "device": "شیائومی Poco X3 Pro",
       "brand": "شیائومی",
       "from": 2400000,
-      "to": 4050000,
+      "to": 4700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1769,24 +2049,15 @@
       "repairType": "lcd-replacement",
       "device": "شیائومی Poco X5 Pro 5G",
       "brand": "شیائومی",
-      "from": 3600000,
-      "to": 11450000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+      "from": 4500000,
+      "note": "تعویض گلس روی ال سی دی سالم، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "شیائومی Poco X6 Pro",
       "brand": "شیائومی",
       "from": 4000000,
-      "to": 11450000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Poco X7 Pro 5G",
-      "brand": "شیائومی",
-      "from": 3800000,
-      "to": 11450000,
+      "to": 9450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1801,8 +2072,15 @@
       "repairType": "lcd-replacement",
       "device": "شیائومی Redmi 12",
       "brand": "شیائومی",
-      "from": 2400000,
-      "to": 4450000,
+      "from": 3500000,
+      "note": "تعویض گلس روی ال سی دی سالم، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "شیائومی Redmi 12",
+      "brand": "شیائومی",
+      "from": 2600000,
+      "to": 4700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1810,40 +2088,23 @@
       "device": "شیائومی Redmi 12C",
       "brand": "شیائومی",
       "from": 2400000,
-      "to": 4400000,
+      "to": 4450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "شیائومی Redmi 13 4G",
       "brand": "شیائومی",
-      "from": 2400000,
-      "to": 4000000,
+      "from": 2700000,
+      "to": 5100000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi 13C",
+      "device": "شیائومی Redmi 13X",
       "brand": "شیائومی",
-      "from": 2400000,
-      "to": 4450000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi 14C",
-      "brand": "شیائومی",
-      "from": 2450000,
-      "to": 4700000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi 15",
-      "brand": "شیائومی",
-      "from": 3200000,
-      "to": 5880000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+      "from": 3700000,
+      "note": "تعویض گلس روی ال سی دی سالم، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
@@ -1857,16 +2118,8 @@
       "repairType": "lcd-replacement",
       "device": "شیائومی Redmi 9T",
       "brand": "شیائومی",
-      "from": 2250000,
-      "to": 4350000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi A3",
-      "brand": "شیائومی",
       "from": 2300000,
-      "to": 4980000,
+      "to": 4400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1879,66 +2132,33 @@
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi Note 10",
+      "device": "شیائومی Redmi Note 11",
       "brand": "شیائومی",
-      "from": 3200000,
-      "to": 15300000,
+      "from": 4000000,
+      "to": 14700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi Note 10 Pro",
+      "device": "شیائومی Redmi Note 11S",
       "brand": "شیائومی",
-      "from": 7000000,
-      "to": 15350000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi Note 10 Pro 5G",
-      "brand": "شیائومی",
-      "from": 3300000,
-      "to": 15150000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi Note 10S",
-      "brand": "شیائومی",
-      "from": 3300000,
-      "to": 15350000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi Note 11 Pro 4G",
-      "brand": "شیائومی",
-      "from": 3300000,
-      "to": 15880000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+      "from": 15450000,
+      "note": "شامل اجرت نصب"
     },
     {
       "repairType": "lcd-replacement",
       "device": "شیائومی Redmi Note 11S 5G",
       "brand": "شیائومی",
-      "from": 3200000,
-      "to": 15300000,
+      "from": 2500000,
+      "to": 6400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi Note 12 4G",
+      "device": "شیائومی Redmi Note 12",
       "brand": "شیائومی",
-      "from": 4000000,
-      "to": 15400000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi Note 12S",
-      "brand": "شیائومی",
-      "from": 3200000,
-      "to": 15400000,
+      "from": 3500000,
+      "to": 14400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -1946,38 +2166,46 @@
       "device": "شیائومی Redmi Note 13 4G",
       "brand": "شیائومی",
       "from": 4000000,
-      "to": 13450000,
+      "to": 13320000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi Note 13 Pro 5G",
+      "device": "شیائومی Redmi Note 13 Pro 4G",
       "brand": "شیائومی",
       "from": 3500000,
-      "to": 11450000,
+      "to": 10000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "شیائومی Redmi Note 14 4G",
       "brand": "شیائومی",
-      "from": 3300000,
-      "to": 15700000,
+      "from": 4000000,
+      "to": 13880000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "شیائومی Redmi Note 14 4G",
+      "brand": "شیائومی",
+      "from": 6000000,
+      "to": 8400000,
+      "note": "تعویض گلس روی ال سی دی سالم، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "شیائومی Redmi Note 14 Pro",
       "brand": "شیائومی",
-      "from": 4700000,
-      "to": 11450000,
+      "from": 4000000,
+      "to": 14400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "شیائومی Redmi Note 14 Pro + 5G",
       "brand": "شیائومی",
-      "from": 5300000,
+      "from": 4000000,
       "to": 11400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
@@ -1985,40 +2213,72 @@
       "repairType": "lcd-replacement",
       "device": "شیائومی Redmi Note 8 Pro",
       "brand": "شیائومی",
-      "from": 2400000,
-      "to": 4980000,
+      "from": 2300000,
+      "to": 4400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "شیائومی Redmi Note 9 Pro",
       "brand": "شیائومی",
-      "from": 2400000,
-      "to": 4450000,
-      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
-    },
-    {
-      "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi Note 9S",
-      "brand": "شیائومی",
-      "from": 2700000,
-      "to": 4900000,
+      "from": 2200000,
+      "to": 4200000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "شیائومی Redmi NOTE15 5G",
       "brand": "شیائومی",
-      "from": 3700000,
-      "to": 16480000,
+      "from": 15000000,
+      "to": 17400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
-      "device": "شیائومی Redmi Pad SE",
-      "brand": "شیائومی",
-      "from": 8100000,
-      "to": 11850000,
+      "device": "گوگل Pixel 7 Pro",
+      "brand": "گوگل",
+      "from": 20300000,
+      "to": 40500000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "گوگل Pixle 6A",
+      "brand": "گوگل",
+      "from": 22000000,
+      "to": 27500000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "موتورولا Edge 30 5G",
+      "brand": "موتورولا",
+      "from": 3800000,
+      "to": 13700000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "موتورولا Edge 40",
+      "brand": "موتورولا",
+      "from": 7500000,
+      "to": 13700000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "موتورولا Edge 50",
+      "brand": "موتورولا",
+      "from": 7500000,
+      "to": 10300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "موتورولا EDGE40 Neo",
+      "brand": "موتورولا",
+      "from": 15100000,
+      "to": 17400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -2033,8 +2293,16 @@
       "repairType": "lcd-replacement",
       "device": "موتورولا Moto G51",
       "brand": "موتورولا",
-      "from": 4600000,
+      "from": 4000000,
       "to": 7400000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "موتورولا Moto G52",
+      "brand": "موتورولا",
+      "from": 3500000,
+      "to": 14400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -2042,15 +2310,15 @@
       "device": "موتورولا Moto G54",
       "brand": "موتورولا",
       "from": 4000000,
-      "to": 6400000,
+      "to": 7700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "موتورولا Moto G84 5G",
       "brand": "موتورولا",
-      "from": 11300000,
-      "to": 13800000,
+      "from": 4000000,
+      "to": 11450000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -2058,15 +2326,38 @@
       "device": "موتورولا Moto G9 Plus",
       "brand": "موتورولا",
       "from": 3500000,
-      "to": 5600000,
+      "to": 6300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "موتورولا Razer 60 Ultra",
+      "brand": "موتورولا",
+      "from": 100500000,
+      "to": 136000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "ناتینگ فون Nothing Cmf 1",
+      "brand": "ناتینگ فون",
+      "from": 7000000,
+      "note": "تعویض گلس روی ال سی دی سالم، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "ناتینگ فون Nothing Cmf 1",
+      "brand": "ناتینگ فون",
+      "from": 6900000,
+      "to": 15700000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "ناتینگ فون Nothing Phone 2A",
       "brand": "ناتینگ فون",
-      "from": 8300000,
-      "to": 17900000,
+      "from": 14000000,
+      "to": 17400000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -2079,18 +2370,25 @@
     },
     {
       "repairType": "lcd-replacement",
-      "device": "نوکیا G20",
+      "device": "نوکیا G21",
       "brand": "نوکیا",
-      "from": 3000000,
-      "to": 5400000,
+      "from": 2450000,
+      "to": 4900000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "هواوی DUB-LX1",
+      "brand": "هواوی",
+      "from": 4000000,
+      "note": "تعویض گلس روی ال سی دی سالم، شامل اجرت"
     },
     {
       "repairType": "lcd-replacement",
       "device": "هواوی Mate 30 Pro",
       "brand": "هواوی",
-      "from": 22000000,
-      "to": 27800000,
+      "from": 21000000,
+      "to": 25180000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
@@ -2103,19 +2401,88 @@
     },
     {
       "repairType": "lcd-replacement",
-      "device": "هواوی P30 Lite",
+      "device": "هواوی P Smart 2019",
       "brand": "هواوی",
-      "from": 2700000,
-      "to": 5100000,
+      "from": 2500000,
+      "to": 5900000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
     },
     {
-      "repairType": "speaker-microphone-repair",
-      "device": "شیائومی MI 11 Lite 5G",
-      "brand": "شیائومی",
-      "from": 4800000,
-      "to": 12370000,
+      "repairType": "lcd-replacement",
+      "device": "هواوی P30 Lite",
+      "brand": "هواوی",
+      "from": 2700000,
+      "to": 5000000,
       "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "هواوی Psmart 2019",
+      "brand": "هواوی",
+      "from": 2200000,
+      "to": 4300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "هواوی Y7 2019",
+      "brand": "هواوی",
+      "from": 2700000,
+      "to": 5000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "هواوی Y7 Prime",
+      "brand": "هواوی",
+      "from": 3000000,
+      "to": 5300000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "هواوی Y9A",
+      "brand": "هواوی",
+      "from": 2700000,
+      "to": 4900000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "lcd-replacement",
+      "device": "هواوی Y9S",
+      "brand": "هواوی",
+      "from": 3100000,
+      "to": 5000000,
+      "note": "از قطعه کپی تا اورجینال، شامل اجرت"
+    },
+    {
+      "repairType": "software-repair",
+      "device": "سامسونگ A50 (SM-A505F)",
+      "brand": "سامسونگ",
+      "aka": "سامسونگ A50",
+      "from": 2300000,
+      "note": "حذف قفل حساب گوگل، شامل اجرت"
+    },
+    {
+      "repairType": "software-repair",
+      "device": "شیائومی Poco X3 Pro",
+      "brand": "شیائومی",
+      "from": 2400000,
+      "note": "شامل اجرت نصب"
+    },
+    {
+      "repairType": "software-repair",
+      "device": "شیائومی Redmi 15C",
+      "brand": "شیائومی",
+      "from": 3000000,
+      "note": "حذف قفل حساب گوگل، شامل اجرت"
+    },
+    {
+      "repairType": "software-repair",
+      "device": "شیائومی Redmi Note 11 Pro 5G",
+      "brand": "شیائومی",
+      "from": 2300000,
+      "note": "حذف قفل حساب گوگل، شامل اجرت"
     }
   ]
 }

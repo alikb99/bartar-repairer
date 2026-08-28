@@ -1,6 +1,13 @@
 import Link from "next/link";
 import { Info, Phone } from "lucide-react";
-import { pricesForPage, toman, PRICES_UPDATED, REPAIR_LABELS } from "@/lib/pricing";
+import {
+  pricesForPage,
+  rial,
+  toman,
+  PRICES_UPDATED,
+  REPAIR_LABELS,
+  SCHEMA_CURRENCY,
+} from "@/lib/pricing";
 import { SITE } from "@/lib/data";
 
 // Price table for an individual service page (e.g. /iphone-battery-replacement/).
@@ -30,6 +37,8 @@ export default function PagePriceTable({
   // One Offer per priced model, wrapped in an OfferCatalog. Prices are real
   // (content/parts-prices.json) so this is safe to expose as structured data.
   // Rows without an upper bound emit a single price instead of a range.
+  // The table shows tomans; the schema currency is the rial, so every figure
+  // goes through rial() (see lib/pricing.ts).
   const offerSchema = {
     "@context": "https://schema.org",
     "@type": "OfferCatalog",
@@ -42,19 +51,19 @@ export default function PagePriceTable({
         name: `${REPAIR_LABELS[r.repairType] ?? "تعمیر"} ${r.device}`,
         provider: { "@id": SITE.localBusinessId },
       },
-      priceCurrency: "IRR",
+      priceCurrency: SCHEMA_CURRENCY,
       priceSpecification: r.to
         ? {
             "@type": "PriceSpecification",
-            minPrice: r.from,
-            maxPrice: r.to,
-            priceCurrency: "IRR",
+            minPrice: rial(r.from),
+            maxPrice: rial(r.to),
+            priceCurrency: SCHEMA_CURRENCY,
             valueAddedTaxIncluded: true,
           }
         : {
             "@type": "PriceSpecification",
-            price: r.from,
-            priceCurrency: "IRR",
+            price: rial(r.from),
+            priceCurrency: SCHEMA_CURRENCY,
             valueAddedTaxIncluded: true,
           },
       availability: "https://schema.org/InStock",
@@ -126,6 +135,15 @@ export default function PagePriceTable({
           className="inline-flex items-center gap-2 rounded-[13px] border-[1.5px] border-hairline bg-white px-5 py-3 text-sm font-bold text-ink-900 transition hover:border-ink-900 hover:bg-ink-900 hover:text-white"
         >
           ثبت درخواست آنلاین
+        </Link>
+        {/* This table lists only the models named on this page; /prices/ carries
+            every row, so a visitor whose model is absent still has somewhere
+            to go instead of bouncing. */}
+        <Link
+          href="/prices/"
+          className="inline-flex items-center gap-2 text-sm font-bold text-accent underline decoration-accent/30 underline-offset-4 transition hover:decoration-accent"
+        >
+          جستجوی قیمت مدل های دیگر
         </Link>
       </div>
 

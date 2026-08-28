@@ -25,14 +25,18 @@ import {
   type Post,
 } from "@/lib/content";
 import { SITE } from "@/lib/data";
-import { pricesForPage } from "@/lib/pricing";
+import { SCHEMA_CURRENCY, pricesForPage, rial } from "@/lib/pricing";
 import { clusterContentFor } from "@/lib/cluster-content";
 import ClusterContent from "@/components/ClusterContent";
 import ContentEnhancer from "@/components/ContentEnhancer";
 import PagePriceTable from "@/components/PagePriceTable";
 import PillarArticles from "@/components/PillarArticles";
+import PageCallout from "@/components/PageCallout";
+import { CARD_LABELS } from "@/lib/recovered-hub-labels";
 import RelatedLinks from "@/components/RelatedLinks";
+import RepairRequestSection from "@/components/RepairRequestSection";
 import RepairTypeLinks from "@/components/RepairTypeLinks";
+import ServiceCentersSlot from "@/components/ServiceCentersSlot";
 
 // Premium mobile-repair landing implementing ui/Mobile Repair.dc.html.
 // The exact database content renders untouched inside the white content
@@ -261,7 +265,7 @@ export default function MobileRepairLanding({ post }: { post: Post }) {
     "@type": "WebPage",
     "@id": `${SITE.domain}${encodeURI(post.path)}#webpage`,
     url: `${SITE.domain}${encodeURI(post.path)}`,
-    name: post.title,
+    name: h1For(post.path, post.title),
     description: post.metaDesc,
     inLanguage: "fa-IR",
     isPartOf: { "@id": SITE.websiteId },
@@ -274,7 +278,8 @@ export default function MobileRepairLanding({ post }: { post: Post }) {
     "@context": "https://schema.org",
     "@type": "Service",
     "@id": `${SITE.domain}${encodeURI(post.path)}#service`,
-    name: post.title,
+    // The page's own name, as it renders it — not the database title.
+    name: h1For(post.path, post.title),
     serviceType: post.title.split("|")[0].trim(),
     areaServed: { "@type": "City", name: SITE.city },
     provider: { "@id": SITE.localBusinessId },
@@ -285,9 +290,9 @@ export default function MobileRepairLanding({ post }: { post: Post }) {
       ? {
           offers: {
             "@type": "AggregateOffer",
-            priceCurrency: "IRT",
-            lowPrice: Math.min(...pagePrices.rows.map((p) => p.from)),
-            highPrice: Math.max(...pagePrices.rows.map((p) => p.to ?? p.from)),
+            priceCurrency: SCHEMA_CURRENCY,
+            lowPrice: rial(Math.min(...pagePrices.rows.map((p) => p.from))),
+            highPrice: rial(Math.max(...pagePrices.rows.map((p) => p.to ?? p.from))),
             offerCount: pagePrices.rows.length,
             availability: "https://schema.org/InStock",
             url: `${SITE.domain}${encodeURI(post.path)}`,
@@ -298,12 +303,12 @@ export default function MobileRepairLanding({ post }: { post: Post }) {
       ? {
           hasOfferCatalog: {
             "@type": "OfferCatalog",
-            name: post.title.split("|")[0].trim(),
+            name: h1For(post.path, post.title),
             itemListElement: childPages.map((c) => ({
               "@type": "Offer",
               itemOffered: {
                 "@type": "Service",
-                name: c.title,
+                name: CARD_LABELS[c.path] ?? h1For(c.path, c.title),
                 url: `${SITE.domain}${encodeURI(c.path)}`,
               },
             })),
@@ -326,6 +331,69 @@ export default function MobileRepairLanding({ post }: { post: Post }) {
       acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
   };
+
+  // Model and service pages lead with their own text: the database body and
+  // its price table sit directly under the hero, and the marketing blocks
+  // follow. Brand hubs do the opposite — the hub is a shop window, so the
+  // faults grid comes first and the body text sits further down.
+  const contentBlock = (
+    <section id="content" className="mx-auto max-w-[1280px] px-4 pb-12 sm:px-6 lg:px-8">
+      {toc.length >= 3 && (
+        <nav
+          aria-label="فهرست مطالب"
+          className="mb-7 rounded-[22px] border border-line bg-white p-5 shadow-card"
+        >
+          <p className="flex items-center gap-2 text-sm font-extrabold text-ink-900">
+            <ListChecks className="h-4 w-4 text-accent" />
+            فهرست این صفحه
+          </p>
+          <ol className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {toc.map((t, i) => (
+              <li key={t.id}>
+                <a
+                  href={`#${t.id}`}
+                  className="flex items-start gap-2 rounded-xl border border-transparent px-3 py-2 text-sm leading-7 text-ink-500 transition hover:border-accent/20 hover:bg-accent/[.04] hover:text-accent"
+                >
+                  <span className="text-accent/70">
+                    {(i + 1).toLocaleString("fa-IR")}.
+                  </span>
+                  {t.text}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <ClusterContent path={post.path} />
+      <PagePriceTable title={post.title} path={post.path} />
+      <div id="post-content" className="prose-fa service-prose svc-stack">
+        {lead.trim() && (
+          <div
+            className="svc-body svc-lead rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8"
+            dangerouslySetInnerHTML={{ __html: lead }}
+          />
+        )}
+        {sections.map((s) => (
+          <section
+            key={s.id}
+            className="svc-section rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8"
+          >
+            <div className="svc-body" dangerouslySetInnerHTML={{ __html: s.html }} />
+          </section>
+        ))}
+        {!lead.trim() && sections.length === 0 && (
+          <div
+            className="svc-body rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8"
+            dangerouslySetInnerHTML={{ __html: idHtml }}
+          />
+        )}
+      </div>
+      <ContentEnhancer targetId="post-content" />
+    </section>
+  );
+  const requestBlock = (
+    <RepairRequestSection heading={`ثبت آنلاین درخواست تعمیر ${phoneLabel}`} />
+  );
 
   return (
     <article>
@@ -405,7 +473,7 @@ export default function MobileRepairLanding({ post }: { post: Post }) {
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img
                       src={post.image}
-                      alt={post.title}
+                      alt={h1For(post.path, post.title)}
                       width={210}
                       height={380}
                       fetchPriority="high"
@@ -424,6 +492,9 @@ export default function MobileRepairLanding({ post }: { post: Post }) {
           </div>
         </div>
       </header>
+
+      {!isBrandLevel && contentBlock}
+      {requestBlock}
 
       {/* ===== FAULTS ===== */}
       <section id="faults" className="mx-auto max-w-[1280px] px-4 pb-4 pt-14 sm:px-6 lg:px-8 lg:pt-[74px]">
@@ -599,60 +670,7 @@ export default function MobileRepairLanding({ post }: { post: Post }) {
         </div>
       </section>
 
-      {/* ===== DATABASE CONTENT (exact) ===== */}
-      <section id="content" className="mx-auto max-w-[1280px] px-4 pb-12 sm:px-6 lg:px-8">
-        {toc.length >= 3 && (
-          <nav
-            aria-label="فهرست مطالب"
-            className="mb-7 rounded-[22px] border border-line bg-white p-5 shadow-card"
-          >
-            <p className="flex items-center gap-2 text-sm font-extrabold text-ink-900">
-              <ListChecks className="h-4 w-4 text-accent" />
-              فهرست این صفحه
-            </p>
-            <ol className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-              {toc.map((t, i) => (
-                <li key={t.id}>
-                  <a
-                    href={`#${t.id}`}
-                    className="flex items-start gap-2 rounded-xl border border-transparent px-3 py-2 text-sm leading-7 text-ink-500 transition hover:border-accent/20 hover:bg-accent/[.04] hover:text-accent"
-                  >
-                    <span className="text-accent/70">
-                      {(i + 1).toLocaleString("fa-IR")}.
-                    </span>
-                    {t.text}
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </nav>
-        )}
-        <ClusterContent path={post.path} />
-        <PagePriceTable title={post.title} path={post.path} />
-        <div id="post-content" className="prose-fa service-prose svc-stack">
-          {lead.trim() && (
-            <div
-              className="svc-body svc-lead rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8"
-              dangerouslySetInnerHTML={{ __html: lead }}
-            />
-          )}
-          {sections.map((s) => (
-            <section
-              key={s.id}
-              className="svc-section rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8"
-            >
-              <div className="svc-body" dangerouslySetInnerHTML={{ __html: s.html }} />
-            </section>
-          ))}
-          {!lead.trim() && sections.length === 0 && (
-            <div
-              className="svc-body rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8"
-              dangerouslySetInnerHTML={{ __html: idHtml }}
-            />
-          )}
-        </div>
-        <ContentEnhancer targetId="post-content" />
-      </section>
+      {isBrandLevel && contentBlock}
 
       {/* ===== FAQ (ui: Mobile Repair mockup) — shown when the database
            content has no FAQ of its own, so questions never duplicate. ===== */}
@@ -712,10 +730,12 @@ export default function MobileRepairLanding({ post }: { post: Post }) {
 
       {/* Contextual cluster links (pillar/siblings + repair-type hubs) */}
       <div className="mx-auto max-w-[1280px] px-4 pb-6 sm:px-6 lg:px-8">
+        <PageCallout path={post.path} slot="end" />
         <RepairTypeLinks post={post} />
         <RelatedLinks post={post} />
       </div>
       <PillarArticles path={post.path} />
+      <ServiceCentersSlot path={post.path} />
     </article>
   );
 }

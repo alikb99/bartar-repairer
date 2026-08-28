@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { ArrowUpLeft, Layers } from "lucide-react";
+import { RELATED_OVERRIDES } from "@/lib/recovered-related";
 import {
   NAV,
   relatedNavLinks,
   recentPosts,
   clusterSiblings,
+  linkLabel,
+  titleOf,
   pillarFor,
   pageCluster,
   servicePillarFor,
@@ -51,7 +54,7 @@ export default function RelatedLinks({ post }: { post: Post }) {
   } else if (servicePillar) {
     title = `سایر خدمات ${servicePillar.label}`;
     items = serviceSiblings(post, 8).map((p) => ({
-      title: p.title,
+      title: linkLabel(p.title),
       slug: p.path,
     }));
     upLink = {
@@ -65,19 +68,38 @@ export default function RelatedLinks({ post }: { post: Post }) {
     const siblings = clusterSiblings(post, 6);
     if (siblings.length >= 2 && pillar) {
       title = `مقالات مرتبط ${pillar.label}`;
-      items = siblings.map((p) => ({ title: p.title, slug: p.path }));
+      items = siblings.map((p) => ({
+        title: linkLabel(p.title),
+        slug: p.path,
+      }));
     } else {
       title = "مطالب بیشتر";
       items = recentPosts(6)
         .filter((p) => p.id !== post.id)
         .slice(0, 6)
-        .map((p) => ({ title: p.title, slug: p.path }));
+        .map((p) => ({ title: linkLabel(p.title), slug: p.path }));
     }
   } else {
     title = "خدمات پرطرفدار";
     items = NAV.flatMap((g) => g.children)
       .filter((c) => c.slug !== post.path)
       .slice(0, 8);
+  }
+
+  // A few dozen pages froze a list the sibling rule no longer reproduces; those
+  // keep the deployed list verbatim (lib/recovered-related.ts).
+  const frozen = RELATED_OVERRIDES[post.path];
+  if (frozen) {
+    const byPath = new Map(items.map((it) => [it.slug, it]));
+    items = frozen
+      .filter((href) => href !== upLink?.path)
+      .map(
+        (href) =>
+          byPath.get(href) ?? {
+            slug: href,
+            title: linkLabel(titleOf(href) ?? href),
+          },
+      );
   }
 
   if (items.length === 0) return null;

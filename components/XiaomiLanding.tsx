@@ -16,9 +16,13 @@ import {
 } from "lucide-react";
 import { breadcrumbs, h1For, type Post } from "@/lib/content";
 import { SITE } from "@/lib/data";
+import { calloutFor } from "@/lib/recovered-callouts";
 import { clusterContentFor } from "@/lib/cluster-content";
 import ClusterContent from "@/components/ClusterContent";
+import PageCallout from "@/components/PageCallout";
+import RepairRequestSection from "@/components/RepairRequestSection";
 import PillarArticles from "@/components/PillarArticles";
+import ServiceCentersSlot from "@/components/ServiceCentersSlot";
 
 /*
   Hand-tuned premium landing for the Xiaomi service page (/xiaomi/).
@@ -281,7 +285,7 @@ export default function XiaomiLanding({ post }: { post: Post }) {
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: post.title,
+    name: h1For(post.path, post.title),
     serviceType: "تعمیر محصولات شیائومی",
     areaServed: { "@type": "City", name: SITE.city },
     provider: { "@type": "LocalBusiness", "@id": SITE.localBusinessId, name: SITE.name },
@@ -397,6 +401,13 @@ export default function XiaomiLanding({ post }: { post: Post }) {
           </div>
         </div>
       </header>
+
+      {calloutFor(post.path)?.slot === "top" && (
+        <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+          <PageCallout path={post.path} slot="top" />
+        </div>
+      )}
+      <RepairRequestSection heading="ثبت آنلاین درخواست تعمیر شیائومی" />
 
       {/* ===================== CLUSTER ANSWER ===================== */}
       {clusterFaqs.length > 0 && (
@@ -747,6 +758,7 @@ export default function XiaomiLanding({ post }: { post: Post }) {
       </section>
 
       <PillarArticles path={post.path} />
+      <ServiceCentersSlot path={post.path} />
     </article>
   );
 }

@@ -8,7 +8,7 @@
 // Built entirely from POSTS at build time — no database content is modified and
 // no URL changes. Grouping is for humans only; the invariant that matters is
 // that every indexable post appears exactly once.
-import { POSTS, CANONICAL_TO, type Post } from "./content";
+import { POSTS, CANONICAL_TO, linkLabel, type Post } from "./content";
 import { REPAIR_TYPES, repairTypesFor } from "./repair-types";
 
 // Mirrors the exclusions in app/sitemap.ts / app/[...slug]/page.tsx: noindex
@@ -22,6 +22,11 @@ const EXCLUDE = new Set([
 ]);
 
 export type DirLink = { path: string; label: string };
+
+// The directory is a list of page names, not of <title> tags: the SEO tail
+// after the pipe repeats on every second row and makes the columns unreadable.
+// Same naming as every other internal link (lib/content.ts → linkLabel).
+const dirLabel = (title: string): string => linkLabel(title);
 export type DirGroup = { slug: string; title: string; items: DirLink[] };
 
 // Brand / category buckets for SERVICE pages. First match wins, so the order is
@@ -69,8 +74,13 @@ const SERVICE_TITLE = new Map<string, string>([
   [SERVICE_OTHER.slug, SERVICE_OTHER.title],
 ]);
 
+// Sorted by the label the row actually shows, not by the database title: a
+// column sorted by invisible text reads as unsorted. Brackets are dropped from
+// the sort key so that "تعمیر گوشی آیفون (اپل)" files under آیفون with the
+// other iPhone rows instead of ahead of them because of the bracket.
+const sortKey = (title: string) => dirLabel(title).replace(/[()]/g, "");
 function sortByTitle(a: Post, b: Post) {
-  return a.title.localeCompare(b.title, "fa");
+  return sortKey(a.title).localeCompare(sortKey(b.title), "fa");
 }
 
 export function buildDirectory(): {
@@ -100,7 +110,7 @@ export function buildDirectory(): {
     items: svcMap
       .get(s)!
       .sort(sortByTitle)
-      .map((p) => ({ path: p.path, label: p.title })),
+      .map((p) => ({ path: p.path, label: dirLabel(p.title) })),
   }));
 
   // ----- articles grouped by repair type, with a catch-all -----
@@ -129,7 +139,7 @@ export function buildDirectory(): {
       items: artMap
         .get(s)!
         .sort(sortByTitle)
-        .map((p) => ({ path: p.path, label: p.title })),
+        .map((p) => ({ path: p.path, label: dirLabel(p.title) })),
     }));
 
   return {

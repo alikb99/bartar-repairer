@@ -135,7 +135,7 @@ export default function Hero() {
               </div>
               <div>
                 <div className="text-[17px] font-extrabold leading-none text-ink-900">
-                  ۴۸٬۰۰۰+
+                  ۹۴٬۰۰۰+
                 </div>
                 <div className="mt-1 text-xs text-ink-500">تعمیر موفق</div>
               </div>

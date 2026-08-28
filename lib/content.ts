@@ -3,6 +3,8 @@
 // bundle. Pages keep their EXACT hierarchical WordPress URLs and content.
 import fs from "node:fs";
 import path from "node:path";
+import { HEADING_LABELS, HUB_LABELS } from "./recovered-hub-labels";
+import { INJECTED_LINKS } from "./recovered-internal-links";
 import { SITE } from "./data";
 // Replays the SEO surface of the 2026-08-16 production build, whose source was
 // never committed (see docs/00-CRITICAL-source-location.md in the deploy repo).
@@ -25,12 +27,13 @@ const readJson = (f: string) =>
 //  - deZwnj: plain text (titles, meta, excerpt).
 //  - deZwnjHtml: HTML bodies — only touches TEXT between tags, never attribute
 //    values, so Persian image/file URLs that contain a ZWNJ are not corrupted.
-// A ZWNJ often sits NEXT to a real space in the export ("می‌ دهد"), so a
-// naive swap leaves a double space that shows up in the rendered H1, the meta
-// description and llms.txt. Collapse runs of plain spaces/tabs afterwards —
-// but not newlines, which still separate block content in HTML bodies.
+// A ZWNJ often sits NEXT to a real space in the export ("می‌ دهد"), so the two
+// together have to become ONE space — but only around the ZWNJ. A double space
+// that was typed into the title stays: the deployed pages carry it in their
+// JSON-LD, which is compared byte for byte. The plain-text files tidy the rest
+// themselves (see tidy() in the llms routes), where nothing collapses it later.
 const deZwnj = (s: string): string =>
-  s ? s.replace(/‌/g, " ").replace(/[ 	]{2,}/g, " ") : s;
+  s ? s.replace(/[ 	]*‌[ 	]*/g, " ") : s;
 const deZwnjHtml = (s: string): string =>
   s
     ? s
@@ -165,7 +168,9 @@ function localizeUrls(s: string): string {
 // posts.json untouched while consolidating link equity onto the real pages.
 const LINK_FIXES: [string, string][] = [
   ["/acer/lap-top/", "/lap-top-acer/"],
-  ["/acer/", "/lap-top-acer/"],
+  // /acer/ is NOT in this list: it is a real page, shipped pre-rendered from
+  // public/acer/ (see docs/frozen-pages.md), and the body links that point at
+  // it are correct as written.
   ["/acer-tablet-board-repair/", "/acer-tablet-boardrepair/"],
   ["/repair-honor-9x/", "/repair-honor9x/"],
   [
@@ -510,7 +515,8 @@ const INTERNAL_LINKS: [string, string][] = [
   ["نمایندگی ایسوس", "/asus/"],
   ["تعمیرات ایسوس", "/asus/"],
   ["تعمیر ایسوس", "/asus/"],
-  // Acer (no standalone /acer/ page — the Acer hub is /lap-top-acer/)
+  // Acer: /acer/ is the brand landing page, /lap-top-acer/ the laptop hub
+  // that carries the model list and prices — which is what these phrases mean.
   ["نمایندگی تعمیرات ایسر", "/lap-top-acer/"],
   ["تعمیر لپ تاپ ایسر", "/lap-top-acer/"],
   ["نمایندگی ایسر", "/lap-top-acer/"],
@@ -961,38 +967,123 @@ function appendArticleUpdate(path: string, html: string): string {
   return `${html}<section class="article-update"><h2>به روزرسانی کاربردی</h2><p>${update}</p></section>`;
 }
 
+const ANCHOR = new RegExp("<a\\b", "i");
+const SPLIT_TAGS = /(<[^>]+>)/g;
+const OPEN_ANCHORS = /<a\b/gi;
+const CLOSE_ANCHORS = /<\/a>/gi;
+
+/** A paragraph's visible text, normalised the way the recovered map records it. */
+const plainText = (inner: string): string =>
+  inner
+    .replace(/<[^>]+>/g, "")
+    .replace(/‌/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+const paraNamed = (inner: string, para: string): boolean =>
+  plainText(inner).startsWith(para);
+
 function linkifyInternal(html: string, selfPath: string): string {
-  const targets = INTERNAL_LINKS.filter(([, path]) => path !== selfPath);
+  // A page that the deployed site linked by hand keeps exactly those links:
+  // the map below is what it carried, phrase for phrase. Pages with no recorded
+  // list fall back to the general brand/device map.
+  const recovered = INJECTED_LINKS[selfPath];
+  const targets: [string, string, string?][] = (
+    recovered ?? INTERNAL_LINKS
+  ).filter(([, path]) => path !== selfPath);
   const linked = new Set<string>();
+  const used = new Set<number>();
   let added = 0;
-  const MAX = 8;
+  const MAX = recovered ? recovered.length : 8;
   return html.replace(
     /(<p\b[^>]*>)([\s\S]*?)(<\/p>)/gi,
-    (m, open: string, inner: string, close: string) => {
+    (m, open: string, inner: string, close: string, offset: number) => {
       if (added >= MAX) return m;
-      if (/<a\b/i.test(inner)) return m; // never touch paragraphs that already link
+      // Some WordPress blocks wrap a whole paragraph in a link. That <a> sits
+      // outside the <p>, so the test below does not see it; injecting here
+      // would nest one link inside another and split the sentence in two.
+      const before = html.slice(0, offset);
+      const opened = (before.match(OPEN_ANCHORS) || []).length;
+      const closed = (before.match(CLOSE_ANCHORS) || []).length;
+      if (opened > closed) return m;
+      // A paragraph that already links is left alone, unless the recovered
+      // list names it: the deployed page put a second link there on purpose.
+      const named =
+        recovered !== undefined &&
+        targets.some(([, , para]) => !!para && paraNamed(inner, para));
+      if (!named && ANCHOR.test(inner)) return m;
       // Search only text nodes. Replacing inside raw `inner` can corrupt an
       // image alt/title attribute when it contains a target phrase.
-      const parts = inner.split(/(<[^>]+>)/g);
-      for (const [phrase, path] of targets) {
-        if (linked.has(path)) continue;
+      const parts = inner.split(SPLIT_TAGS);
+      const paraText = plainText(inner);
+      for (let i = 0; i < targets.length; i++) {
+        const [phrase, path, para] = targets[i];
+        // A recovered entry is used once each; the general map links a page
+        // once per document, whichever paragraph mentions it first.
+        if (recovered ? used.has(i) : linked.has(path)) continue;
+        if (para && !paraText.startsWith(para)) continue;
+        // The database copy sometimes links the same page in the same
+        // paragraph already; a second <a> would nest inside the first.
+        if (inner.includes(`href="${path}"`)) continue;
         const textIndex = parts.findIndex(
           (part, index) => index % 2 === 0 && part.includes(phrase),
         );
-        if (textIndex >= 0) {
-          const text = parts[textIndex];
-          const idx = text.indexOf(phrase);
-          parts[textIndex] =
-            text.slice(0, idx) +
-            `<a href="${path}">${phrase}</a>` +
-            text.slice(idx + phrase.length);
-          linked.add(path);
-          added++;
-          break; // at most one injected link per paragraph
-        }
+        if (textIndex < 0) continue;
+        const text = parts[textIndex];
+        const idx = text.indexOf(phrase);
+        parts[textIndex] =
+          text.slice(0, idx) +
+          `<a href="${path}">${phrase}</a>` +
+          text.slice(idx + phrase.length);
+        used.add(i);
+        linked.add(path);
+        added++;
+        // The deployed pages put two links in one paragraph where the copy
+        // named two pages; the general map keeps to one so a paragraph written
+        // without links does not turn into a list of them.
+        if (!recovered) break;
       }
       return open + parts.join("") + close;
     },
+  );
+}
+
+// Body-text corrections made on the live site after the WordPress export was
+// taken, replayed here so the rebuild matches what is deployed. Keyed by URL,
+// each entry is an exact find/replace — posts.json stays the untouched source
+// of truth. Keep this table tiny; anything larger belongs in the database.
+const CONTENT_FIXES: Record<string, [string, string][]> = {
+  // Founding year corrected on the deployed pages (1382 → 1383).
+  "/xiaomi/mobile/": [["از سال 1382 تا کنون", "از سال 1383 تا کنون"]],
+  "/about/": [["های سال 1382", "های سال 1383"]],
+  "/home/": [
+    ["از سال 1382 تاکنون", "از سال 1383 تاکنون"],
+    ["از سال 1382 تا به امروز", "از سال 1383 تا به امروز"],
+  ],
+};
+
+function applyContentFixes(path: string, html: string): string {
+  const fixes = CONTENT_FIXES[path];
+  if (!fixes) return html;
+  let out = html;
+  for (const [from, to] of fixes) out = out.split(from).join(to);
+  return out;
+}
+
+// Several hundred WordPress bodies start their sections below <h2>: the editor
+// picked the size that looked right, not the level. With nothing at level two,
+// the outline a crawler reads jumps from the h1 straight to level three or
+// four, and the on-page table of contents (which collects h2s) comes out empty.
+// Shifting every heading up by the same amount restores the hierarchy without
+// flattening it — a body whose sections are h3 with h4 sub-headings keeps that
+// relationship, one step higher. Bodies that already use <h2> are left alone.
+function promoteHeadings(html: string): string {
+  const levels = [...html.matchAll(/<h([2-6])\b/gi)].map((m) => Number(m[1]));
+  if (!levels.length) return html;
+  const shift = Math.min(...levels) - 2;
+  if (shift <= 0) return html;
+  return html.replace(
+    /<(\/?)h([2-6])\b/gi,
+    (_m, slash, level) => `<${slash}h${Number(level) - shift}`,
   );
 }
 
@@ -1004,7 +1095,10 @@ export const POSTS: Post[] = raw.map((p) => {
   const segments = renamedPath
     ? renamedPath.split("/").filter(Boolean)
     : rawSegments;
-  let content = addAltText(cleanContent(p.content), p.title);
+  let content = applyContentFixes(
+    selfPath,
+    promoteHeadings(addAltText(cleanContent(p.content), p.title)),
+  );
   // Inject contextual in-body links to the commercial hubs. Runs on BOTH article
   // and service/model pages so every cluster page funnels in-body link equity up
   // to its brand/device hub (e.g. a Samsung model page links the phrase
@@ -1087,6 +1181,59 @@ export function h1For(pathname: string, fallback: string): string {
   return H1_OVERRIDES_RECOVERED[pathname] || fallback;
 }
 
+
+/** Longest link label before it is cut back to the last whole word. */
+const LABEL_MAX = 45;
+
+/**
+ * What to call a page inside a card or a list: its database title with the SEO
+ * tail removed. Titles are written for the SERP ("نمایندگی ZTE | تعمیرات گوشی
+ * زد تی ای در تهران"); everything after the first separator is noise once the
+ * reader is already on the site, and the cards clamp to one line anyway.
+ *
+ * A parenthesis is only a separator when it opens a clause too long to fit —
+ * "(اپل)" is part of the name, "(خروج آب و گردوغبار …)" is a subtitle.
+ */
+/** The database title of a page, by URL — for lists that carry only hrefs. */
+export function titleOf(pathname: string): string | undefined {
+  return postByPath.get(pathname)?.title;
+}
+
+export function linkLabel(title: string): string {
+  let head = title.split(/\s*[|:+]\s*/)[0].trim() || title;
+  // A parenthesis at the END is a subtitle ("… (ترفندهای ۲۰۲۵)"); one in the
+  // middle is part of the name ("تعمیر گوشی آیفون (اپل) در تهران").
+  head = head.replace(/\s*\([^()]*\)?\s*$/, "").trim() || head;
+  // A title that asks a question ends at the question mark; what follows is a
+  // subtitle ("… چیست؟ راهنمای عیب یابی"), and the question alone is the name.
+  const question = head.indexOf("؟");
+  if (question >= 0 && question < LABEL_MAX) return head.slice(0, question + 1);
+  if (head.length <= LABEL_MAX) return head || title;
+  const clipped = head.slice(0, LABEL_MAX);
+  const lastSpace = clipped.lastIndexOf(" ");
+  return (lastSpace > 0 ? clipped.slice(0, lastSpace) : clipped).trim();
+}
+
+/**
+ * The name a hub page is introduced by when a child page links up to it
+ * ("سایر خدمات …", "مشاهده صفحه نمایندگی: …"). These were chosen by hand and do
+ * not follow from the title — /hp/ keeps its parenthesis, /lap-top-acer/ drops
+ * everything from "با" on — so the deployed names live in
+ * lib/recovered-hub-labels.ts and only unlisted hubs fall back to trimming.
+ */
+export function hubLabel(pathname: string, title: string): string {
+  return HUB_LABELS[pathname] ?? linkLabel(title);
+}
+
+/**
+ * The same hub, as the related-links HEADING names it. The deployed pages do
+ * not always use the up-link's wording there ("سایر خدمات تعمیرات لپ تاپ" over
+ * "مشاهده صفحه اصلی: تعمیر لپ تاپ"), so both names are kept.
+ */
+export function headingLabel(pathname: string, title: string): string {
+  return HEADING_LABELS[pathname] ?? hubLabel(pathname, title);
+}
+
 export const CATEGORIES = categoriesJson as Category[];
 export const DB_SITE = siteJson as {
   blogname: string;
@@ -1164,6 +1311,11 @@ const PILLAR_DEFS: PillarDef[] = [
   { path: "/htc/", label: "نمایندگی اچ تی سی", brand: "htc" },
   { path: "/nokia/", label: "نمایندگی نوکیا", brand: "nokia" },
   { path: "/motorola-mobile-repair-center/", label: "تعمیر موتورولا", brand: "motorola" },
+  // Acer has no separate brand hub — the laptop page is the brand page, so it
+  // serves as both the device pillar above and the brand-wide one here. Without
+  // this, an Acer article that names no device ("خدمات پس از فروش ایسر") lands
+  // in no cluster at all and falls back to the generic recent-posts list.
+  { path: "/lap-top-acer/", label: "تعمیر ایسر", brand: "acer" },
   // service hubs (device only — broadest fallback)
   { path: "/services/category-mobile-phone-repair/", label: "تعمیر موبایل", device: "mobile" },
   { path: "/services/laptop-repair/", label: "تعمیر لپ تاپ", device: "laptop" },
@@ -1345,8 +1497,17 @@ export function serviceSiblings(post: Post, limit = 8): Post[] {
   if (!pl) return [];
   return (serviceClusterIndex.get(pl.path) ?? [])
     .filter((p) => p.id !== post.id)
+    // A brand hub's own children are its device hubs and appliance pages, all
+    // already listed in its services grid; repeating them here would crowd out
+    // the root-level pages that have no other route in. Under a device hub the
+    // children ARE the models a reader of a model page wants next, so they stay.
+    .filter(
+      (p) => pl.device || !p.parent || postById.get(p.parent)?.path !== pl.path,
+    )
     .slice(0, limit);
 }
+
+
 
 export function safeDecode(s: string): string {
   try {
@@ -1367,7 +1528,9 @@ export function breadcrumbs(post: Post): { title: string; path: string }[] {
   let cur: Post | undefined = post;
   while (cur && !seen.has(cur.id)) {
     seen.add(cur.id);
-    chain.unshift({ title: cur.title, path: cur.path });
+    // Breadcrumbs name each page the way the page names itself — its H1, not
+    // the database title, which is written for the SERP.
+    chain.unshift({ title: h1For(cur.path, cur.title), path: cur.path });
     cur = cur.parent ? postById.get(cur.parent) : undefined;
   }
   // Flat cluster articles have no parent chain — give them a topical path
@@ -1397,11 +1560,11 @@ export function readingMinutes(html: string): number {
 // contextual internal linking with descriptive anchor text).
 export function relatedNavLinks(
   path: string,
-): { title: string; items: NavChild[] } | null {
+): { title: string; slug: string; items: NavChild[] } | null {
   for (const g of NAV) {
     if (g.children.length && g.children.some((c) => c.slug === path)) {
       const items = g.children.filter((c) => c.slug !== path);
-      if (items.length) return { title: g.title, items };
+      if (items.length) return { title: hubLabel(g.slug, g.title), slug: g.slug, items };
     }
   }
   return null;
@@ -1420,13 +1583,19 @@ export function pageCluster(
   if (!parent) return { parent: null, siblings: [] };
   const siblings = POSTS.filter(
     (p) => p.type === "page" && p.parent === parent.id && p.id !== post.id,
-  ).map((p) => ({ title: p.title, slug: p.path }));
-  // Short brand label: drop trailing marketing clauses ("… با گارانتی معتبر")
-  // and separators so headings/anchors stay concise.
-  const label = parent.title
-    .split(/\s+با\s+|\s*[|،–—-]\s*/)[0]
-    .trim();
-  return { parent: { title: label || parent.title, path: parent.path }, siblings };
+  )
+    // Cross-brand service hubs (تعمیر تلویزیون, تعمیر لپ تاپ …) are reached from
+    // the service nav and the pillar links, not from a sibling list: they are
+    // not siblings of a page about one brand's appliance, they are its parent
+    // subject. Brand device hubs stay — they really are siblings.
+    .filter(
+      (p) => !existingPillars.some((d) => d.path === p.path && !d.brand),
+    )
+    .map((p) => ({ title: linkLabel(p.title), slug: p.path }));
+  return {
+    parent: { title: hubLabel(parent.path, parent.title), path: parent.path },
+    siblings,
+  };
 }
 
 // Extract FAQ Q&A from content for FAQPage schema (handles native <details>

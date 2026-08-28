@@ -12,6 +12,8 @@
 // Keyword clusters from moneywords.md are covered by writing naturally about
 // the thing people search for — not by repeating the phrase.
 
+import { CLUSTER_CONTENT_RECOVERED } from "./recovered-cluster-content";
+
 export type ClusterFact = { label: string; value: string };
 export type ClusterSection = { h: string; p: string[] };
 export type ClusterFaq = { q: string; a: string };
@@ -2978,7 +2980,14 @@ export const CLUSTER_CONTENT: Record<string, ClusterBlock> = {
   },
 };
 
-/** Enrichment block for a page, or null when the page has none. */
+/**
+ * Enrichment block for a page, or null when the page has none.
+ *
+ * The recovered table wins: it is read straight from the deployed HTML, and
+ * several blocks were edited there after the copy above was written. The
+ * hand-written blocks stay as the readable origin and cover any page the
+ * recovery does not (see lib/recovered-cluster-content.ts).
+ */
 export function clusterContentFor(path: string): ClusterBlock | null {
-  return CLUSTER_CONTENT[path] ?? null;
+  return CLUSTER_CONTENT_RECOVERED[path] ?? CLUSTER_CONTENT[path] ?? null;
 }

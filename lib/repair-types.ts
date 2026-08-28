@@ -8,6 +8,7 @@
 // is modified and no existing URL changes.
 import { POSTS, type Post } from "./content";
 import { ARTICLE_REPAIR_TYPE } from "./recovered-membership";
+import { REPAIR_TYPE_MEMBERSHIP } from "./recovered-membership-types";
 
 export type RepairType = {
   /** URL segment under /repairs/ */
@@ -172,14 +173,17 @@ for (const t of REPAIR_TYPES) itemsBySlug.set(t.slug, { services: [], articles: 
 for (const p of POSTS) {
   if (EXCLUDED.has(p.path)) continue;
   const matched: RepairType[] = [];
-  // A recovered assignment wins outright: it records where the live build
-  // actually filed the article, which the title regexes below no longer
-  // reproduce (see recovered-membership.ts).
+  // What the deployed hubs actually list wins outright: they are the record of
+  // where each page was filed, including the pages that sit under two hubs
+  // (see recovered-membership-types.ts). Pages the hubs do not mention fall
+  // back to the single recovered pin, then to the title regexes.
+  const filed = REPAIR_TYPE_MEMBERSHIP[p.path];
   const pinned = ARTICLE_REPAIR_TYPE[p.path];
   // Match on TITLE only — the most reliable signal. Slugs are often
   // abbreviated and article bodies mention every repair type in passing.
   for (const t of REPAIR_TYPES) {
-    if (pinned ? t.slug !== pinned : !t.match.test(p.title)) continue;
+    if (filed ? !filed.includes(t.slug) : t.slug !== pinned && !t.match.test(p.title))
+      continue;
     matched.push(t);
     const bucket = itemsBySlug.get(t.slug)!;
     if (p.type === "page") bucket.services.push(p);

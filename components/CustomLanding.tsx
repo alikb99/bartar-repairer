@@ -103,7 +103,7 @@ export default function CustomLanding({ post }: { post: Post }) {
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: post.title,
+    name: h1For(post.path, post.title),
     serviceType: post.title,
     areaServed: { "@type": "City", name: SITE.city },
     provider: { "@type": "LocalBusiness", "@id": SITE.localBusinessId, name: SITE.name },

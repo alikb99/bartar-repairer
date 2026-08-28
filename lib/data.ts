@@ -33,17 +33,17 @@ export const SITE = {
   mapCentral:
     "https://balad.ir/p/%D8%A8%D8%B1%D8%AA%D8%B1-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3-tehran-nei-sanaei_electronic-equipment-repair-4TyjywJEshQMcD#15/35.72402/51.42398",
   socials: {
-    // Canonical profile URLs. Keep them free of share/tracking parameters:
-    // sameAs is an identity claim, so the URL should be the one the platform
-    // itself canonicalises to, not a per-share link that can rotate.
-    instagram: "https://www.instagram.com/bartar_repairer/",
-    telegram: "https://t.me/bartar_repairer",
+    // These are the profile URLs the site is deployed with, in this order:
+    // Object.values() feeds the schema sameAs, and sameAs is an identity claim
+    // that has to match what is published. The Instagram link keeps its share
+    // token and Facebook its /people/…/pfbid… form for that reason; replacing
+    // them with the platforms' canonical forms is a change to make on the live
+    // site first, not here.
+    instagram: "https://www.instagram.com/bartar_repairer?igsh=MTJ5aXJhcW00cmFyMA==",
     youtube: "https://www.youtube.com/@bartar_services",
-    aparat: "https://www.aparat.com/bartar_service",
     twitter: "https://x.com/Bartar_repairer",
-    // Numeric profile.php id — the stable form. The previous /people/…/pfbid…
-    // link embeds a rotating token that eventually 404s.
-    facebook: "https://www.facebook.com/profile.php?id=61593924380746",
+    facebook:
+      "https://www.facebook.com/people/%D8%A8%D8%B1%D8%AA%D8%B1-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3/pfbid02MAe5xVUQdSiJozu9SHA5sS3zTkPk2iJYz3capxQC3N617jmdxrhuPbUVPMHJvLuMl/",
     pinterest: "https://www.pinterest.com/bartar_repairer/",
     linkedin: "https://www.linkedin.com/in/bartar-repairer/",
     // wa.me needs the full international number with no leading zero —
@@ -51,7 +51,89 @@ export const SITE = {
     whatsapp: "https://wa.me/989046972370",
   },
   tagline: "تعمیر تخصصی دستگاه های الکترونیکی با گارانتی واقعی",
+  // Workshop supervisor. Owner-supplied, like everything in lib/team.ts —
+  // named on /team/, in the homepage body and in the Organization schema.
+  manager: {
+    name: "حمیدرضا آتشین پای",
+    jobTitle: "سرپرست و مدیر مجموعه",
+    bio: "سرپرستی کارگاه، سپردن هر دستگاه به تکنسین مربوط به آن و پیگیری تعمیرهایی که طول می کشند با ایشان است. اگر از نتیجه کار راضی نبودید، با شعبه تماس بگیرید و بخواهید پرونده دستگاه به ایشان ارجاع شود.",
+  },
+  // Online support chat. `data-key` identifies the account on the 9fx widget;
+  // it loads lazily because it is third-party JS on every page.
+  chat: {
+    src: "https://9fx.ir/chat.js",
+    key: "9jteaHBEC7uCiddu",
+    label: "گفتگوی آنلاین با پشتیبانی برتر سرویس",
+  },
 };
+
+// ---------- Physical branches ----------
+// Single source of truth for the branch locator (components/ServiceCenters.tsx),
+// the footer map and the LocalBusiness nodes. Never hardcode an embed URL in a
+// component — build it with baladEmbedUrl() below.
+export type Branch = {
+  id: "central" | "west";
+  /** Card heading, rendered as `name — area`. */
+  name: string;
+  area: string;
+  address: string;
+  phone: string;
+  phoneHref: string;
+  hours: string;
+  geo: { lat: number; lng: number };
+  /** Nearest metro stations, shown only where the branch has them. */
+  metro?: string;
+  /**
+   * Balad POI token. Only the Motahari branch is registered on Balad; the
+   * Saadat Abad branch falls back to a bare lat/lng pin. If the owner registers
+   * it, add the token here and the map and "مشاهده در بلد" link follow.
+   */
+  baladPoi?: string;
+  baladUrl?: string;
+};
+
+export const BRANCHES: Branch[] = [
+  {
+    id: "central",
+    name: "شعبه مرکزی",
+    area: "خیابان مطهری",
+    address: SITE.address,
+    phone: SITE.phone,
+    phoneHref: SITE.phoneHref,
+    hours: SITE.hours,
+    geo: { lat: 35.723166, lng: 51.419674 },
+    metro: "میرزای شیرازی، هفتم تیر، مفتح",
+    baladPoi: "4TyjywJEshQMcD",
+    baladUrl: SITE.mapCentral,
+  },
+  {
+    id: "west",
+    name: "شعبه غرب",
+    area: "سعادت آباد، میدان کاج",
+    address: SITE.addressWest,
+    phone: SITE.phoneWest,
+    phoneHref: SITE.phoneWestHref,
+    hours: SITE.hours,
+    geo: SITE.geoWest,
+  },
+];
+
+/**
+ * Balad's embed page reads exactly three query params: `p` (POI token),
+ * `lat` and `lng`. A registered place gets the business card; anything else
+ * gets a plain pin. The `#zoom/lat/lng` hash controls the viewport.
+ */
+export function baladEmbedUrl(branch: Branch, zoom = 16): string {
+  const hash = `#${zoom}/${branch.geo.lat}/${branch.geo.lng}`;
+  return branch.baladPoi
+    ? `https://balad.ir/embed?p=${branch.baladPoi}${hash}`
+    : `https://balad.ir/embed?lat=${branch.geo.lat}&lng=${branch.geo.lng}${hash}`;
+}
+
+/** Google Maps turn-by-turn link for a branch. */
+export function directionsUrl(branch: Branch): string {
+  return `https://www.google.com/maps/dir/?api=1&destination=${branch.geo.lat},${branch.geo.lng}`;
+}
 
 export const BRANDS = [
   "اپل",

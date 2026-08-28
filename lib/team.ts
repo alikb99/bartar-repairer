@@ -40,12 +40,12 @@ export const TECHNICIANS: Technician[] = [
     yearsNote: "min",
   },
   {
-    name: "سهیل",
+    name: "سهیل محمدی",
     specialty: "تعمیر لپ تاپ و مانیتور",
     years: 8,
   },
   {
-    name: "امیرحسین",
+    name: "امیرحسین آتشین",
     specialty: "تعمیر لپ تاپ و مانیتور",
     years: 8,
   },

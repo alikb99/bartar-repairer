@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -23,11 +24,17 @@ import {
   CANONICAL_TO,
 } from "@/lib/content";
 import { howToSchema } from "@/lib/howto";
-import { pricesForPage } from "@/lib/pricing";
+import { SCHEMA_CURRENCY, pricesForPage, rial } from "@/lib/pricing";
 import { SITE } from "@/lib/data";
+import { serviceAreasFor } from "@/lib/service-areas";
+import { calloutFor } from "@/lib/recovered-callouts";
+import { commentsFor } from "@/lib/recovered-comments";
 import { clusterContentFor } from "@/lib/cluster-content";
 import ContactCard from "@/components/ContactCard";
 import ClusterContent from "@/components/ClusterContent";
+import PageCallout from "@/components/PageCallout";
+import PageNotes from "@/components/PageNotes";
+import ReaderComments from "@/components/ReaderComments";
 import PagePriceTable from "@/components/PagePriceTable";
 import ContentEnhancer from "@/components/ContentEnhancer";
 import ReadingProgress from "@/components/ReadingProgress";
@@ -40,6 +47,7 @@ import RepairTypeLinks from "@/components/RepairTypeLinks";
 import ContactPage from "@/components/ContactPage";
 import RepairRequestPage from "@/components/RepairRequestPage";
 import ServiceDeviceSceneLoader from "@/components/ServiceDeviceSceneLoader";
+import ServiceCentersSlot from "@/components/ServiceCentersSlot";
 
 // Brand "نمایندگی" pages rendered with the generic premium brand layout.
 const BRAND_PAGES = new Set([
@@ -70,6 +78,17 @@ export function generateStaticParams() {
   return POSTS.filter((p) => p.path !== "/blog/").map((p) => ({
     slug: p.segments,
   }));
+}
+
+// WordPress exported its timestamps as bare local time ("2026-02-23 15:59:13").
+// Schema.org dates without an offset are ambiguous — Google reads them as UTC,
+// which shifts every article's published and modified time by 3.5 hours. The
+// shop and its whole audience are in Tehran, so the offset is Iran Standard
+// Time. IRST has had no DST since 2022, which is what makes a fixed offset the
+// right answer rather than a lookup.
+const TEHRAN_OFFSET = "+03:30";
+function isoDate(d: string): string {
+  return `${d.replace(" ", "T")}${TEHRAN_OFFSET}`;
 }
 
 function faDate(d: string): string {
@@ -219,6 +238,14 @@ export default async function Page({
     });
   }
 
+  // A "body" callout sits between the intro and the first heading, so the
+  // article body is rendered in two halves with the panel between them. Pages
+  // without one keep a single block — the split must not change their markup.
+  const callout = calloutFor(post.path);
+  const splitAt = callout?.slot === "body" ? bodyHtml.search(/<h2\b/i) : -1;
+  const bodyIntro = splitAt > 0 ? bodyHtml.slice(0, splitAt) : "";
+  const bodyRest = splitAt > 0 ? bodyHtml.slice(splitAt) : "";
+
   // Service pages: split the long database HTML at every <h2> so each topic
   // renders as its own numbered card instead of one unbroken wall of text.
   // The markup inside each section is preserved byte-for-byte.
@@ -255,7 +282,7 @@ export default async function Page({
     "@type": "WebPage",
     "@id": `${SITE.domain}${encodeURI(post.path)}#webpage`,
     url: `${SITE.domain}${encodeURI(post.path)}`,
-    name: post.title,
+    name: h1For(post.path, post.title),
     description: post.metaDesc,
     inLanguage: "fa-IR",
     isPartOf: { "@id": SITE.websiteId },
@@ -265,15 +292,56 @@ export default async function Page({
       ? { "@type": "ImageObject", url: absoluteUrl(post.image) }
       : undefined,
   };
+  // Reader questions and the shop's answers, published as Comment nodes so the
+  // page's real Q&A is machine readable. Pages whose deployed copy showed the
+  // thread without the JSON-LD keep it that way (`schema: false`).
+  const comments = commentsFor(post.path);
+  const commentSchema =
+    comments?.schema && comments.threads.length
+      ? comments.threads.map((c) => ({
+          "@type": "Comment",
+          text: c.text,
+          datePublished: isoDate(c.dateTime),
+          author:
+            c.schemaAuthor === SITE.brandName
+              ? {
+                  "@type": "Organization",
+                  name: SITE.brandName,
+                  url: `${SITE.domain}/team/`,
+                }
+              : { "@type": "Person", name: c.schemaAuthor ?? c.author },
+          ...(c.reply
+            ? {
+                comment: [
+                  {
+                    "@type": "Comment",
+                    text: c.reply.text,
+                    datePublished: isoDate(c.reply.dateTime),
+                    author: {
+                      "@type": "Organization",
+                      name: SITE.brandName,
+                      url: `${SITE.domain}/team/`,
+                    },
+                  },
+                ],
+              }
+            : {}),
+          url: `${SITE.domain}${encodeURI(post.path)}#comment-${c.id}`,
+        }))
+      : null;
+
   const articleSchema = isArticle
     ? {
         "@context": "https://schema.org",
         "@type": "Article",
         "@id": `${SITE.domain}${encodeURI(post.path)}#article`,
         headline: post.title,
+        ...(commentSchema
+          ? { comment: commentSchema, commentCount: commentSchema.length }
+          : {}),
         image: post.image ? [absoluteUrl(post.image)] : undefined,
-        datePublished: post.date.replace(" ", "T"),
-        dateModified: post.modified.replace(" ", "T"),
+        datePublished: isoDate(post.date),
+        dateModified: isoDate(post.modified),
         author: { "@id": SITE.authorId },
         publisher: { "@id": SITE.organizationId },
         mainEntityOfPage: `${SITE.domain}${encodeURI(post.path)}`,
@@ -283,14 +351,24 @@ export default async function Page({
 
   // Real prices for this exact page (brand + repair type), when available.
   const pagePrices = !isArticle ? pricesForPage(post.title, post.path) : null;
-  const serviceSchema = !isArticle
+  // Neighbourhood pages are a service offer wherever they live in the database:
+  // "تعمیر لپ تاپ ایسر در آیت الله کاشانی" is a service in a named place, not
+  // an article, so it gets the Service node and names the district it serves.
+  const areas = serviceAreasFor(post);
+  const serviceSchema =
+    !isArticle || areas.length > 0
       ? {
         "@context": "https://schema.org",
         "@type": "Service",
         "@id": `${SITE.domain}${encodeURI(post.path)}#service`,
-        name: post.title,
+        name: h1For(post.path, post.title),
         serviceType: post.title.split("|")[0].trim(),
-        areaServed: { "@type": "City", name: SITE.city },
+        areaServed: areas.length
+          ? areas.map((a) => ({
+              "@type": "Place",
+              name: `${a.name}، ${SITE.city}`,
+            }))
+          : { "@type": "City", name: SITE.city },
         // Reference the sitewide LocalBusiness node instead of duplicating it.
         provider: { "@id": SITE.localBusinessId },
         image: post.image
@@ -302,10 +380,10 @@ export default async function Page({
           ? {
               offers: {
                 "@type": "AggregateOffer",
-                priceCurrency: "IRT",
-                lowPrice: Math.min(...pagePrices.rows.map((p) => p.from)),
-                highPrice: Math.max(
-                  ...pagePrices.rows.map((p) => p.to ?? p.from),
+                priceCurrency: SCHEMA_CURRENCY,
+                lowPrice: rial(Math.min(...pagePrices.rows.map((p) => p.from))),
+                highPrice: rial(
+                  Math.max(...pagePrices.rows.map((p) => p.to ?? p.from)),
                 ),
                 offerCount: pagePrices.rows.length,
                 availability: "https://schema.org/InStock",
@@ -503,6 +581,7 @@ export default async function Page({
             </div>
           )}
           <ClusterContent path={post.path} />
+          <PageNotes path={post.path} />
           {toc.length >= 3 && (
             <nav
               aria-label="فهرست مطالب"
@@ -529,11 +608,21 @@ export default async function Page({
               </ol>
             </nav>
           )}
-          <div
-            id="post-content"
-            className="prose-fa mt-10"
-            dangerouslySetInnerHTML={{ __html: bodyHtml }}
-          />
+          {splitAt > 0 ? (
+            <div id="post-content" className="prose-fa mt-10">
+              <div className="prose-fa" dangerouslySetInnerHTML={{ __html: bodyIntro }} />
+              <PageCallout path={post.path} slot="body" />
+              <div className="prose-fa" dangerouslySetInnerHTML={{ __html: bodyRest }} />
+            </div>
+          ) : (
+            <div
+              id="post-content"
+              className="prose-fa mt-10"
+              dangerouslySetInnerHTML={{ __html: bodyHtml }}
+            />
+          )}
+          <PageCallout path={post.path} slot="end" />
+          <ReaderComments path={post.path} />
           <ContentEnhancer targetId="post-content" />
           <RepairTypeLinks post={post} />
           <RelatedLinks post={post} />
@@ -592,16 +681,19 @@ export default async function Page({
                     dangerouslySetInnerHTML={{ __html: svcLead }}
                   />
                 )}
-                {svcSections.map((s) => (
-                  <section
-                    key={s.id}
-                    className="svc-section rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8"
-                  >
-                    <div
-                      className="svc-body"
-                      dangerouslySetInnerHTML={{ __html: s.html }}
-                    />
-                  </section>
+                {svcSections.map((s, i) => (
+                  <Fragment key={s.id}>
+                    <section className="svc-section rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8">
+                      <div
+                        className="svc-body"
+                        dangerouslySetInnerHTML={{ __html: s.html }}
+                      />
+                    </section>
+                    {/* On a service page the panel follows the opening section,
+                        where the reader has just been told what we do and is
+                        deciding whether the shop is near enough to bother. */}
+                    {i === 0 && <PageCallout path={post.path} slot="body" />}
+                  </Fragment>
                 ))}
                 {!svcLead.trim() && svcSections.length === 0 && (
                   <div
@@ -638,6 +730,7 @@ export default async function Page({
       )}
       {!isArticle && <ServiceCtaBand title={post.title} />}
       {!isArticle && <PillarArticles path={post.path} />}
+      <ServiceCentersSlot path={post.path} />
     </article>
   );
 }
@@ -649,17 +742,28 @@ function BottomCta() {
       <div className="text-white">
         <div className="text-[19px] font-extrabold">دستگاهت نیاز به تعمیر دارد؟</div>
         <div className="mt-1.5 text-sm text-ink-300">
-          همین حالا برای عیب یابی رایگان با کارشناسان ما تماس بگیرید.
+          عیب یابی رایگان است. تماس بگیرید یا درخواست خود را آنلاین ثبت کنید.
         </div>
       </div>
-      <a
-        href={SITE.phoneHref}
-        dir="ltr"
-        className="flex shrink-0 items-center gap-2 rounded-[13px] bg-accent px-6 py-3.5 text-[15px] font-bold text-white transition hover:bg-accent-deep"
-      >
-        <Phone className="h-4 w-4" />
-        {SITE.phone}
-      </a>
+      {/* Two ways out, because an article is read at every hour and the phone
+          only answers during shop hours. */}
+      <div className="flex flex-wrap items-center gap-3">
+        <a
+          href={SITE.phoneHref}
+          dir="ltr"
+          className="flex shrink-0 items-center gap-2 rounded-[13px] bg-accent px-6 py-3.5 text-[15px] font-bold text-white transition hover:bg-accent-deep"
+        >
+          <Phone className="h-4 w-4" />
+          {SITE.phone}
+        </a>
+        <Link
+          href="/online-repair-request/"
+          className="flex shrink-0 items-center gap-2 rounded-[13px] border-[1.5px] border-white/25 px-6 py-3.5 text-[15px] font-bold text-white transition hover:border-white/60 hover:bg-white/10"
+        >
+          ثبت درخواست آنلاین
+          <ArrowLeft className="h-4 w-4" />
+        </Link>
+      </div>
     </div>
   );
 }

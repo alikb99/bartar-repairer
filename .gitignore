@@ -9,3 +9,6 @@ next-env.d.ts
 # Never commit the giant DB dump
 bartar.sql
 .DS_Store
+# Build and verification artefacts (regenerate with npm run build / scripts/verify-*)
+*.log
+/parity.json
