@@ -246,6 +246,27 @@ function cleanContent(html: string): string {
     return t;
   });
   out = out.replace(/<a\b[^>]*>\s*<\/a>/gi, "");
+  // The WordPress export lost the href on 108 anchors across 49 pages — 45
+  // bare <a> wrapping a branch address ("خیابان گلبرگ غربی…", "میدان کاج…"),
+  // 59 <a tabindex="0"> left over from the old theme, and one anchor pasted in
+  // without its URL, plus three with an empty href. An <a> with no usable
+  // href is not a link: clicking it does
+  // nothing, screen readers still announce it as a link, and a crawler sees a
+  // dangling anchor. Turn each one into a plain <span> — the attributes go too,
+  // since tabindex="0" on something that cannot be activated is worse than no
+  // tabindex at all. A <span> rather than nothing on purpose: three of these
+  // anchors sit against a &nbsp;, so removing the tag outright shifts one space
+  // at the tag boundary in every text extraction of the page (the browser
+  // renders it the same either way). Keeping a neutral wrapper changes the
+  // markup and nothing else, which is what was wrong here.
+  // href="" counts as no href: three iPhone pages carry
+  // <a href="" target="_blank">برتر سرویس</a>, which resolves to the current
+  // URL and reopens the page in a new tab.
+  out = out.replace(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi, (full, attrs: string, inner: string) => {
+    const m = attrs.match(/\shref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i);
+    const href = (m?.[1] ?? m?.[2] ?? m?.[3] ?? "").trim();
+    return href ? full : `<span>${inner}</span>`;
+  });
   out = out.replace(/<figure\b[^>]*>\s*(?:<figcaption[^>]*>\s*<\/figcaption>)?\s*<\/figure>/gi, "");
   out = out.replace(/<img /gi, '<img loading="lazy" decoding="async" ');
   // Wrap tables so they scroll inside their box instead of overflowing the page.
@@ -1613,9 +1634,13 @@ export function extractFaq(html: string): { q: string; a: string }[] {
     const a = strip(m[2]);
     if (q && a) items.push({ q, a });
   }
-  // accordion built as <a ...>question؟</a> followed by <p> answers
+  // Accordion built as <a ...>question؟</a> followed by <p> answers. The old
+  // theme left those triggers without an href, so cleanContent now renders
+  // them as <span>; match either shape, or the FAQPage schema vanishes from
+  // the brand hubs (it did — dell, hp, htc, lenovo and sony lost it).
   if (items.length === 0) {
-    const are = /<a[^>]*>([^<]*؟)<\/a>\s*((?:<p>[\s\S]*?<\/p>\s*)+)/gi;
+    const are =
+      /<(?:a|span)[^>]*>([^<]*؟)<\/(?:a|span)>\s*((?:<p>[\s\S]*?<\/p>\s*)+)/gi;
     while ((m = are.exec(html))) {
       const q = strip(m[1]);
       const a = strip(m[2]);

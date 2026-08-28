@@ -40,6 +40,25 @@ export const ACCEPTED = [
       stripSameAs(live) === stripSameAs(build),
   },
   {
+    id: "href-less-anchors",
+    axes: ["links"],
+    reason:
+      "The WordPress export lost the href on 108 anchors across 49 pages — " +
+      "45 bare <a> around a branch address, 59 <a tabindex=\"0\"> from the old " +
+      "theme, one anchor pasted in without its URL, three with href=\"\" — and " +
+      "the deployed site " +
+      "still ships them. An <a> with no href does nothing when clicked, is " +
+      "still announced as a link by screen readers, and hands a crawler a " +
+      "dangling anchor. cleanContent now renders each as a plain <span>, so " +
+      "these entries exist only on the live side. Nothing else moved: the " +
+      "text, headings, images and schema axes are identical on all 49 pages, " +
+      "which is the check that would catch a wrong replacement.",
+    // A link entry is "<href> :: <label>"; an empty href means the anchor had
+    // none. Only ever matches on the live side, because the build no longer
+    // emits such an anchor at all.
+    matches: (value) => value.startsWith(" :: "),
+  },
+  {
     id: "related-link-anchor-text",
     axes: ["links"],
     reason:
