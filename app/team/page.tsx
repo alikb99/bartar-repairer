@@ -1,13 +1,32 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChevronLeft, MapPin, Phone, Wrench } from "lucide-react";
+import {
+  ChevronLeft,
+  Linkedin,
+  MapPin,
+  Phone,
+  UserRound,
+  Wrench,
+} from "lucide-react";
 import { SITE } from "@/lib/data";
-import { TECHNICIANS, WORKSHOP_TOOLS, yearsLabel } from "@/lib/team";
+import {
+  TECHNICIANS,
+  WRITERS,
+  MANAGEMENT,
+  WORKSHOP_TOOLS,
+  personId,
+  roleLabel,
+  yearsLabel,
+} from "@/lib/team";
+
+const MANAGER = MANAGEMENT[0];
 
 // Non-absolute: the root layout template appends " | برتر سرویس".
 const TITLE = "تیم فنی تعمیرگاه - تکنسین ها و تجهیزات کارگاه";
 const DESC =
   "تکنسین های تعمیرگاه برتر سرویس و تجهیزاتی که با آن کار می کنیم: میکروسکوپ، دوربین حرارتی، شست وشوی اولتراسونیک و ابزار ریزکاری برد.";
+
+const OG_ALT = "bartar-repairer.com — Electronics Repair, Tehran";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -18,22 +37,51 @@ export const metadata: Metadata = {
     description: DESC,
     url: `${SITE.domain}/team/`,
     type: "website",
+    // Declaring an openGraph object here replaces the parent's, which is what
+    // dropped the file-convention /opengraph-image this page should share with
+    // every other page on the site. Naming it back is the whole fix.
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: OG_ALT }],
   },
-  twitter: { card: "summary_large_image", title: TITLE, description: DESC },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESC,
+    images: ["/opengraph-image"],
+  },
 };
 
 export default function TeamPage() {
-  // One Person node per technician. Only fields we actually have are emitted —
-  // no jobTitle or knowsAbout unless the owner supplied it.
-  const people = TECHNICIANS.map((t) => ({
+  // One Person node per technician/writer, keyed to the same @id their own
+  // /team/<slug>/ profile page declares — see PersonPage in
+  // app/team/[slug]/page.tsx. Only fields we actually have are emitted; no
+  // jobTitle or knowsAbout unless the owner supplied it.
+  const people = [...TECHNICIANS, ...WRITERS, ...MANAGEMENT].map((t) => ({
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": personId(SITE.domain, t.slug),
     name: t.name,
+    url: `${SITE.domain}/team/${t.slug}/`,
     worksFor: { "@id": SITE.organizationId },
     ...(t.specialty ? { jobTitle: t.specialty, knowsAbout: t.specialty } : {}),
     ...(t.photo ? { image: `${SITE.domain}${t.photo.src}` } : {}),
     ...(t.certifications?.length ? { hasCredential: t.certifications } : {}),
   }));
+
+  // The author identity this page is about, stated on the page it describes:
+  // same @id as the node in app/layout.tsx, with the profiles that corroborate
+  // it. Google reads sameAs as an identity claim, so it belongs where the team
+  // is actually presented.
+  const editorialTeam = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": SITE.authorId,
+    name: `تیم فنی ${SITE.shortName}`,
+    url: `${SITE.domain}/team/`,
+    // Same list app/layout.tsx feeds the Organization/LocalBusiness nodes —
+    // kept as Object.values() so a new profile added to SITE.socials shows up
+    // here too, instead of silently missing from this one hand-copied array.
+    sameAs: Object.values(SITE.socials),
+  };
 
   const breadcrumb = {
     "@context": "https://schema.org",
@@ -54,6 +102,10 @@ export default function TeamPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(editorialTeam) }}
       />
       {people.map((p) => (
         <script
@@ -91,6 +143,46 @@ export default function TeamPage() {
 
       <section className="bg-paper py-12 lg:py-16">
         <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+          {/* The person a customer can escalate to, named. A team page that
+              lists only technicians leaves no one accountable for the job. */}
+          <div className="mb-10 flex flex-col gap-5 rounded-[26px] border border-line bg-white p-5 shadow-card sm:flex-row sm:items-center sm:p-7">
+            <span
+              aria-hidden="true"
+              className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-accent-tint text-accent"
+            >
+              <UserRound className="h-7 w-7" />
+            </span>
+            <div className="min-w-0">
+              <span className="inline-flex rounded-lg bg-accent-tint px-3 py-1.5 text-xs font-extrabold text-accent">
+                {SITE.manager.jobTitle}
+              </span>
+              <h2 className="mt-3 text-xl font-extrabold leading-8 text-ink-900 sm:text-2xl">
+                {SITE.manager.name}
+              </h2>
+              <p className="mt-2 text-[15px] leading-9 text-ink-700">
+                {SITE.manager.bio}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <Link
+                  href={`/team/${MANAGER.slug}/`}
+                  className="inline-flex items-center gap-2 rounded-[12px] border border-line bg-paper px-4 py-2.5 text-sm font-bold text-ink-800 transition hover:border-accent hover:text-accent"
+                >
+                  مشاهده پروفایل کامل
+                  <ChevronLeft className="h-4 w-4 text-accent" />
+                </Link>
+                <a
+                  href={SITE.socials.linkedin}
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex items-center gap-2 rounded-[12px] border border-line bg-paper px-4 py-2.5 text-sm font-bold text-ink-800 transition hover:border-accent hover:text-accent"
+                >
+                  <Linkedin className="h-4 w-4 text-accent" />
+                  پروفایل لینکدین {SITE.brandName}
+                </a>
+              </div>
+            </div>
+          </div>
+
           <h2 className="text-2xl font-extrabold text-ink-900 sm:text-[32px]">
             تعمیرکاران برتر سرویس
           </h2>
@@ -102,11 +194,11 @@ export default function TeamPage() {
 
           <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {TECHNICIANS.map((t) => (
-              <li
-                key={t.name}
-                className="rounded-[22px] border border-line bg-white p-5 shadow-card"
-              >
-                <div className="flex items-start gap-4">
+              <li key={t.slug}>
+                <Link
+                  href={`/team/${t.slug}/`}
+                  className="card-hover flex h-full items-start gap-4 rounded-[22px] border border-line bg-white p-5 shadow-card transition hover:border-accent"
+                >
                   {t.photo ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img
@@ -149,12 +241,58 @@ export default function TeamPage() {
                       </ul>
                     ) : null}
                   </div>
-                </div>
+                </Link>
               </li>
             ))}
           </ul>
         </div>
       </section>
+
+      {WRITERS.length > 0 && (
+        <section className="border-t border-line bg-white py-12 lg:py-16">
+          <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-extrabold text-ink-900 sm:text-[32px]">
+              نویسندگان و کارشناسان محتوا
+            </h2>
+            <p className="mt-3 max-w-3xl text-[15px] leading-9 text-ink-700">
+              این افراد دستگاه تعمیر نمی کنند؛ مقاله ها و راهنماهای سایت را می
+              نویسند و روی سئوی محتوا کار می کنند.
+            </p>
+            <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {WRITERS.map((w) => (
+                <li key={w.slug}>
+                  <Link
+                    href={`/team/${w.slug}/`}
+                    className="card-hover flex h-full items-start gap-4 rounded-[22px] border border-line bg-paper p-5 shadow-card transition hover:border-accent"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-white text-accent"
+                    >
+                      {w.name[0]}
+                    </span>
+                    <div className="min-w-0">
+                      <h3 className="text-[16px] font-extrabold leading-7 text-ink-900">
+                        {w.name}
+                      </h3>
+                      {w.specialty && (
+                        <p className="mt-1 text-sm leading-7 text-ink-500">
+                          {w.specialty}
+                        </p>
+                      )}
+                      {yearsLabel(w) && (
+                        <p className="mt-1 text-[13px] font-bold leading-7 text-accent">
+                          {yearsLabel(w)}
+                        </p>
+                      )}
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <section className="border-t border-line bg-white py-12 lg:py-16">
         <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">

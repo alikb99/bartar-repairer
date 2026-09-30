@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowUpLeft, BookOpen, Wrench } from "lucide-react";
-import { clusterArticles, clusterServices } from "@/lib/content";
+import { clusterArticles, clusterServices, linkLabel } from "@/lib/content";
 
 // Pillar → cluster down-links: on a hub (pillar) page, list the topical cluster
 // articles assigned to it. This completes the hub-and-spoke internal linking so
@@ -8,7 +8,10 @@ import { clusterArticles, clusterServices } from "@/lib/content";
 export default function PillarArticles({
   path,
   title = "راهنماها و مقالات مرتبط",
-  limit = 12,
+  // Thirty: the hubs are the entry point for their whole cluster, and cutting
+  // the list at a dozen leaves two thirds of the cluster with no link from the
+  // page that is supposed to lead to it.
+  limit = 30,
 }: {
   path: string;
   title?: string;
@@ -35,7 +38,7 @@ export default function PillarArticles({
                   className="card-hover group flex items-center justify-between gap-3 rounded-xl border border-line bg-white px-4 py-3.5"
                 >
                   <span className="line-clamp-2 text-sm font-medium text-ink-800 transition group-hover:text-accent">
-                    {p.title}
+                    {linkLabel(p.title)}
                   </span>
                   <ArrowUpLeft className="h-4 w-4 shrink-0 text-ink-300 transition group-hover:text-accent" />
                 </Link>
@@ -57,7 +60,7 @@ export default function PillarArticles({
                   className="card-hover group flex items-center justify-between gap-3 rounded-xl border border-line bg-white px-4 py-3.5"
                 >
                   <span className="line-clamp-2 text-sm font-medium text-ink-800 transition group-hover:text-accent">
-                    {p.title}
+                    {linkLabel(p.title)}
                   </span>
                   <ArrowUpLeft className="h-4 w-4 shrink-0 text-ink-300 transition group-hover:text-accent" />
                 </Link>

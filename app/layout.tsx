@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import "./globals.css";
-import { SITE } from "@/lib/data";
+import { BRANCHES, GROUP_SITES, SITE } from "@/lib/data";
 import { NAV } from "@/lib/content";
 import { TECHNICIANS } from "@/lib/team";
 import Header from "@/components/Header";
@@ -87,10 +88,13 @@ const orgSchema = {
     postalCode: SITE.postalCode,
     addressCountry: "IR",
   },
+  // Straight from BRANCHES so the schema, the branch locator and the footer
+  // map can never drift apart. The rounded 35.7231/51.4222 pair that used to
+  // sit here put the pin about 250 m off, on the wrong side of Motahari.
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 35.7231,
-    longitude: 51.4222,
+    latitude: BRANCHES[0].geo.lat,
+    longitude: BRANCHES[0].geo.lng,
   },
   areaServed: { "@type": "City", name: SITE.city },
   openingHoursSpecification: openingHours,
@@ -125,6 +129,9 @@ const westBranchSchema = {
   },
   areaServed: { "@type": "City", name: SITE.city },
   openingHoursSpecification: openingHours,
+  // The west branch is not registered on Balad, so its map link is a Google
+  // Maps coordinate search rather than a POI page.
+  hasMap: `https://www.google.com/maps/search/?api=1&query=${SITE.geoWest.lat},${SITE.geoWest.lng}`,
 };
 
 const organizationSchema = {
@@ -136,12 +143,35 @@ const organizationSchema = {
   url: SITE.domain,
   logo: `${SITE.domain}/logo.png`,
   sameAs: Object.values(SITE.socials),
+  // The named human behind the business. A real, verifiable manager is a much
+  // stronger trust signal than an anonymous Organization node.
+  employee: {
+    "@type": "Person",
+    name: SITE.manager.name,
+    jobTitle: SITE.manager.jobTitle,
+    url: `${SITE.domain}/team/`,
+  },
   contactPoint: {
     "@type": "ContactPoint",
     telephone: SITE.phoneIntl,
     contactType: "customer service",
     areaServed: "IR",
   },
+  // The company's other web properties, declared as subsidiaries of this one.
+  // See GROUP_SITES in lib/data.ts for why: they all publish this same phone
+  // number and these same two addresses, and until this edge existed nothing
+  // told a crawler they belonged to one owner.
+  //
+  // This sits in the root layout rather than on the brand pages so the claim is
+  // made once, consistently, on every URL — a parent that only admits to a
+  // subsidiary on that subsidiary's own brand page is a weaker claim than one
+  // that says it everywhere.
+  subOrganization: GROUP_SITES.map((s) => ({
+    "@type": "Organization",
+    name: s.name,
+    url: s.url,
+    description: s.blurb,
+  })),
 };
 
 const websiteSchema = {
@@ -227,6 +257,15 @@ export default function RootLayout({
         <main id="main">{children}</main>
         <Footer nav={NAV} />
         <CallFab />
+        {/* Online support chat. lazyOnload keeps third-party JS out of the
+            critical path — it must never compete with LCP on a site whose
+            hosting already costs it a slow TTFB. */}
+        <Script
+          src={SITE.chat.src}
+          data-key={SITE.chat.key}
+          data-label={SITE.chat.label}
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );

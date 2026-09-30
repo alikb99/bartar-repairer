@@ -285,6 +285,12 @@ export function ratingSummary(): { value: number; count: number } | null {
   };
 }
 
+// Prices are stored and shown in tomans, but schema.org wants a real currency
+// code and Iran's is the rial: 1 toman = 10 rial. Publishing a toman figure
+// under IRR would understate every price on the site tenfold in rich results.
+export const SCHEMA_CURRENCY = "IRR";
+export const rial = (toman: number): number => toman * 10;
+
 /** Persian thousands formatting for تومان amounts. */
 export function toman(n: number): string {
   return n.toLocaleString("fa-IR");

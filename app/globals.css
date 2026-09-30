@@ -866,3 +866,45 @@ span {
   color: var(--color-body);
   white-space: normal;
 }
+
+/* ── تست گوشی آنلاین (/phone-test/) ─────────────────────────────── */
+/* خانه های شبکه تست تاچ با classList رنگ می شوند نه state ری اکت (components/phone-tests/TouchTest.tsx) */
+.pt-grid .pt-cell {
+  border: 1px solid rgb(var(--c-ink-950) / 0.08);
+}
+.pt-grid .pt-cell.on {
+  background: rgb(var(--c-green-500) / 0.75);
+}
+.pt-grid.done .pt-cell:not(.on) {
+  background: rgb(var(--c-red-500) / 0.55);
+}
+/* جدول های داخل متن صفحه های تست؛ دو ستونه و روی گوشی بدون اسکرول افقی */
+.pt-prose .table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.pt-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.93rem;
+  line-height: 1.9;
+}
+.pt-prose th {
+  background: var(--table-head-bg);
+  color: var(--table-head-fg);
+  text-align: right;
+  font-weight: 700;
+  padding: 0.65rem 0.85rem;
+}
+.pt-prose td {
+  padding: 0.65rem 0.85rem;
+  border-top: 1px solid var(--color-border);
+  vertical-align: top;
+}
+.pt-prose tr:nth-child(even) td {
+  background: var(--table-stripe);
+}
+.pt-prose ol {
+  list-style-type: persian;
+}

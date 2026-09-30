@@ -117,7 +117,7 @@ export default function Header({ nav }: { nav: NavItem[] }) {
           <Link href="/" className="flex shrink-0 items-center" aria-label={SITE.name}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/logo.png"
+              src="/logo.webp"
               alt={SITE.name}
               width={120}
               height={46}
@@ -172,6 +172,14 @@ export default function Header({ nav }: { nav: NavItem[] }) {
                 {ctaItem.title}
               </Link>
             )}
+            {/* One-tap call on mobile, where the desktop CTA is hidden. */}
+            <a
+              href={SITE.phoneHref}
+              aria-label={`تماس با ${SITE.phone}`}
+              className="grid h-11 w-11 place-items-center rounded-xl bg-accent text-white shadow-[0_6px_18px_rgba(218,37,28,.28)] lg:hidden"
+            >
+              <Phone className="h-[19px] w-[19px]" />
+            </a>
             <button
               aria-label="منو"
               aria-expanded={mobileOpen}
@@ -254,7 +262,7 @@ export default function Header({ nav }: { nav: NavItem[] }) {
             >
               <div className="flex items-center justify-between border-b border-line px-5 py-4">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/logo.png" alt={SITE.name} width={100} height={38} className="h-9 w-auto" />
+                <img src="/logo.webp" alt={SITE.name} width={100} height={38} className="h-9 w-auto" />
                 <button
                   aria-label="بستن"
                   onClick={() => setMobileOpen(false)}

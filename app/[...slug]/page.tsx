@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fragment } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -21,13 +22,22 @@ import {
   h1For,
   mobileRepairInfo,
   CANONICAL_TO,
+  CATEGORIES,
 } from "@/lib/content";
 import { howToSchema } from "@/lib/howto";
-import { pricesForPage } from "@/lib/pricing";
+import { SCHEMA_CURRENCY, pricesForPage, rial } from "@/lib/pricing";
 import { SITE } from "@/lib/data";
+import { authorFor } from "@/lib/authors";
+import { personId } from "@/lib/team";
+import { serviceAreasFor } from "@/lib/service-areas";
+import { calloutFor } from "@/lib/recovered-callouts";
+import { commentsFor } from "@/lib/recovered-comments";
 import { clusterContentFor } from "@/lib/cluster-content";
 import ContactCard from "@/components/ContactCard";
 import ClusterContent from "@/components/ClusterContent";
+import PageCallout from "@/components/PageCallout";
+import PageNotes from "@/components/PageNotes";
+import ReaderComments from "@/components/ReaderComments";
 import PagePriceTable from "@/components/PagePriceTable";
 import ContentEnhancer from "@/components/ContentEnhancer";
 import ReadingProgress from "@/components/ReadingProgress";
@@ -40,6 +50,12 @@ import RepairTypeLinks from "@/components/RepairTypeLinks";
 import ContactPage from "@/components/ContactPage";
 import RepairRequestPage from "@/components/RepairRequestPage";
 import ServiceDeviceSceneLoader from "@/components/ServiceDeviceSceneLoader";
+import ServiceCentersSlot from "@/components/ServiceCentersSlot";
+import HotjarCallTracking from "@/components/HotjarCallTracking";
+import LaptopProblems from "@/components/LaptopProblems";
+
+// WordPress category id -> name, for the byline classifier in lib/authors.ts.
+const CATEGORY_NAME = new Map(CATEGORIES.map((c) => [c.termId, c.name]));
 
 // Brand "نمایندگی" pages rendered with the generic premium brand layout.
 const BRAND_PAGES = new Set([
@@ -56,20 +72,45 @@ const BRAND_PAGES = new Set([
 ]);
 
 // Keep legacy URLs reachable as required, while keeping pages with no real
-// content out of Google's index: a duplicate homepage, an Elementor test page,
-// and an empty service page that was never written.
+// content out of Google's index: a duplicate homepage and an empty service
+// page that was never written. (The Elementor test page that used to be listed
+// here is no longer exported at all — see UNBUILT_PAGES.)
 const NOINDEX_PAGES = new Set([
   "/home/",
-  "/تست-المنتور/",
   "/home-appliances/air-conditioner-repair-agency/",
 ]);
 
+// Paths in POSTS that are deliberately not exported.
+//   /blog/            — an empty WordPress placeholder; the real articles
+//                       listing is the app/blog route, which owns that URL.
+//   /تست-المنتور/     — an Elementor test page: 11 words of body, "تست المنتور"
+//                       for a title, no inbound link from anywhere on the site,
+//                       and absent from the sitemap and llms.txt. It was
+//                       noindex, so dropping it costs no ranking; .htaccess
+//                       answers 410 so the URL is retired rather than left to
+//                       look like a broken page.
+const UNBUILT_PAGES = new Set(["/blog/", "/تست-المنتور/"]);
+
+// The landing page of the paid laptop campaign. It gets Hotjar with call-tap
+// events, a problems block under the hero and a hero tuned for a visitor who
+// arrived ready to call. The database body below is unchanged.
+const LAPTOP_AD_LANDING = "/services/laptop-repair/";
+
 export function generateStaticParams() {
-  // Exclude the empty WordPress "بلاگ" placeholder at /blog/ — that URL is
-  // served by the real articles listing route (app/blog).
-  return POSTS.filter((p) => p.path !== "/blog/").map((p) => ({
+  return POSTS.filter((p) => !UNBUILT_PAGES.has(p.path)).map((p) => ({
     slug: p.segments,
   }));
+}
+
+// WordPress exported its timestamps as bare local time ("2026-02-23 15:59:13").
+// Schema.org dates without an offset are ambiguous — Google reads them as UTC,
+// which shifts every article's published and modified time by 3.5 hours. The
+// shop and its whole audience are in Tehran, so the offset is Iran Standard
+// Time. IRST has had no DST since 2022, which is what makes a fixed offset the
+// right answer rather than a lookup.
+const TEHRAN_OFFSET = "+03:30";
+function isoDate(d: string): string {
+  return `${d.replace(" ", "T")}${TEHRAN_OFFSET}`;
 }
 
 function faDate(d: string): string {
@@ -204,6 +245,19 @@ export default async function Page({
   const mins = readingMinutes(post.content);
   const isArticle = post.type === "post";
   const date = isArticle ? faDate(post.date) : "";
+  // The one technician whose owner-supplied specialty covers this article —
+  // see lib/authors.ts. Only articles get a named byline; service pages keep
+  // describing the shop's offer, not a person's writing.
+  const author = isArticle
+    ? authorFor({
+        path: post.path,
+        title: post.title,
+        kind: "post",
+        categoryNames: post.categories
+          .map((id) => CATEGORY_NAME.get(id))
+          .filter((n): n is string => !!n),
+      })
+    : null;
 
   // Table of contents for articles: id every H2 and collect headings so readers
   // (and SERP jump-links) can navigate long guides.
@@ -218,6 +272,14 @@ export default async function Page({
       return `<h2 id="${id}">${t}</h2>`;
     });
   }
+
+  // A "body" callout sits between the intro and the first heading, so the
+  // article body is rendered in two halves with the panel between them. Pages
+  // without one keep a single block — the split must not change their markup.
+  const callout = calloutFor(post.path);
+  const splitAt = callout?.slot === "body" ? bodyHtml.search(/<h2\b/i) : -1;
+  const bodyIntro = splitAt > 0 ? bodyHtml.slice(0, splitAt) : "";
+  const bodyRest = splitAt > 0 ? bodyHtml.slice(splitAt) : "";
 
   // Service pages: split the long database HTML at every <h2> so each topic
   // renders as its own numbered card instead of one unbroken wall of text.
@@ -255,7 +317,7 @@ export default async function Page({
     "@type": "WebPage",
     "@id": `${SITE.domain}${encodeURI(post.path)}#webpage`,
     url: `${SITE.domain}${encodeURI(post.path)}`,
-    name: post.title,
+    name: h1For(post.path, post.title),
     description: post.metaDesc,
     inLanguage: "fa-IR",
     isPartOf: { "@id": SITE.websiteId },
@@ -265,16 +327,62 @@ export default async function Page({
       ? { "@type": "ImageObject", url: absoluteUrl(post.image) }
       : undefined,
   };
+  // Reader questions and the shop's answers, published as Comment nodes so the
+  // page's real Q&A is machine readable. Pages whose deployed copy showed the
+  // thread without the JSON-LD keep it that way (`schema: false`).
+  const comments = commentsFor(post.path);
+  const commentSchema =
+    comments?.schema && comments.threads.length
+      ? comments.threads.map((c) => ({
+          "@type": "Comment",
+          text: c.text,
+          datePublished: isoDate(c.dateTime),
+          author:
+            c.schemaAuthor === SITE.brandName
+              ? {
+                  "@type": "Organization",
+                  name: SITE.brandName,
+                  url: `${SITE.domain}/team/`,
+                }
+              : { "@type": "Person", name: c.schemaAuthor ?? c.author },
+          ...(c.reply
+            ? {
+                comment: [
+                  {
+                    "@type": "Comment",
+                    text: c.reply.text,
+                    datePublished: isoDate(c.reply.dateTime),
+                    author: {
+                      "@type": "Organization",
+                      name: SITE.brandName,
+                      url: `${SITE.domain}/team/`,
+                    },
+                  },
+                ],
+              }
+            : {}),
+          url: `${SITE.domain}${encodeURI(post.path)}#comment-${c.id}`,
+        }))
+      : null;
+
   const articleSchema = isArticle
     ? {
         "@context": "https://schema.org",
         "@type": "Article",
         "@id": `${SITE.domain}${encodeURI(post.path)}#article`,
         headline: post.title,
+        ...(commentSchema
+          ? { comment: commentSchema, commentCount: commentSchema.length }
+          : {}),
         image: post.image ? [absoluteUrl(post.image)] : undefined,
-        datePublished: post.date.replace(" ", "T"),
-        dateModified: post.modified.replace(" ", "T"),
-        author: { "@id": SITE.authorId },
+        datePublished: isoDate(post.date),
+        dateModified: isoDate(post.modified),
+        // The technician whose specialty covers this article when one was
+        // resolved (see lib/authors.ts); falls back to the sitewide editorial
+        // team only for the rare topic nobody on the roster covers.
+        author: {
+          "@id": author ? personId(SITE.domain, author.slug) : SITE.authorId,
+        },
         publisher: { "@id": SITE.organizationId },
         mainEntityOfPage: `${SITE.domain}${encodeURI(post.path)}`,
         description: post.metaDesc,
@@ -283,14 +391,24 @@ export default async function Page({
 
   // Real prices for this exact page (brand + repair type), when available.
   const pagePrices = !isArticle ? pricesForPage(post.title, post.path) : null;
-  const serviceSchema = !isArticle
+  // Neighbourhood pages are a service offer wherever they live in the database:
+  // "تعمیر لپ تاپ ایسر در آیت الله کاشانی" is a service in a named place, not
+  // an article, so it gets the Service node and names the district it serves.
+  const areas = serviceAreasFor(post);
+  const serviceSchema =
+    !isArticle || areas.length > 0
       ? {
         "@context": "https://schema.org",
         "@type": "Service",
         "@id": `${SITE.domain}${encodeURI(post.path)}#service`,
-        name: post.title,
+        name: h1For(post.path, post.title),
         serviceType: post.title.split("|")[0].trim(),
-        areaServed: { "@type": "City", name: SITE.city },
+        areaServed: areas.length
+          ? areas.map((a) => ({
+              "@type": "Place",
+              name: `${a.name}، ${SITE.city}`,
+            }))
+          : { "@type": "City", name: SITE.city },
         // Reference the sitewide LocalBusiness node instead of duplicating it.
         provider: { "@id": SITE.localBusinessId },
         image: post.image
@@ -302,10 +420,10 @@ export default async function Page({
           ? {
               offers: {
                 "@type": "AggregateOffer",
-                priceCurrency: "IRT",
-                lowPrice: Math.min(...pagePrices.rows.map((p) => p.from)),
-                highPrice: Math.max(
-                  ...pagePrices.rows.map((p) => p.to ?? p.from),
+                priceCurrency: SCHEMA_CURRENCY,
+                lowPrice: rial(Math.min(...pagePrices.rows.map((p) => p.from))),
+                highPrice: rial(
+                  Math.max(...pagePrices.rows.map((p) => p.to ?? p.from)),
                 ),
                 offerCount: pagePrices.rows.length,
                 availability: "https://schema.org/InStock",
@@ -318,7 +436,13 @@ export default async function Page({
 
   // HowTo markup for articles that genuinely describe a procedure. Steps come
   // from the article's own ordered list or step headings.
-  const howTo = isArticle ? howToSchema(post, SITE.domain, SITE.authorId) : null;
+  const howTo = isArticle
+    ? howToSchema(
+        post,
+        SITE.domain,
+        author ? personId(SITE.domain, author.slug) : SITE.authorId,
+      )
+    : null;
 
   const faqs = [
     ...(clusterContentFor(post.path)?.faq ?? []),
@@ -340,10 +464,25 @@ export default async function Page({
       : null;
 
   const category = crumbs.length > 1 ? crumbs[0].title : "مقاله";
+  const isAdLanding = post.path === LAPTOP_AD_LANDING;
+  const heroBadges = isAdLanding
+    ? [
+        { icon: Wrench, title: "عیب یابی", text: "رایگان" },
+        { icon: ShieldCheck, title: "گارانتی کتبی", text: "۶ ماهه" },
+        { icon: Clock3, title: "قطعه موجود", text: "همان روز" },
+      ]
+    : [
+        { icon: Wrench, title: "عیب یابی", text: "رایگان" },
+        { icon: ShieldCheck, title: "گارانتی", text: "۶ ماهه" },
+        { icon: Clock3, title: "تحویل", text: "سریع" },
+      ];
 
   return (
     <article>
       {isArticle && <ReadingProgress />}
+      {isAdLanding && (
+        <HotjarCallTracking hotjarId={6777563} trackYektanet />
+      )}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
@@ -395,23 +534,43 @@ export default async function Page({
               <h1 className="text-[28px] font-extrabold leading-[1.5] tracking-tight text-ink-900 sm:text-[38px]">
                 {h1For(post.path, post.title)}
               </h1>
-              <Link
-                href="/team/"
-                className="mt-5 flex w-fit items-center gap-3 rounded-xl transition hover:opacity-80"
-                aria-label="مشاهده تیم فنی تعمیرات برتر"
-              >
-                <div className="grid h-[46px] w-[46px] place-items-center rounded-full bg-[#E4E7EC] text-base font-extrabold text-ink-500">
-                  ب
-                </div>
-                <div>
-                  <div className="text-[14.5px] font-extrabold text-ink-900">
-                    تیم فنی تعمیرات برتر
+              {author ? (
+                <Link
+                  href={`/team/${author.slug}/`}
+                  className="mt-5 flex w-fit items-center gap-3 rounded-xl transition hover:opacity-80"
+                  aria-label={`مشاهده پروفایل ${author.name}`}
+                >
+                  <div className="grid h-[46px] w-[46px] place-items-center rounded-full bg-[#E4E7EC] text-base font-extrabold text-ink-500">
+                    {author.name[0]}
                   </div>
-                  <div className="mt-0.5 text-[12.5px] text-ink-300">
-                    مشاهده تخصص تکنسین ها
+                  <div>
+                    <div className="text-[14.5px] font-extrabold text-ink-900">
+                      {author.name}
+                    </div>
+                    <div className="mt-0.5 text-[12.5px] text-ink-300">
+                      {author.specialty ?? "مشاهده پروفایل تعمیرکار"}
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              ) : (
+                <Link
+                  href="/team/"
+                  className="mt-5 flex w-fit items-center gap-3 rounded-xl transition hover:opacity-80"
+                  aria-label="مشاهده تیم فنی تعمیرات برتر"
+                >
+                  <div className="grid h-[46px] w-[46px] place-items-center rounded-full bg-[#E4E7EC] text-base font-extrabold text-ink-500">
+                    ب
+                  </div>
+                  <div>
+                    <div className="text-[14.5px] font-extrabold text-ink-900">
+                      تیم فنی تعمیرات برتر
+                    </div>
+                    <div className="mt-0.5 text-[12.5px] text-ink-300">
+                      مشاهده تخصص تکنسین ها
+                    </div>
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
         </header>
@@ -435,7 +594,10 @@ export default async function Page({
               <p className="mt-4 max-w-[560px] text-[17px] leading-9 text-ink-500">
                 {post.metaDesc}
               </p>
-              <div className="mt-7 flex flex-wrap items-center gap-3">
+              <div
+                data-cta="hero"
+                className="mt-7 flex flex-wrap items-center gap-3"
+              >
                 <a
                   href={SITE.phoneHref}
                   className="flex items-center gap-2.5 rounded-[14px] bg-accent px-6 py-3.5 text-base font-bold text-white shadow-[0_10px_26px_rgba(218,37,28,.30)] transition hover:-translate-y-0.5 hover:bg-accent-deep"
@@ -443,20 +605,35 @@ export default async function Page({
                   <Phone className="h-[19px] w-[19px]" />
                   تماس و رزرو نوبت
                 </a>
-                <a
-                  href="#content"
-                  className="flex items-center gap-2 rounded-[14px] border-[1.5px] border-hairline bg-white px-6 py-3.5 text-base font-bold text-ink-900 transition hover:border-ink-900 hover:bg-ink-900 hover:text-white"
-                >
-                  مشاهده متن صفحه
-                  <ArrowLeft className="h-4 w-4" />
-                </a>
+                {isAdLanding ? (
+                  /* A campaign visitor outside shop hours cannot reach the
+                     phone; the online request keeps that visit from being
+                     lost. Other pages keep the jump to their body text. */
+                  <Link
+                    href="/online-repair-request/"
+                    className="flex items-center gap-2 rounded-[14px] border-[1.5px] border-hairline bg-white px-6 py-3.5 text-base font-bold text-ink-900 transition hover:border-ink-900 hover:bg-ink-900 hover:text-white"
+                  >
+                    ثبت درخواست آنلاین
+                    <ArrowLeft className="h-4 w-4" />
+                  </Link>
+                ) : (
+                  <a
+                    href="#content"
+                    className="flex items-center gap-2 rounded-[14px] border-[1.5px] border-hairline bg-white px-6 py-3.5 text-base font-bold text-ink-900 transition hover:border-ink-900 hover:bg-ink-900 hover:text-white"
+                  >
+                    مشاهده متن صفحه
+                    <ArrowLeft className="h-4 w-4" />
+                  </a>
+                )}
               </div>
+              {isAdLanding && (
+                <p className="mt-3 flex items-center gap-2 text-[13px] font-semibold text-ink-500">
+                  <Clock3 className="h-4 w-4 shrink-0 text-accent" />
+                  پاسخگویی تلفنی: {SITE.hours}
+                </p>
+              )}
               <div className="mt-8 grid max-w-xl grid-cols-3 gap-2.5 sm:gap-3">
-                {[
-                  { icon: Wrench, title: "عیب یابی", text: "رایگان" },
-                  { icon: ShieldCheck, title: "گارانتی", text: "۶ ماهه" },
-                  { icon: Clock3, title: "تحویل", text: "سریع" },
-                ].map((item) => (
+                {heroBadges.map((item) => (
                   <div
                     key={item.title}
                     className="rounded-2xl border border-line bg-white/84 p-3 shadow-card backdrop-blur sm:p-4"
@@ -472,7 +649,11 @@ export default async function Page({
                 ))}
               </div>
             </div>
-            <div className="relative min-h-[250px] overflow-hidden rounded-[28px] border border-white bg-ink-950 shadow-float sm:min-h-[320px] lg:col-start-2 lg:row-span-2 lg:min-h-[430px]">
+            {/* Decorative. On a phone it pushes the problems block a full
+                screen down on the ad landing, so it is desktop-only there. */}
+            <div
+              className={`relative min-h-[250px] overflow-hidden rounded-[28px] border border-white bg-ink-950 shadow-float sm:min-h-[320px] lg:col-start-2 lg:row-span-2 lg:min-h-[430px] ${isAdLanding ? "hidden lg:block" : ""}`}
+            >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_34%,rgba(218,37,28,.34),transparent_38%),linear-gradient(145deg,#242936,#13161C)]" />
               <ServiceDeviceSceneLoader />
               <div className="absolute inset-x-5 bottom-5 rounded-2xl border border-white/10 bg-white/[.08] p-4 text-white backdrop-blur-md">
@@ -485,6 +666,7 @@ export default async function Page({
           </div>
         </header>
       )}
+      {isAdLanding && <LaptopProblems />}
 
       {/* Body */}
       {isArticle ? (
@@ -503,6 +685,7 @@ export default async function Page({
             </div>
           )}
           <ClusterContent path={post.path} />
+          <PageNotes path={post.path} />
           {toc.length >= 3 && (
             <nav
               aria-label="فهرست مطالب"
@@ -529,11 +712,21 @@ export default async function Page({
               </ol>
             </nav>
           )}
-          <div
-            id="post-content"
-            className="prose-fa mt-10"
-            dangerouslySetInnerHTML={{ __html: bodyHtml }}
-          />
+          {splitAt > 0 ? (
+            <div id="post-content" className="prose-fa mt-10">
+              <div className="prose-fa" dangerouslySetInnerHTML={{ __html: bodyIntro }} />
+              <PageCallout path={post.path} slot="body" />
+              <div className="prose-fa" dangerouslySetInnerHTML={{ __html: bodyRest }} />
+            </div>
+          ) : (
+            <div
+              id="post-content"
+              className="prose-fa mt-10"
+              dangerouslySetInnerHTML={{ __html: bodyHtml }}
+            />
+          )}
+          <PageCallout path={post.path} slot="end" />
+          <ReaderComments path={post.path} />
           <ContentEnhancer targetId="post-content" />
           <RepairTypeLinks post={post} />
           <RelatedLinks post={post} />
@@ -592,16 +785,19 @@ export default async function Page({
                     dangerouslySetInnerHTML={{ __html: svcLead }}
                   />
                 )}
-                {svcSections.map((s) => (
-                  <section
-                    key={s.id}
-                    className="svc-section rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8"
-                  >
-                    <div
-                      className="svc-body"
-                      dangerouslySetInnerHTML={{ __html: s.html }}
-                    />
-                  </section>
+                {svcSections.map((s, i) => (
+                  <Fragment key={s.id}>
+                    <section className="svc-section rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8">
+                      <div
+                        className="svc-body"
+                        dangerouslySetInnerHTML={{ __html: s.html }}
+                      />
+                    </section>
+                    {/* On a service page the panel follows the opening section,
+                        where the reader has just been told what we do and is
+                        deciding whether the shop is near enough to bother. */}
+                    {i === 0 && <PageCallout path={post.path} slot="body" />}
+                  </Fragment>
                 ))}
                 {!svcLead.trim() && svcSections.length === 0 && (
                   <div
@@ -638,6 +834,7 @@ export default async function Page({
       )}
       {!isArticle && <ServiceCtaBand title={post.title} />}
       {!isArticle && <PillarArticles path={post.path} />}
+      <ServiceCentersSlot path={post.path} />
     </article>
   );
 }
@@ -649,17 +846,28 @@ function BottomCta() {
       <div className="text-white">
         <div className="text-[19px] font-extrabold">دستگاهت نیاز به تعمیر دارد؟</div>
         <div className="mt-1.5 text-sm text-ink-300">
-          همین حالا برای عیب یابی رایگان با کارشناسان ما تماس بگیرید.
+          عیب یابی رایگان است. تماس بگیرید یا درخواست خود را آنلاین ثبت کنید.
         </div>
       </div>
-      <a
-        href={SITE.phoneHref}
-        dir="ltr"
-        className="flex shrink-0 items-center gap-2 rounded-[13px] bg-accent px-6 py-3.5 text-[15px] font-bold text-white transition hover:bg-accent-deep"
-      >
-        <Phone className="h-4 w-4" />
-        {SITE.phone}
-      </a>
+      {/* Two ways out, because an article is read at every hour and the phone
+          only answers during shop hours. */}
+      <div className="flex flex-wrap items-center gap-3">
+        <a
+          href={SITE.phoneHref}
+          dir="ltr"
+          className="flex shrink-0 items-center gap-2 rounded-[13px] bg-accent px-6 py-3.5 text-[15px] font-bold text-white transition hover:bg-accent-deep"
+        >
+          <Phone className="h-4 w-4" />
+          {SITE.phone}
+        </a>
+        <Link
+          href="/online-repair-request/"
+          className="flex shrink-0 items-center gap-2 rounded-[13px] border-[1.5px] border-white/25 px-6 py-3.5 text-[15px] font-bold text-white transition hover:border-white/60 hover:bg-white/10"
+        >
+          ثبت درخواست آنلاین
+          <ArrowLeft className="h-4 w-4" />
+        </Link>
+      </div>
     </div>
   );
 }
@@ -680,6 +888,7 @@ function ServiceCtaBand({ title }: { title: string }) {
           <a
             href={SITE.phoneHref}
             dir="ltr"
+            data-cta="band"
             className="mt-6 inline-flex items-center gap-2.5 rounded-[14px] bg-accent px-7 py-3.5 text-base font-extrabold text-white shadow-[0_10px_26px_rgba(218,37,28,.34)] transition hover:-translate-y-0.5 hover:bg-accent-deep"
           >
             <Phone className="h-[19px] w-[19px]" />

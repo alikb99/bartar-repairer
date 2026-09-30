@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowUpLeft, ChevronLeft, Clock3, MapPin, Phone } from "lucide-react";
+import { ArrowUpLeft, ChevronLeft, Clock3, MapPin, Phone, Plus } from "lucide-react";
 import {
   LIVE_SERVICE_AREAS,
   serviceAreaBy,
@@ -9,6 +9,8 @@ import {
 } from "@/lib/service-areas";
 import { SITE } from "@/lib/data";
 import AreaGuide from "@/components/AreaGuide";
+import ServiceCentersSlot from "@/components/ServiceCentersSlot";
+import { areaContentFor } from "@/lib/recovered-area-content";
 
 export function generateStaticParams() {
   return LIVE_SERVICE_AREAS.map((a) => ({ area: a.slug }));
@@ -70,6 +72,9 @@ export default async function AreaHub({
   const pages = serviceAreaContent(a.slug);
   const branch = branchOf(a.branch);
   const others = LIVE_SERVICE_AREAS.filter((x) => x.slug !== a.slug);
+  // Hand-written copy for this neighbourhood: which branch it belongs to, and
+  // the questions people from here actually ask (lib/recovered-area-content.ts).
+  const areaCopy = areaContentFor(`/areas/${a.slug}/`);
   const url = `${SITE.domain}/areas/${a.slug}/`;
 
   const breadcrumbSchema = {
@@ -133,12 +138,33 @@ export default async function AreaHub({
     },
   };
 
+  // The neighbourhood questions are a real FAQ — one page, one set of answers —
+  // so they are published as such rather than left as plain text.
+  const faqSchema = areaCopy?.faq.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${url}#faq`,
+        mainEntity: areaCopy.faq.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }
+    : null;
+
   return (
     <article>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localSchema) }}
@@ -222,6 +248,23 @@ export default async function AreaHub({
       </header>
 
       <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+        {areaCopy?.intro && (
+          <section className="mt-12 rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8">
+            <h2 className="text-xl font-extrabold text-ink-900 sm:text-2xl">
+              {areaCopy.intro.heading}
+            </h2>
+            {areaCopy.intro.paras.map((para, i) => (
+              <p key={i} className="mt-3 text-[15px] leading-9 text-ink-700">
+                {para}
+              </p>
+            ))}
+            {areaCopy.intro.coverage && (
+              <p className="text-[15px] leading-9 text-ink-700 mt-5 border-t border-line pt-5">
+                {areaCopy.intro.coverage}
+              </p>
+            )}
+          </section>
+        )}
         <AreaGuide area={a} />
       </div>
 
@@ -249,6 +292,33 @@ export default async function AreaHub({
         </section>
       )}
 
+      {areaCopy && areaCopy.faq.length > 0 && (
+        <section className="py-12 lg:py-16">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+            <h2 className="heading-accent text-xl font-extrabold text-ink-900 sm:text-2xl">
+              پرسش های رایج درباره {a.name}
+            </h2>
+            <div className="mt-7 space-y-3">
+              {areaCopy.faq.map((f, i) => (
+                <details
+                  key={f.q}
+                  open={i === 0}
+                  className="group overflow-hidden rounded-2xl border border-line bg-white shadow-card open:border-accent/30"
+                >
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-right [&::-webkit-details-marker]:hidden">
+                    <span className="text-base font-semibold text-ink-900">
+                      {f.q}
+                    </span>
+                    <Plus className="h-5 w-5 shrink-0 text-accent transition-transform duration-300 group-open:rotate-45" />
+                  </summary>
+                  <p className="px-5 pb-5 text-sm leading-8 text-ink-500">{f.a}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="bg-paper py-12 lg:py-14">
         <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-xl font-extrabold text-ink-900 sm:text-2xl">
@@ -267,6 +337,14 @@ export default async function AreaHub({
           </div>
         </div>
       </section>
+
+      <ServiceCentersSlot
+        path={`/areas/${a.slug}/`}
+        always
+        withAreas={false}
+        heading={`شعبه های نزدیک به ${a.name}`}
+        intro={`نزدیک ترین شعبه به ${a.name} را انتخاب کنید. دستگاه را حضوری بیاورید یا با پیک رفت و برگشت بفرستید؛ عیب یابی رایگان است و هزینه پیش از شروع کار اعلام می شود.`}
+      />
     </article>
   );
 }

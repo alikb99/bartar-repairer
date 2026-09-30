@@ -11,6 +11,8 @@ import {
   Articles,
   CTA,
 } from "@/components/Sections";
+import { HomeAbout, HomeTools } from "@/components/HomeBody";
+import HotjarCallTracking from "@/components/HotjarCallTracking";
 import { FAQS, SITE } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -59,6 +61,7 @@ const homePageSchema = {
 export default function Home() {
   return (
     <>
+      <HotjarCallTracking hotjarId={6781025} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -72,6 +75,8 @@ export default function Home() {
       <Services />
       <Brands />
       <WhyUs />
+      <HomeAbout />
+      <HomeTools />
       <Steps />
       {/* Renders only once real customer reviews exist in lib/pricing.ts. The
           previous placeholder testimonials (invented names, invented quotes)

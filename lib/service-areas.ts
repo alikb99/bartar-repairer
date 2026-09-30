@@ -17,6 +17,8 @@ export type ServiceArea = {
   branch: "central" | "west";
 };
 
+import { AREA_PARENT } from "./recovered-area-parents";
+
 const EXCLUDED = new Set(["/home/", "/تست-المنتور/", "/blog/"]);
 
 export const SERVICE_AREAS: ServiceArea[] = [
@@ -69,6 +71,12 @@ for (const p of POSTS) {
     if (!a.aliases.some((alias) => p.title.includes(alias))) continue;
     matched.push(a);
     itemsBySlug.get(a.slug)!.push(p);
+    // A page about a street too small for its own hub still belongs on the
+    // district hub that speaks for it (lib/recovered-area-parents.ts).
+    for (const parent of AREA_PARENT[a.slug] ?? []) {
+      const bucket = itemsBySlug.get(parent);
+      if (bucket && !bucket.includes(p)) bucket.push(p);
+    }
   }
   if (matched.length) areasByPostId.set(p.id, matched.slice(0, 2));
 }
@@ -81,9 +89,26 @@ export function serviceAreaBy(slug: string): ServiceArea | undefined {
 export function serviceAreaContent(slug: string): Post[] {
   return itemsBySlug.get(slug) ?? [];
 }
-/** Areas a page serves (used for up-links). */
+/**
+ * Areas a page serves (used for up-links and for the Service schema).
+ *
+ * Only areas that earned their own hub count. A page about a street with two
+ * pages behind it would otherwise claim to serve a "district" that has no page
+ * to point at — the district it really belongs to is the published one.
+ */
 export function serviceAreasFor(post: Post): ServiceArea[] {
-  return areasByPostId.get(post.id) ?? [];
+  const published = new Set(LIVE_SERVICE_AREAS.map((a) => a.slug));
+  const out: ServiceArea[] = [];
+  const add = (slug: string) => {
+    const area = bySlug.get(slug);
+    if (area && published.has(slug) && !out.some((x) => x.slug === slug))
+      out.push(area);
+  };
+  for (const a of areasByPostId.get(post.id) ?? []) {
+    if (published.has(a.slug)) add(a.slug);
+    else for (const parent of AREA_PARENT[a.slug] ?? []) add(parent);
+  }
+  return out;
 }
 /** Areas with enough pages to publish as their own hub. */
 export const LIVE_SERVICE_AREAS = SERVICE_AREAS.filter(

@@ -16,18 +16,26 @@ import {
   breadcrumbs,
   extractFaq,
   h1For,
+  hubLabel,
   type Post,
 } from "@/lib/content";
 import { SITE } from "@/lib/data";
+import { calloutFor } from "@/lib/recovered-callouts";
+import { CARD_LABELS } from "@/lib/recovered-hub-labels";
 import { clusterContentFor } from "@/lib/cluster-content";
+import BrandSiteCard from "@/components/BrandSiteCard";
 import ContactCard from "@/components/ContactCard";
 import ClusterContent from "@/components/ClusterContent";
 import ContentEnhancer from "@/components/ContentEnhancer";
 import PagePriceTable from "@/components/PagePriceTable";
 import PillarArticles from "@/components/PillarArticles";
+import PageCallout from "@/components/PageCallout";
+import ReaderComments from "@/components/ReaderComments";
 import RelatedLinks from "@/components/RelatedLinks";
+import RepairRequestSection from "@/components/RepairRequestSection";
 import RepairTypeLinks from "@/components/RepairTypeLinks";
 import ServiceDeviceSceneLoader from "@/components/ServiceDeviceSceneLoader";
+import ServiceCentersSlot from "@/components/ServiceCentersSlot";
 
 type TocItem = { id: string; text: string };
 
@@ -112,7 +120,7 @@ function ServicesGrid({ post, children }: { post: Post; children: Post[] }) {
           <div>
             <span className="section-index">خدمات نمایندگی</span>
             <h2 className="mt-2 text-2xl font-extrabold text-ink-900 sm:text-[32px]">
-              دسته بندی خدمات {post.title.split(/\s+با\s+|\s*[|،–—-]\s*/)[0]}
+              دسته بندی خدمات {hubLabel(post.path, post.title)}
             </h2>
           </div>
           <PhoneButton>مشاوره تعمیر</PhoneButton>
@@ -129,7 +137,7 @@ function ServicesGrid({ post, children }: { post: Post; children: Post[] }) {
               </div>
               <div className="pl-14">
                 <h3 className="line-clamp-2 text-[15px] font-extrabold leading-7 text-ink-900">
-                  {item.title}
+                  {CARD_LABELS[item.path] ?? h1For(item.path, item.title)}
                 </h3>
                 <p className="mt-2 line-clamp-2 text-sm leading-7 text-ink-500">
                   {item.metaDesc}
@@ -147,16 +155,27 @@ function ServicesGrid({ post, children }: { post: Post; children: Post[] }) {
   );
 }
 
+// The one hub whose legacy WordPress body is not rendered: on /apple/ it
+// repeated the device cards, the cluster answer and the price table almost line
+// for line, so the deployed site dropped it. Everything that page needs is
+// above; keeping the duplicate would only feed thin, repeated copy to crawlers.
+const HIDE_LEGACY_BODY = new Set(["/apple/"]);
+
 export default function BrandLanding({ post }: { post: Post }) {
   const crumbs = breadcrumbs(post);
   const childPages = POSTS.filter((c) => c.parent === post.id);
   const cluster = clusterContentFor(post.path);
   // Hand-written cluster answers join the FAQs mined from the legacy body, so
   // both show up in the FAQPage schema.
-  const faqs = [...(cluster?.faq ?? []), ...extractFaq(post.content)];
+  // Questions mined from a body that is not rendered would be schema for text
+  // no reader can see, so the hidden-body hub answers only what it shows.
+  const faqs = [
+    ...(cluster?.faq ?? []),
+    ...(HIDE_LEGACY_BODY.has(post.path) ? [] : extractFaq(post.content)),
+  ];
   const heroImg = post.image ? { src: post.image, alt: post.title } : firstImage(post.content);
   const { html: bodyHtml, toc } = withHeadingIds(post.content);
-  const brandName = post.title.split(/\s+با\s+|\s*[|،–—-]\s*/)[0].trim();
+  const brandName = hubLabel(post.path, post.title);
 
   const agencyGroup = NAV.find((n) => n.title.includes("نمایندگی"));
   const otherBrands = (agencyGroup?.children ?? [])
@@ -179,7 +198,7 @@ export default function BrandLanding({ post }: { post: Post }) {
   const serviceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: post.title,
+    name: h1For(post.path, post.title),
     serviceType: brandName || post.title,
     areaServed: { "@type": "City", name: SITE.city },
     provider: { "@type": "LocalBusiness", "@id": SITE.localBusinessId, name: SITE.name },
@@ -195,7 +214,7 @@ export default function BrandLanding({ post }: { post: Post }) {
               "@type": "Offer",
               itemOffered: {
                 "@type": "Service",
-                name: c.title,
+                name: CARD_LABELS[c.path] ?? h1For(c.path, c.title),
                 url: `${SITE.domain}${encodeURI(c.path)}`,
               },
             })),
@@ -241,7 +260,7 @@ export default function BrandLanding({ post }: { post: Post }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={heroImg.src}
-              alt={heroImg.alt || post.title}
+              alt={heroImg.alt || h1For(post.path, post.title)}
               width={1400}
               height={760}
               className="absolute inset-0 h-full w-full object-cover opacity-[.13]"
@@ -309,12 +328,23 @@ export default function BrandLanding({ post }: { post: Post }) {
         </div>
       </header>
 
+      <BrandSiteCard path={post.path} />
+
+      {calloutFor(post.path)?.slot === "top" && (
+        <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+          <PageCallout path={post.path} slot="top" />
+        </div>
+      )}
+      <RepairRequestSection
+        heading={`ثبت آنلاین درخواست تعمیر ${brandName}`}
+      />
+
       <ServicesGrid post={post} children={childPages} />
 
       <section id="content" className="bg-paper py-10 lg:py-14">
         <div className="mx-auto grid max-w-[1240px] grid-cols-1 gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:px-8">
           <main className="min-w-0">
-            {toc.length >= 3 && (
+            {!HIDE_LEGACY_BODY.has(post.path) && toc.length >= 3 && (
               <nav
                 aria-label="فهرست مطالب"
                 className="mb-7 rounded-[22px] border border-line bg-white p-5 shadow-card"
@@ -343,14 +373,19 @@ export default function BrandLanding({ post }: { post: Post }) {
 
             <ClusterContent path={post.path} />
             <PagePriceTable title={post.title} path={post.path} />
-            <div className="rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8 lg:p-10">
-              <div
-                id="post-content"
-                className="prose-fa brand-prose"
-                dangerouslySetInnerHTML={{ __html: bodyHtml }}
-              />
-            </div>
-            <ContentEnhancer targetId="post-content" />
+            {!HIDE_LEGACY_BODY.has(post.path) && (
+              <>
+                <div className="rounded-[26px] border border-line bg-white p-5 shadow-card sm:p-8 lg:p-10">
+                  <div
+                    id="post-content"
+                    className="prose-fa brand-prose"
+                    dangerouslySetInnerHTML={{ __html: bodyHtml }}
+                  />
+                </div>
+                <ContentEnhancer targetId="post-content" />
+              </>
+            )}
+            <ReaderComments path={post.path} />
             <RepairTypeLinks post={post} />
             <RelatedLinks post={post} />
           </main>
@@ -423,6 +458,7 @@ export default function BrandLanding({ post }: { post: Post }) {
       </section>
 
       <PillarArticles path={post.path} />
+      <ServiceCentersSlot path={post.path} />
     </article>
   );
 }

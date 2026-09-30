@@ -856,7 +856,7 @@
           </a>
 
           <a class="svc" role="listitem" href="#service-projector">
-            <div class="svc__icon"><img src="assets/icons/projector.webp" alt="" loading="lazy" decoding="async" /></div>
+            <div class="svc__icon"><img src="assets/icons/projector.webp" alt="آیکن تعمیر ویدئو پرژکتور ایسر" loading="lazy" decoding="async" /></div>
             <h3>تعمیر ویدئو پرژکتور ایسر</h3>
             <p>مشکلات لامپ، تصویر، فن، پاور و سرویس دوره‌ای.</p>
           </a>
@@ -1241,6 +1241,27 @@
       </div>
     </section>
 
+    <!--
+      Dedicated Acer site. The other ten brand hubs render this block from
+      components/BrandSiteCard.tsx; this page is frozen pre-rendered HTML with
+      its own stylesheet (docs/frozen-pages.md), so the same declaration is
+      written by hand here using this page's own classes. Keep the wording in
+      step with BrandSiteCard — the whole point is that every brand says it the
+      same way. The machine-readable half is the subOrganization edge in the
+      JSON-LD above, applied by scripts/sync-group-schema.mjs.
+    -->
+    <section class="section section--tight" id="brand-site">
+      <div class="container">
+        <h2>سایت تخصصی ایسر مجموعه ما</h2>
+        <p class="muted">
+          برتر سرویس یک مرکز تعمیر چند برندی است و این صفحه بخش ایسر آن را نشان می دهد. برای محصولات ایسر یک سایت جداگانه داریم که قیمت به تفکیک مدل، شرح خرابی های رایج و ثبت درخواست تعمیر در آن کامل تر است. هر دو مجموعه یک شرکت، یک کارگاه و همان دو شعبه مطهری و سعادت آباد هستند.
+        </p>
+        <p>
+          <a class="btn btn--primary" href="https://www.acer-services.org/">ایسر سرویس، سایت تخصصی تعمیرات ایسر</a>
+        </p>
+      </div>
+    </section>
+
   </main>
 
   <!-- Footer -->
@@ -1264,6 +1285,7 @@
             <li><a href="https://bartar-repairer.com/about/">درباره ما</a></li>
             <li><a href="https://bartar-repairer.com/blog/">وبلاگ</a></li>
             <li><a href="https://bartar-repairer.com/services/laptop-repair/">تعمیرات لپ تاپ</a></li>
+            <li><a href="https://bartar-repairer.com/group/">سایت های مجموعه</a></li>
           </ul>
         </nav>
 
@@ -1333,329 +1355,6 @@
     })();
   </script>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://bartar-repairer.com/#organization",
-        "name": "برتر سرویس",
-        "url": "https://bartar-repairer.com/",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://bartar-repairer.com/acer/assets/logo/bartar-logo.webp"
-        },
-        "sameAs": [
-          "https://www.instagram.com/bartar_repairer/",
-          "https://t.me/bartar_repairer",
-          "https://www.youtube.com/@bartar_services",
-          "https://www.aparat.com/bartar_service",
-          "https://x.com/Bartar_repairer",
-          "https://www.facebook.com/profile.php?id=61593924380746",
-          "https://www.pinterest.com/bartar_repairer/",
-          "https://www.linkedin.com/in/bartar-repairer/",
-          "https://wa.me/989046972370"
-        ],
-        "contactPoint": [
-          {
-            "@type": "ContactPoint",
-            "telephone": "+98-21-91300348",
-            "contactType": "customer service",
-            "areaServed": "IR",
-            "availableLanguage": ["fa"]
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://bartar-repairer.com/#website",
-        "url": "https://bartar-repairer.com/",
-        "name": "برتر سرویس",
-        "publisher": { "@id": "https://bartar-repairer.com/#organization" },
-        "inLanguage": "fa-IR"
-      },
-      {
-        "@type": "WebPage",
-        "@id": "https://bartar-repairer.com/acer/#webpage",
-        "url": "https://bartar-repairer.com/acer/",
-        "name": "نمایندگی تعمیرات ایسر در تهران",
-        "description": "نمایندگی تعمیرات ایسر در تهران با پیک رایگان، گارانتی کتبی و قطعات اورجینال. تماس: 021-91300348",
-        "isPartOf": { "@id": "https://bartar-repairer.com/#website" },
-        "about": { "@id": "https://bartar-repairer.com/acer/#business" },
-        "breadcrumb": { "@id": "https://bartar-repairer.com/acer/#breadcrumbs" },
-        "inLanguage": "fa-IR",
-        "primaryImageOfPage": {
-          "@type": "ImageObject",
-          "url": "https://bartar-repairer.com/acer/assets/photo/acer-baner-1860.webp"
-        }
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://bartar-repairer.com/acer/#breadcrumbs",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "برتر سرویس",
-            "item": "https://bartar-repairer.com/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "ایسر",
-            "item": "https://bartar-repairer.com/acer/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "نمایندگی تعمیرات ایسر",
-            "item": "https://bartar-repairer.com/acer/"
-          }
-        ]
-      },
-      {
-        "@type": "LocalBusiness",
-        "@id": "https://bartar-repairer.com/acer/#business",
-        "name": "برتر سرویس | نمایندگی تعمیرات ایسر در تهران",
-        "url": "https://bartar-repairer.com/acer/",
-        "image": "https://bartar-repairer.com/acer/assets/logo/acer.webp",
-        "telephone": "+98-21-91300348",
-        "priceRange": "$$",
-        "address": {
-          "@type": "PostalAddress",
-          "addressCountry": "IR",
-          "addressLocality": "تهران",
-          "streetAddress": "تهران، خیابان مطهری، ابتدای خیابان قائم مقام فراهانی جنوبی، پلاک 158، ساختمان برتر سرویس"
-        },
-        "areaServed": { "@type": "City", "name": "تهران" },
-        "openingHoursSpecification": [
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": ["Saturday","Sunday","Monday","Tuesday","Wednesday"],
-            "opens": "09:00",
-            "closes": "18:30"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Thursday",
-            "opens": "09:00",
-            "closes": "15:00"
-          }
-        ],
-        "sameAs": [
-          "https://bartar-repairer.com/",
-          "https://bartar-repairer.com/contact/"
-        ],
-        "department": [
-          {
-            "@type": "LocalBusiness",
-            "@id": "https://bartar-repairer.com/acer/#branch-west",
-            "name": "نمایندگی غرب برتر سرویس",
-            "telephone": "+98-21-91300348",
-            "address": {
-              "@type": "PostalAddress",
-              "addressCountry": "IR",
-              "addressLocality": "تهران",
-              "streetAddress": "تهران، سعادت آباد، میدان کاج، کوچه دوازدهم علی اکبر، پلاک 30، مجتمع اداری کسری، طبقه اول واحد 5"
-            },
-            "areaServed": { "@type": "City", "name": "تهران" }
-          }
-        ]
-      },
-      {
-        "@type": "OfferCatalog",
-        "@id": "https://bartar-repairer.com/acer/#services-catalog",
-        "name": "خدمات تعمیرات ایسر",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "url": "https://bartar-repairer.com/acer/",
-            "itemOffered": {
-              "@type": "Service",
-              "@id": "https://bartar-repairer.com/acer/#svc-laptop",
-              "name": "تعمیر لپ تاپ ایسر",
-              "serviceType": "Acer Laptop Repair",
-              "provider": { "@id": "https://bartar-repairer.com/acer/#business" },
-              "areaServed": { "@type": "City", "name": "تهران" }
-            }
-          },
-          {
-            "@type": "Offer",
-            "url": "https://bartar-repairer.com/acer/",
-            "itemOffered": {
-              "@type": "Service",
-              "@id": "https://bartar-repairer.com/acer/#svc-tablet",
-              "name": "تعمیر تبلت ایسر",
-              "serviceType": "Acer Tablet Repair",
-              "provider": { "@id": "https://bartar-repairer.com/acer/#business" },
-              "areaServed": { "@type": "City", "name": "تهران" }
-            }
-          },
-          {
-            "@type": "Offer",
-            "url": "https://bartar-repairer.com/acer/",
-            "itemOffered": {
-              "@type": "Service",
-              "@id": "https://bartar-repairer.com/acer/#svc-desktop",
-              "name": "تعمیر کامپیوتر ایسر",
-              "serviceType": "Acer Computer Repair",
-              "provider": { "@id": "https://bartar-repairer.com/acer/#business" },
-              "areaServed": { "@type": "City", "name": "تهران" }
-            }
-          },
-          {
-            "@type": "Offer",
-            "url": "https://bartar-repairer.com/acer/",
-            "itemOffered": {
-              "@type": "Service",
-              "@id": "https://bartar-repairer.com/acer/#svc-smartwatch",
-              "name": "تعمیر ساعت هوشمند ایسر",
-              "serviceType": "Acer Smartwatch Repair",
-              "provider": { "@id": "https://bartar-repairer.com/acer/#business" },
-              "areaServed": { "@type": "City", "name": "تهران" }
-            }
-          },
-          {
-            "@type": "Offer",
-            "url": "https://bartar-repairer.com/acer/",
-            "itemOffered": {
-              "@type": "Service",
-              "@id": "https://bartar-repairer.com/acer/#svc-gpu",
-              "name": "تعمیر کارت گرافیک ایسر",
-              "serviceType": "Acer GPU Repair",
-              "provider": { "@id": "https://bartar-repairer.com/acer/#business" },
-              "areaServed": { "@type": "City", "name": "تهران" }
-            }
-          },
-          {
-            "@type": "Offer",
-            "url": "https://bartar-repairer.com/acer/",
-            "itemOffered": {
-              "@type": "Service",
-              "@id": "https://bartar-repairer.com/acer/#svc-monitor",
-              "name": "تعمیر مانیتور ایسر",
-              "serviceType": "Acer Monitor Repair",
-              "provider": { "@id": "https://bartar-repairer.com/acer/#business" },
-              "areaServed": { "@type": "City", "name": "تهران" }
-            }
-          },
-          {
-            "@type": "Offer",
-            "url": "https://bartar-repairer.com/acer/",
-            "itemOffered": {
-              "@type": "Service",
-              "@id": "https://bartar-repairer.com/acer/#svc-projector",
-              "name": "تعمیر ویدئو پروژکتور ایسر",
-              "serviceType": "Acer Projector Repair",
-              "provider": { "@id": "https://bartar-repairer.com/acer/#business" },
-              "areaServed": { "@type": "City", "name": "تهران" }
-            }
-          }
-        ]
-      },
-      {
-        "@type": "OfferCatalog",
-        "@id": "https://bartar-repairer.com/acer/#laptop-pricing",
-        "name": "تعرفه تعمیر لپ تاپ ایسر (نمونه)",
-        "itemListElement": [
-          {
-            "@type": "Offer",
-            "url": "https://bartar-repairer.com/acer/",
-            
-            "itemOffered": {
-              "@type": "Service",
-              "name": "عیب‌یابی تخصصی لپ تاپ ایسر",
-              "provider": { "@id": "https://bartar-repairer.com/acer/#business" }
-            }
-          },
-          {
-            "@type": "Offer",
-            "url": "https://bartar-repairer.com/acer/",
-            
-            "itemOffered": {
-              "@type": "Service",
-              "name": "سرویس فن و خنک‌کاری لپ تاپ ایسر",
-              "provider": { "@id": "https://bartar-repairer.com/acer/#business" }
-            }
-          },
-          {
-            "@type": "Offer",
-            "url": "https://bartar-repairer.com/acer/",
-            
-            "itemOffered": {
-              "@type": "Service",
-              "name": "تعمیر/تعویض سوکت شارژ لپ تاپ ایسر",
-              "provider": { "@id": "https://bartar-repairer.com/acer/#business" }
-            }
-          }
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://bartar-repairer.com/acer/#faq-schema",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "آیا پیک رایگان در تمام تهران دارید؟",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "بله، در تمام مناطق تهران امکان ارسال و دریافت دستگاه با پیک رایگان فراهم است."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "هزینه تعمیرات ایسر چگونه مشخص می‌شود؟",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "پس از عیب‌یابی تخصصی، هزینه و زمان تعمیر اعلام می‌شود و با تأیید شما انجام خواهد شد."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "آیا خدمات شامل گارانتی است؟",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "بله، تمام تعمیرات (طبق شرایط) با گارانتی کتبی ارائه می‌شوند."
-            }
-          },
-
-          {
-            "@type": "Question",
-            "name": "علت روشن نشدن تبلت ایسر چیست؟",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "در گام اول میتوانید میزان شارژ آن را چک کنید و یا اینکه سخت افزار یا نرم افزار بایستی چک شود و در موارد دیگر اینکه خرابی دکمه روشن خاموش آن را بررسی نمائید و اگر این موارد نبود بایستی به برتر سرویس مراجعه کنید."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "چرا کامپیوتر های ایسر داغ میکند؟",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "از علت های آن میتواند خنک نبودن قطعه سی پی یو اشاره کرد و یا اینکه چیپست ماردبرد مشکل پیدا کرده است و در کل بایستی چک کنید سیستم در جای گرم نباشد هنگام روشن شدن."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "چرا ساعت هوشمند ایسر روشن نمیشود؟",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "یکی از علتهای آن می تواند اتمام باتری باشد که سعی کنید آن را شارژ کنید و اگر باز هم روشن نشد شارژر را تغییر دهید و در نهایت اگر باز هم مشکل برطرف نشد دستگاه باید دوباره راه اندازی شود."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "از قطعات اورجینال استفاده می‌کنید؟",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "در صورت نیاز به تعویض قطعه، از قطعات اورجینال و سازگار با مدل دستگاه استفاده می‌شود."
-            }
-          }
-        ]
-      }
-    ]
-  }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://bartar-repairer.com/#organization","name":"برتر سرویس","url":"https://bartar-repairer.com/","logo":{"@type":"ImageObject","url":"https://bartar-repairer.com/acer/assets/logo/bartar-logo.webp"},"sameAs":["https://www.instagram.com/bartar_repairer/","https://t.me/bartar_repairer","https://www.youtube.com/@bartar_services","https://www.aparat.com/bartar_service","https://x.com/Bartar_repairer","https://www.facebook.com/profile.php?id=61593924380746","https://www.pinterest.com/bartar_repairer/","https://www.linkedin.com/in/bartar-repairer/","https://wa.me/989046972370"],"contactPoint":[{"@type":"ContactPoint","telephone":"+98-21-91300348","contactType":"customer service","areaServed":"IR","availableLanguage":["fa"]}],"subOrganization":[{"@type":"Organization","name":"اپل سرویس","url":"https://apple-servise.ir/","description":"تعمیر آیفون، مک بوک، آیپد و اپل واچ به تفکیک مدل."},{"@type":"Organization","name":"نمایندگی تعمیرات سامسونگ","url":"https://samsung-repairer.ir/","description":"تعمیر گوشی، تبلت، لپ تاپ و ساعت هوشمند سامسونگ."},{"@type":"Organization","name":"نمایندگی رسمی تعمیرات شیائومی","url":"https://xiaomi-repair.ir/","description":"تعمیر گوشی و تبلت شیائومی، ردمی و پوکو."},{"@type":"Organization","name":"نمایندگی تعمیرات هوآوی","url":"https://huawei-repairer.ir/","description":"تعمیر موبایل، تبلت و لپ تاپ هوآوی و آنر."},{"@type":"Organization","name":"ایسوس سرویس","url":"https://asus-services.com/","description":"تعمیر لپ تاپ، لپ تاپ گیمینگ و گوشی ایسوس."},{"@type":"Organization","name":"مرکز تخصصی تعمیرات لنوو","url":"https://lenovo-repairer.ir/","description":"تعمیر لپ تاپ، تبلت و آل این وان لنوو."},{"@type":"Organization","name":"نمایندگی اچ پی","url":"https://hp-services.org/","description":"تعمیر لپ تاپ، پرینتر و مانیتور اچ پی."},{"@type":"Organization","name":"نمایندگی تعمیرات دل","url":"https://dell-services.ir/","description":"تعمیر لپ تاپ، آل این وان و سیستم های دل."},{"@type":"Organization","name":"نمایندگی تعمیرات SONY","url":"https://sony-services.com/","description":"تعمیر لپ تاپ، تلویزیون، دوربین و پلی استیشن سونی."},{"@type":"Organization","name":"نمایندگی تعمیرات ایسر","url":"https://www.acer-services.org/","description":"تعمیر لپ تاپ ایسر، نیترو، اسپایر و پریدیتور."},{"@type":"Organization","name":"نمایندگی تعمیرات اچ تی سی","url":"https://htc-service.org/","description":"تعمیر موبایل، تبلت و ساعت هوشمند اچ تی سی."},{"@type":"Organization","name":"آموزشگاه برتر","url":"https://bartar-academy.com/","description":"آموزشگاه تعمیرات موبایل و لپ تاپ، داخل همین کارگاه."},{"@type":"Organization","name":"برتر جانبی","url":"https://bartar-janebi.com/","description":"فروش لوازم جانبی موبایل: پاوربانک، شارژر و گلس."}]},{"@type":"WebSite","@id":"https://bartar-repairer.com/#website","url":"https://bartar-repairer.com/","name":"برتر سرویس","publisher":{"@id":"https://bartar-repairer.com/#organization"},"inLanguage":"fa-IR"},{"@type":"WebPage","@id":"https://bartar-repairer.com/acer/#webpage","url":"https://bartar-repairer.com/acer/","name":"نمایندگی تعمیرات ایسر در تهران","description":"نمایندگی تعمیرات ایسر در تهران با پیک رایگان، گارانتی کتبی و قطعات اورجینال. تماس: 021-91300348","isPartOf":{"@id":"https://bartar-repairer.com/#website"},"about":{"@id":"https://bartar-repairer.com/acer/#business"},"breadcrumb":{"@id":"https://bartar-repairer.com/acer/#breadcrumbs"},"inLanguage":"fa-IR","primaryImageOfPage":{"@type":"ImageObject","url":"https://bartar-repairer.com/acer/assets/photo/acer-baner-1860.webp"}},{"@type":"BreadcrumbList","@id":"https://bartar-repairer.com/acer/#breadcrumbs","itemListElement":[{"@type":"ListItem","position":1,"name":"برتر سرویس","item":"https://bartar-repairer.com/"},{"@type":"ListItem","position":2,"name":"ایسر","item":"https://bartar-repairer.com/acer/"},{"@type":"ListItem","position":3,"name":"نمایندگی تعمیرات ایسر","item":"https://bartar-repairer.com/acer/"}]},{"@type":"LocalBusiness","@id":"https://bartar-repairer.com/acer/#business","name":"برتر سرویس | نمایندگی تعمیرات ایسر در تهران","url":"https://bartar-repairer.com/acer/","image":"https://bartar-repairer.com/acer/assets/logo/acer.webp","telephone":"+98-21-91300348","priceRange":"$","address":{"@type":"PostalAddress","addressCountry":"IR","addressLocality":"تهران","streetAddress":"تهران، خیابان مطهری، ابتدای خیابان قائم مقام فراهانی جنوبی، پلاک 158، ساختمان برتر سرویس"},"areaServed":{"@type":"City","name":"تهران"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday","Monday","Tuesday","Wednesday"],"opens":"09:00","closes":"18:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Thursday","opens":"09:00","closes":"15:00"}],"sameAs":["https://bartar-repairer.com/","https://bartar-repairer.com/contact/"],"department":[{"@type":"LocalBusiness","@id":"https://bartar-repairer.com/acer/#branch-west","name":"نمایندگی غرب برتر سرویس","telephone":"+98-21-91300348","address":{"@type":"PostalAddress","addressCountry":"IR","addressLocality":"تهران","streetAddress":"تهران، سعادت آباد، میدان کاج، کوچه دوازدهم علی اکبر، پلاک 30، مجتمع اداری کسری، طبقه اول واحد 5"},"areaServed":{"@type":"City","name":"تهران"}}]},{"@type":"OfferCatalog","@id":"https://bartar-repairer.com/acer/#services-catalog","name":"خدمات تعمیرات ایسر","itemListElement":[{"@type":"Offer","url":"https://bartar-repairer.com/acer/","itemOffered":{"@type":"Service","@id":"https://bartar-repairer.com/acer/#svc-laptop","name":"تعمیر لپ تاپ ایسر","serviceType":"Acer Laptop Repair","provider":{"@id":"https://bartar-repairer.com/acer/#business"},"areaServed":{"@type":"City","name":"تهران"}}},{"@type":"Offer","url":"https://bartar-repairer.com/acer/","itemOffered":{"@type":"Service","@id":"https://bartar-repairer.com/acer/#svc-tablet","name":"تعمیر تبلت ایسر","serviceType":"Acer Tablet Repair","provider":{"@id":"https://bartar-repairer.com/acer/#business"},"areaServed":{"@type":"City","name":"تهران"}}},{"@type":"Offer","url":"https://bartar-repairer.com/acer/","itemOffered":{"@type":"Service","@id":"https://bartar-repairer.com/acer/#svc-desktop","name":"تعمیر کامپیوتر ایسر","serviceType":"Acer Computer Repair","provider":{"@id":"https://bartar-repairer.com/acer/#business"},"areaServed":{"@type":"City","name":"تهران"}}},{"@type":"Offer","url":"https://bartar-repairer.com/acer/","itemOffered":{"@type":"Service","@id":"https://bartar-repairer.com/acer/#svc-smartwatch","name":"تعمیر ساعت هوشمند ایسر","serviceType":"Acer Smartwatch Repair","provider":{"@id":"https://bartar-repairer.com/acer/#business"},"areaServed":{"@type":"City","name":"تهران"}}},{"@type":"Offer","url":"https://bartar-repairer.com/acer/","itemOffered":{"@type":"Service","@id":"https://bartar-repairer.com/acer/#svc-gpu","name":"تعمیر کارت گرافیک ایسر","serviceType":"Acer GPU Repair","provider":{"@id":"https://bartar-repairer.com/acer/#business"},"areaServed":{"@type":"City","name":"تهران"}}},{"@type":"Offer","url":"https://bartar-repairer.com/acer/","itemOffered":{"@type":"Service","@id":"https://bartar-repairer.com/acer/#svc-monitor","name":"تعمیر مانیتور ایسر","serviceType":"Acer Monitor Repair","provider":{"@id":"https://bartar-repairer.com/acer/#business"},"areaServed":{"@type":"City","name":"تهران"}}},{"@type":"Offer","url":"https://bartar-repairer.com/acer/","itemOffered":{"@type":"Service","@id":"https://bartar-repairer.com/acer/#svc-projector","name":"تعمیر ویدئو پروژکتور ایسر","serviceType":"Acer Projector Repair","provider":{"@id":"https://bartar-repairer.com/acer/#business"},"areaServed":{"@type":"City","name":"تهران"}}}]},{"@type":"OfferCatalog","@id":"https://bartar-repairer.com/acer/#laptop-pricing","name":"تعرفه تعمیر لپ تاپ ایسر (نمونه)","itemListElement":[{"@type":"Offer","url":"https://bartar-repairer.com/acer/","itemOffered":{"@type":"Service","name":"عیب‌یابی تخصصی لپ تاپ ایسر","provider":{"@id":"https://bartar-repairer.com/acer/#business"}}},{"@type":"Offer","url":"https://bartar-repairer.com/acer/","itemOffered":{"@type":"Service","name":"سرویس فن و خنک‌کاری لپ تاپ ایسر","provider":{"@id":"https://bartar-repairer.com/acer/#business"}}},{"@type":"Offer","url":"https://bartar-repairer.com/acer/","itemOffered":{"@type":"Service","name":"تعمیر/تعویض سوکت شارژ لپ تاپ ایسر","provider":{"@id":"https://bartar-repairer.com/acer/#business"}}}]},{"@type":"FAQPage","@id":"https://bartar-repairer.com/acer/#faq-schema","mainEntity":[{"@type":"Question","name":"آیا پیک رایگان در تمام تهران دارید؟","acceptedAnswer":{"@type":"Answer","text":"بله، در تمام مناطق تهران امکان ارسال و دریافت دستگاه با پیک رایگان فراهم است."}},{"@type":"Question","name":"هزینه تعمیرات ایسر چگونه مشخص می‌شود؟","acceptedAnswer":{"@type":"Answer","text":"پس از عیب‌یابی تخصصی، هزینه و زمان تعمیر اعلام می‌شود و با تأیید شما انجام خواهد شد."}},{"@type":"Question","name":"آیا خدمات شامل گارانتی است؟","acceptedAnswer":{"@type":"Answer","text":"بله، تمام تعمیرات (طبق شرایط) با گارانتی کتبی ارائه می‌شوند."}},{"@type":"Question","name":"علت روشن نشدن تبلت ایسر چیست؟","acceptedAnswer":{"@type":"Answer","text":"در گام اول میتوانید میزان شارژ آن را چک کنید و یا اینکه سخت افزار یا نرم افزار بایستی چک شود و در موارد دیگر اینکه خرابی دکمه روشن خاموش آن را بررسی نمائید و اگر این موارد نبود بایستی به برتر سرویس مراجعه کنید."}},{"@type":"Question","name":"چرا کامپیوتر های ایسر داغ میکند؟","acceptedAnswer":{"@type":"Answer","text":"از علت های آن میتواند خنک نبودن قطعه سی پی یو اشاره کرد و یا اینکه چیپست ماردبرد مشکل پیدا کرده است و در کل بایستی چک کنید سیستم در جای گرم نباشد هنگام روشن شدن."}},{"@type":"Question","name":"چرا ساعت هوشمند ایسر روشن نمیشود؟","acceptedAnswer":{"@type":"Answer","text":"یکی از علتهای آن می تواند اتمام باتری باشد که سعی کنید آن را شارژ کنید و اگر باز هم روشن نشد شارژر را تغییر دهید و در نهایت اگر باز هم مشکل برطرف نشد دستگاه باید دوباره راه اندازی شود."}},{"@type":"Question","name":"از قطعات اورجینال استفاده می‌کنید؟","acceptedAnswer":{"@type":"Answer","text":"در صورت نیاز به تعویض قطعه، از قطعات اورجینال و سازگار با مدل دستگاه استفاده می‌شود."}}]}]}</script>
 </body>
 </html>

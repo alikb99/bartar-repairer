@@ -1,0 +1,16 @@
+User-Agent: *
+Allow: /
+Disallow: /*index.txt$
+
+User-Agent: GPTBot
+User-Agent: OAI-SearchBot
+User-Agent: ChatGPT-User
+User-Agent: PerplexityBot
+User-Agent: ClaudeBot
+User-Agent: Claude-User
+User-Agent: Google-Extended
+User-Agent: Applebot-Extended
+User-Agent: CCBot
+Allow: /
+
+Sitemap: https://bartar-repairer.com/sitemap.xml

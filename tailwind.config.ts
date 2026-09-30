@@ -11,6 +11,12 @@ const config: Config = {
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./lib/**/*.{ts,tsx}",
+    // Frozen pages are raw HTML served from public/ (docs/frozen-pages.md).
+    // Without them here Tailwind purges the utilities only they use — the
+    // /prices/ hero gradient — and they render half-styled. /acer/, /app/ and
+    // /warranty/ are excluded: each ships its own inline stylesheet.
+    "./public/prices/index.html",
+    "./public/mobile-repair-online/index.html",
   ],
   theme: {
     extend: {

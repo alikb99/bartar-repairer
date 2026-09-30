@@ -1,0 +1,14 @@
+# تنظیمات پوشه‌ی /app/ (فقط روی هاست آپاچی/لایت‌اسپید اثر دارد)
+AddType application/vnd.android.package-archive .apk
+AddType image/webp .webp
+AddType font/woff2 .woff2
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html
+</IfModule>
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType text/html "access plus 1 hour"
+ExpiresByType image/webp "access plus 30 days"
+ExpiresByType image/jpeg "access plus 30 days"
+ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>

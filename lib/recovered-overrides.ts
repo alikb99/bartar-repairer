@@ -72,7 +72,13 @@ export const TITLE_OVERRIDES_RECOVERED: Record<string, string> = {
   "/apple-repairs-onsite/": "تعمیرات اپل در محل | برتر سرویس",
   "/apple-representative-office-in-tehran-charso/": "نمایندگی تعمیرات اپل در تهران چارسو | برتر سرویس",
   "/apple-watch-board-repair/": "تعمیرات برد اپل واچ | برتر سرویس",
-  "/apple/": "نمایندگی تعمیرات اپل در تهران - پیک رایگان و ۶ ماه گارانتی",
+  // Head terms ("نمایندگی تعمیرات اپل"، "تعمیرات اپل") deliberately dropped
+  // here: apple-servise.ir — see BRAND_SITES in lib/data.ts — is the property
+  // that has to own them, and while both pages targeted the same phrase with
+  // the same NAP, Google picked one and suppressed the other. This page keeps
+  // the device long tail and the multi-brand framing instead.
+  // Previous value: "نمایندگی تعمیرات اپل در تهران - پیک رایگان و ۶ ماه گارانتی"
+  "/apple/": "بخش اپل برتر سرویس | تعمیر آیفون، مک بوک، آیپد و اپل واچ",
   "/apple/apple-tv2/": "نمایندگی تعمیرات تلویزیون اپل - تعمیر در محل شما | برتر سرویس",
   "/apple/apple-watch/": "نمایندگی تعمیرات اپل واچ در تهران - ۶ ماه گارانتی کتبی",
   "/apple/imac/": "نمایندگی تعمیرات آی مک در تهران - ۶ ماه گارانتی کتبی | برتر سرویس",
@@ -854,7 +860,8 @@ export const TITLE_OVERRIDES_RECOVERED: Record<string, string> = {
 
 export const META_OVERRIDES_RECOVERED: Record<string, string> = {
   "/agency/": "آدرس و تلفن دو شعبه تعمیرگاه در تهران؛ شعبه مرکزی خیابان مطهری و شعبه غرب سعادت آباد میدان کاج، به همراه فهرست برندها و دستگاه هایی که تعمیر می کنیم.",
-  "/apple/": "نمایندگی تعمیرات اپل در تهران؛ آیفون، آیپد، مک بوک، اپل واچ و ایرپاد هر کدام صفحه و قیمت جدا دارند. پیک رفت و برگشت رایگان، عیب یابی رایگان و ۶ ماه گارانتی…",
+  // Repositioned alongside the title override above — see the note there.
+  "/apple/": "بخش محصولات اپل در مرکز چند برندی برتر سرویس؛ آیفون، آیپد، مک بوک، اپل واچ و ایرپاد هر کدام صفحه و قیمت جدا دارند. سایت تخصصی اپل مجموعه، اپل سرویس است.",
   "/apple/apple-tv2/": "نمایندگی تعمیرات تلویزیون اپل در تهران؛ رفع هنگ کردن، مشکل تصویر و ایرادهای نرم افزاری Apple TV با اعلام هزینه پیش از تعمیر و گارانتی کتبی.",
   "/apple/apple-watch/": "نمایندگی تعمیرات اپل واچ در تهران؛ تعویض صفحه و باتری Apple Watch با قطعه اورجینال، اعلام هزینه پیش از تعمیر، پیک رایگان و ۶ ماه گارانتی کتبی.",
   "/apple/imac/": "نمایندگی تعمیرات آی مک در تهران؛ تعمیر برد، هارد، فن و صفحه نمایش iMac و iMac Pro با قطعه اصل، عیب یابی رایگان و ۶ ماه گارانتی کتبی.",
@@ -945,6 +952,9 @@ export const META_OVERRIDES_RECOVERED: Record<string, string> = {
 };
 
 export const H1_OVERRIDES_RECOVERED: Record<string, string> = {
+  // Frames the page as a section of the multi-brand centre rather than a second
+  // "نمایندگی تعمیرات اپل" competing with apple-servise.ir on the same phrase.
+  "/apple/": "بخش محصولات اپل در برتر سرویس",
   "/apple/mobile-2/": "تعمیر گوشی آیفون در تهران",
   "/asus/mobile/": "تعمیرات گوشی ایسوس در تهران",
   "/google-pixel-mobile-phone-repair/": "تعمیرات گوشی گوگل پیکسل در تهران",

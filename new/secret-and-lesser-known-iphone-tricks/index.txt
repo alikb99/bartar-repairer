@@ -1,0 +1,550 @@
+1:"$Sreact.fragment"
+10:I[7150,[],""]
+:HL["/_next/static/css/7c551e285657e6d6.css","style"]
+2:T72f,{"@context":"https://schema.org","@type":"LocalBusiness","@id":"https://bartar-repairer.com/#localbusiness","name":"مرکز تخصصی تعمیرات برتر","alternateName":"برتر سرویس","image":"https://bartar-repairer.com/logo.png","logo":"https://bartar-repairer.com/logo.png","url":"https://bartar-repairer.com","telephone":"+982191300348","priceRange":"$$","address":{"@type":"PostalAddress","streetAddress":"تهران، خیابان مطهری، خیابان قائم مقام فراهانی جنوبی، پلاک ۱۵۸","addressLocality":"تهران","postalCode":"1586983711","addressCountry":"IR"},"geo":{"@type":"GeoCoordinates","latitude":35.723166,"longitude":51.419674},"areaServed":{"@type":"City","name":"تهران"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday","Monday","Tuesday","Wednesday"],"opens":"09:00","closes":"18:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Thursday","opens":"09:00","closes":"15:00"}],"hasMap":"https://balad.ir/p/%D8%A8%D8%B1%D8%AA%D8%B1-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3-tehran-nei-sanaei_electronic-equipment-repair-4TyjywJEshQMcD#15/35.72402/51.42398","sameAs":["https://www.instagram.com/bartar_repairer?igsh=MTJ5aXJhcW00cmFyMA==","https://www.youtube.com/@bartar_services","https://x.com/Bartar_repairer","https://www.facebook.com/people/%D8%A8%D8%B1%D8%AA%D8%B1-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3/pfbid02MAe5xVUQdSiJozu9SHA5sS3zTkPk2iJYz3capxQC3N617jmdxrhuPbUVPMHJvLuMl/","https://www.pinterest.com/bartar_repairer/","https://www.linkedin.com/in/bartar-repairer/","https://www.aparat.com/bartar_service","https://wa.me/989046972370"],"parentOrganization":{"@id":"https://bartar-repairer.com/#organization"},"description":"تعمیر تخصصی دستگاه های الکترونیکی با گارانتی واقعی"}3:T480,{"@context":"https://schema.org","@type":"LocalBusiness","@id":"https://bartar-repairer.com/#branch-west","name":"مرکز تخصصی تعمیرات برتر — شعبه غرب","image":"https://bartar-repairer.com/logo.png","url":"https://bartar-repairer.com","telephone":"+982122129170","priceRange":"$$","branchOf":{"@id":"https://bartar-repairer.com/#localbusiness"},"address":{"@type":"PostalAddress","streetAddress":"تهران، سعادت آباد، میدان کاج، کوچه دوازدهم علی اکبر، پلاک ۳۰، مجتمع اداری کسری، طبقه اول واحد ۵","addressLocality":"تهران","addressCountry":"IR"},"geo":{"@type":"GeoCoordinates","latitude":35.782578745007484,"longitude":51.37508182469265},"areaServed":{"@type":"City","name":"تهران"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Saturday","Sunday","Monday","Tuesday","Wednesday"],"opens":"09:00","closes":"18:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Thursday","opens":"09:00","closes":"15:00"}],"hasMap":"https://www.google.com/maps/search/?api=1&query=35.782578745007484,51.37508182469265"}0:{"P":null,"b":"t6Tj1yxzgY5__q7CFAh-O","p":"","c":["","secret-and-lesser-known-iphone-tricks",""],"i":false,"f":[[["",{"children":[["slug","secret-and-lesser-known-iphone-tricks","c"],{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/7c551e285657e6d6.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"fa-IR","dir":"rtl","children":[["$","head",null,{"children":["$","link",null,{"rel":"preload","href":"/fonts/1abbc144918f74fd-s.p.woff2","as":"font","type":"font/woff2","crossOrigin":"anonymous"}]}],["$","body",null,{"className":"font-sans antialiased","children":[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"$2"}}],["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"$3"}}],"$L4","$L5","$L6","$L7","$L8","$L9","$La","$Lb","$Lc"]}]]}]]}],{"children":[["slug","secret-and-lesser-known-iphone-tricks","c"],"$Ld",{"children":["__PAGE__","$Le",{},null,false]},null,false]},null,false],"$Lf",false]],"m":"$undefined","G":["$10",[]],"s":false,"S":true}
+13:I[1725,["619","static/chunks/619-ba102abea3e3d0e4.js","931","static/chunks/931-95edd6292749ec2d.js","759","static/chunks/759-c1b8994887781599.js","177","static/chunks/app/layout-1e9166996e65fb3c.js"],"default"]
+14:I[9766,[],""]
+15:I[8924,[],""]
+16:I[2619,["619","static/chunks/619-ba102abea3e3d0e4.js","696","static/chunks/696-95bea2db689d49fc.js","48","static/chunks/app/%5B...slug%5D/page-da51f0e6117ba265.js"],""]
+22:I[1402,["619","static/chunks/619-ba102abea3e3d0e4.js","931","static/chunks/931-95edd6292749ec2d.js","759","static/chunks/759-c1b8994887781599.js","177","static/chunks/app/layout-1e9166996e65fb3c.js"],""]
+24:I[4431,[],"OutletBoundary"]
+26:I[5278,[],"AsyncMetadataOutlet"]
+28:I[4431,[],"ViewportBoundary"]
+2a:I[4431,[],"MetadataBoundary"]
+2b:"$Sreact.suspense"
+4:["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebSite\",\"@id\":\"https://bartar-repairer.com/#website\",\"name\":\"مرکز تخصصی تعمیرات برتر\",\"url\":\"https://bartar-repairer.com\",\"inLanguage\":\"fa-IR\",\"publisher\":{\"@id\":\"https://bartar-repairer.com/#organization\"},\"potentialAction\":{\"@type\":\"SearchAction\",\"target\":{\"@type\":\"EntryPoint\",\"urlTemplate\":\"https://bartar-repairer.com/search/?q={search_term_string}\"},\"query-input\":\"required name=search_term_string\"}}"}}]
+11:Te4a,{"@context":"https://schema.org","@type":"Organization","@id":"https://bartar-repairer.com/#organization","name":"مرکز تخصصی تعمیرات برتر","alternateName":"برتر سرویس","url":"https://bartar-repairer.com","logo":"https://bartar-repairer.com/logo.png","sameAs":["https://www.instagram.com/bartar_repairer?igsh=MTJ5aXJhcW00cmFyMA==","https://www.youtube.com/@bartar_services","https://x.com/Bartar_repairer","https://www.facebook.com/people/%D8%A8%D8%B1%D8%AA%D8%B1-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3/pfbid02MAe5xVUQdSiJozu9SHA5sS3zTkPk2iJYz3capxQC3N617jmdxrhuPbUVPMHJvLuMl/","https://www.pinterest.com/bartar_repairer/","https://www.linkedin.com/in/bartar-repairer/","https://www.aparat.com/bartar_service","https://wa.me/989046972370"],"employee":{"@type":"Person","name":"حمیدرضا آتشین پای","jobTitle":"سرپرست و مدیر مجموعه","url":"https://bartar-repairer.com/team/"},"contactPoint":{"@type":"ContactPoint","telephone":"+982191300348","contactType":"customer service","areaServed":"IR"},"subOrganization":[{"@type":"Organization","name":"اپل سرویس","url":"https://apple-servise.ir/","description":"تعمیر آیفون، مک بوک، آیپد و اپل واچ به تفکیک مدل."},{"@type":"Organization","name":"نمایندگی تعمیرات سامسونگ","url":"https://samsung-repairer.ir/","description":"تعمیر گوشی، تبلت، لپ تاپ و ساعت هوشمند سامسونگ."},{"@type":"Organization","name":"نمایندگی رسمی تعمیرات شیائومی","url":"https://xiaomi-repair.ir/","description":"تعمیر گوشی و تبلت شیائومی، ردمی و پوکو."},{"@type":"Organization","name":"نمایندگی تعمیرات هوآوی","url":"https://huawei-repairer.ir/","description":"تعمیر موبایل، تبلت و لپ تاپ هوآوی و آنر."},{"@type":"Organization","name":"ایسوس سرویس","url":"https://asus-services.com/","description":"تعمیر لپ تاپ، لپ تاپ گیمینگ و گوشی ایسوس."},{"@type":"Organization","name":"مرکز تخصصی تعمیرات لنوو","url":"https://lenovo-repairer.ir/","description":"تعمیر لپ تاپ، تبلت و آل این وان لنوو."},{"@type":"Organization","name":"نمایندگی اچ پی","url":"https://hp-services.org/","description":"تعمیر لپ تاپ، پرینتر و مانیتور اچ پی."},{"@type":"Organization","name":"نمایندگی تعمیرات دل","url":"https://dell-services.ir/","description":"تعمیر لپ تاپ، آل این وان و سیستم های دل."},{"@type":"Organization","name":"نمایندگی تعمیرات SONY","url":"https://sony-services.com/","description":"تعمیر لپ تاپ، تلویزیون، دوربین و پلی استیشن سونی."},{"@type":"Organization","name":"نمایندگی تعمیرات ایسر","url":"https://www.acer-services.org/","description":"تعمیر لپ تاپ ایسر، نیترو، اسپایر و پریدیتور."},{"@type":"Organization","name":"نمایندگی تعمیرات اچ تی سی","url":"https://htc-service.org/","description":"تعمیر موبایل، تبلت و ساعت هوشمند اچ تی سی."},{"@type":"Organization","name":"آموزشگاه برتر","url":"https://bartar-academy.com/","description":"آموزشگاه تعمیرات موبایل و لپ تاپ، داخل همین کارگاه."},{"@type":"Organization","name":"برتر جانبی","url":"https://bartar-janebi.com/","description":"فروش لوازم جانبی موبایل: پاوربانک، شارژر و گلس."}]}5:["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"$11"}}]
+12:T67b,{"@context":"https://schema.org","@type":"Organization","@id":"https://bartar-repairer.com/#editorial-team","name":"تیم فنی تعمیرات برتر","url":"https://bartar-repairer.com/team/","parentOrganization":{"@id":"https://bartar-repairer.com/#organization"},"employee":[{"@type":"Person","name":"علیرضا قهرمانی","jobTitle":"تعمیر گوشی آیفون و اندروید","knowsAbout":"تعمیر گوشی آیفون و اندروید"},{"@type":"Person","name":"مهدی لسانی","jobTitle":"تعمیر ساعت هوشمند، تبلت و گوشی های ناتینگ فون، گوگل پیکسل و نوکیا","knowsAbout":"تعمیر ساعت هوشمند، تبلت و گوشی های ناتینگ فون، گوگل پیکسل و نوکیا"},{"@type":"Person","name":"محمدرضا اکبرپور","jobTitle":"تعمیر لپ تاپ و مانیتور","knowsAbout":"تعمیر لپ تاپ و مانیتور"},{"@type":"Person","name":"امیرحسین آتشین","jobTitle":"تعمیر لپ تاپ و مانیتور","knowsAbout":"تعمیر لپ تاپ و مانیتور"},{"@type":"Person","name":"علی کارگر","jobTitle":"تعمیر موبایل و تعمیرات نرم افزاری","knowsAbout":"تعمیر موبایل و تعمیرات نرم افزاری"},{"@type":"Person","name":"ایلیا فرزانه","jobTitle":"تعویض قطعات گوشی آیفون و اندروید","knowsAbout":"تعویض قطعات گوشی آیفون و اندروید"},{"@type":"Person","name":"عرفان صادقی","jobTitle":"تعمیرات نرم افزاری","knowsAbout":"تعمیرات نرم افزاری"}]}6:["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"$12"}}]
+7:["$","a",null,{"href":"#main","className":"sr-only focus:not-sr-only focus:fixed focus:top-4 focus:right-4 focus:z-[100] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-white","children":"رفتن به محتوای اصلی"}]
+8:["$","$L13",null,{"nav":[{"title":"خانه","slug":"/","icon":"Home","children":[],"secondary":true},{"title":"تعمیرات موبایل","slug":"/services/category-mobile-phone-repair/","icon":"Smartphone","blurb":"تعمیر تخصصی گوشی همه برندها با قطعات اصل","children":[{"title":"تعمیرات موبایل (همه برندها)","slug":"/services/category-mobile-phone-repair/"},{"title":"تعمیر گوشی سامسونگ","slug":"/samsung/mobile/"},{"title":"تعمیر گوشی شیائومی","slug":"/xiaomi/mobile/"},{"title":"تعمیر گوشی آیفون","slug":"/apple/mobile-2/"},{"title":"تعمیر گوشی هواوی","slug":"/huawei/mobile/"},{"title":"تعمیر گوشی اچ تی سی","slug":"/htc/mobile/"},{"title":"تعمیر گوشی ایسوس","slug":"/asus/mobile/"},{"title":"تعمیر گوشی نوکیا","slug":"/nokia/"},{"title":"تعمیر گوشی ناتینگ فون","slug":"/nothingphone-repair/"},{"title":"تعمیر گوشی گوگل پیکسل","slug":"/google-pixel-mobile-phone-repair/"},{"title":"تعمیر گوشی موتورولا","slug":"/motorola-mobile-repair-center/"}]},{"title":"تعمیرات لپ تاپ","slug":"/services/laptop-repair/","icon":"Laptop","blurb":"تعمیر مادربرد، صفحه نمایش و آب خوردگی همه برندها","children":[{"title":"تعمیرات لپ تاپ (همه برندها)","slug":"/services/laptop-repair/"},{"title":"تعمیر لپ تاپ ایسوس","slug":"/asus/lap-top-2/"},{"title":"تعمیر لپ تاپ لنوو","slug":"/lenovo/lap-top/"},{"title":"تعمیر لپ تاپ اچ پی","slug":"/hp/lap-top/"},{"title":"تعمیر لپ تاپ دل","slug":"/dell/lap-top/"},{"title":"تعمیر لپ تاپ ایسر","slug":"/lap-top-acer/"},{"title":"تعمیر لپ تاپ سونی","slug":"/sony/lap-top/"},{"title":"تعمیر لپ تاپ سامسونگ","slug":"/samsung/lap-top/"},{"title":"تعمیر لپ تاپ شیائومی","slug":"/xiaomi/lap-top/"},{"title":"تعمیر مک بوک","slug":"/apple/macbook/"}]},{"title":"نمایندگی ها","slug":"/agency/","icon":"Building2","blurb":"نمایندگی تخصصی تعمیرات برندهای معتبر","children":[{"title":"سایر نمایندگی ها","slug":"/agency/"},{"title":"نمایندگی سامسونگ","slug":"/samsung/"},{"title":"نمایندگی شیائومی","slug":"/xiaomi/"},{"title":"نمایندگی اپل","slug":"/apple/"},{"title":"نمایندگی ایسوس","slug":"/asus/"},{"title":"نمایندگی لنوو","slug":"/lenovo/"},{"title":"نمایندگی اچ پی","slug":"/hp/"},{"title":"نمایندگی هوآوی","slug":"/huawei/"},{"title":"نمایندگی سونی","slug":"/sony/"},{"title":"نمایندگی دل","slug":"/dell/"},{"title":"نمایندگی اچ تی سی","slug":"/htc/"},{"title":"نمایندگی نوکیا","slug":"/nokia/"}]},{"title":"خدمات تعمیر","slug":"/repairs/","icon":"Wrench","blurb":"همه خدمات بر اساس نوع ایراد دستگاه","children":[{"title":"همه خدمات تعمیر","slug":"/repairs/"},{"title":"تعویض ال سی دی و تاچ","slug":"/repairs/lcd-replacement/"},{"title":"تعویض باتری","slug":"/repairs/battery-replacement/"},{"title":"تعمیر برد و مادربرد","slug":"/repairs/board-repair/"},{"title":"تعمیر آب خوردگی","slug":"/repairs/water-damage/"},{"title":"تعویض درب پشت و قاب","slug":"/repairs/back-cover-replacement/"},{"title":"تعمیر دوربین","slug":"/repairs/camera-repair/"},{"title":"تعمیر اسپیکر و میکروفون","slug":"/repairs/speaker-microphone-repair/"},{"title":"تعمیر نرم افزاری و فلش","slug":"/repairs/software-repair/"},{"title":"تعمیر کیبورد لپ تاپ","slug":"/repairs/keyboard-repair/"},{"title":"رفع داغ شدن و سرویس فن","slug":"/repairs/overheating-fan-repair/"}]},{"title":"عیب یابی آنلاین","slug":"/online-diagnosis/","icon":"Stethoscope","children":[],"secondary":true},{"title":"ثبت درخواست","slug":"/online-repair-request/","icon":"Wrench","children":[],"secondary":true},{"title":"مقالات","slug":"/blog","icon":"Newspaper","children":[]},{"title":"درباره ما","slug":"/about/","icon":"Info","children":[],"secondary":true},{"title":"تماس با ما","slug":"/contact/","icon":"Phone","children":[]}]}]
+9:["$","main",null,{"id":"main","children":["$","$L14",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L15",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","section",null,{"className":"bg-finegrid relative flex min-h-[70vh] items-center justify-center overflow-hidden px-4 pt-24 lg:pt-28","children":[["$","div",null,{"className":"pointer-events-none absolute left-1/2 top-1/3 h-72 w-[40rem] -translate-x-1/2 rounded-full bg-accent/5 blur-3xl"}],["$","div",null,{"className":"relative mx-auto max-w-xl text-center","children":[["$","span",null,{"className":"display text-7xl font-extrabold text-accent/30 sm:text-8xl","children":"۴۰۴"}],["$","h1",null,{"className":"display mt-4 text-2xl font-extrabold text-ink-900 sm:text-3xl","children":"این صفحه پیدا نشد"}],["$","p",null,{"className":"mt-4 leading-8 text-ink-500","children":"ممکن است آدرس تغییر کرده باشد یا صفحه حذف شده باشد. از مسیرهای زیر ادامه دهید یا برای راهنمایی با ما تماس بگیرید."}],["$","div",null,{"className":"mt-8 flex flex-wrap justify-center gap-3","children":[["$","$L16",null,{"href":"/","className":"inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-bold text-white shadow-soft transition hover:bg-accent-deep","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-house h-4 w-4","children":[["$","path","5wwlr5",{"d":"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"}],["$","path","1d0kgt",{"d":"M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"}],"$undefined"]}],"صفحه اصلی"]}],["$","$L16",null,{"href":"/blog/","className":"inline-flex items-center gap-2 rounded-full border border-line bg-white px-6 py-3 text-sm font-bold text-ink-700 transition hover:border-accent/40 hover:text-accent","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-newspaper h-4 w-4","children":[["$","path","7pis2x",{"d":"M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"}],["$","path","sponae",{"d":"M18 14h-8"}],["$","path","95g1m2",{"d":"M15 18h-5"}],["$","path","smlsk5",{"d":"M10 6h8v4h-8V6Z"}],"$undefined"]}],"مقالات"]}],["$","a",null,{"href":"tel:02191300348","dir":"ltr","className":"inline-flex items-center gap-2 rounded-full border border-line bg-white px-6 py-3 text-sm font-bold text-ink-700 transition hover:border-accent/40 hover:text-accent","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-phone h-4 w-4","children":[["$","path","foiqr5",{"d":"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"}],"$undefined"]}],"۰۲۱-۹۱۳۰۰۳۴۸"]}]]}]]}]]}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]
+a:["$","footer",null,{"className":"bg-ink-950 text-white","children":[["$","div",null,{"className":"border-b border-[#20242D]","children":["$","div",null,{"className":"mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-6 px-6 py-9","children":[["$","div",null,{"children":[["$","div",null,{"className":"text-2xl font-extrabold tracking-tight","children":"دستگاهت خراب شده؟ همین حالا تماس بگیر"}],["$","div",null,{"className":"mt-2 text-[14.5px] text-ink-300","children":"عیب یابی رایگان، گارانتی تعمیر و قطعات اصل در دو شعبه تهران."}]]}],["$","a",null,{"href":"tel:02191300348","className":"flex items-center gap-2.5 rounded-xl bg-accent px-6 py-3.5 text-[15px] font-bold text-white transition hover:-translate-y-0.5 hover:bg-accent-deep","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-phone h-[18px] w-[18px]","children":[["$","path","foiqr5",{"d":"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"}],"$undefined"]}],["$","span",null,{"dir":"ltr","children":"۰۲۱-۹۱۳۰۰۳۴۸"}]]}]]}]}],["$","div",null,{"className":"mx-auto grid max-w-[1280px] gap-10 px-6 py-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.4fr]","children":[["$","div",null,{"children":[["$","img",null,{"src":"/logo.webp","alt":"مرکز تخصصی تعمیرات برتر","width":120,"height":46,"className":"h-11 w-auto rounded-xl bg-white px-3 py-2"}],["$","p",null,{"className":"mt-5 max-w-[330px] text-sm leading-8 text-ink-300","children":"مرکز تخصصی تعمیر موبایل و لپ تاپ و نمایندگی برندهای معتبر. با بیش از ۱۵ سال تجربه، خدمات تعمیراتی مطمئن همراه با گارانتی ارائه می دهیم."}],["$","div",null,{"className":"mt-5 flex flex-wrap items-center gap-2.5","children":[["$","a","اینستاگرام",{"href":"https://www.instagram.com/bartar_repairer?igsh=MTJ5aXJhcW00cmFyMA==","target":"_blank","rel":"noopener noreferrer","aria-label":"اینستاگرام","title":"اینستاگرام","className":"grid h-[42px] w-[42px] place-items-center rounded-xl border border-[#2A2F39] text-[#C2C8D2] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white","children":["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-instagram h-[19px] w-[19px]","children":[["$","rect","2e1cvw",{"width":"20","height":"20","x":"2","y":"2","rx":"5","ry":"5"}],["$","path","9exkf1",{"d":"M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"}],["$","line","r4j83e",{"x1":"17.5","x2":"17.51","y1":"6.5","y2":"6.5"}],"$undefined"]}]}],["$","a","واتساپ",{"href":"https://wa.me/989046972370","target":"_blank","rel":"noopener noreferrer","aria-label":"واتساپ","title":"واتساپ","className":"grid h-[42px] w-[42px] place-items-center rounded-xl border border-[#2A2F39] text-[#C2C8D2] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white","children":["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-message-circle h-[19px] w-[19px]","children":[["$","path","vv11sd",{"d":"M7.9 20A9 9 0 1 0 4 16.1L2 22Z"}],"$undefined"]}]}],["$","a","یوتیوب",{"href":"https://www.youtube.com/@bartar_services","target":"_blank","rel":"noopener noreferrer","aria-label":"یوتیوب","title":"یوتیوب","className":"grid h-[42px] w-[42px] place-items-center rounded-xl border border-[#2A2F39] text-[#C2C8D2] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white","children":"$L17"}],"$L18","$L19","$L1a","$L1b"]}],"$L1c"]}],"$L1d","$L1e","$L1f"]}],"$L20","$L21"]}]
+b:["$","a",null,{"href":"tel:02191300348","aria-label":"تماس با مرکز تخصصی تعمیرات برتر | ۰۲۱-۹۱۳۰۰۳۴۸","dir":"ltr","className":"fixed bottom-5 left-4 right-[92px] z-40 flex h-14 items-center justify-center gap-2 rounded-full bg-accent px-6 text-sm font-bold text-white shadow-[0_12px_30px_-10px_rgba(181,27,27,0.7)] lg:hidden","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-phone h-4 w-4","children":[["$","path","foiqr5",{"d":"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"}],"$undefined"]}],"۰۲۱-۹۱۳۰۰۳۴۸"]}]
+c:["$","$L22",null,{"src":"https://9fx.ir/chat.js","data-key":"9jteaHBEC7uCiddu","data-label":"گفتگوی آنلاین با پشتیبانی برتر سرویس","strategy":"lazyOnload"}]
+d:["$","$1","c",{"children":[null,["$","$L14",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L15",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}]
+e:["$","$1","c",{"children":["$L23",null,["$","$L24",null,{"children":["$L25",["$","$L26",null,{"promise":"$@27"}]]}]]}]
+f:["$","$1","h",{"children":[null,[["$","$L28",null,{"children":"$L29"}],null],["$","$L2a",null,{"children":["$","div",null,{"hidden":true,"children":["$","$2b",null,{"fallback":null,"children":"$L2c"}]}]}]]}]
+17:["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-youtube h-[19px] w-[19px]","children":[["$","path","1q2vi4",{"d":"M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"}],["$","path","1jp15x",{"d":"m10 15 5-3-5-3z"}],"$undefined"]}]
+18:["$","a","آپارات",{"href":"https://www.aparat.com/bartar_service","target":"_blank","rel":"noopener noreferrer","aria-label":"آپارات","title":"آپارات","className":"grid h-[42px] w-[42px] place-items-center rounded-xl border border-[#2A2F39] text-[#C2C8D2] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white","children":["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-video h-[19px] w-[19px]","children":[["$","path","ftymec",{"d":"m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"}],["$","rect","158x01",{"x":"2","y":"6","width":"14","height":"12","rx":"2"}],"$undefined"]}]}]
+19:["$","a","لینکدین",{"href":"https://www.linkedin.com/in/bartar-repairer/","target":"_blank","rel":"noopener noreferrer","aria-label":"لینکدین","title":"لینکدین","className":"grid h-[42px] w-[42px] place-items-center rounded-xl border border-[#2A2F39] text-[#C2C8D2] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white","children":["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-linkedin h-[19px] w-[19px]","children":[["$","path","c2jq9f",{"d":"M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"}],["$","rect","mk3on5",{"width":"4","height":"12","x":"2","y":"9"}],["$","circle","bt5ra8",{"cx":"4","cy":"4","r":"2"}],"$undefined"]}]}]
+1a:["$","a","ایکس (توییتر)",{"href":"https://x.com/Bartar_repairer","target":"_blank","rel":"noopener noreferrer","aria-label":"ایکس (توییتر)","title":"ایکس (توییتر)","className":"grid h-[42px] w-[42px] place-items-center rounded-xl border border-[#2A2F39] text-[#C2C8D2] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white","children":["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-twitter h-[19px] w-[19px]","children":[["$","path","pff0z6",{"d":"M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"}],"$undefined"]}]}]
+1b:["$","a","پینترست",{"href":"https://www.pinterest.com/bartar_repairer/","target":"_blank","rel":"noopener noreferrer","aria-label":"پینترست","title":"پینترست","className":"grid h-[42px] w-[42px] place-items-center rounded-xl border border-[#2A2F39] text-[#C2C8D2] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white","children":["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-globe h-[19px] w-[19px]","children":[["$","circle","1mglay",{"cx":"12","cy":"12","r":"10"}],["$","path","13o1zl",{"d":"M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"}],["$","path","9i4pu4",{"d":"M2 12h20"}],"$undefined"]}]}]
+1c:["$","a",null,{"href":"/app/","className":"mt-5 inline-flex items-center gap-2 rounded-xl border border-[#2A2F39] px-4 py-2.5 text-[13.5px] font-bold text-[#E7EAEF] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-download h-[17px] w-[17px]","children":[["$","path","ih7n3h",{"d":"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"}],["$","polyline","2ggqvy",{"points":"7 10 12 15 17 10"}],["$","line","1vk2je",{"x1":"12","x2":"12","y1":"15","y2":"3"}],"$undefined"]}],"دانلود اپلیکیشن اندروید"]}]
+1d:["$","div",null,{"children":[["$","div",null,{"className":"mb-[18px] text-[15px] font-extrabold","children":"خدمات"}],["$","ul",null,{"className":"flex flex-col gap-3","children":[["$","li","/services/category-mobile-phone-repair/",{"children":["$","$L16",null,{"href":"/services/category-mobile-phone-repair/","className":"text-sm text-ink-300 transition hover:pr-1.5 hover:text-white","children":"تعمیرات موبایل"}]}],["$","li","/services/laptop-repair/",{"children":["$","$L16",null,{"href":"/services/laptop-repair/","className":"text-sm text-ink-300 transition hover:pr-1.5 hover:text-white","children":"تعمیرات لپ تاپ"}]}],["$","li","/agency/",{"children":["$","$L16",null,{"href":"/agency/","className":"text-sm text-ink-300 transition hover:pr-1.5 hover:text-white","children":"نمایندگی ها"}]}],["$","li","/repairs/",{"children":["$","$L16",null,{"href":"/repairs/","className":"text-sm text-ink-300 transition hover:pr-1.5 hover:text-white","children":"خدمات تعمیر"}]}]]}]]}]
+1e:["$","div",null,{"children":[["$","div",null,{"className":"mb-[18px] text-[15px] font-extrabold","children":"دسترسی سریع"}],["$","ul",null,{"className":"flex flex-col gap-3","children":[["$","li","/",{"children":["$","$L16",null,{"href":"/","className":"text-sm text-ink-300 transition hover:pr-1.5 hover:text-white","children":"خانه"}]}],["$","li","/online-diagnosis/",{"children":["$","$L16",null,{"href":"/online-diagnosis/","className":"text-sm text-ink-300 transition hover:pr-1.5 hover:text-white","children":"عیب یابی آنلاین"}]}],["$","li","/online-repair-request/",{"children":["$","$L16",null,{"href":"/online-repair-request/","className":"text-sm text-ink-300 transition hover:pr-1.5 hover:text-white","children":"ثبت درخواست"}]}],["$","li","/blog",{"children":["$","$L16",null,{"href":"/blog","className":"text-sm text-ink-300 transition hover:pr-1.5 hover:text-white","children":"مقالات"}]}],["$","li","/about/",{"children":["$","$L16",null,{"href":"/about/","className":"text-sm text-ink-300 transition hover:pr-1.5 hover:text-white","children":"درباره ما"}]}],["$","li","/contact/",{"children":["$","$L16",null,{"href":"/contact/","className":"text-sm text-ink-300 transition hover:pr-1.5 hover:text-white","children":"تماس با ما"}]}]]}]]}]
+1f:["$","div",null,{"children":[["$","div",null,{"className":"mb-[18px] text-[15px] font-extrabold","children":"شعب ما"}],["$","div",null,{"className":"flex flex-col gap-[18px]","children":[["$","div",null,{"className":"flex gap-3","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-map-pin mt-0.5 h-[19px] w-[19px] shrink-0 text-accent","children":[["$","path","1r0f0z",{"d":"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"}],["$","circle","ilqhr7",{"cx":"12","cy":"10","r":"3"}],"$undefined"]}],["$","div",null,{"children":[["$","div",null,{"className":"mb-1 text-[13.5px] font-bold text-[#E7EAEF]","children":"شعبه مرکزی"}],["$","div",null,{"className":"text-[13px] leading-7 text-ink-300","children":"تهران، خیابان مطهری، خیابان قائم مقام فراهانی جنوبی، پلاک ۱۵۸"}],["$","a",null,{"href":"tel:02191300348","dir":"ltr","className":"mt-1 inline-block text-[13px] text-ink-300 transition hover:text-white","children":"۰۲۱-۹۱۳۰۰۳۴۸"}],["$","div",null,{"className":"mt-2 flex items-start gap-1.5 text-[12.5px] leading-6 text-ink-300","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-train-front mt-0.5 h-[15px] w-[15px] shrink-0 text-ink-300","children":[["$","path","1v71zp",{"d":"M8 3.1V7a4 4 0 0 0 8 0V3.1"}],["$","path","1yrq24",{"d":"m9 15-1-1"}],["$","path","1t0d6s",{"d":"m15 15 1-1"}],["$","path","1p0hjs",{"d":"M9 19c-2.8 0-5-2.2-5-5v-4a8 8 0 0 1 16 0v4c0 2.8-2.2 5-5 5Z"}],["$","path","13i0xs",{"d":"m8 19-2 3"}],["$","path","xo31yx",{"d":"m16 19 2 3"}],"$undefined"]}],["$","span",null,{"children":["نزدیک مترو ","میرزای شیرازی، هفتم تیر و مفتح"]}]]}]]}]]}],["$","div",null,{"className":"flex gap-3","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-map-pin mt-0.5 h-[19px] w-[19px] shrink-0 text-accent","children":[["$","path","1r0f0z",{"d":"M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"}],["$","circle","ilqhr7",{"cx":"12","cy":"10","r":"3"}],"$undefined"]}],["$","div",null,{"children":[["$","div",null,{"className":"mb-1 text-[13.5px] font-bold text-[#E7EAEF]","children":"شعبه غرب"}],["$","div",null,{"className":"text-[13px] leading-7 text-ink-300","children":"تهران، سعادت آباد، میدان کاج، کوچه دوازدهم علی اکبر، پلاک ۳۰، مجتمع اداری کسری، طبقه اول واحد ۵"}],["$","a",null,{"href":"tel:02122129170","dir":"ltr","className":"mt-1 inline-block text-[13px] text-ink-300 transition hover:text-white","children":"۰۲۱-۲۲۱۲۹۱۷۰"}]]}]]}]]}],["$","div",null,{"className":"mt-6","children":[["$","div",null,{"className":"mb-3 text-[13.5px] font-bold text-[#E7EAEF]","children":"موقعیت شعبه مرکزی روی نقشه"}],["$","div",null,{"className":"overflow-hidden rounded-xl border border-[#2A2F39]","children":["$","iframe",null,{"title":"موقعیت شعبه مرکزی برتر سرویس روی نقشه","src":"https://maps.google.com/maps?q=35.723166,51.419674&z=16&hl=fa&output=embed","width":"100%","height":"190","loading":"lazy","referrerPolicy":"no-referrer-when-downgrade","className":"block h-[190px] w-full grayscale-[.2]","style":{"border":0}}]}],["$","a",null,{"href":"https://www.google.com/maps/dir/?api=1&destination=35.723166,51.419674","target":"_blank","rel":"noopener noreferrer nofollow","className":"mt-2.5 inline-flex items-center gap-1.5 rounded-lg border border-[#2A2F39] px-3 py-1.5 text-[12.5px] font-bold text-[#E7EAEF] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-navigation h-[14px] w-[14px]","children":["$L2d","$undefined"]}],"مسیریابی روی نقشه"]}]]}],"$L2e"]}]
+20:["$","div",null,{"className":"border-t border-[#20242D]","children":["$","div",null,{"className":"mx-auto grid max-w-[1280px] gap-8 px-6 py-10 sm:grid-cols-3","children":[["$","nav","نمایندگی تعمیرات",{"aria-label":"نمایندگی تعمیرات","children":[["$","div",null,{"className":"mb-4 text-[14px] font-extrabold text-[#E7EAEF]","children":"نمایندگی تعمیرات"}],["$","ul",null,{"className":"flex flex-col gap-2.5","children":[["$","li","/samsung/نمایندگی تعمیرات سامسونگ",{"children":["$","$L16",null,{"href":"/samsung/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"نمایندگی تعمیرات سامسونگ"}]}],["$","li","/apple/نمایندگی تعمیرات اپل",{"children":["$","$L16",null,{"href":"/apple/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"نمایندگی تعمیرات اپل"}]}],["$","li","/xiaomi/نمایندگی تعمیرات شیائومی",{"children":["$","$L16",null,{"href":"/xiaomi/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"نمایندگی تعمیرات شیائومی"}]}],["$","li","/asus/نمایندگی تعمیرات ایسوس",{"children":["$","$L16",null,{"href":"/asus/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"نمایندگی تعمیرات ایسوس"}]}],["$","li","/huawei/نمایندگی تعمیرات هواوی",{"children":["$","$L16",null,{"href":"/huawei/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"نمایندگی تعمیرات هواوی"}]}],["$","li","/lenovo/نمایندگی تعمیرات لنوو",{"children":["$","$L16",null,{"href":"/lenovo/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"نمایندگی تعمیرات لنوو"}]}],["$","li","/hp/نمایندگی تعمیرات اچ پی",{"children":["$","$L16",null,{"href":"/hp/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"نمایندگی تعمیرات اچ پی"}]}],["$","li","/sony/نمایندگی تعمیرات سونی",{"children":["$","$L16",null,{"href":"/sony/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"نمایندگی تعمیرات سونی"}]}],["$","li","/dell/نمایندگی تعمیرات دل",{"children":["$","$L16",null,{"href":"/dell/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"نمایندگی تعمیرات دل"}]}],["$","li","/nokia/نمایندگی تعمیرات نوکیا",{"children":["$","$L16",null,{"href":"/nokia/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"نمایندگی تعمیرات نوکیا"}]}]]}]]}],["$","nav","تعمیر گوشی",{"aria-label":"تعمیر گوشی","children":[["$","div",null,{"className":"mb-4 text-[14px] font-extrabold text-[#E7EAEF]","children":"تعمیر گوشی"}],["$","ul",null,{"className":"flex flex-col gap-2.5","children":[["$","li","/samsung/mobile/تعمیر گوشی سامسونگ",{"children":["$","$L16",null,{"href":"/samsung/mobile/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر گوشی سامسونگ"}]}],["$","li","/apple/mobile-2/تعمیر گوشی آیفون",{"children":["$","$L16",null,{"href":"/apple/mobile-2/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر گوشی آیفون"}]}],["$","li","/xiaomi/mobile/تعمیر گوشی شیائومی",{"children":["$","$L16",null,{"href":"/xiaomi/mobile/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر گوشی شیائومی"}]}],["$","li","/huawei/mobile/تعمیر گوشی هواوی",{"children":["$","$L16",null,{"href":"/huawei/mobile/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر گوشی هواوی"}]}],["$","li","/asus/mobile/تعمیر گوشی ایسوس",{"children":["$","$L16",null,{"href":"/asus/mobile/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر گوشی ایسوس"}]}],["$","li","/htc/mobile/تعمیر گوشی اچ تی سی",{"children":["$","$L16",null,{"href":"/htc/mobile/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر گوشی اچ تی سی"}]}],["$","li","/google-pixel-mobile-phone-repair/تعمیر گوشی گوگل پیکسل",{"children":["$","$L16",null,{"href":"/google-pixel-mobile-phone-repair/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر گوشی گوگل پیکسل"}]}],"$L2f","$L30","$L31"]}]]}],"$L32"]}]}]
+21:["$","div",null,{"className":"border-t border-[#20242D]","children":["$","div",null,{"className":"mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-3 px-6 py-5","children":[["$","div",null,{"className":"text-[13px] text-[#7B828E]","children":["© تمامی حقوق برای ","تعمیرات برتر"," محفوظ است — ۱۴۰۴"]}],["$","div",null,{"className":"flex flex-wrap items-center gap-4 text-[13px] text-[#7B828E]","children":[["$","a",null,{"href":"/app/","className":"transition hover:text-white","children":"دانلود اپلیکیشن"}],["$","a",null,{"href":"/prices/","className":"transition hover:text-white","children":"قیمت تعمیر"}],["$","$L16",null,{"href":"/team/","className":"transition hover:text-white","children":"تیم فنی"}],["$","$L16",null,{"href":"/directory/","className":"transition hover:text-white","children":"فهرست کامل صفحات"}],["$","$L16",null,{"href":"/group/","className":"transition hover:text-white","children":"سایت های مجموعه"}],["$","$L16",null,{"href":"/privacy-policy/","className":"transition hover:text-white","children":"حریم خصوصی"}],["$","$L16",null,{"href":"/terms-and-conditions/","className":"transition hover:text-white","children":"قوانین و مقررات"}],["$","span",null,{"children":"bartar-repairer.com"}]]}]]}]}]
+2d:["$","polygon","1ltx0t",{"points":"3 11 22 2 13 21 11 13 3 11"}]
+2e:["$","div",null,{"className":"mt-6","children":[["$","div",null,{"className":"mb-3 text-[13.5px] font-bold text-[#E7EAEF]","children":"مناطق تحت پوشش"}],["$","div",null,{"className":"flex flex-wrap gap-x-3 gap-y-2","children":[["$","$L16","sattarkhan",{"href":"/areas/sattarkhan/","className":"text-[12.5px] text-ink-300 transition hover:text-white","children":"ستارخان"}],["$","$L16","west-tehran",{"href":"/areas/west-tehran/","className":"text-[12.5px] text-ink-300 transition hover:text-white","children":"غرب تهران"}],["$","$L16","niavaran",{"href":"/areas/niavaran/","className":"text-[12.5px] text-ink-300 transition hover:text-white","children":"نیاوران"}],["$","$L16","central-tehran",{"href":"/areas/central-tehran/","className":"text-[12.5px] text-ink-300 transition hover:text-white","children":"مرکز تهران"}],["$","$L16","jomhouri",{"href":"/areas/jomhouri/","className":"text-[12.5px] text-ink-300 transition hover:text-white","children":"خیابان جمهوری"}],["$","$L16","east-tehran",{"href":"/areas/east-tehran/","className":"text-[12.5px] text-ink-300 transition hover:text-white","children":"شرق تهران"}],["$","$L16","north-tehran",{"href":"/areas/north-tehran/","className":"text-[12.5px] text-ink-300 transition hover:text-white","children":"شمال تهران"}],["$","$L16","shahrak-gharb",{"href":"/areas/shahrak-gharb/","className":"text-[12.5px] text-ink-300 transition hover:text-white","children":"شهرک غرب"}],["$","$L16","sadeghieh",{"href":"/areas/sadeghieh/","className":"text-[12.5px] text-ink-300 transition hover:text-white","children":"صادقیه"}],["$","$L16","tehranpars",{"href":"/areas/tehranpars/","className":"text-[12.5px] text-ink-300 transition hover:text-white","children":"تهرانپارس"}],["$","$L16","golbarg",{"href":"/areas/golbarg/","className":"text-[12.5px] text-ink-300 transition hover:text-white","children":"خیابان گلبرگ"}],["$","$L16","south-tehran",{"href":"/areas/south-tehran/","className":"text-[12.5px] text-ink-300 transition hover:text-white","children":"جنوب تهران"}],["$","$L16","saadat-abad",{"href":"/areas/saadat-abad/","className":"text-[12.5px] text-ink-300 transition hover:text-white","children":"سعادت آباد"}]]}]]}]
+2f:["$","li","/motorola-mobile-repair-center/تعمیر گوشی موتورولا",{"children":["$","$L16",null,{"href":"/motorola-mobile-repair-center/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر گوشی موتورولا"}]}]
+30:["$","li","/nothingphone-repair/تعمیر گوشی ناتینگ فون",{"children":["$","$L16",null,{"href":"/nothingphone-repair/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر گوشی ناتینگ فون"}]}]
+31:["$","li","/nokia/تعمیر گوشی نوکیا",{"children":["$","$L16",null,{"href":"/nokia/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر گوشی نوکیا"}]}]
+32:["$","nav","تعمیر لپ تاپ",{"aria-label":"تعمیر لپ تاپ","children":[["$","div",null,{"className":"mb-4 text-[14px] font-extrabold text-[#E7EAEF]","children":"تعمیر لپ تاپ"}],["$","ul",null,{"className":"flex flex-col gap-2.5","children":[["$","li","/asus/lap-top-2/تعمیر لپ تاپ ایسوس",{"children":["$","$L16",null,{"href":"/asus/lap-top-2/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر لپ تاپ ایسوس"}]}],["$","li","/lenovo/lap-top/تعمیر لپ تاپ لنوو",{"children":["$","$L16",null,{"href":"/lenovo/lap-top/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر لپ تاپ لنوو"}]}],["$","li","/hp/lap-top/تعمیر لپ تاپ اچ پی",{"children":["$","$L16",null,{"href":"/hp/lap-top/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر لپ تاپ اچ پی"}]}],["$","li","/dell/lap-top/تعمیر لپ تاپ دل",{"children":["$","$L16",null,{"href":"/dell/lap-top/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر لپ تاپ دل"}]}],["$","li","/lap-top-acer/تعمیر لپ تاپ ایسر",{"children":["$","$L16",null,{"href":"/lap-top-acer/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر لپ تاپ ایسر"}]}],["$","li","/sony/lap-top/تعمیر لپ تاپ سونی",{"children":["$","$L16",null,{"href":"/sony/lap-top/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر لپ تاپ سونی"}]}],["$","li","/samsung/lap-top/تعمیر لپ تاپ سامسونگ",{"children":["$","$L16",null,{"href":"/samsung/lap-top/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر لپ تاپ سامسونگ"}]}],["$","li","/xiaomi/lap-top/تعمیر لپ تاپ شیائومی",{"children":["$","$L16",null,{"href":"/xiaomi/lap-top/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر لپ تاپ شیائومی"}]}],["$","li","/apple/macbook/تعمیر مک بوک",{"children":["$","$L16",null,{"href":"/apple/macbook/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیر مک بوک"}]}],["$","li","/services/laptop-repair/تعمیرات لپ تاپ",{"children":["$","$L16",null,{"href":"/services/laptop-repair/","className":"text-[13px] text-ink-300 transition hover:pr-1 hover:text-white","children":"تعمیرات لپ تاپ"}]}]]}]]}]
+33:I[6659,["619","static/chunks/619-ba102abea3e3d0e4.js","696","static/chunks/696-95bea2db689d49fc.js","48","static/chunks/app/%5B...slug%5D/page-da51f0e6117ba265.js"],"default"]
+23:["$","article",null,{"children":[["$","$L33",null,{}],false,["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"BreadcrumbList\",\"@id\":\"https://bartar-repairer.com/secret-and-lesser-known-iphone-tricks/#breadcrumb\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"خانه\",\"item\":\"https://bartar-repairer.com\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"تعمیر گوشی آیفون\",\"item\":\"https://bartar-repairer.com/apple/mobile-2/\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)\",\"item\":\"https://bartar-repairer.com/secret-and-lesser-known-iphone-tricks/\"}]}"}}],["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"WebPage\",\"@id\":\"https://bartar-repairer.com/secret-and-lesser-known-iphone-tricks/#webpage\",\"url\":\"https://bartar-repairer.com/secret-and-lesser-known-iphone-tricks/\",\"name\":\"40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)\",\"description\":\"معرفی کامل و جامع تمامی ترفند های ضرروری و کمتر شناخته شده ی آیفون همراه با تصویر و + توضیحات تیتروار و خلاصه محور\",\"inLanguage\":\"fa-IR\",\"isPartOf\":{\"@id\":\"https://bartar-repairer.com/#website\"},\"about\":{\"@id\":\"https://bartar-repairer.com/#organization\"},\"breadcrumb\":{\"@id\":\"https://bartar-repairer.com/secret-and-lesser-known-iphone-tricks/#breadcrumb\"},\"primaryImageOfPage\":{\"@type\":\"ImageObject\",\"url\":\"https://bartar-repairer.com/wp-content/uploads/2025/12/1010.webp\"}}"}}],["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":\"Article\",\"@id\":\"https://bartar-repairer.com/secret-and-lesser-known-iphone-tricks/#article\",\"headline\":\"40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)\",\"image\":[\"https://bartar-repairer.com/wp-content/uploads/2025/12/1010.webp\"],\"datePublished\":\"2025-12-24T11:27:02+03:30\",\"dateModified\":\"2026-01-04T13:09:39+03:30\",\"author\":{\"@id\":\"https://bartar-repairer.com/team/ali-kargar/#person\"},\"publisher\":{\"@id\":\"https://bartar-repairer.com/#organization\"},\"mainEntityOfPage\":\"https://bartar-repairer.com/secret-and-lesser-known-iphone-tricks/\",\"description\":\"معرفی کامل و جامع تمامی ترفند های ضرروری و کمتر شناخته شده ی آیفون همراه با تصویر و + توضیحات تیتروار و خلاصه محور\"}"}}],null,null,null,["$","header",null,{"className":"bg-gradient-to-b from-white to-paper","children":["$","div",null,{"className":"mx-auto max-w-[820px] px-4 pb-8 pt-8 sm:px-6","children":[["$","nav",null,{"className":"flex flex-wrap items-center gap-1 text-sm text-ink-500","aria-label":"مسیر","children":[["$","$L16",null,{"href":"/","className":"hover:text-accent","children":"خانه"}],[["$","span","/apple/mobile-2/",{"className":"flex items-center gap-1","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-chevron-left h-4 w-4 text-ink-300","children":[["$","path","1wnfg3",{"d":"m15 18-6-6 6-6"}],"$undefined"]}],["$","$L16",null,{"href":"/apple/mobile-2/","className":"line-clamp-1 hover:text-accent","children":"تعمیر گوشی آیفون"}]]}],["$","span","/secret-and-lesser-known-iphone-tricks/",{"className":"flex items-center gap-1","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-chevron-left h-4 w-4 text-ink-300","children":[["$","path","1wnfg3",{"d":"m15 18-6-6 6-6"}],"$undefined"]}],"$L34"]}]]]}],"$L35"]}]}],false,"$L36",false,false,"$L37"]}]
+34:["$","span",null,{"className":"line-clamp-1 text-ink-700","children":"40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)"}]
+35:["$","div",null,{"className":"mt-6","children":[["$","div",null,{"className":"mb-4 flex flex-wrap items-center gap-2.5","children":[["$","span",null,{"className":"rounded-lg bg-accent-tint px-3 py-1.5 text-xs font-extrabold text-accent","children":"تعمیر گوشی آیفون"}],["$","span",null,{"className":"text-[13px] text-ink-300","children":["۳ دی ۱۴۰۴ · ",25," دقیقه مطالعه"]}]]}],["$","h1",null,{"className":"text-[28px] font-extrabold leading-[1.5] tracking-tight text-ink-900 sm:text-[38px]","children":"40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)"}],["$","$L16",null,{"href":"/team/ali-kargar/","className":"mt-5 flex w-fit items-center gap-3 rounded-xl transition hover:opacity-80","aria-label":"مشاهده پروفایل علی کارگر","children":[["$","div",null,{"className":"grid h-[46px] w-[46px] place-items-center rounded-full bg-[#E4E7EC] text-base font-extrabold text-ink-500","children":"ع"}],["$","div",null,{"children":[["$","div",null,{"className":"text-[14.5px] font-extrabold text-ink-900","children":"علی کارگر"}],["$","div",null,{"className":"mt-0.5 text-[12.5px] text-ink-300","children":"تعمیر موبایل و تعمیرات نرم افزاری"}]]}]]}]]}]
+38:Tc7c8,آگاه هستید که همواره کمپانی اپل در طراحی گوشی های آیفون امکانات ویژه و متفاوتی را در اختیار کاربران خود قرار داده است همچنین ترفند های جالبی که کار کردن با تلفن همراهتان را برایتان راحت تر میکند و تجربه ی بهتری را برایتان رقم خواهد زد تیم<a href="/"> برتر سرویس</a> در این مقاله شما را با تمامی این ترفند ها که شاید تا به حال با انها آشنا نبوده اید آگاه خواهد ساخت .
+
+همچنین تیم ما پاسخگوی تمامی سوالات از تمامی قسمت های این مقاله می باشد و در صورت بروز مشکل با متخصص ترین افراد در زمینه <a href="/apple/mobile-2/">تعمیرات گوشی آیفون</a> به شما کاربر گرامی خدمت رسانی می کند با ما تا انتهای مطلب همراه باشید .
+
+&nbsp;
+
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37736" src="/wp-content/uploads/2025/12/666.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+&nbsp;
+<h2 id="sec-1">ترفندهای مخفی و کمتر شناخته شده آیفون</h2>
+<h3 id="1">ضربه به پشت گوشی (Back Tap) برای اجرای سریع دستورات</h3>
+با دوبار ضربه زدن بر روی پنل پشتی یا سه بار ضربه زدن به طور متوالی، یک میانبر یا اپلیکیشن خاص را اجرا کنید. با این قابلیت می توان امکانات زیادی نظیر ثبت اسکرین شات، بی صدا کردن آیفون، قفل کردن نمایشگر، تغییر شدت صدا و حتی اجرای اپلیکیشن های خاصی نظیر دستیار صوتی هوشمند گوگل را برایتان فراهم می آورد . با ما همراه باشید تا چگونگی فعالسازی این قابلیت را به شما بی آموزیم.
+<ul>
+ 	<li> تنظیمات را باز کنید و به مسیر Settings &gt; Accessibility بروید.</li>
+ 	<li>Touch را لمس کنید .</li>
+ 	<li> گزینه ی Back Tap را در پایین انتخاب کنید .</li>
+</ul>
+Tap Double Tap را برای فعال شدن میانبرها با دوبار ضربه زدن و گزینه ی Triple Tap برای فعال شدن میانبرها با سه بار ضربه زدن روی پنل پشتی را انتخاب کنید.
+
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37744" src="/wp-content/uploads/2025/12/999999999999.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+&nbsp;
+<h3>فعال سازی منوی مخفی آیفون</h3>
+با منوی مخفی آیفون یا همان شورتکات آیفون فقط با یک لمس یا حتی یک فرمان صوتی، کارهای روزمره مثل ارسال پیام، پخش آهنگ یا فعال سازی حالت کم مصرف باتری را سریع تر و هوشمندانه تر انجام داد . برای دستیابی به این بخش اگر برنامه ی Shortcuts به صورت پیش فرض بر تلفن شما موجود نبود میتوانید ان را نصب کنید و توسط آن منوی شخصی سازی شده ی خود را داشته باشید .
+<ul>
+ 	<li>برنامه ی Shortcuts را باز کنید .</li>
+ 	<li>روی علامت + گوشه بالا سمت راست ضربه بزنید.</li>
+ 	<li>در صفحه جدید یعنی  New Shortcut  روی Add Action بزنید .</li>
+ 	<li>برنامه ی مورد نظر را اضافه کنید .</li>
+ 	<li>اگر  قابلیت فرمان صوتی Hey Siri در تنظیمات فعال باشد.با گفتن نام شورتکات به دستیار آیفون، Siri، فرایند خودکار شورتکات بدون لمس گزینه ای انجام خواهد شد.</li>
+</ul>
+<h3>استفاده از آیفون به عنوان ذره بین حرفه ای </h3>
+<ul>
+ 	<li> Magnifier یا ذره بین ایفون امکان استفاده دوربین آیفون به عنوان یک ذره بین و یا تلسکوپ را به شما می دهد . برخی افراد به دلیل کم بینایی از دوربین آیفون این بهره را میبرند .</li>
+ 	<li>دربخش تنظیمات گزینه Accessibility را انتخاب کنید .</li>
+ 	<li>گزینه Magnifier را فعال کنید .</li>
+ 	<li>برای باز کردن ذره بین در آیفون های با دکمه برای این کار دکمه Home را 3 بار بفشارید و در آیفون های بی دکمه  برای این کار دکمه Side یا کناری  را 3 بار بفشارید.</li>
+</ul>
+<h3> اسکرین شات کامل از صفحات وب طولانی</h3>
+<div lang="en-IR" data-md="61">
+<div data-attrid="wa:/description" data-hveid="CBsQAA"> نیازی به نصب برنامه جداگانه نیست؛ در آیفون های سری X به بعد، با گرفتن دکمه های پاور و volume، اسکرین شات بگیرید و بر روی عکس کوچکی که در پایین ظاهر می شود بزنید و گزینه Full page را انتخاب کنید .</div>
+</div>
+<div data-attrid="wa:/description" data-hveid="CBsQAA">
+<h3>مخفی کردن عکس ها و ویدیوها بدون اپلیکیشن اضافی</h3>
+گاهی ممکن است اطلاعاتی مهمی از ما در قالب تصائیر در گوشیمان باشد به همین حهت پنهان کردن تصاویر امری لازم جهت حفظ حریم شخصیمان می باشد .
+<ul>
+ 	<li><span dir="rtl">وارد Photos شوید.</span></li>
+ 	<li><span dir="rtl">عکس موردنظر را انتخاب کنید.</span></li>
+ 	<li><span dir="rtl">در گوشه بالا سمت راست روی آیکون منو ضربه بزنید.</span></li>
+ 	<li><span dir="rtl"> روی گزینه Hide بزنید.</span></li>
+ 	<li><span dir="rtl">در پنجره ای که باز می شود، برای تایید مخفی شدن عکس دوباره رویHide ضربه بزنید.</span></li>
+ 	<li>جهت مشاهده تصاویر پنهان شده مجدد Photos یا گالری را باز کنید.</li>
+ 	<li>روی albums در پایین صفحه ضربه بزنید.</li>
+ 	<li>انگشت خود را به سمت پایین بکشید تا گزینه Hidden پیدا کنید. این گزینه در قسمت Utilities قرار دارد .</li>
+ 	<li> با فیس آیدی، تاچ آیدی یا وارد کردن رمز ورود احراز هویت انجام دهید.</li>
+ 	<li> می توانید عکس های مخفی خود را ببینید .</li>
+</ul>
+&nbsp;
+
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37875" src="/wp-content/uploads/2025/12/call-Recovered-Recovered-Recovered.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵) — call Recovered Recovered Recovered">
+
+&nbsp;
+<h2 id="sec-2">ترفندهای افزایش سرعت و عملکرد آیفون</h2>
+ممکن است بعد از مدتی احساس کنید دستگاهتان نسبت به قبل کند تر عمل میکند که این مشکل از علل مختلفی به وجود میاید در این قسمت تمامی دلایلی که باعث این اشکال می شود را بررسی و با اریه ی ترفند های قابل اجرا سعی در حل این موارد خواهیم داشت با ما همراه باشید .
+<h3>آزادسازی رم آیفون بدون ریستارت</h3>
+آیفون برای اجرای وظایف از رم دستگاه استفاده می کنند. البته به صورت خودکار بخشی از رم را خالی میکند اما گاها پیش می آید که نیاز به آزادسازی دستی داشته باشد تا بهتر عمل کند و همچنین نیاز به این داشته باشیم که اطلاعاتمان پاک نشود.  در این قسمت به این دستور العمل میپردازیم .
+<ul>
+ 	<li> وارد Settings شده و روی General بزنید .</li>
+ 	<li>روی Shut Down ضربه بزنید.</li>
+ 	<li>بعد از مکثی نوار لغزنده خاموش کردن (turn-off slider) ظاهر می شود.</li>
+ 	<li> Home را به مدت طولانی نگه دارید. صبر کنید تا صفحه گوشی خالی شود.</li>
+ 	<li>Home را رها کرده و رمز عبور گوشی را وارد کنید تا فرآیند انجام شود .</li>
+</ul>
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37881" src="/wp-content/uploads/2025/12/84844556.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+</div>
+&nbsp;
+<h3>غیرفعال کردن انیمیشن ها برای افزایش سرعت iOS</h3>
+iOS دارای انیمیشن و افکت های بصری است حالت بصری زیبایی ایجاد میکنند ، اما این افکت ها می توانند منابع دستگاه را مصرف کنند و عملکرد گوشی را کند کنند . غیرفعال کردن این افکت ها از این ایجاد این مشکل جلوگیری می کند .
+<ul>
+ 	<li>وارد Settings شوید .</li>
+ 	<li>بر روی General ضربه بزنید و وارد Accessibility  شوید.</li>
+ 	<li> گزینه Reduce Motion را فعال کنید.</li>
+</ul>
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37886" src="/wp-content/uploads/2025/12/820020.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+&nbsp;
+<h3>حذف کش برنامه ها بدون پاک کردن اپ</h3>
+داده های کش به مرور حافظه و منابع دستگاه را مصرف می کنند. پاکسازی این داده ها سرعت و عملکرد گوشی ایفون را بهتر و منجبر به آزادسازی حافظه می شود . روش حذف این کش ها رو در ادامه مشاهده می فرمایید .
+<ul>
+ 	<li> به settings گوشی آیفون وارد شوید.</li>
+ 	<li>General را انتخاب کنید.</li>
+ 	<li>برنامه ای که می خواهید حافظه ی پنهان آن را پاک کنید، انتخاب کنید.</li>
+ 	<li>دو گزینه Offload App و Delete App را مشاهده خواهید کرد.</li>
+ 	<li>در این مرحله باید گزینه پاک کردن کش یا حذف داده های برنامه را انتخاب کنید.</li>
+ 	<li>در صورتی که درخواست را مشاهده نمودید می بایست آن را تایید نمایید.</li>
+ 	<li>گزینه Offload App بدون حذف تمامی اطلاعات برنامه حافظه ی پنهان آن را می کند .</li>
+</ul>
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37899" src="/wp-content/uploads/2025/12/85555555.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+&nbsp;
+<h3>جلوگیری از کند شدن آیفون های قدیمی</h3>
+یکی از اصلی ترین مشکلاتی که با گذشت زمان برای تمام گوشی ها پیش می آید کند شدن دستگاه می باشد که آیفون هم از این قضیه مستثنا نمی باشد . شما میتوانید با چند عمل ساده مثل که در زیر شرح دادیم عملکرد دستگاه خود را بهبود بخشید و مانع از کند شدن آن شوید.
+<ul>
+ 	<li>گوشی را ری استارت کنید .</li>
+ 	<li>از فضای ذخیره سازی ابری icloud  استفاده کنید و حدالامکان اطلاعات غیر ضروری را از حافظه ی گوشی حذف کنید.</li>
+ 	<li>حجم پردازش گرافیکی را کم کنید .</li>
+ 	<li>سیری را محدود کنید .</li>
+ 	<li>باطری تلفن را تعویض کنید .</li>
+ 	<li>از رفرش اپ در پس زمینه جلوگیری کنید .</li>
+</ul>
+<h3>مدیریت برنامه های پس زمینه برای کاهش مصرف منابع</h3>
+در اکثر مواقع گوشی آیفون به ثورت خودکار این عمل را انجام می دهد و لازم نیست شما همیشه به صورت دستی این کار را انجام دهید . اما گاهی پیش می آید که برنامه ای به صورت غیر معمول از باطری استفاده می کند یا عملکرد درستی ندارد در این شرایط شما می توانید طبق روش زیر آن را ببندید .
+<ul>
+ 	<li>وارد Settings شوید .</li>
+ 	<li>سپس General</li>
+ 	<li>و وارد قسمت Background App Refresh شوید سوییچ هر برنامه ای که نمیخواهید اجرا شود را خاموش کنید .</li>
+</ul>
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37910" src="/wp-content/uploads/2025/12/5000.webp" width="323" height="581" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+<h2 id="sec-3"> ترفندهای باتری آیفون (کاهش مصرف و افزایش عمر باتری)</h2>
+یکی از مهم ترین قسمت های مراقبت و نگهداری از گوشی اللخصوص در گوشی های آیفون مراقبت از باطری آنهاست چرا که سلامت باطری تلفنتان رابطه مستقیم با توجه و نگهداری شما از آن دارد در اینجا به چند نکته که شما را در این امر یاری می دهد بیان می کنیم .
+<h3>محدود کردن شارژ باتری تا ۸۰٪ برای افزایش طول عمر</h3>
+در گوشی های آیفون باتری های لیتیومی به کار رفته که در صورت شارژ بالای طولانی مدت به مرور زمان افت کیفیت و عمر پیدا خواهند کرد . حال کمپانی اپل ویژگی Optimized Battery Charging را افزوده برای شمایی که به فکر سلامت باطری خویش هستید.  این ویژگی امکان محدود کردن شارژ باتری تا ۸۰ درصد را می دهد . و سپس فرایند شارژ متوقف خواهد شد و باتری افزایش ولتاژ نخواهد داشت . فعال کردن این امکان را در زیر مشاهده کنید .
+<ul>
+ 	<li>وارد Settings شوید .</li>
+ 	<li>وارد بخش Battery شوید.</li>
+ 	<li> Battery Health &amp; Charging را انتخاب کنید.</li>
+ 	<li> به Charging Optimization بروید و بر گزینه 80% Limit بزنید .</li>
+</ul>
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37912" src="/wp-content/uploads/2025/12/98.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+&nbsp;
+<h3>شناسایی برنامه های پرمصرف باتری</h3>
+ممکن است حس کنید گوشیتان خیلی زود باطری خالی میکند و احتمال دهید که باطری تلفنتان خراب شده است اما بهتر است قبل از اقدام برای باطری به فکر برنامه های پر مصرف تلفنتان باشید که بی صدا در حال مصرف باطری شما می باشند در این قسمت به شما نشان می دهیم چگونه چنین برنامه ها را یافته و مصرف باطری خود را بهبود بخشید .
+<ul>
+ 	<li>به Settings  میرویم .</li>
+ 	<li>روی Battery میزنیم .</li>
+ 	<li>لیست  Battery Usage by App بارگذاری می شود.</li>
+ 	<li>این لیست نمایانگر این است که هر برنامه چند درصد از باتری شما را در ۲۴ ساعت گذشته یا ۱۰ روز گذشته مصرف کرده است .</li>
+ 	<li>حال با شناسایی برنامه ی پر مصرف می توانید اجرای آن را متوقف کنید طبق روش هایی که در بالا خدمتتان عرض کردیم.</li>
+</ul>
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37913" src="/wp-content/uploads/2025/12/555555555.webp" width="323" height="581" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+<h3>فعال سازی حالت کم مصرف هوشمند</h3>
+
+<p class="rd-title">Low Power Mode یا حالت کم مصرف یک ویژگی کا آمد است که با غیر فعالسازی ومحدود کردن آیتم هایی مصرف باتری را تا حد قابل توجهی پایین می آورد همچنین در زمانی که کاربر شارژ کمی دارد و دسترسی به شارژ ندارد یا میخواهد گوشی را بدون شارژ مجدد مورد استفاده قرار دهد به کمکش می آید و مدت بیشتری از حالت معمول تلفن را با همان مقدار شارژ روشن نگه میدارد .</p>
+
+<ul>
+ 	<li>وارد Settings  شوید .</li>
+ 	<li> گزینه Battery را انتخاب کنید .</li>
+ 	<li>Low Power Mode به نمایش در می آید حال میتوانید آن را فعال کنید .</li>
+</ul>
+<h3>تنظیم شارژ شبانه برای جلوگیری از آسیب باتری</h3>
+شارژ بهینه باتری یا Optimized Battery Charging جهت از آسیب های احتمالی شارژ شبانه آیفون طراحی شده است. این سیستم با یادگیری الگوی خواب و بیداری کاربر، شارژ باتری را در شب تا حدود ۸۰٪ نگه می دارد و زمانی که نزدیک به زمان بیداری کاربر است، شارژ را تا ۱۰۰٪ ادامه می دهد. این ویژگیباعث می شود که باتری مدت زمان کمتری را در حالت شارژ کامل باشد و فرسودگی آن به تعویق بیفتد .
+<ul>
+ 	<li>این قسمت را نیز همانند قسمت های بالا میتوانید وارد settings شوید .</li>
+ 	<li>سپس وارد health buttery شوید .</li>
+ 	<li>گزینه Optimized Battery Charging را فعال کنید .</li>
+</ul>
+&nbsp;
+
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37915" src="/wp-content/uploads/2025/12/966666666666.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+&nbsp;
+<h3> نشانه هایی که می گوید باتری آیفون نیاز به تعویض دارد</h3>
+ممکن است شما تمام مراحل بالا را طی کرده باشید اما با این حال شاهد این باشید که شارژ گوشی همراهتان زود خالی می شود و یا مشکلات دیگری که شما را به شک انداخته است که آیا زمان تعویض باتری فرا رسیده است ؟
+
+در این قسمت شما را همراهی می کنیم تا به پاسخ این سوال برسید و اگر نیازمند به تعویض باتری بودید با متخصیص ما در بخش تعمیرات قسمت <a href="/iphone-battery-replacement/">تعویض باتری آیفون</a> در ارتباط باشید و تعمیر گوشی خود را به متخصص های ما بسپرید .
+<ul>
+ 	<li>رجوع به قسمت health buttery و چک درصد سلامت باطری</li>
+ 	<li>خاموش شدن ناگهانی دستگاه</li>
+ 	<li>تورم باتری</li>
+ 	<li> تخلیه سریع شارژ</li>
+ 	<li>نوسانات درصد باتری</li>
+ 	<li> زمان شارژ طولانی تر</li>
+</ul>
+<h2 id="sec-4">ترفندهای امنیتی و حفظ حریم خصوصی در آیفون</h2>
+حفظ حریم شخصی یکی از مهمترین نیاز های ما در گوشی های همراهمان می باشد چرا که امروزه اکثر اطلاعات به صورت دیجیتالی ذخیره می شوند و گوشی ها همانند یک گاو صندوق همیشه همراه ذخیره کننده این اطلاعات می باشند از این جهت ما ترفند ها و راه هایی را برای ایمن سازی هر چه بیشتر تلفنتان به شما ارائه داده ایم با ما همراه باشید .
+<h3> قفل کردن برنامه ها بدون نصب نرم افزار جانبی</h3>
+در گوشی های آیفون امکاناتی در نظر گرفته شده تا بتوانید هر برنامه ای که می خواهیید به ساده ترین روش و بدون نصب برنامه ی جانبی قفل کنید ما در این قسمت به بررسی دو روش قفل کردن برنامه ها می پردازیم .
+<ul>
+ 	<li>انگشتتان را روی برنامه ی موردنظر نگه دارید .</li>
+ 	<li>Require Face ID را انتخاب کنید .</li>
+ 	<li>میتوانید گزینه دوم هم بزنید تا در کنار قفل شدن برنامه را مخفی هم کند .</li>
+ 	<li>در روش دوم نیز میتوانید وارد Settings شده</li>
+ 	<li>Face ID Passcode را انتخاب کرده</li>
+ 	<li>روی Other Apps بزنید .</li>
+</ul>
+
+<h3>مخفی کردن اعلان پیام ها روی لاک اسکرین</h3>
+اگر بخواهید پیام های دریافتیتان در معرض دید دیگران قرار نگیرد و حفظ حریم شخصی برایتان مهم است میتوانید با روشی که اینجا به آن اشاره کرده ایم مانع از نمایش اعلانات روی صفحه نمایش گوشیتان شوید و تازمانی که خودتان قفل گوشی را باز نکنید پیام هایتان به نمایش در نیایند .
+<ul>
+ 	<li>وارد Setting شوید</li>
+ 	<li>گزینه Notifications را انتخاب کنید</li>
+ 	<li>اپلیکیشن Message یا Mail را انتخاب کنید</li>
+ 	<li>Show Previews یا نشان دادن پیش نمایش را غیر فعال کنید.</li>
+</ul>
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37919" src="/wp-content/uploads/2025/12/20.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+&nbsp;
+<h3>جلوگیری از دسترسی برنامه ها به میکروفون و دوربین</h3>
+خیلی اوقات فکر دسترسی برخی برنامه ها به دوربینیا میکروفن موجب نگرانی ما میسود و ممکن است با خود فکر کنیم این دسترسی امکان نا امن شدن حریم شخصیمان را فراهم می کند پس با ما همراه باشید تا راه بستن این دسترسی ها رو به شما بدهیم .
+<ul>
+ 	<li>وارد Settings  شوید .</li>
+ 	<li>وارد Privacy  شوید .</li>
+ 	<li>روی Microphone، Camera یا Bluetooth بزنید .</li>
+ 	<li>توسط سوئیچ، دسترسی به Microphone، Camera یا Bluetooth را روشن یا خاموش کنید.</li>
+</ul>
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37920" src="/wp-content/uploads/2025/12/21.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+&nbsp;
+<h3>شناسایی اپ هایی که مخفیانه اطلاعات شما را جمع آوری می کنند</h3>
+گرم گوشی خالی کردن سریع باتری مصرف بیش از حدداده و ... همه و همه نشان ازنرم افزاری آسیب زاد در گوشی همراه شما می باشد که شما باید انها از بین ببرید پیشنهاد ما به شما در صورت مشکوک بودن به برنامه ای بروزرسانی گوشی می باشد که تا حد زیادی نقص های امنیتی را از بین میبرد .
+
+&nbsp;
+<h3>فعال سازی حالت اضطراری (Emergency SOS)</h3>
+قابلیت SOS در تمامی گوشی های همراه تعبیه شده و به شما این امکان را می دهدتا در شرایط بحرانی و اضطراری بتوانید به سرعت هر چه بیشتر درخواست کمک خویش را به افراد نزدیک یا مراکز مهم اورژانسی ارسال کنید در اینجا روش فعالسازی اینرا برایتان بیان خواهیم کرد .
+<ul>
+ 	<li>به Settings بروید</li>
+ 	<li> گزینه ی Emergency SOS انتخاب شود</li>
+ 	<li>در آخر نحوه ی اتصال دلخواه خود را انتخاب کنید .</li>
+</ul>
+&nbsp;
+<h2 id="sec-5"> ترفندهای کاربردی صفحه نمایش و تاچ آیفون</h2>
+ترفند های زیادی در گوشی های آیفون موجود است که شاید شما تا به حال از آنها بی خبر بوده اید . حال ما با بررسی آنها به سرعت استفادیتان و همچنین بهتر کردن تجربه استفاده ی شما کمک می کنیم .
+
+&nbsp;
+<h3> استفاده از آیفون با یک دست (One-Hand Mode)</h3>
+حتما برایتانپیش آمده که بخواهید با یک دست با گوشی همراهتان کار کنید یا دستتان بند بوده یا دلایل مرتبط دیگر اما به دلیل بزرگ بودن صفحه ی گوشی ها این کار چندان برایمان راحت نیست اما روشی وجود دارد که بتوان با یک دست با گوشی کار کرد که ما در این جا به آن پرداختیم .
+<ul>
+ 	<li>به Settings بروید</li>
+ 	<li>Accessibility را انتخاب کنید</li>
+ 	<li> گزینه  ی Touch را انتخاب کنید</li>
+ 	<li>وضعیت Reachability را فعال کنید</li>
+</ul>
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37923" src="/wp-content/uploads/2025/12/99996.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+&nbsp;
+<h3>تنظیم حساسیت لمس صفحه برای گلس ضخیم</h3>
+گوشی های آیففونبه صورت خودکار تنظیمات مناسب برای لمس صفحه در نظر گرفته اما گاهی ممکن است نیاز شما متفاوت با تنظیمات پیش فرض باشد به عنوان مثال گلسی برای گوشی تعبیه کردید که پیام لمس را به خوبی منتقل نمیکد در این مواقع شما می توانید به صورت دستی تنظیمات را تغییر دهید به دستورالعمل زیر توجه فرمایید .
+<ul>
+ 	<li>به قسمت Settings بروید .</li>
+ 	<li>Accessibility را انتخاب کنید .</li>
+ 	<li>وارد گزینه Touch شوید .</li>
+ 	<li>حال میتوانید حساسیت لمس را بین گزینه های Fast و Slow تنظیم کنید .</li>
+</ul>
+&nbsp;
+
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37968" src="/wp-content/uploads/2025/12/6666666666.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+&nbsp;
+<h3>جلوگیری از لمس ناخواسته صفحه هنگام تماس</h3>
+گاها ممکن است تلنتان به صورت غیر ارادی لمس کوچیکی از شما را دریافت کند و چیزی را اجرا کند که شما نمیخواهید . این عمل اللخصوص در هنگام برقراری تماس میتواند مشکل ساز باشد با دستورالعمل زیر میتوانید این مشکل را حل کنید .
+<ul>
+ 	<li>به settings رفته</li>
+ 	<li>وارد Accessibility  شوید</li>
+ 	<li>Touch را انتخاب کنید</li>
+ 	<li>حالا در زبانه کنار Touch Accommodations ‚ Assistive Touch  و Back Tap را غیر فعال کنید .</li>
+</ul>
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37972" src="/wp-content/uploads/2025/12/477777.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+&nbsp;
+<h3>کالیبره کردن تاچ آیفون در صورت اختلال</h3>
+با گذشت زمان ممکن است حس کنید حساسیت گوشیتان نسبت به لمس کم تر شده است و آ« سرعت عمل و کارایی گذشته را از دست داده است . کالیبره کردن یکی از راه هایی است که میتوان توسط آن تاچ صفحه را بهتر کرد که ما در ادامه ی مطلب به آن پرداختیم گاهی نیز ممکن است این ایراد فراتر از تنظیمات برود و مشکل از سنسور ها یا دیگر عوامل داخلی باشد که جای نگرانی ندارد تیم تخصیصی تعمیرات ما در قسمت <a href="/replacing-the-iphone-lcd/">تعمیر یا تعویض تاچ ال سی دی آیفون</a> خدمت رسان شماهستند و در سریع ترین و بهترین حالت این مشکل را برایتان برطرف میکنند .
+<ul>
+ 	<li>به Settings بروید</li>
+ 	<li>وارد Display Accommodations شوید و سپس Auto-Brightness را خاموش کنید.به مکانی کم نور بروید و سپس روشنایی صفحه را به صورت دستی کم کنید تا صفحه نمایش تا حد ممکن تاریک شود.</li>
+ 	<li>Auto-Brightness را مجدد روشن کنید</li>
+ 	<li>به محیطی با نور عادی بروید، عملکرد سنسور خودکار روشنایی صفحه نمایش را بررسی کنید</li>
+ 	<li>با این عملکرد سنسور نور گوشی مانند قبل می شود</li>
+</ul>
+آیفون گزینه ی مستقیمی برای کالیبره کردن لمس (Touch Calibration) ندارند، اما برای بهبود عملکرد لمس می توان چند کار ساده انجام داد.
+<ul>
+ 	<li>تمیز کردن صفحه نمایش</li>
+ 	<li>برداشتن گلس یا قاب ضخیم</li>
+ 	<li>ریست تنظیمات لمسی که در بالا به آن اشاره کردیم .</li>
+ 	<li>خاموش و روشن کردن گوشی</li>
+ 	<li>به روزرسانی iOS</li>
+</ul>
+<h2 id="sec-6">ترفندهای دوربین آیفون که کیفیت عکس را چند برابر می کند</h2>
+
+
+قطعا می دانید که گوشی های آیفون به دوربین خوبش و کیفیت عکس هایش شهرت دارد و حتی شاید خیلی افراد دوربین آیفون را دلیل انتخاب این گوشی قرار دهند اما آیا راه هایی وجود دارد که بتوان بهترین استفاده را از این دوربین کرد ؟ ما در این مقاله مسیر هایی را برایتان نمایان خواهیم کرد تا از دوربین گوشی آیفون خود به نحو احسن استفاده کنید با ما همراه باشید .
+
+&nbsp;
+<h3>قفل فوکوس و نوردهی حرفه ای</h3>
+دوربین آیفون به صورت خودکار فوکوس را انجام می دهد و خود توانایی تشخیص سوژه را دارا است اما گاهی ممکن است بخواهید دوربین را روی چیزی غیر از سوژه فوکوس کنید که در این صورت می توانید به صورت دستی این کار را انجام دهید .<img loading="lazy" decoding="async" class="alignleft wp-image-37977 " src="/wp-content/uploads/2025/12/75.webp" width="278" height="500" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+&nbsp;
+<ul>
+ 	<li>وارد Camera شوید</li>
+ 	<li>با نگه داشتن انگشت روی قسمت مورد نظر آن را انتخاب کنید</li>
+ 	<li>با بالا و پایین کشیدن انگشت نور را میتوان تنظیم کرد</li>
+ 	<li>جهت قفل کردن نیز بعد از انتخاب سوژه روی آن نگه دارید تا آیکون AE/AF Lock نمایان شود</li>
+ 	<li>حال بدون تغییر فوکوس می توانید عکاسی کنید</li>
+ 	<li>برای تنظیمات بیشتر وارد pro mode شوید</li>
+ 	<li>iso و سرعت شاتر را تغییر دهید</li>
+ 	<li>این تنظیمات برای  Portrait Mode، Night Mode، و Macro Mode هم کارایی دارد</li>
+</ul>
+&nbsp;
+<div class="Y6JuXb">
+<div lang="fa" data-hveid="CBkQAA" data-ved="2ahUKEwiJw-KZltORAxWaIUQIHS8yLaEQFSgAegQIGRAA">
+<div class="tF2Cxc">
+<div class="yuRUbf">
+<div class="b8lM7"></div>
+</div>
+</div>
+</div>
+</div>
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+
+&nbsp;
+<h3>گرفتن عکس سریع بدون باز کردن اپ دوربین</h3>
+قطعا هر این که بخواهید برای هر بار عکاسی قفل گوشی را باز کنید و وارد اپلیکیشن دوربین شوید کسل کنندست اما آیفون راه های جایزینی برایتان آورده که در این جا نگاهی بهشان می انذازیم . در کل دو راه موجود است که بدون باز کردن اپلیکیشن بتوان عکاسی کرد .
+<ul>
+ 	<li>از طریق صفحه قفل که سریع ترین راه، کشیدن آیکون دوربین از گوشه پایین صفحه به سمت بالا/چپ است.</li>
+ 	<li>از طریق Back Tap (دو یا سه ضربه به پشت) این روش کمی پیشرفته تر است و شما باید آن را تنظیم کنید.</li>
+ 	<li>روش تنظیم <a href="#1">Back Tap</a> در بالای مقاله توضیح داده شده</li>
+</ul>
+&nbsp;
+<h3>حذف صدای شاتر دوربین آیفون</h3>
+اگر بخواهید عکاسی کنید بدون این که صدای عکس گرفتن را مدام بشنوید یا میخواهید کسی متوجه نشود که شما در حال عکاسی هستید این مطلب مناسبتان است در کل 3 راه ساده جلوی راهتان قرار میدهیم جهت قطع صدای شاتر .
+<ul>
+ 	<li id="h-روش-اول-استفاده-از-کلید-سایلنت-ring-silent-switch" class="wp-block-heading">استفاده از کلید سایلنت (Ring/Silent Switch)</li>
+ 	<li id="h-روش-دوم-استفاده-از-حالت-live-photo-یا-تنظیمات-دوربین" class="wp-block-heading">استفاده از حالت Live Photo یا تنظیمات دوربین</li>
+ 	<li>استفاده از نرم افزارهای جایگزین یا ادیتورهای عکس</li>
+</ul>
+<h3>اسکن اسناد با کیفیت بالا بدون اپ اضافی</h3>
+یکی از مواردی که برای تمامی افراد کار آمد است اسکن کردن مدارکشان است در اینجا روشی را برایتان روشن می کنیم تا بدون نیاز به دستگاه اسکنر یا رجوع به کافی نت و مراکز دیگر به راحتی و با کیفیت خودتانمدارکتان را اسکن کنید .
+<ul>
+ 	<li>وارد برنامه Files شوید</li>
+ 	<li>روی آیکون سه نقطه بزنید</li>
+ 	<li>گزینه Scan Documents را برگزنید</li>
+ 	<li>مدارک خود را رو به روی دوربین قرار دهید و سپس فرایند اسکن را آغاز کنید</li>
+</ul>
+&nbsp;
+
+
+
+&nbsp;
+<h3>تنظیمات مخفی دوربین برای عکس های شب</h3>
+عکاسی در شب یا مکان های تاریک بسیار دشوار تر از عکاسی در نور است همانطور که میدانید نور یکی از ارکان اصلی عکاسی است اما راه هایی وجود دارد تا بتوان در تاریکی هم عکاسی کرد و نتیجه مطلوبی به دست اورد خود ایفون دارای ویژگی Night Mode است و در تاریکی به صورت خودکار این ویژگی فعال می شود اما شما میتوانید کنترل بیشتری روی ان داشته باشید که ما در ادامه مطلب به انها مبپردازیم .
+<ul>
+ 	<li dir="rtl" lang="fa">با ضربه زدن روی آیکون ماه، یک نوار لغزنده ظاهر می شود که توسط آن میتوان کنترل مدت زمان نوردهی (Exposure Time) را بدست آورد</li>
+ 	<li dir="rtl" lang="fa"> استفاده از سه پایه (Tripod Mode) یکی از راه هایی است که با فاکتور گرفتن ازلرزش دست کیفیت عکاسی در شب را بالا میبرد</li>
+ 	<li>قفل کردن فرمت HEIF/HEVC در قسمت تنظیمات</li>
+</ul>
+<h2 id="sec-7">ترفندهای مدیریت حافظه و فضای ذخیره سازی</h2>
+فضای ذخیره سازی تاثیر مستقیم بر عملکرد تلفن دارد و پر شدن آن ممکن است باعث کند شدن تلفن همراهتان شود در این بخش روش هایی را باهم بررسی میکنیم تا مانع از این امر شویم .
+<h3>پیدا کردن فایل ها و ویدیوهای حجیم مخفی</h3>
+آیفون گزینه های مستقیمی برای نمایش فایل های مخفی به سبک کامپیوترها ندارد، اما می توانید با ابزارهای داخلی، منابع اصلی مصرف فضا را شناسایی کنید.
+<ul>
+ 	<li>وارد Settings شوید</li>
+ 	<li>iPhone Storage را انتخاب کنید</li>
+ 	<li>لیستی از تمام اپلیکیشن ها و مقدار فضایی که هر کدام مصرف کرده اند، مشاهده می کنید که در آن میتوان اپلیکیشن هایی که ویدیو در آن رد و بدل کرده اید شناسایی کرده و ویدیو ها را پاکسازی کنید</li>
+</ul>
+
+
+&nbsp;
+<h3>حذف فایل های اضافی سیستم iOS</h3>
+فایل هایی وجود دارد که دیگر ما استفاده ای از انها نداریم و حتی فراموش کرده ایم که در قسمتی از گوشیمان ذخیره شده اند
+
+اما همین فایل ها میتوانند پر کننده حافظه ی ما بدون اطلاع ما باشند حال روش هایی را بیان میکنیم که این فایل ها از بین بروند
+<ul>
+ 	<li>بازنشانی تنظیمات (Reset All Settings)</li>
+ 	<li>به روزرسانی iOS</li>
+ 	<li>حذف و نصب مجدد اپلیکیشن ها</li>
+ 	<li>اجرای کامل یک چرخه دانلود/آپلود</li>
+ 	<li>رفتن به بخش تنظیمات داخلیبرنامه ها برای پاک کردن کش</li>
+</ul>
+<h3>انتقال هوشمند عکس ها به iCloud یا کامپیوتر</h3>
+یکی از راه های مدیریت و کنترل حافظه و پیشگیری از پر شدن حافظه انتقال عکس ها است که در اینجا دو روش رایج آن را شح دادیم
+
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37997" src="/wp-content/uploads/2025/12/520.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+<ul>
+ 	<li>وارد Settings شوید</li>
+ 	<li>وارد iCloud Photos شوید</li>
+ 	<li>گزینه Optimize iPhone Storage را فعال کنید</li>
+</ul>
+برای انتقال از طریق کامپیوتر نیز مسیر زیر را دنبال کنید
+<ul>
+ 	<li>استفاده از کابل و Windows File Explorer</li>
+ 	<li>آیفون را با کابل وصل کنید</li>
+ 	<li>به File Explorer بروید.</li>
+ 	<li>آیفون در لیست دستگاه ها نمایش داده می شود.</li>
+ 	<li>به پوشه Internal Storage و سپس DCIM بروید.</li>
+ 	<li>تمام عکس ها و ویدیو ها در پوشه ها ی این فولدر قرار دارند ؛ آن ها را به پوشه دلخواه در کامپیوتر کپی کنید.</li>
+</ul>
+&nbsp;
+<h3>جلوگیری از پر شدن حافظه آیفون در واتساپ و تلگرام</h3>
+دو اپلیکیشن پیام رسان که امروزه جز پرطرفدار ترین پیام رسان هاست و روزانه محتوای تصویری و ویدیویی زیادی را جا به جا میکند تلگرام و واتساپ می باشند اما این همه محتوا ی تصویری که در این برنامه ها جا به جا می شوند به خودی خود باعث پر شدن فضای ذخیره سازی میشوند مطلب زیر را دنبال کنید تا مانع از این مشکل شوید .
+<ul>
+ 	<li>دانلود خودکار را در تنظیمات غیر فعال کنید</li>
+ 	<li>کش برنامه را پاک کنید</li>
+ 	<li>چت هایتان را مرور کرده و فایل های بلا استفاده را حذف کنید</li>
+</ul>
+<h2 id="sec-8"> ترفندهای تماس و پیام رسانی آیفون</h2>
+در عصر ارتباطات که 80 درصد مکالمات ما با پیام رسان ها مکالمات انجام می شود لازم است تا از تمامی ترفند ها و زیر بم های پیام رسانی گوشی خود و تماس های آن آشنا شوید .
+
+&nbsp;
+<h3>ضبط تماس در آیفون (روش های امن)</h3>
+ضبط تماس ویژگی است که در خیلی از شرایط میتواند کاربردی باشی پس تیم برتر سرویس این مهم را در این مطلب جا داده تاشما مخاطب گرامی از هیچ طرفندی جا نمانید با ما همراه باشید .
+
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-37999" src="/wp-content/uploads/2025/12/call-Recovered-Recovered-Recovered-Recovered.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵) — call Recovered Recovered Recovered Recovered">
+<ul>
+ 	<li>ضبط تماس درحال حاضر فقط در iOS 18 در دسترس است ابتدا ابدیت کنید .</li>
+ 	<li>وارد Settings شوید</li>
+ 	<li>وارد اپلیکیشن Phone در قسمت تنظیمات شوید</li>
+ 	<li>گزینه ی Call Recording را فعال کنید</li>
+ 	<li>دکمه ی Record در گوشه سمت راست پس از برقراری تماس فعال می شود ، برای شروع ضبط آن را لمس کنید.</li>
+</ul>
+<h3>پاسخ خودکار به تماس ها در زمان رانندگی</h3>
+این قابلیت به ظاهر ساده که شاید تا به حال مانع از تصادفات زیادی شده باشد Driving Focus نام دارد . فعال کردن این بخش برای شما عزیزانی که ساعاتی را مشغول به رانندگی می باشید بسیار کار امد است ما را در ادامه مطلب دنبال کنید .
+<ul>
+ 	<li>وارد Settings شوید</li>
+ 	<li>به Focus رفته و به Driving تنظیم کنید</li>
+ 	<li>تماس های دریافتی میتوانند مستقیماً به پاسخ صوتی (Voice Mail) هدایت شوند.</li>
+ 	<li>یا به تماس های دریافتی از مخاطبین خاص (Favorites) یا تماس هایی که چند بار زنگ زده اند، پاسخ داده شود.</li>
+</ul>
+<h3> زمان بندی ارسال پیام</h3>
+ممکن است بخواهیدپیامی را برای زمان خاصی ارسال کنید اما احتمال می دهید فراموش کنید و آن پیام هرکز ارسال نشود این ویژگی در اینجا به کمک شما میاید روش کار با آن را در زیر دنبال کنید.
+
+وارد اپلیکیشن Shortcuts شوید
+
+به بخش Automation رجوع کنید
+
+یک اتوماسیون جدید ایجاد کرده و زمان  مورد نظر را به عنوان Trigger تنظیم کنید.
+
+در قسمت Action، گزینه Send Message را انتخاب کرده و متن و گیرنده مورد نظر را مشخص کنید.
+
+گزینه Ask Before Running را خاموش کنید تا پیام دقیقاً در زمان مقرر و بدون نیاز به تأیید شما ارسال شود.
+<h3>بی صدا کردن تماس های مزاحم بدون بلاک کامل</h3>
+شما به راحتی میتوانید تماس هایی که نمیخواهید با شما برقرار شود را بی صدا کنید بدون این که فرد مورد نظر را بلاک کنید
+<ul>
+ 	<li>وارد Settings شوید</li>
+ 	<li>سپس وارد Phone شده</li>
+ 	<li>با انتخاب گزینه Silence Unknown Callers میتوانید افرادی که در مخاطبانتان ذخیره نشده اند را بی صدا کنید .</li>
+</ul>
+<h2 id="sec-9">چه زمانی ترفندها جواب نمی دهند و آیفون نیاز به تعمیر دارد؟</h2>
+تمامی این ترفند ها برای تجربه بهتر و کارایی بیشتر تلفن شما به شما ارائه شده اما گاهی ممکن است این ها عمل نکنند یا نشانه هایی ببینید که باعث نگرانی شما در مورد تلفنتان شود مادر اینجا به بررسی این مسائل می پردازیم
+
+<img loading="lazy" decoding="async" class="aligncenter size-full wp-image-38000" src="/wp-content/uploads/2025/12/85555.webp" width="600" height="400" / alt="40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)">
+
+&nbsp;
+<h3>نشانه های خرابی سخت افزاری آیفون</h3>
+خرابی گوشی های همراه چالشیست که همه ی ما حداقل یک بار با آن مواجه شده ایم بر اثر حوادث یا گذر زمان این امری طبیعی برای تمامی محصولات دیجیتال است اما اینکه شما زودتر متوجهاین خرابی شوید تاثیر زیادی در بهبود تلفن همراهتان دارد ما در این قسمت علائمی را ذکر کرده ایم که شما را زود تر از خرابی دستگاه تلفنتان مطلع سازد با ما همراه باشید .
+<ul>
+ 	<li>تخلیه سریع باتری</li>
+ 	<li>خاموش شدن ناگهانی</li>
+ 	<li>تاچ از کار افتاده یا غیرفعال</li>
+ 	<li>خطوط یا لکه های رنگی روی صفحه</li>
+ 	<li>چشمک زدن صفحه</li>
+ 	<li>دکمه ها گیر می کنند یا کار نمی کنند</li>
+ 	<li>مشکل در پورت لایتنینگ</li>
+ 	<li>تصویر سیاه در هنگام باز کردن دوربین</li>
+ 	<li>راه اندازی مجدد (Restart) مکرر و نا خواسته</li>
+ 	<li>تفاوت مشکل نرم افزاری با خرابی سخت افزاری</li>
+</ul>
+<h3>تفاوت مشکل نرم افزاری با خرابی سخت افزاری</h3>
+<div data-v-baaac922="">
+<div dir="ltr" data-v-36800c70="" data-v-baaac922="" data-block-id="409e3f79-540c-4a96-a378-198d6276f480">
+<div>
+<p dir="rtl" lang="fa">مشکل نرم افزاری معمولاً مربوط به خطا های سیستمی، برنامه ها یا تنظیمات است و اغلب با به روزرسانی، ریست فکتوری یا نصب مجدد سیستم عامل (iOS) قابل حل است، در حالی که خرابی سخت افزاری به آسیب فیزیکی یا نقص در قطعات داخلی دستگاه (مانند باتری، صفحه نمایش، مادربرد یا تراشه ها) مربوط می شود و تنها با تعویض یا تعمیر فیزیکی آن قطعه برطرف خواهد شد.</p>
+
+</div>
+</div>
+</div>
+<div data-v-baaac922="">
+<div class="block-v1" data-v-59b6beb9="" data-v-7ec14783="">
+<h3>چرا برخی مشکلات فقط با تعمیر تخصصی حل می شوند</h3>
+<div data-v-baaac922="">
+<div class="markdown-container" dir="ltr" data-v-36800c70="" data-v-baaac922="" data-block-id="56681ed8-71ef-4982-a9f0-3c2e669992ff">
+<div>
+<p dir="rtl" lang="fa">بعضی مشکلات ریشه در آسیب های فیزیکی یا نقص فنی قطعات حساس و درونی دستگاه مانند مادربرد، تراشه های مدیریت انرژی (ICها)، یا مدار های لحیم کاری شده دارند که نیازمند دانش الکترونیک سطح بالا، ابزار های مخصوص لحیم کاری و میکروسکوپ است و فراتر از دسترسی ها و تنظیمات نرم افزاری یا تعویض قطعات ساده ای مانند باتری و صفحه نمایش است در هر دو صورت ما به حل مشکل شما می پردازیم . تیم تخصصی برتر سرویس با سال ها تجربه درخشان خدمت رسانی در زمینه ی تعمیرات محصولات دیجیتالی در کنار شماست در صورت بروز هر گونه مشکل در گوشی آیفون خود میتوانید با بهترین متخصیصین <a href="/apple/">نمایندگی تعمیرات اپل</a> در برتر سرویس ارتباط برقرار کنید .</p>
+
+</div>
+<p dir="rtl" lang="fa"><strong>در انتهای سخن</strong> باید بگوییم تمامی موارد گفته شده جهت رفاه حال شما کاربر گرامی و تجربه ی کاربری بهتر با تلفن همراهتان بیان شده است در صورتی که با مورد دیگری آشنا هستید که در این مقاله به آن اشاره نشده با در میان بگذارید .</p>
+
+</div>
+</div>
+</div>
+</div>36:["$","div",null,{"className":"mx-auto max-w-3xl px-4 pb-24 sm:px-6 lg:px-8","children":[["$","div",null,{"className":"mt-10","children":["$","img",null,{"src":"/wp-content/uploads/2025/12/1010.webp","alt":"40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)","width":896,"height":504,"fetchPriority":"high","className":"aspect-[16/9] w-full rounded-3xl border border-line object-cover"}]}],null,null,["$","nav",null,{"aria-label":"فهرست مطالب","className":"mt-10 rounded-2xl border border-line bg-paper p-5","children":[["$","p",null,{"className":"flex items-center gap-2 text-sm font-bold text-ink-900","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-list-checks h-4 w-4 text-accent","children":[["$","path","1jhpwq",{"d":"m3 17 2 2 4-4"}],["$","path","1obspn",{"d":"m3 7 2 2 4-4"}],["$","path","15sg57",{"d":"M13 6h8"}],["$","path","h98zly",{"d":"M13 12h8"}],["$","path","oe0vm4",{"d":"M13 18h8"}],"$undefined"]}],"در این مقاله می خوانید"]}],["$","ol",null,{"className":"mt-3 grid gap-1.5 sm:grid-cols-2","children":[["$","li","sec-1",{"children":["$","a",null,{"href":"#sec-1","className":"flex items-start gap-2 rounded-lg px-2 py-1.5 text-sm text-ink-500 transition hover:bg-white hover:text-accent","children":[["$","span",null,{"className":"text-accent/60","children":["۱","."]}],"ترفندهای مخفی و کمتر شناخته شده آیفون"]}]}],["$","li","sec-2",{"children":["$","a",null,{"href":"#sec-2","className":"flex items-start gap-2 rounded-lg px-2 py-1.5 text-sm text-ink-500 transition hover:bg-white hover:text-accent","children":[["$","span",null,{"className":"text-accent/60","children":["۲","."]}],"ترفندهای افزایش سرعت و عملکرد آیفون"]}]}],["$","li","sec-3",{"children":["$","a",null,{"href":"#sec-3","className":"flex items-start gap-2 rounded-lg px-2 py-1.5 text-sm text-ink-500 transition hover:bg-white hover:text-accent","children":[["$","span",null,{"className":"text-accent/60","children":["۳","."]}],"ترفندهای باتری آیفون (کاهش مصرف و افزایش عمر باتری)"]}]}],["$","li","sec-4",{"children":["$","a",null,{"href":"#sec-4","className":"flex items-start gap-2 rounded-lg px-2 py-1.5 text-sm text-ink-500 transition hover:bg-white hover:text-accent","children":[["$","span",null,{"className":"text-accent/60","children":["۴","."]}],"ترفندهای امنیتی و حفظ حریم خصوصی در آیفون"]}]}],["$","li","sec-5",{"children":["$","a",null,{"href":"#sec-5","className":"flex items-start gap-2 rounded-lg px-2 py-1.5 text-sm text-ink-500 transition hover:bg-white hover:text-accent","children":[["$","span",null,{"className":"text-accent/60","children":["۵","."]}],"ترفندهای کاربردی صفحه نمایش و تاچ آیفون"]}]}],["$","li","sec-6",{"children":["$","a",null,{"href":"#sec-6","className":"flex items-start gap-2 rounded-lg px-2 py-1.5 text-sm text-ink-500 transition hover:bg-white hover:text-accent","children":[["$","span",null,{"className":"text-accent/60","children":["۶","."]}],"ترفندهای دوربین آیفون که کیفیت عکس را چند برابر می کند"]}]}],["$","li","sec-7",{"children":["$","a",null,{"href":"#sec-7","className":"flex items-start gap-2 rounded-lg px-2 py-1.5 text-sm text-ink-500 transition hover:bg-white hover:text-accent","children":[["$","span",null,{"className":"text-accent/60","children":["۷","."]}],"ترفندهای مدیریت حافظه و فضای ذخیره سازی"]}]}],["$","li","sec-8",{"children":["$","a",null,{"href":"#sec-8","className":"flex items-start gap-2 rounded-lg px-2 py-1.5 text-sm text-ink-500 transition hover:bg-white hover:text-accent","children":[["$","span",null,{"className":"text-accent/60","children":["۸","."]}],"ترفندهای تماس و پیام رسانی آیفون"]}]}],["$","li","sec-9",{"children":["$","a",null,{"href":"#sec-9","className":"flex items-start gap-2 rounded-lg px-2 py-1.5 text-sm text-ink-500 transition hover:bg-white hover:text-accent","children":[["$","span",null,{"className":"text-accent/60","children":["۹","."]}],"چه زمانی ترفندها جواب نمی دهند و آیفون نیاز به تعمیر دارد؟"]}]}]]}]]}],["$","div",null,{"id":"post-content","className":"prose-fa mt-10","dangerouslySetInnerHTML":{"__html":"$38"}}],"$L39","$L3a","$L3b","$L3c","$L3d","$L3e"]}]
+37:null
+3f:I[8081,["619","static/chunks/619-ba102abea3e3d0e4.js","696","static/chunks/696-95bea2db689d49fc.js","48","static/chunks/app/%5B...slug%5D/page-da51f0e6117ba265.js"],"default"]
+39:null
+3a:null
+3b:["$","$L3f",null,{"targetId":"post-content"}]
+3c:null
+3d:["$","section",null,{"className":"mt-14 border-t border-line pt-10","children":[["$","h2",null,{"className":"heading-accent text-xl font-extrabold text-ink-900","children":"مقالات مرتبط تعمیر گوشی آیفون"}],["$","$L16",null,{"href":"/apple/mobile-2/","className":"mt-5 flex items-center justify-between gap-3 rounded-xl border border-accent/25 bg-accent/[0.04] px-4 py-3.5 transition hover:border-accent/50","children":[["$","span",null,{"className":"flex items-center gap-2 text-sm font-bold text-accent-deep","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-layers h-4 w-4 text-accent","children":[["$","path","zw3jo",{"d":"M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"}],["$","path","1wduqc",{"d":"M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"}],["$","path","kqbvx6",{"d":"M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"}],"$undefined"]}],"مشاهده صفحه اصلی: تعمیر گوشی آیفون"]}],["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-arrow-up-left h-4 w-4 shrink-0 text-accent","children":[["$","path","11bw93",{"d":"M7 17V7h10"}],["$","path","2786uv",{"d":"M17 17 7 7"}],"$undefined"]}]]}],["$","div",null,{"className":"mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3","children":[["$","$L16","/how-to-transfer-contacts-from-iphone-to-android-phone/",{"href":"/how-to-transfer-contacts-from-iphone-to-android-phone/","className":"card-hover group flex items-center justify-between gap-3 rounded-xl border border-line bg-white px-4 py-3.5","children":[["$","span",null,{"className":"line-clamp-1 text-sm font-medium text-ink-800 transition group-hover:text-accent","children":"آموزش انتقال مخاطبین از آیفون به گوشی"}],["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-arrow-up-left h-4 w-4 shrink-0 text-ink-300 transition group-hover:text-accent","children":[["$","path","11bw93",{"d":"M7 17V7h10"}],["$","path","2786uv",{"d":"M17 17 7 7"}],"$undefined"]}]]}],["$","$L16","/how-to-change-phone-language-on-android-and-iphone/",{"href":"/how-to-change-phone-language-on-android-and-iphone/","className":"card-hover group flex items-center justify-between gap-3 rounded-xl border border-line bg-white px-4 py-3.5","children":[["$","span",null,{"className":"line-clamp-1 text-sm font-medium text-ink-800 transition group-hover:text-accent","children":"آموزش تغییر زبان گوشی"}],["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-arrow-up-left h-4 w-4 shrink-0 text-ink-300 transition group-hover:text-accent","children":[["$","path","11bw93",{"d":"M7 17V7h10"}],["$","path","2786uv",{"d":"M17 17 7 7"}],"$undefined"]}]]}],["$","$L16","/comprehensive-guide-to-iphone-call-recording-2026/",{"href":"/comprehensive-guide-to-iphone-call-recording-2026/","className":"card-hover group flex items-center justify-between gap-3 rounded-xl border border-line bg-white px-4 py-3.5","children":[["$","span",null,{"className":"line-clamp-1 text-sm font-medium text-ink-800 transition group-hover:text-accent","children":"راهنمای جامع ضبط مکالمه آیفون"}],["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-arrow-up-left h-4 w-4 shrink-0 text-ink-300 transition group-hover:text-accent","children":["$L40","$L41","$undefined"]}]]}],"$L42","$L43","$L44"]}]]}]
+3e:["$","div",null,{"className":"mt-12 flex flex-wrap items-center justify-between gap-5 rounded-[20px] bg-gradient-to-br from-[#22262F] to-ink-950 px-7 py-7 sm:px-8","children":[["$","div",null,{"className":"text-white","children":[["$","div",null,{"className":"text-[19px] font-extrabold","children":"دستگاهت نیاز به تعمیر دارد؟"}],["$","div",null,{"className":"mt-1.5 text-sm text-ink-300","children":"عیب یابی رایگان است. تماس بگیرید یا درخواست خود را آنلاین ثبت کنید."}]]}],["$","div",null,{"className":"flex flex-wrap items-center gap-3","children":[["$","a",null,{"href":"tel:02191300348","dir":"ltr","className":"flex shrink-0 items-center gap-2 rounded-[13px] bg-accent px-6 py-3.5 text-[15px] font-bold text-white transition hover:bg-accent-deep","children":[["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-phone h-4 w-4","children":[["$","path","foiqr5",{"d":"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"}],"$undefined"]}],"۰۲۱-۹۱۳۰۰۳۴۸"]}],["$","$L16",null,{"href":"/online-repair-request/","className":"flex shrink-0 items-center gap-2 rounded-[13px] border-[1.5px] border-white/25 px-6 py-3.5 text-[15px] font-bold text-white transition hover:border-white/60 hover:bg-white/10","children":["ثبت درخواست آنلاین",["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-arrow-left h-4 w-4","children":[["$","path","1l729n",{"d":"m12 19-7-7 7-7"}],["$","path","x3x0zl",{"d":"M19 12H5"}],"$undefined"]}]]}]]}]]}]
+40:["$","path","11bw93",{"d":"M7 17V7h10"}]
+41:["$","path","2786uv",{"d":"M17 17 7 7"}]
+42:["$","$L16","/the-complete-guide-to-quickly-scanning-qr-codes-with-iphone/",{"href":"/the-complete-guide-to-quickly-scanning-qr-codes-with-iphone/","className":"card-hover group flex items-center justify-between gap-3 rounded-xl border border-line bg-white px-4 py-3.5","children":[["$","span",null,{"className":"line-clamp-1 text-sm font-medium text-ink-800 transition group-hover:text-accent","children":"راهنمای کامل اسکن سریع کدهای QR با آیفون"}],["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-arrow-up-left h-4 w-4 shrink-0 text-ink-300 transition group-hover:text-accent","children":[["$","path","11bw93",{"d":"M7 17V7h10"}],["$","path","2786uv",{"d":"M17 17 7 7"}],"$undefined"]}]]}]
+43:["$","$L16","/how-to-activate-hotspot-on-iphone/",{"href":"/how-to-activate-hotspot-on-iphone/","className":"card-hover group flex items-center justify-between gap-3 rounded-xl border border-line bg-white px-4 py-3.5","children":[["$","span",null,{"className":"line-clamp-1 text-sm font-medium text-ink-800 transition group-hover:text-accent","children":"چگونه هات اسپات آیفون را فعال کنیم؟"}],["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-arrow-up-left h-4 w-4 shrink-0 text-ink-300 transition group-hover:text-accent","children":[["$","path","11bw93",{"d":"M7 17V7h10"}],["$","path","2786uv",{"d":"M17 17 7 7"}],"$undefined"]}]]}]
+44:["$","$L16","/how-to-activate-facetime-on-iphone-step-by-step-activation-guide/",{"href":"/how-to-activate-facetime-on-iphone-step-by-step-activation-guide/","className":"card-hover group flex items-center justify-between gap-3 rounded-xl border border-line bg-white px-4 py-3.5","children":[["$","span",null,{"className":"line-clamp-1 text-sm font-medium text-ink-800 transition group-hover:text-accent","children":"چطور FaceTime آیفون را فعال کنیم؟"}],["$","svg",null,{"ref":"$undefined","xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-arrow-up-left h-4 w-4 shrink-0 text-ink-300 transition group-hover:text-accent","children":[["$","path","11bw93",{"d":"M7 17V7h10"}],["$","path","2786uv",{"d":"M17 17 7 7"}],"$undefined"]}]]}]
+29:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}],["$","meta","2",{"name":"theme-color","content":"#DA251C"}]]
+25:null
+45:I[622,[],"IconMark"]
+27:{"metadata":[["$","title","0",{"children":"40 ترفند آیفون که هر کاربر باید بداند (ترفندهای ۲۰۲۵)"}],["$","meta","1",{"name":"description","content":"معرفی کامل و جامع تمامی ترفند های ضرروری و کمتر شناخته شده ی آیفون همراه با تصویر و + توضیحات تیتروار و خلاصه محور"}],["$","meta","2",{"name":"robots","content":"index, follow"}],["$","link","3",{"rel":"canonical","href":"https://bartar-repairer.com/secret-and-lesser-known-iphone-tricks/"}],["$","meta","4",{"property":"og:title","content":"40 ترفند آیفون که هر کاربر باید بداند (ترفندهای ۲۰۲۵)"}],["$","meta","5",{"property":"og:description","content":"معرفی کامل و جامع تمامی ترفند های ضرروری و کمتر شناخته شده ی آیفون همراه با تصویر و + توضیحات تیتروار و خلاصه محور"}],["$","meta","6",{"property":"og:url","content":"https://bartar-repairer.com/secret-and-lesser-known-iphone-tricks/"}],["$","meta","7",{"property":"og:image","content":"https://bartar-repairer.com/wp-content/uploads/2025/12/1010.webp"}],["$","meta","8",{"property":"og:image:width","content":"1200"}],["$","meta","9",{"property":"og:image:height","content":"630"}],["$","meta","10",{"property":"og:image:alt","content":"40 ترفند آیفون که هر کاربر باید بداند! (ترفندهای ۲۰۲۵)"}],["$","meta","11",{"property":"og:type","content":"article"}],["$","meta","12",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","13",{"name":"twitter:title","content":"40 ترفند آیفون که هر کاربر باید بداند (ترفندهای ۲۰۲۵)"}],["$","meta","14",{"name":"twitter:description","content":"معرفی کامل و جامع تمامی ترفند های ضرروری و کمتر شناخته شده ی آیفون همراه با تصویر و + توضیحات تیتروار و خلاصه محور"}],["$","meta","15",{"name":"twitter:image","content":"https://bartar-repairer.com/wp-content/uploads/2025/12/1010.webp"}],["$","link","16",{"rel":"shortcut icon","href":"/favicon.ico"}],["$","link","17",{"rel":"icon","href":"/favicon.ico","sizes":"48x48"}],["$","link","18",{"rel":"icon","href":"/icon-48.png","sizes":"48x48","type":"image/png"}],["$","link","19",{"rel":"icon","href":"/icon-96.png","sizes":"96x96","type":"image/png"}],["$","link","20",{"rel":"icon","href":"/icon-192.png","sizes":"192x192","type":"image/png"}],["$","link","21",{"rel":"apple-touch-icon","href":"/apple-icon.png","sizes":"180x180","type":"image/png"}],["$","$L45","22",{}]],"error":null,"digest":"$undefined"}
+2c:"$27:metadata"

@@ -3,6 +3,9 @@
 // bundle. Pages keep their EXACT hierarchical WordPress URLs and content.
 import fs from "node:fs";
 import path from "node:path";
+import { HEADING_LABELS, HUB_LABELS } from "./recovered-hub-labels";
+import { INJECTED_LINKS } from "./recovered-internal-links";
+import { ADDED_LINKS } from "./added-links";
 import { SITE } from "./data";
 // Replays the SEO surface of the 2026-08-16 production build, whose source was
 // never committed (see docs/00-CRITICAL-source-location.md in the deploy repo).
@@ -25,12 +28,13 @@ const readJson = (f: string) =>
 //  - deZwnj: plain text (titles, meta, excerpt).
 //  - deZwnjHtml: HTML bodies — only touches TEXT between tags, never attribute
 //    values, so Persian image/file URLs that contain a ZWNJ are not corrupted.
-// A ZWNJ often sits NEXT to a real space in the export ("می‌ دهد"), so a
-// naive swap leaves a double space that shows up in the rendered H1, the meta
-// description and llms.txt. Collapse runs of plain spaces/tabs afterwards —
-// but not newlines, which still separate block content in HTML bodies.
+// A ZWNJ often sits NEXT to a real space in the export ("می‌ دهد"), so the two
+// together have to become ONE space — but only around the ZWNJ. A double space
+// that was typed into the title stays: the deployed pages carry it in their
+// JSON-LD, which is compared byte for byte. The plain-text files tidy the rest
+// themselves (see tidy() in the llms routes), where nothing collapses it later.
 const deZwnj = (s: string): string =>
-  s ? s.replace(/‌/g, " ").replace(/[ 	]{2,}/g, " ") : s;
+  s ? s.replace(/[ 	]*‌[ 	]*/g, " ") : s;
 const deZwnjHtml = (s: string): string =>
   s
     ? s
@@ -165,7 +169,9 @@ function localizeUrls(s: string): string {
 // posts.json untouched while consolidating link equity onto the real pages.
 const LINK_FIXES: [string, string][] = [
   ["/acer/lap-top/", "/lap-top-acer/"],
-  ["/acer/", "/lap-top-acer/"],
+  // /acer/ is NOT in this list: it is a real page, shipped pre-rendered from
+  // public/acer/ (see docs/frozen-pages.md), and the body links that point at
+  // it are correct as written.
   ["/acer-tablet-board-repair/", "/acer-tablet-boardrepair/"],
   ["/repair-honor-9x/", "/repair-honor9x/"],
   [
@@ -241,6 +247,52 @@ function cleanContent(html: string): string {
     return t;
   });
   out = out.replace(/<a\b[^>]*>\s*<\/a>/gi, "");
+  // The WordPress export lost the href on 108 anchors across 49 pages — 45
+  // bare <a> wrapping a branch address ("خیابان گلبرگ غربی…", "میدان کاج…"),
+  // 59 <a tabindex="0"> left over from the old theme, and one anchor pasted in
+  // without its URL, plus three with an empty href. An <a> with no usable
+  // href is not a link: clicking it does
+  // nothing, screen readers still announce it as a link, and a crawler sees a
+  // dangling anchor. Turn each one into a plain <span> — the attributes go too,
+  // since tabindex="0" on something that cannot be activated is worse than no
+  // tabindex at all. A <span> rather than nothing on purpose: three of these
+  // anchors sit against a &nbsp;, so removing the tag outright shifts one space
+  // at the tag boundary in every text extraction of the page (the browser
+  // renders it the same either way). Keeping a neutral wrapper changes the
+  // markup and nothing else, which is what was wrong here.
+  // href="" counts as no href: three iPhone pages carry
+  // <a href="" target="_blank">برتر سرویس</a>, which resolves to the current
+  // URL and reopens the page in a new tab.
+  out = out.replace(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi, (full, attrs: string, inner: string) => {
+    const m = attrs.match(/\shref\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i);
+    const href = (m?.[1] ?? m?.[2] ?? m?.[3] ?? "").trim();
+    return href ? full : `<span>${inner}</span>`;
+  });
+  // HEADINGS WITH NO TEXT. Two shapes, both from the WordPress editor:
+  //   <h2></h2>            the heading's text was deleted, the block stayed
+  //   <h2><img …></h2>     a picture was dropped into a heading block
+  // Neither is a heading. Both render as a gap or a stray image, a screen
+  // reader announces "heading, level 2" with no name, and — because the
+  // article table of contents is built from the <h2>s — both put a blank
+  // numbered row into the contents list. The image is content, so it is kept
+  // and only its heading wrapper goes; a heading with nothing in it at all is
+  // removed outright.
+  out = out.replace(
+    /<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi,
+    (full, _level: string, inner: string) => {
+      if (inner.replace(/<[^>]+>/g, "").replace(/[\s\u200c]|&nbsp;/g, "")) return full;
+      return /<img\b/i.test(inner) ? inner : "";
+    },
+  );
+  // Outbound links opened from body content get rel="noopener". The pages come
+  // from a WordPress export where the editor set target="_blank" by hand and
+  // rel by accident; without it the opened tab can reach back through
+  // window.opener. Manufacturer links stay followed — they are cited as
+  // sources, and nofollowing asus.com or hp.com would be dishonest.
+  out = out.replace(/<a\b([^>]*href="https?:\/\/[^"]*"[^>]*)>/gi, (full, attrs: string) => {
+    if (/bartar-repairer\.com/i.test(attrs) || /\srel\s*=/i.test(attrs)) return full;
+    return `<a${attrs} rel="noopener">`;
+  });
   out = out.replace(/<figure\b[^>]*>\s*(?:<figcaption[^>]*>\s*<\/figcaption>)?\s*<\/figure>/gi, "");
   out = out.replace(/<img /gi, '<img loading="lazy" decoding="async" ');
   // Wrap tables so they scroll inside their box instead of overflowing the page.
@@ -510,7 +562,8 @@ const INTERNAL_LINKS: [string, string][] = [
   ["نمایندگی ایسوس", "/asus/"],
   ["تعمیرات ایسوس", "/asus/"],
   ["تعمیر ایسوس", "/asus/"],
-  // Acer (no standalone /acer/ page — the Acer hub is /lap-top-acer/)
+  // Acer: /acer/ is the brand landing page, /lap-top-acer/ the laptop hub
+  // that carries the model list and prices — which is what these phrases mean.
   ["نمایندگی تعمیرات ایسر", "/lap-top-acer/"],
   ["تعمیر لپ تاپ ایسر", "/lap-top-acer/"],
   ["نمایندگی ایسر", "/lap-top-acer/"],
@@ -619,6 +672,19 @@ export const CANONICAL_TO: Record<string, string> = {
 // Hand-written titles for the commercial (money) pages. Keyword stays first,
 // followed by a concrete USP so the SERP snippet earns the click. Only the
 // <title> meta is replaced — page URLs, H1s and body content stay untouched.
+// ---- Titles rewritten AFTER the 2026-08-16 deploy ----
+// TITLE_OVERRIDES_RECOVERED is a record of what the deployed site says, read
+// back out of its HTML, so it must not be edited to change a title — that
+// would destroy the only copy of the deployed value. Deliberate rewrites go
+// here instead and win over it. Each of these three was a two-or-three-word
+// title that spent a whole SERP line saying nothing: "خدمات" (18 characters),
+// "قطعات اپل" (22), "درباره ی ما" (24).
+const TITLE_REWRITES: Record<string, string> = {
+  "/about/": "درباره برتر سرویس | ۱۵ سال تعمیر تخصصی موبایل و لپ تاپ در تهران",
+  "/services/": "خدمات تعمیرات برتر سرویس | موبایل، لپ تاپ، تبلت و لوازم خانگی",
+  "/apple-mobile-part/": "قطعات اصل موبایل اپل | تشخیص قطعه اورجینال و گارانتی تعویض",
+};
+
 const TITLE_OVERRIDES: Record<string, string> = {
   // Keyed by the post-rename URL (see PATH_RENAMES) so it is not silently
   // orphaned: the recovered tables never saw this path because the July build
@@ -961,37 +1027,223 @@ function appendArticleUpdate(path: string, html: string): string {
   return `${html}<section class="article-update"><h2>به روزرسانی کاربردی</h2><p>${update}</p></section>`;
 }
 
+const ANCHOR = new RegExp("<a\\b", "i");
+const SPLIT_TAGS = /(<[^>]+>)/g;
+const OPEN_ANCHORS = /<a\b/gi;
+const CLOSE_ANCHORS = /<\/a>/gi;
+
+/** A paragraph's visible text, normalised the way the recovered map records it. */
+const plainText = (inner: string): string =>
+  inner
+    .replace(/<[^>]+>/g, "")
+    .replace(/‌/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+const paraNamed = (inner: string, para: string): boolean =>
+  plainText(inner).startsWith(para);
+
 function linkifyInternal(html: string, selfPath: string): string {
-  const targets = INTERNAL_LINKS.filter(([, path]) => path !== selfPath);
+  // A page that the deployed site linked by hand keeps exactly those links:
+  // the map below is what it carried, phrase for phrase. Pages with no recorded
+  // list fall back to the general brand/device map.
+  const recovered = INJECTED_LINKS[selfPath];
+  // Links added after the export (lib/added-links.ts) go FIRST: a recovered
+  // list is a closed set, so an article published later would otherwise have
+  // no route in from the pages that already rank for its topic.
+  const extra = ADDED_LINKS[selfPath] ?? [];
+  const targets: [string, string, string?][] = [
+    ...extra,
+    ...(recovered ?? INTERNAL_LINKS),
+  ].filter(([, path]) => path !== selfPath);
   const linked = new Set<string>();
+  const used = new Set<number>();
   let added = 0;
-  const MAX = 8;
+  const MAX = recovered ? recovered.length + extra.length : 8 + extra.length;
   return html.replace(
     /(<p\b[^>]*>)([\s\S]*?)(<\/p>)/gi,
-    (m, open: string, inner: string, close: string) => {
+    (m, open: string, inner: string, close: string, offset: number) => {
       if (added >= MAX) return m;
-      if (/<a\b/i.test(inner)) return m; // never touch paragraphs that already link
+      // Some WordPress blocks wrap a whole paragraph in a link. That <a> sits
+      // outside the <p>, so the test below does not see it; injecting here
+      // would nest one link inside another and split the sentence in two.
+      const before = html.slice(0, offset);
+      const opened = (before.match(OPEN_ANCHORS) || []).length;
+      const closed = (before.match(CLOSE_ANCHORS) || []).length;
+      if (opened > closed) return m;
+      // A paragraph that already links is left alone, unless the recovered
+      // list names it: the deployed page put a second link there on purpose.
+      const named =
+        recovered !== undefined &&
+        targets.some(([, , para]) => !!para && paraNamed(inner, para));
+      if (!named && ANCHOR.test(inner)) return m;
       // Search only text nodes. Replacing inside raw `inner` can corrupt an
       // image alt/title attribute when it contains a target phrase.
-      const parts = inner.split(/(<[^>]+>)/g);
-      for (const [phrase, path] of targets) {
-        if (linked.has(path)) continue;
+      const parts = inner.split(SPLIT_TAGS);
+      const paraText = plainText(inner);
+      for (let i = 0; i < targets.length; i++) {
+        const [phrase, path, para] = targets[i];
+        // A recovered entry is used once each; the general map links a page
+        // once per document, whichever paragraph mentions it first.
+        if (recovered ? used.has(i) : linked.has(path)) continue;
+        if (para && !paraText.startsWith(para)) continue;
+        // The database copy sometimes links the same page in the same
+        // paragraph already; a second <a> would nest inside the first.
+        if (inner.includes(`href="${path}"`)) continue;
         const textIndex = parts.findIndex(
           (part, index) => index % 2 === 0 && part.includes(phrase),
         );
-        if (textIndex >= 0) {
-          const text = parts[textIndex];
-          const idx = text.indexOf(phrase);
-          parts[textIndex] =
-            text.slice(0, idx) +
-            `<a href="${path}">${phrase}</a>` +
-            text.slice(idx + phrase.length);
-          linked.add(path);
-          added++;
-          break; // at most one injected link per paragraph
-        }
+        if (textIndex < 0) continue;
+        const text = parts[textIndex];
+        const idx = text.indexOf(phrase);
+        parts[textIndex] =
+          text.slice(0, idx) +
+          `<a href="${path}">${phrase}</a>` +
+          text.slice(idx + phrase.length);
+        used.add(i);
+        linked.add(path);
+        added++;
+        // The deployed pages put two links in one paragraph where the copy
+        // named two pages; the general map keeps to one so a paragraph written
+        // without links does not turn into a list of them.
+        if (!recovered) break;
       }
       return open + parts.join("") + close;
+    },
+  );
+}
+
+// Body-text corrections made on the live site — or requested directly by the
+// owner — replayed here so the rebuild matches what should be deployed. Keyed
+// by URL, each entry is an exact find/replace against the ALREADY-rendered
+// body (after cleanContent/addAltText/promoteHeadings/levelHeadings run) —
+// posts.json itself stays the untouched source of truth. Keep this table
+// tiny; anything larger belongs in the database.
+const CONTENT_FIXES: Record<string, [string, string][]> = {
+  // Founding year corrected on the deployed pages (1382 → 1383).
+  "/xiaomi/mobile/": [["از سال 1382 تا کنون", "از سال 1383 تا کنون"]],
+  "/home/": [
+    ["از سال 1382 تاکنون", "از سال 1383 تاکنون"],
+    ["از سال 1382 تا به امروز", "از سال 1383 تا به امروز"],
+  ],
+  "/about/": [
+    ["های سال 1382", "های سال 1383"],
+    // States, in the "تیم ما" intro, that the whole business is run under the
+    // supervisor already named sitewide (SITE.manager in lib/data.ts / the
+    // /team/ page) — owner-supplied fact, 2026-08-29.
+    [
+      "<p>تیم حرفه ای ما در کنار شماست تا احساس امنیت را به شما بدهند . ما در مجموعه خود سعی داشته ایم همیشه بهترین متخصصین را داشته باشیم تا بهترین نتیجه را برای شما به ارمغان بیاوریم.</p>",
+      "<p>تیم حرفه ای ما در کنار شماست تا احساس امنیت را به شما بدهند . ما در مجموعه خود سعی داشته ایم همیشه بهترین متخصصین را داشته باشیم تا بهترین نتیجه را برای شما به ارمغان بیاوریم. کل مجموعه برتر سرویس زیر نظر حمیدرضا آتشین پای، سرپرست و مدیر مجموعه، اداره می شود.</p>",
+    ],
+    // The WordPress "تیم ما" photo grid named 9 people as of the 2023 export.
+    // None of the photos are current — see lib/team.ts, the source of truth
+    // for who actually works here today — so all 9 (including three women who
+    // are no longer on staff) are removed outright rather than left showing
+    // former employees as current ones. Owner-supplied instruction,
+    // 2026-08-29.
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"791\" src=\"/wp-content/uploads/2023/10/20231011_145810-1024x1013.webp\" alt=\"حسین مهرجو تکنسین نرم افزار موبایل\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tحسین مهرجو\t\t<p><strong>سمت:</strong> برنامه نویس ارشد اندروید و ios</p><p><strong>مدرک تحصیلی:</strong> کارشناسی آیتی</p><p><strong>تجربه کاری:</strong> 8 سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"781\" src=\"/wp-content/uploads/2023/10/20231011_151655-1024x1000.webp\" alt=\"حامد عباسی متخصص سخت افزار موبایل برتر سرویس\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tحامد عباسی\t\t<p><strong>سمت:</strong> متخصص سخت افزار موبایل</p><p><strong>مدرک تحصیلی:</strong> کارشناسی ارشد مخابرات</p><p><strong>تجربه کاری:</strong> 6 سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"746\" src=\"/wp-content/uploads/2023/10/20231011_152535-1024x955.webp\" alt=\"عرفان آگاه متخصص تعمیرات لپ تاپ برتر سرویس\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tعرفان آگاه\t\t<p><strong>سمت:</strong> متخصص تعمیرات لپ تاپ</p><p><strong>مدرک تحصیلی:</strong> کارشناسی الکترونیک </p><p><strong>تجربه کاری:</strong> 8 سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"802\" src=\"/wp-content/uploads/2023/10/20231011_160304-min-1022x1024.webp\" alt=\"صدرا فراهانی متخصص سخت افزار آیفون\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tصدرا فراهانی\t\t<p><strong>سمت:</strong> متخصص سخت افزار آیفون</p><p><strong>مدرک تحصیلی:</strong> کارشناسی الکتروتکنیک</p><p><strong>تجربه کاری:</strong> 5 سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"781\" src=\"/wp-content/uploads/2023/10/20231011_151655-min-1024x1000.webp\" alt=\"امیرحسین معینی تعمیرکار موبایل\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tامیر حسین معینی\t\t<p><strong>سمت:</strong> متخصص کنترل کیفیت</p><p><strong>مدرک تحصیلی:</strong> کاردانی برق</p><p><strong>تجربه کاری:</strong> 5سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"793\" src=\"/wp-content/uploads/2023/10/20231011_153726-1024x1015.webp\" alt=\"خانم جغتایی مدیر بخش تبلیغات و بازاریابی برتر سرویس\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tخانم جغتایی\t\t<p><strong>سمت:</strong> مدیر بخش تبلیغات و بازار یابی</p><p><strong>مدرک تحصیلی:</strong> کارشناسی ارشد مدیریت تبلیغات</p><p><strong>تجربه کاری:</strong> 5سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"728\" src=\"/wp-content/uploads/2023/10/20231011_153330-1024x932.webp\" alt=\"خانم عباسی مسئول هماهنگی بین مشتری و تکنسین برتر سرویس\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tخانم عباسی\t\t<p><strong>سمت:</strong> مسئول هماهنگی بین مشتری و تکنسین</p><p><strong>مدرک تحصیلی:</strong> کارشناسی ارشد مدیریت بازرگانی</p><p><strong>تجربه کاری:</strong> 6 سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"780\" src=\"/wp-content/uploads/2023/10/20231010_112146-1-1024x999.webp\" alt=\"خانم شاه آبادی مدیر بخش پذیرش و هماهنگی داخلی برتر سرویس\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tخانم شاه آبادی\t\t<p><strong>س</strong><strong>مت:</strong> مدیر بخش پذیرش و هماهنگی داخلی</p><p><strong>مدرک تحصیلی:</strong> کارشناسی ارشد مدیریت بازرگانی</p><p><strong>تجربه کاری:</strong> 6 سال</p>",
+      "",
+    ],
+    // The one name that WAS current (علیرضا قهرمانی) is replaced, not just
+    // stripped, with the CURRENT full roster from lib/team.ts, each linking to
+    // their /team/<slug>/ profile — owner-supplied instruction, 2026-08-29.
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"781\" src=\"/wp-content/uploads/2023/10/20231011_151101-1024x1000.webp\" alt=\"علیرضا قهرمانی متخصص سخت افزار آیفون برتر سرویس\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tعلیرضا قهرمانی\t\t<p><strong>س</strong><strong>مت:</strong> متخصص سخت افزار آیفون</p><p><strong>مدرک تحصیلی:</strong> کارشناسی ارشد مهندسی پزشکی</p><p><strong>تجربه کاری:</strong> 8 سال</p>",
+      "<p><strong><a href=\"/team/alireza-ghahremani/\">علیرضا قهرمانی</a></strong> — تعمیر گوشی آیفون و اندروید. ۱۲ سال سابقه.</p><p><strong><a href=\"/team/mehdi-lesani/\">مهدی لسانی</a></strong> — تعمیر ساعت هوشمند، تبلت و گوشی های ناتینگ فون، گوگل پیکسل و نوکیا. بیش از ۱۰ سال سابقه.</p><p><strong><a href=\"/team/mohammadreza-akbarpour/\">محمدرضا اکبرپور</a></strong> — تعمیر لپ تاپ و مانیتور. ۸ سال سابقه.</p><p><strong><a href=\"/team/amirhossein-atashin/\">امیرحسین آتشین</a></strong> — تعمیر لپ تاپ و مانیتور. ۸ سال سابقه.</p><p><strong><a href=\"/team/ali-kargar/\">علی کارگر</a></strong> — تعمیر موبایل و تعمیرات نرم افزاری. ۸ سال سابقه.</p><p><strong><a href=\"/team/ilia-farzaneh/\">ایلیا فرزانه</a></strong> — تعویض قطعات گوشی آیفون و اندروید. حدود ۵ سال سابقه.</p><p><strong><a href=\"/team/erfan-sadeghi/\">عرفان صادقی</a></strong> — تعمیرات نرم افزاری. ۳ سال سابقه.</p><p><a href=\"/team/\">مشاهده پروفایل کامل تیم فنی</a></p>",
+    ],
+  ],
+};
+
+function applyContentFixes(path: string, html: string): string {
+  const fixes = CONTENT_FIXES[path];
+  if (!fixes) return html;
+  let out = html;
+  for (const [from, to] of fixes) out = out.split(from).join(to);
+  return out;
+}
+
+// Several hundred WordPress bodies start their sections below <h2>: the editor
+// picked the size that looked right, not the level. With nothing at level two,
+// the outline a crawler reads jumps from the h1 straight to level three or
+// four, and the on-page table of contents (which collects h2s) comes out empty.
+// Shifting every heading up by the same amount restores the hierarchy without
+// flattening it — a body whose sections are h3 with h4 sub-headings keeps that
+// relationship, one step higher. Bodies that already use <h2> are left alone.
+function promoteHeadings(html: string): string {
+  const levels = [...html.matchAll(/<h([2-6])\b/gi)].map((m) => Number(m[1]));
+  if (!levels.length) return html;
+  const shift = Math.min(...levels) - 2;
+  if (shift <= 0) return html;
+  return html.replace(
+    /<(\/?)h([2-6])\b/gi,
+    (_m, slash, level) => `<${slash}h${Number(level) - shift}`,
+  );
+}
+
+// promoteHeadings fixes a body that starts too deep; this fixes one that skips
+// a level on the way down — an <h2> section whose sub-headings are <h4>,
+// which is what WordPress bodies look like when the editor picked heading
+// sizes by eye. The outline a crawler and a screen reader read then disagrees
+// with the one a person sees.
+//
+// The walk keeps a stack of (original level → level emitted). A heading comes
+// out one below its nearest surviving ancestor and never deeper than it
+// already was, so nothing is pushed down and siblings stay siblings. A body
+// with no gaps maps to itself, which is why this can run over every page and
+// only move the ones that are malformed.
+//
+// The stack is SEEDED WITH ONE LEVEL ABOVE THE BODY'S FIRST HEADING, which is
+// deliberate and load-bearing: seeding with the page <h1> instead would pull a
+// leading <h3> up to <h2>, and the article table of contents is built from the
+// <h2>s. That version rewrote the visible contents list on 60 pages and moved
+// their body text — a much bigger change than the one being made here. This
+// version can never create a new shallowest heading, so the contents list is
+// untouched and only genuinely skipped levels close up.
+function levelHeadings(html: string): string {
+  const first = html.match(/<h([1-6])\b/i);
+  if (!first) return html;
+  const base = Number(first[1]) - 1;
+  const stack: { orig: number; mapped: number }[] = [{ orig: base, mapped: base }];
+  return html.replace(
+    /<(\/?)h([1-6])\b([^>]*)>/gi,
+    (full, slash: string, level: string, attrs: string) => {
+      const orig = Number(level);
+      if (slash) {
+        const open = stack[stack.length - 1];
+        return open && open.orig === orig ? `</h${open.mapped}>` : full;
+      }
+      while (stack.length > 1 && stack[stack.length - 1].orig >= orig) stack.pop();
+      const mapped = Math.min(orig, stack[stack.length - 1].mapped + 1);
+      stack.push({ orig, mapped });
+      return `<h${mapped}${attrs}>`;
     },
   );
 }
@@ -1004,7 +1256,10 @@ export const POSTS: Post[] = raw.map((p) => {
   const segments = renamedPath
     ? renamedPath.split("/").filter(Boolean)
     : rawSegments;
-  let content = addAltText(cleanContent(p.content), p.title);
+  let content = applyContentFixes(
+    selfPath,
+    levelHeadings(promoteHeadings(addAltText(cleanContent(p.content), p.title))),
+  );
   // Inject contextual in-body links to the commercial hubs. Runs on BOTH article
   // and service/model pages so every cluster page funnels in-body link equity up
   // to its brand/device hub (e.g. a Samsung model page links the phrase
@@ -1037,7 +1292,8 @@ export const POSTS: Post[] = raw.map((p) => {
     segments,
     path: selfPath,
     metaTitle: deZwnj(
-      TITLE_OVERRIDES_RECOVERED[selfPath] ||
+      TITLE_REWRITES[selfPath] ||
+        TITLE_OVERRIDES_RECOVERED[selfPath] ||
         TITLE_OVERRIDES[selfPath] ||
         refineTitle(deZwnj(resolveTitle(p.seoTitle, p.title))),
     ),
@@ -1087,6 +1343,59 @@ export function h1For(pathname: string, fallback: string): string {
   return H1_OVERRIDES_RECOVERED[pathname] || fallback;
 }
 
+
+/** Longest link label before it is cut back to the last whole word. */
+const LABEL_MAX = 45;
+
+/**
+ * What to call a page inside a card or a list: its database title with the SEO
+ * tail removed. Titles are written for the SERP ("نمایندگی ZTE | تعمیرات گوشی
+ * زد تی ای در تهران"); everything after the first separator is noise once the
+ * reader is already on the site, and the cards clamp to one line anyway.
+ *
+ * A parenthesis is only a separator when it opens a clause too long to fit —
+ * "(اپل)" is part of the name, "(خروج آب و گردوغبار …)" is a subtitle.
+ */
+/** The database title of a page, by URL — for lists that carry only hrefs. */
+export function titleOf(pathname: string): string | undefined {
+  return postByPath.get(pathname)?.title;
+}
+
+export function linkLabel(title: string): string {
+  let head = title.split(/\s*[|:+]\s*/)[0].trim() || title;
+  // A parenthesis at the END is a subtitle ("… (ترفندهای ۲۰۲۵)"); one in the
+  // middle is part of the name ("تعمیر گوشی آیفون (اپل) در تهران").
+  head = head.replace(/\s*\([^()]*\)?\s*$/, "").trim() || head;
+  // A title that asks a question ends at the question mark; what follows is a
+  // subtitle ("… چیست؟ راهنمای عیب یابی"), and the question alone is the name.
+  const question = head.indexOf("؟");
+  if (question >= 0 && question < LABEL_MAX) return head.slice(0, question + 1);
+  if (head.length <= LABEL_MAX) return head || title;
+  const clipped = head.slice(0, LABEL_MAX);
+  const lastSpace = clipped.lastIndexOf(" ");
+  return (lastSpace > 0 ? clipped.slice(0, lastSpace) : clipped).trim();
+}
+
+/**
+ * The name a hub page is introduced by when a child page links up to it
+ * ("سایر خدمات …", "مشاهده صفحه نمایندگی: …"). These were chosen by hand and do
+ * not follow from the title — /hp/ keeps its parenthesis, /lap-top-acer/ drops
+ * everything from "با" on — so the deployed names live in
+ * lib/recovered-hub-labels.ts and only unlisted hubs fall back to trimming.
+ */
+export function hubLabel(pathname: string, title: string): string {
+  return HUB_LABELS[pathname] ?? linkLabel(title);
+}
+
+/**
+ * The same hub, as the related-links HEADING names it. The deployed pages do
+ * not always use the up-link's wording there ("سایر خدمات تعمیرات لپ تاپ" over
+ * "مشاهده صفحه اصلی: تعمیر لپ تاپ"), so both names are kept.
+ */
+export function headingLabel(pathname: string, title: string): string {
+  return HEADING_LABELS[pathname] ?? hubLabel(pathname, title);
+}
+
 export const CATEGORIES = categoriesJson as Category[];
 export const DB_SITE = siteJson as {
   blogname: string;
@@ -1095,7 +1404,17 @@ export const DB_SITE = siteJson as {
   siteurl: string;
 };
 
-export const ARTICLE_POSTS = POSTS.filter((p) => p.type === "post");
+// Newest first. The WordPress export is ALREADY strictly date-descending (536
+// articles, zero violations), so this sort is a no-op for every database post
+// and exists for one reason: hand-authored articles from extra-posts.json are
+// appended to the raw array, which parked the newest content on the site at
+// the END of /blog/ — page 58 instead of page 1. Sorting by date puts them
+// where their date says they belong without touching POSTS itself, whose order
+// feeds path building and the byte-compared parity pages.
+// Array.prototype.sort is stable, so equal dates keep their export order.
+export const ARTICLE_POSTS = POSTS.filter((p) => p.type === "post").sort(
+  (a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0),
+);
 
 const postByPath = new Map<string, Post>();
 for (const p of POSTS) {
@@ -1164,6 +1483,11 @@ const PILLAR_DEFS: PillarDef[] = [
   { path: "/htc/", label: "نمایندگی اچ تی سی", brand: "htc" },
   { path: "/nokia/", label: "نمایندگی نوکیا", brand: "nokia" },
   { path: "/motorola-mobile-repair-center/", label: "تعمیر موتورولا", brand: "motorola" },
+  // Acer has no separate brand hub — the laptop page is the brand page, so it
+  // serves as both the device pillar above and the brand-wide one here. Without
+  // this, an Acer article that names no device ("خدمات پس از فروش ایسر") lands
+  // in no cluster at all and falls back to the generic recent-posts list.
+  { path: "/lap-top-acer/", label: "تعمیر ایسر", brand: "acer" },
   // service hubs (device only — broadest fallback)
   { path: "/services/category-mobile-phone-repair/", label: "تعمیر موبایل", device: "mobile" },
   { path: "/services/laptop-repair/", label: "تعمیر لپ تاپ", device: "laptop" },
@@ -1345,8 +1669,17 @@ export function serviceSiblings(post: Post, limit = 8): Post[] {
   if (!pl) return [];
   return (serviceClusterIndex.get(pl.path) ?? [])
     .filter((p) => p.id !== post.id)
+    // A brand hub's own children are its device hubs and appliance pages, all
+    // already listed in its services grid; repeating them here would crowd out
+    // the root-level pages that have no other route in. Under a device hub the
+    // children ARE the models a reader of a model page wants next, so they stay.
+    .filter(
+      (p) => pl.device || !p.parent || postById.get(p.parent)?.path !== pl.path,
+    )
     .slice(0, limit);
 }
+
+
 
 export function safeDecode(s: string): string {
   try {
@@ -1367,7 +1700,9 @@ export function breadcrumbs(post: Post): { title: string; path: string }[] {
   let cur: Post | undefined = post;
   while (cur && !seen.has(cur.id)) {
     seen.add(cur.id);
-    chain.unshift({ title: cur.title, path: cur.path });
+    // Breadcrumbs name each page the way the page names itself — its H1, not
+    // the database title, which is written for the SERP.
+    chain.unshift({ title: h1For(cur.path, cur.title), path: cur.path });
     cur = cur.parent ? postById.get(cur.parent) : undefined;
   }
   // Flat cluster articles have no parent chain — give them a topical path
@@ -1397,11 +1732,11 @@ export function readingMinutes(html: string): number {
 // contextual internal linking with descriptive anchor text).
 export function relatedNavLinks(
   path: string,
-): { title: string; items: NavChild[] } | null {
+): { title: string; slug: string; items: NavChild[] } | null {
   for (const g of NAV) {
     if (g.children.length && g.children.some((c) => c.slug === path)) {
       const items = g.children.filter((c) => c.slug !== path);
-      if (items.length) return { title: g.title, items };
+      if (items.length) return { title: hubLabel(g.slug, g.title), slug: g.slug, items };
     }
   }
   return null;
@@ -1420,13 +1755,19 @@ export function pageCluster(
   if (!parent) return { parent: null, siblings: [] };
   const siblings = POSTS.filter(
     (p) => p.type === "page" && p.parent === parent.id && p.id !== post.id,
-  ).map((p) => ({ title: p.title, slug: p.path }));
-  // Short brand label: drop trailing marketing clauses ("… با گارانتی معتبر")
-  // and separators so headings/anchors stay concise.
-  const label = parent.title
-    .split(/\s+با\s+|\s*[|،–—-]\s*/)[0]
-    .trim();
-  return { parent: { title: label || parent.title, path: parent.path }, siblings };
+  )
+    // Cross-brand service hubs (تعمیر تلویزیون, تعمیر لپ تاپ …) are reached from
+    // the service nav and the pillar links, not from a sibling list: they are
+    // not siblings of a page about one brand's appliance, they are its parent
+    // subject. Brand device hubs stay — they really are siblings.
+    .filter(
+      (p) => !existingPillars.some((d) => d.path === p.path && !d.brand),
+    )
+    .map((p) => ({ title: linkLabel(p.title), slug: p.path }));
+  return {
+    parent: { title: hubLabel(parent.path, parent.title), path: parent.path },
+    siblings,
+  };
 }
 
 // Extract FAQ Q&A from content for FAQPage schema (handles native <details>
@@ -1444,9 +1785,13 @@ export function extractFaq(html: string): { q: string; a: string }[] {
     const a = strip(m[2]);
     if (q && a) items.push({ q, a });
   }
-  // accordion built as <a ...>question؟</a> followed by <p> answers
+  // Accordion built as <a ...>question؟</a> followed by <p> answers. The old
+  // theme left those triggers without an href, so cleanContent now renders
+  // them as <span>; match either shape, or the FAQPage schema vanishes from
+  // the brand hubs (it did — dell, hp, htc, lenovo and sony lost it).
   if (items.length === 0) {
-    const are = /<a[^>]*>([^<]*؟)<\/a>\s*((?:<p>[\s\S]*?<\/p>\s*)+)/gi;
+    const are =
+      /<(?:a|span)[^>]*>([^<]*؟)<\/(?:a|span)>\s*((?:<p>[\s\S]*?<\/p>\s*)+)/gi;
     while ((m = are.exec(html))) {
       const q = strip(m[1]);
       const a = strip(m[2]);

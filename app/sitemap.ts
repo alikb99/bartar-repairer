@@ -5,6 +5,8 @@ import { LIVE_SERVICE_AREAS } from "@/lib/service-areas";
 import { SITE } from "@/lib/data";
 import { CLUSTER_REVISED } from "@/lib/recovered-revised";
 import { PER_PAGE } from "@/components/BlogListing";
+import { PEOPLE } from "@/lib/team";
+import { PHONE_TESTS, PHONE_TEST_BASE, PHONE_TEST_HUB, phoneTestPath } from "@/lib/phone-tests";
 
 export const dynamic = "force-static";
 
@@ -51,6 +53,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return times.length ? new Date(Math.max(...times)) : undefined;
   };
   const firstPageModified = latestModified(ARTICLE_POSTS.slice(0, PER_PAGE));
+  // Order matters: this list is emitted verbatim, and the deployed sitemap has
+  // this exact sequence. Keep the frozen public/ pages where they are.
   const entries: MetadataRoute.Sitemap = [
     { url: `${SITE.domain}/`, priority: 1 },
     {
@@ -63,6 +67,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    // Browser-based phone tests (hub + one page per test).
+    {
+      url: `${SITE.domain}${PHONE_TEST_BASE}`,
+      lastModified: new Date(PHONE_TEST_HUB.updated),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    ...PHONE_TESTS.map((t) => ({
+      url: `${SITE.domain}${phoneTestPath(t.slug)}`,
+      lastModified: new Date(t.updated),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+    { url: `${SITE.domain}/app/`, changeFrequency: "monthly", priority: 0.7 },
     // Crawlable HTML directory: one shallow inbound link to every service page
     // and article, so no page depends on deep blog pagination for discovery.
     {
@@ -70,16 +88,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.4,
     },
-    // Repair-type hubs: commercial cross-brand landing pages.
-    { url: `${SITE.domain}/team/`, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${SITE.domain}/repairs/`, changeFrequency: "weekly", priority: 0.9 },
-    ...LIVE_REPAIR_TYPES.map((t) => ({
-      url: `${SITE.domain}/repairs/${t.slug}/`,
-      changeFrequency: "weekly" as const,
-      priority: 0.9,
-    })),
+    // Declares which other domains this company owns. Low priority as a
+    // destination, but it needs to be crawlable: it is the page the schema's
+    // subOrganization edge is asking a reviewer to verify.
+    {
+      url: `${SITE.domain}/group/`,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
     // Pages shipped as pre-rendered HTML from public/ rather than as routes
-    // (see public/README-frozen-pages.md). They are indexable and must appear
+    // (see docs/frozen-pages.md). They are indexable and must appear
     // here, but nothing in POSTS knows about them.
     {
       url: `${SITE.domain}/acer/`,
@@ -87,13 +105,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    { url: `${SITE.domain}/team/`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE.domain}/warranty/`, changeFrequency: "monthly", priority: 0.7 },
+    ...PEOPLE.map((p) => ({
+      url: `${SITE.domain}/team/${p.slug}/`,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
     { url: `${SITE.domain}/prices/`, changeFrequency: "weekly", priority: 0.9 },
     {
       url: `${SITE.domain}/mobile-repair-online/`,
       changeFrequency: "monthly",
       priority: 0.8,
     },
-    { url: `${SITE.domain}/app/`, changeFrequency: "monthly", priority: 0.7 },
+    // Repair-type hubs: commercial cross-brand landing pages.
+    { url: `${SITE.domain}/repairs/`, changeFrequency: "weekly", priority: 0.9 },
+    ...LIVE_REPAIR_TYPES.map((t) => ({
+      url: `${SITE.domain}/repairs/${t.slug}/`,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    })),
     // Service-area hubs: local landing pages for each covered neighbourhood.
     { url: `${SITE.domain}/areas/`, changeFrequency: "monthly", priority: 0.8 },
     ...LIVE_SERVICE_AREAS.map((a) => ({

@@ -46,33 +46,13 @@ export default async function DirectoryGroupPage({
   const g = directoryGroupBy(group);
   if (!g) notFound();
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "خانه", item: SITE.domain },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "فهرست کامل صفحات",
-        item: `${SITE.domain}/directory/`,
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: g.title,
-        item: `${SITE.domain}/directory/${g.slug}/`,
-      },
-    ],
-  };
+  // No BreadcrumbList here on purpose: /directory/ is a crawl aid, not a
+  // browsing path a visitor arrives on from search, and the visible trail above
+  // already says where the page sits. Emitting one puts these index pages into
+  // breadcrumb rich results in place of the service pages they exist to feed.
 
   return (
     <div className="pt-24 lg:pt-28">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-
       <div className="bg-finegrid border-b border-line">
         <div className="mx-auto max-w-[1400px] px-4 py-12 sm:px-6 lg:px-10">
           <nav
@@ -113,13 +93,6 @@ export default async function DirectoryGroupPage({
           ))}
         </ul>
 
-        <Link
-          href="/directory/"
-          className="mt-10 inline-flex items-center gap-1.5 text-sm font-bold text-accent hover:underline"
-        >
-          <ChevronLeft className="h-4 w-4" />
-          بازگشت به فهرست کامل صفحات
-        </Link>
       </section>
     </div>
   );

@@ -1,0 +1,4 @@
+# Everything under public/ is copied verbatim into out/ and uploaded as-is.
+# core.autocrlf=true would otherwise check these out with CRLF and change the
+# deployed bytes (send-repair-request.php grew 97 bytes that way once).
+public/** -text

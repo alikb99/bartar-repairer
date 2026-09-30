@@ -23,6 +23,11 @@
       "permanent": true
     },
     {
+      "source": "/team/soheil-mohammadi/",
+      "destination": "/team/",
+      "permanent": true
+    },
+    {
       "source": "/xiaomi/mobile/xiaomi-phone-lcd-repair/",
       "destination": "/xiaomi-phone-lcd-repair/",
       "permanent": true

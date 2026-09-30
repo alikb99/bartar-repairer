@@ -1,5 +1,9 @@
 import Link from "next/link";
+import ServiceCentersSlot from "@/components/ServiceCentersSlot";
 import {
+  Navigation,
+  Construction,
+  TrainFront,
   Phone,
   MessageCircle,
   Instagram,
@@ -8,14 +12,17 @@ import {
   Linkedin,
   Twitter,
   Globe,
+  Video,
   MapPin,
   ChevronLeft,
   Clock,
   Package,
-  Send,
-  Video,
 } from "lucide-react";
-import { SITE } from "@/lib/data";
+import {
+  BRANCHES as SHOP_BRANCHES,
+  SITE,
+  directionsUrl,
+} from "@/lib/data";
 import { type Post } from "@/lib/content";
 
 // Content (verbatim from the database) for the contact page.
@@ -30,36 +37,42 @@ const POSTAL_NOTE =
 // sameAs in app/layout.tsx and linked from the footer on every page.
 const SOCIALS = [
   { label: "اینستاگرام", href: SITE.socials.instagram, icon: Instagram },
-  { label: "تلگرام", href: SITE.socials.telegram, icon: Send },
   { label: "یوتیوب", href: SITE.socials.youtube, icon: Youtube },
-  { label: "آپارات", href: SITE.socials.aparat, icon: Video },
   { label: "ایکس (توییتر)", href: SITE.socials.twitter, icon: Twitter },
   { label: "فیسبوک", href: SITE.socials.facebook, icon: Facebook },
   { label: "پینترست", href: SITE.socials.pinterest, icon: Globe },
   { label: "لینکدین", href: SITE.socials.linkedin, icon: Linkedin },
+  { label: "آپارات", href: SITE.socials.aparat, icon: Video },
   { label: "واتساپ", href: SITE.socials.whatsapp, icon: MessageCircle },
 ];
 
 const BRANCHES = [
   {
     name: "شعبه مرکزی تهران",
-    address:
-      "تهران ، خیابان مطهری ، ابتدای خیابان قائم مقام فراهانی جنوبی ، پلاک 158 ساختمان برتر سرویس",
+    address: "تهران، خیابان مطهری، خیابان قائم مقام فراهانی جنوبی، پلاک ۱۵۸",
     postal: SITE.postalCode,
-    map: SITE.mapCentral,
+    metro: { line: "میرزای شیرازی، هفتم تیر", last: "مفتح" },
+    directions: directionsUrl(SHOP_BRANCHES[0]),
+    note: "",
   },
   {
     name: "شعبه شرق تهران",
     address: "میدال هلال احمر جنب میدان 91 مرکز خدمات پس از فروش برترسرویس",
     postal: "",
-    map: "",
+    metro: null,
+    directions: "",
+    // The branch is closed for rebuilding; saying so here stops someone
+    // driving across the city to a shuttered door.
+    note: "این شعبه در حال بازسازی است و فعلاً پذیرش حضوری ندارد. تا بازگشایی، لطفاً به شعبه مرکزی مراجعه کنید یا تماس بگیرید.",
   },
   {
     name: "شعبه غرب تهران",
     address:
-      "تهران، سعادت آباد، میدان کاج، کوچه دوازدهم علی اکبر، پلاک 30، مجتمع اداری کسری، طبقه اول واحد 5",
+      "تهران، سعادت آباد، میدان کاج، کوچه دوازدهم علی اکبر، پلاک ۳۰، مجتمع اداری کسری، طبقه اول واحد ۵",
     postal: "",
-    map: "",
+    metro: null,
+    directions: "",
+    note: "",
   },
 ];
 
@@ -195,6 +208,23 @@ export default function ContactPage({ post }: { post: Post }) {
                     کد پستی: <span dir="ltr" className="tracking-wider">{b.postal}</span>
                   </p>
                 )}
+                {b.metro && (
+                  <p className="mt-2 flex items-start gap-2 text-sm leading-8 text-ink-600">
+                    <TrainFront className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                    <span>
+                      نزدیک ترین ایستگاه های مترو:{" "}
+                      <span className="font-semibold text-ink-800">
+                        {b.metro.line} و {b.metro.last}
+                      </span>
+                    </span>
+                  </p>
+                )}
+                {b.note && (
+                  <p className="mt-2 flex items-start gap-2 text-sm leading-8 text-ink-600">
+                    <Construction className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+                    <span>{b.note}</span>
+                  </p>
+                )}
                 <div className="mt-5 flex flex-wrap gap-2">
                   <a
                     href={SITE.phoneHref}
@@ -204,15 +234,15 @@ export default function ContactPage({ post }: { post: Post }) {
                     <Phone className="h-4 w-4" />
                     {SITE.phone}
                   </a>
-                  {b.map && (
+                  {b.directions && (
                     <a
-                      href={b.map}
+                      href={b.directions}
                       target="_blank"
                       rel="noopener noreferrer nofollow"
                       className="inline-flex items-center gap-2 rounded-full border border-line px-5 py-2.5 text-sm font-semibold text-ink-700 transition hover:border-accent/40 hover:text-accent"
                     >
-                      <MapPin className="h-4 w-4" />
-                      مشاهده روی نقشه
+                      <Navigation className="h-4 w-4" />
+                      مسیریابی روی نقشه
                     </a>
                   )}
                 </div>
@@ -221,6 +251,12 @@ export default function ContactPage({ post }: { post: Post }) {
           </div>
         </section>
       </div>
+
+      <ServiceCentersSlot
+        path={post.path}
+        always
+        heading="شعبه های برتر سرویس روی نقشه"
+      />
     </div>
   );
 }
