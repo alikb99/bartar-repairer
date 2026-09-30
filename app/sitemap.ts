@@ -6,6 +6,7 @@ import { SITE } from "@/lib/data";
 import { CLUSTER_REVISED } from "@/lib/recovered-revised";
 import { PER_PAGE } from "@/components/BlogListing";
 import { PEOPLE } from "@/lib/team";
+import { PHONE_TESTS, PHONE_TEST_BASE, PHONE_TEST_HUB, phoneTestPath } from "@/lib/phone-tests";
 
 export const dynamic = "force-static";
 
@@ -66,6 +67,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.8,
     },
+    // Browser-based phone tests (hub + one page per test).
+    {
+      url: `${SITE.domain}${PHONE_TEST_BASE}`,
+      lastModified: new Date(PHONE_TEST_HUB.updated),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    ...PHONE_TESTS.map((t) => ({
+      url: `${SITE.domain}${phoneTestPath(t.slug)}`,
+      lastModified: new Date(t.updated),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
     { url: `${SITE.domain}/app/`, changeFrequency: "monthly", priority: 0.7 },
     // Crawlable HTML directory: one shallow inbound link to every service page
     // and article, so no page depends on deep blog pagination for discovery.

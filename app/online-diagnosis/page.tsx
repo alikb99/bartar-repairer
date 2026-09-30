@@ -93,6 +93,15 @@ export default function OnlineDiagnosisPage() {
       <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <TroubleshootWizard />
 
+        {/* ایراد سخت افزاری مشکوک؟ همان جا با تست آنلاین قطعه را بسنج */}
+        <p className="mt-8 rounded-2xl border border-line bg-white px-5 py-4 text-[15px] leading-8 text-ink-700">
+          گوشی روشن است ولی به صفحه، تاچ، اسپیکر یا میکروفون شک دارید؟ با{" "}
+          <Link href="/phone-test/" className="font-bold text-accent hover:underline">
+            تست گوشی آنلاین
+          </Link>{" "}
+          همین حالا و بدون نصب برنامه بررسی کنید.
+        </p>
+
         {/* SEO text + internal links to the commercial hubs */}
         <section className="mt-16 border-t border-line pt-10">
           <h2 className="heading-accent text-xl font-extrabold text-ink-900">
