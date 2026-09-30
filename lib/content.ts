@@ -5,6 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { HEADING_LABELS, HUB_LABELS } from "./recovered-hub-labels";
 import { INJECTED_LINKS } from "./recovered-internal-links";
+import { ADDED_LINKS } from "./added-links";
 import { SITE } from "./data";
 // Replays the SEO surface of the 2026-08-16 production build, whose source was
 // never committed (see docs/00-CRITICAL-source-location.md in the deploy repo).
@@ -1046,13 +1047,18 @@ function linkifyInternal(html: string, selfPath: string): string {
   // the map below is what it carried, phrase for phrase. Pages with no recorded
   // list fall back to the general brand/device map.
   const recovered = INJECTED_LINKS[selfPath];
-  const targets: [string, string, string?][] = (
-    recovered ?? INTERNAL_LINKS
-  ).filter(([, path]) => path !== selfPath);
+  // Links added after the export (lib/added-links.ts) go FIRST: a recovered
+  // list is a closed set, so an article published later would otherwise have
+  // no route in from the pages that already rank for its topic.
+  const extra = ADDED_LINKS[selfPath] ?? [];
+  const targets: [string, string, string?][] = [
+    ...extra,
+    ...(recovered ?? INTERNAL_LINKS),
+  ].filter(([, path]) => path !== selfPath);
   const linked = new Set<string>();
   const used = new Set<number>();
   let added = 0;
-  const MAX = recovered ? recovered.length : 8;
+  const MAX = recovered ? recovered.length + extra.length : 8 + extra.length;
   return html.replace(
     /(<p\b[^>]*>)([\s\S]*?)(<\/p>)/gi,
     (m, open: string, inner: string, close: string, offset: number) => {
@@ -1106,17 +1112,73 @@ function linkifyInternal(html: string, selfPath: string): string {
   );
 }
 
-// Body-text corrections made on the live site after the WordPress export was
-// taken, replayed here so the rebuild matches what is deployed. Keyed by URL,
-// each entry is an exact find/replace — posts.json stays the untouched source
-// of truth. Keep this table tiny; anything larger belongs in the database.
+// Body-text corrections made on the live site — or requested directly by the
+// owner — replayed here so the rebuild matches what should be deployed. Keyed
+// by URL, each entry is an exact find/replace against the ALREADY-rendered
+// body (after cleanContent/addAltText/promoteHeadings/levelHeadings run) —
+// posts.json itself stays the untouched source of truth. Keep this table
+// tiny; anything larger belongs in the database.
 const CONTENT_FIXES: Record<string, [string, string][]> = {
   // Founding year corrected on the deployed pages (1382 → 1383).
   "/xiaomi/mobile/": [["از سال 1382 تا کنون", "از سال 1383 تا کنون"]],
-  "/about/": [["های سال 1382", "های سال 1383"]],
   "/home/": [
     ["از سال 1382 تاکنون", "از سال 1383 تاکنون"],
     ["از سال 1382 تا به امروز", "از سال 1383 تا به امروز"],
+  ],
+  "/about/": [
+    ["های سال 1382", "های سال 1383"],
+    // States, in the "تیم ما" intro, that the whole business is run under the
+    // supervisor already named sitewide (SITE.manager in lib/data.ts / the
+    // /team/ page) — owner-supplied fact, 2026-08-29.
+    [
+      "<p>تیم حرفه ای ما در کنار شماست تا احساس امنیت را به شما بدهند . ما در مجموعه خود سعی داشته ایم همیشه بهترین متخصصین را داشته باشیم تا بهترین نتیجه را برای شما به ارمغان بیاوریم.</p>",
+      "<p>تیم حرفه ای ما در کنار شماست تا احساس امنیت را به شما بدهند . ما در مجموعه خود سعی داشته ایم همیشه بهترین متخصصین را داشته باشیم تا بهترین نتیجه را برای شما به ارمغان بیاوریم. کل مجموعه برتر سرویس زیر نظر حمیدرضا آتشین پای، سرپرست و مدیر مجموعه، اداره می شود.</p>",
+    ],
+    // The WordPress "تیم ما" photo grid named 9 people as of the 2023 export.
+    // None of the photos are current — see lib/team.ts, the source of truth
+    // for who actually works here today — so all 9 (including three women who
+    // are no longer on staff) are removed outright rather than left showing
+    // former employees as current ones. Owner-supplied instruction,
+    // 2026-08-29.
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"791\" src=\"/wp-content/uploads/2023/10/20231011_145810-1024x1013.webp\" alt=\"حسین مهرجو تکنسین نرم افزار موبایل\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tحسین مهرجو\t\t<p><strong>سمت:</strong> برنامه نویس ارشد اندروید و ios</p><p><strong>مدرک تحصیلی:</strong> کارشناسی آیتی</p><p><strong>تجربه کاری:</strong> 8 سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"781\" src=\"/wp-content/uploads/2023/10/20231011_151655-1024x1000.webp\" alt=\"حامد عباسی متخصص سخت افزار موبایل برتر سرویس\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tحامد عباسی\t\t<p><strong>سمت:</strong> متخصص سخت افزار موبایل</p><p><strong>مدرک تحصیلی:</strong> کارشناسی ارشد مخابرات</p><p><strong>تجربه کاری:</strong> 6 سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"746\" src=\"/wp-content/uploads/2023/10/20231011_152535-1024x955.webp\" alt=\"عرفان آگاه متخصص تعمیرات لپ تاپ برتر سرویس\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tعرفان آگاه\t\t<p><strong>سمت:</strong> متخصص تعمیرات لپ تاپ</p><p><strong>مدرک تحصیلی:</strong> کارشناسی الکترونیک </p><p><strong>تجربه کاری:</strong> 8 سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"802\" src=\"/wp-content/uploads/2023/10/20231011_160304-min-1022x1024.webp\" alt=\"صدرا فراهانی متخصص سخت افزار آیفون\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tصدرا فراهانی\t\t<p><strong>سمت:</strong> متخصص سخت افزار آیفون</p><p><strong>مدرک تحصیلی:</strong> کارشناسی الکتروتکنیک</p><p><strong>تجربه کاری:</strong> 5 سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"781\" src=\"/wp-content/uploads/2023/10/20231011_151655-min-1024x1000.webp\" alt=\"امیرحسین معینی تعمیرکار موبایل\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tامیر حسین معینی\t\t<p><strong>سمت:</strong> متخصص کنترل کیفیت</p><p><strong>مدرک تحصیلی:</strong> کاردانی برق</p><p><strong>تجربه کاری:</strong> 5سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"793\" src=\"/wp-content/uploads/2023/10/20231011_153726-1024x1015.webp\" alt=\"خانم جغتایی مدیر بخش تبلیغات و بازاریابی برتر سرویس\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tخانم جغتایی\t\t<p><strong>سمت:</strong> مدیر بخش تبلیغات و بازار یابی</p><p><strong>مدرک تحصیلی:</strong> کارشناسی ارشد مدیریت تبلیغات</p><p><strong>تجربه کاری:</strong> 5سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"728\" src=\"/wp-content/uploads/2023/10/20231011_153330-1024x932.webp\" alt=\"خانم عباسی مسئول هماهنگی بین مشتری و تکنسین برتر سرویس\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tخانم عباسی\t\t<p><strong>سمت:</strong> مسئول هماهنگی بین مشتری و تکنسین</p><p><strong>مدرک تحصیلی:</strong> کارشناسی ارشد مدیریت بازرگانی</p><p><strong>تجربه کاری:</strong> 6 سال</p>",
+      "",
+    ],
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"780\" src=\"/wp-content/uploads/2023/10/20231010_112146-1-1024x999.webp\" alt=\"خانم شاه آبادی مدیر بخش پذیرش و هماهنگی داخلی برتر سرویس\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tخانم شاه آبادی\t\t<p><strong>س</strong><strong>مت:</strong> مدیر بخش پذیرش و هماهنگی داخلی</p><p><strong>مدرک تحصیلی:</strong> کارشناسی ارشد مدیریت بازرگانی</p><p><strong>تجربه کاری:</strong> 6 سال</p>",
+      "",
+    ],
+    // The one name that WAS current (علیرضا قهرمانی) is replaced, not just
+    // stripped, with the CURRENT full roster from lib/team.ts, each linking to
+    // their /team/<slug>/ profile — owner-supplied instruction, 2026-08-29.
+    [
+      "<img loading=\"lazy\" decoding=\"async\" width=\"800\" height=\"781\" src=\"/wp-content/uploads/2023/10/20231011_151101-1024x1000.webp\" alt=\"علیرضا قهرمانی متخصص سخت افزار آیفون برتر سرویس\" loading=\"lazy\" />\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tعلیرضا قهرمانی\t\t<p><strong>س</strong><strong>مت:</strong> متخصص سخت افزار آیفون</p><p><strong>مدرک تحصیلی:</strong> کارشناسی ارشد مهندسی پزشکی</p><p><strong>تجربه کاری:</strong> 8 سال</p>",
+      "<p><strong><a href=\"/team/alireza-ghahremani/\">علیرضا قهرمانی</a></strong> — تعمیر گوشی آیفون و اندروید. ۱۲ سال سابقه.</p><p><strong><a href=\"/team/mehdi-lesani/\">مهدی لسانی</a></strong> — تعمیر ساعت هوشمند، تبلت و گوشی های ناتینگ فون، گوگل پیکسل و نوکیا. بیش از ۱۰ سال سابقه.</p><p><strong><a href=\"/team/mohammadreza-akbarpour/\">محمدرضا اکبرپور</a></strong> — تعمیر لپ تاپ و مانیتور. ۸ سال سابقه.</p><p><strong><a href=\"/team/amirhossein-atashin/\">امیرحسین آتشین</a></strong> — تعمیر لپ تاپ و مانیتور. ۸ سال سابقه.</p><p><strong><a href=\"/team/ali-kargar/\">علی کارگر</a></strong> — تعمیر موبایل و تعمیرات نرم افزاری. ۸ سال سابقه.</p><p><strong><a href=\"/team/ilia-farzaneh/\">ایلیا فرزانه</a></strong> — تعویض قطعات گوشی آیفون و اندروید. حدود ۵ سال سابقه.</p><p><strong><a href=\"/team/erfan-sadeghi/\">عرفان صادقی</a></strong> — تعمیرات نرم افزاری. ۳ سال سابقه.</p><p><a href=\"/team/\">مشاهده پروفایل کامل تیم فنی</a></p>",
+    ],
   ],
 };
 
@@ -1342,7 +1404,17 @@ export const DB_SITE = siteJson as {
   siteurl: string;
 };
 
-export const ARTICLE_POSTS = POSTS.filter((p) => p.type === "post");
+// Newest first. The WordPress export is ALREADY strictly date-descending (536
+// articles, zero violations), so this sort is a no-op for every database post
+// and exists for one reason: hand-authored articles from extra-posts.json are
+// appended to the raw array, which parked the newest content on the site at
+// the END of /blog/ — page 58 instead of page 1. Sorting by date puts them
+// where their date says they belong without touching POSTS itself, whose order
+// feeds path building and the byte-compared parity pages.
+// Array.prototype.sort is stable, so equal dates keep their export order.
+export const ARTICLE_POSTS = POSTS.filter((p) => p.type === "post").sort(
+  (a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0),
+);
 
 const postByPath = new Map<string, Post>();
 for (const p of POSTS) {

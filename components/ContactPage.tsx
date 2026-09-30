@@ -12,6 +12,7 @@ import {
   Linkedin,
   Twitter,
   Globe,
+  Video,
   MapPin,
   ChevronLeft,
   Clock,
@@ -41,6 +42,7 @@ const SOCIALS = [
   { label: "فیسبوک", href: SITE.socials.facebook, icon: Facebook },
   { label: "پینترست", href: SITE.socials.pinterest, icon: Globe },
   { label: "لینکدین", href: SITE.socials.linkedin, icon: Linkedin },
+  { label: "آپارات", href: SITE.socials.aparat, icon: Video },
   { label: "واتساپ", href: SITE.socials.whatsapp, icon: MessageCircle },
 ];
 

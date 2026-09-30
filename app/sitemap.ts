@@ -5,6 +5,7 @@ import { LIVE_SERVICE_AREAS } from "@/lib/service-areas";
 import { SITE } from "@/lib/data";
 import { CLUSTER_REVISED } from "@/lib/recovered-revised";
 import { PER_PAGE } from "@/components/BlogListing";
+import { PEOPLE } from "@/lib/team";
 
 export const dynamic = "force-static";
 
@@ -73,6 +74,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.4,
     },
+    // Declares which other domains this company owns. Low priority as a
+    // destination, but it needs to be crawlable: it is the page the schema's
+    // subOrganization edge is asking a reviewer to verify.
+    {
+      url: `${SITE.domain}/group/`,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
     // Pages shipped as pre-rendered HTML from public/ rather than as routes
     // (see docs/frozen-pages.md). They are indexable and must appear
     // here, but nothing in POSTS knows about them.
@@ -83,6 +92,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     { url: `${SITE.domain}/team/`, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE.domain}/warranty/`, changeFrequency: "monthly", priority: 0.7 },
+    ...PEOPLE.map((p) => ({
+      url: `${SITE.domain}/team/${p.slug}/`,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
     { url: `${SITE.domain}/prices/`, changeFrequency: "weekly", priority: 0.9 },
     {
       url: `${SITE.domain}/mobile-repair-online/`,

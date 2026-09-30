@@ -4,10 +4,14 @@ import {
   MapPin,
   Instagram,
   Youtube,
+  Video,
   MessageCircle,
   Download,
   TrainFront,
   Navigation,
+  Linkedin,
+  Twitter,
+  Globe,
 } from "lucide-react";
 import { BRANCHES, SITE, directionsUrl } from "@/lib/data";
 import type { NavItem } from "@/lib/content";
@@ -117,16 +121,18 @@ export default function Footer({ nav }: { nav: NavItem[] }) {
             مرکز تخصصی تعمیر موبایل و لپ تاپ و نمایندگی برندهای معتبر. با بیش از
             ۱۵ سال تجربه، خدمات تعمیراتی مطمئن همراه با گارانتی ارائه می دهیم.
           </p>
-          {/* The channels the shop actually answers on. The full profile set,
-              including the ones that are only there to corroborate identity,
-              goes out as schema sameAs in app/layout.tsx — a footer row of
-              nine icons buys nothing a reader would use. No nofollow: these
-              are the site's own accounts, and the link is the corroboration. */}
+          {/* The full profile set — same accounts as schema sameAs in
+              app/layout.tsx. No nofollow: these are the site's own accounts,
+              and the link is the corroboration. */}
           <div className="mt-5 flex flex-wrap items-center gap-2.5">
             {[
               { Icon: Instagram, label: "اینستاگرام", href: SITE.socials.instagram },
               { Icon: MessageCircle, label: "واتساپ", href: SITE.socials.whatsapp },
               { Icon: Youtube, label: "یوتیوب", href: SITE.socials.youtube },
+              { Icon: Video, label: "آپارات", href: SITE.socials.aparat },
+              { Icon: Linkedin, label: "لینکدین", href: SITE.socials.linkedin },
+              { Icon: Twitter, label: "ایکس (توییتر)", href: SITE.socials.twitter },
+              { Icon: Globe, label: "پینترست", href: SITE.socials.pinterest },
             ].map(({ Icon, label, href }) => (
               <a
                 key={label}
@@ -141,13 +147,13 @@ export default function Footer({ nav }: { nav: NavItem[] }) {
               </a>
             ))}
           </div>
-          <Link
+          <a
             href="/app/"
             className="mt-5 inline-flex items-center gap-2 rounded-xl border border-[#2A2F39] px-4 py-2.5 text-[13.5px] font-bold text-[#E7EAEF] transition hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-white"
           >
             <Download className="h-[17px] w-[17px]" />
             دانلود اپلیکیشن اندروید
-          </Link>
+          </a>
         </div>
 
         {/* Services */}
@@ -313,17 +319,23 @@ export default function Footer({ nav }: { nav: NavItem[] }) {
             © تمامی حقوق برای {SITE.shortName} محفوظ است — ۱۴۰۴
           </div>
           <div className="flex flex-wrap items-center gap-4 text-[13px] text-[#7B828E]">
-            <Link href="/app/" className="transition hover:text-white">
+            {/* Plain <a>, not <Link>: /app/ and /prices/ are frozen HTML in
+                public/ with no Next runtime, so a client-side navigation would
+                render nothing. See docs/frozen-pages.md. */}
+            <a href="/app/" className="transition hover:text-white">
               دانلود اپلیکیشن
-            </Link>
-            <Link href="/prices/" className="transition hover:text-white">
+            </a>
+            <a href="/prices/" className="transition hover:text-white">
               قیمت تعمیر
-            </Link>
+            </a>
             <Link href="/team/" className="transition hover:text-white">
               تیم فنی
             </Link>
             <Link href="/directory/" className="transition hover:text-white">
               فهرست کامل صفحات
+            </Link>
+            <Link href="/group/" className="transition hover:text-white">
+              سایت های مجموعه
             </Link>
             <Link href="/privacy-policy/" className="transition hover:text-white">
               حریم خصوصی

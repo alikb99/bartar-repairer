@@ -139,12 +139,15 @@ export default function PagePriceTable({
         {/* This table lists only the models named on this page; /prices/ carries
             every row, so a visitor whose model is absent still has somewhere
             to go instead of bouncing. */}
-        <Link
+        {/* Plain <a>: /prices/ is frozen HTML in public/ with no Next runtime,
+            so a client-side navigation would render nothing. See
+            docs/frozen-pages.md. */}
+        <a
           href="/prices/"
           className="inline-flex items-center gap-2 text-sm font-bold text-accent underline decoration-accent/30 underline-offset-4 transition hover:decoration-accent"
         >
           جستجوی قیمت مدل های دیگر
-        </Link>
+        </a>
       </div>
 
       <p className="mt-5 flex items-start gap-2 text-[13px] leading-7 text-ink-300">

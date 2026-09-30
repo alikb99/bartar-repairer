@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
-import { BRANCHES, SITE } from "@/lib/data";
+import { BRANCHES, GROUP_SITES, SITE } from "@/lib/data";
 import { NAV } from "@/lib/content";
 import { TECHNICIANS } from "@/lib/team";
 import Header from "@/components/Header";
@@ -157,6 +157,21 @@ const organizationSchema = {
     contactType: "customer service",
     areaServed: "IR",
   },
+  // The company's other web properties, declared as subsidiaries of this one.
+  // See GROUP_SITES in lib/data.ts for why: they all publish this same phone
+  // number and these same two addresses, and until this edge existed nothing
+  // told a crawler they belonged to one owner.
+  //
+  // This sits in the root layout rather than on the brand pages so the claim is
+  // made once, consistently, on every URL — a parent that only admits to a
+  // subsidiary on that subsidiary's own brand page is a weaker claim than one
+  // that says it everywhere.
+  subOrganization: GROUP_SITES.map((s) => ({
+    "@type": "Organization",
+    name: s.name,
+    url: s.url,
+    description: s.blurb,
+  })),
 };
 
 const websiteSchema = {

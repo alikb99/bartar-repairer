@@ -19,6 +19,7 @@ import { SITE } from "@/lib/data";
 import { calloutFor } from "@/lib/recovered-callouts";
 import { clusterContentFor } from "@/lib/cluster-content";
 import ClusterContent from "@/components/ClusterContent";
+import BrandSiteCard from "@/components/BrandSiteCard";
 import PageCallout from "@/components/PageCallout";
 import RepairRequestSection from "@/components/RepairRequestSection";
 import PillarArticles from "@/components/PillarArticles";
@@ -401,6 +402,8 @@ export default function XiaomiLanding({ post }: { post: Post }) {
           </div>
         </div>
       </header>
+
+      <BrandSiteCard path={post.path} />
 
       {calloutFor(post.path)?.slot === "top" && (
         <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">

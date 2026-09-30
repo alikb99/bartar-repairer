@@ -2,8 +2,8 @@
 
 import dynamic from "next/dynamic";
 
-// The request form is interactive-only: it posts to send-repair-request.php and
-// has no server-rendered state worth shipping. Loading it on the client keeps
+// The request form is interactive-only: it embeds the 9fx form and has no
+// server-rendered state worth shipping. Loading it on the client keeps
 // the landing pages' HTML small; the placeholder reserves the form's height so
 // nothing below it jumps when the form arrives.
 const RepairRequestForm = dynamic(() => import("./RepairRequestForm"), {

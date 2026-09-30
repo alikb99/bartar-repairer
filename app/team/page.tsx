@@ -9,7 +9,17 @@ import {
   Wrench,
 } from "lucide-react";
 import { SITE } from "@/lib/data";
-import { TECHNICIANS, WORKSHOP_TOOLS, yearsLabel } from "@/lib/team";
+import {
+  TECHNICIANS,
+  WRITERS,
+  MANAGEMENT,
+  WORKSHOP_TOOLS,
+  personId,
+  roleLabel,
+  yearsLabel,
+} from "@/lib/team";
+
+const MANAGER = MANAGEMENT[0];
 
 // Non-absolute: the root layout template appends " | برتر سرویس".
 const TITLE = "تیم فنی تعمیرگاه - تکنسین ها و تجهیزات کارگاه";
@@ -41,27 +51,21 @@ export const metadata: Metadata = {
 };
 
 export default function TeamPage() {
-  // One Person node per technician. Only fields we actually have are emitted —
-  // no jobTitle or knowsAbout unless the owner supplied it.
-  const people = TECHNICIANS.map((t) => ({
+  // One Person node per technician/writer, keyed to the same @id their own
+  // /team/<slug>/ profile page declares — see PersonPage in
+  // app/team/[slug]/page.tsx. Only fields we actually have are emitted; no
+  // jobTitle or knowsAbout unless the owner supplied it.
+  const people = [...TECHNICIANS, ...WRITERS, ...MANAGEMENT].map((t) => ({
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": personId(SITE.domain, t.slug),
     name: t.name,
+    url: `${SITE.domain}/team/${t.slug}/`,
     worksFor: { "@id": SITE.organizationId },
     ...(t.specialty ? { jobTitle: t.specialty, knowsAbout: t.specialty } : {}),
     ...(t.photo ? { image: `${SITE.domain}${t.photo.src}` } : {}),
     ...(t.certifications?.length ? { hasCredential: t.certifications } : {}),
   }));
-
-  // The supervisor is an employee of the business, not of the editorial team,
-  // so he gets his own Person node rather than joining the `people` list.
-  const manager = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: SITE.manager.name,
-    worksFor: { "@id": SITE.organizationId },
-    jobTitle: SITE.manager.jobTitle,
-  };
 
   // The author identity this page is about, stated on the page it describes:
   // same @id as the node in app/layout.tsx, with the profiles that corroborate
@@ -73,15 +77,10 @@ export default function TeamPage() {
     "@id": SITE.authorId,
     name: `تیم فنی ${SITE.shortName}`,
     url: `${SITE.domain}/team/`,
-    sameAs: [
-      SITE.socials.linkedin,
-      SITE.socials.instagram,
-      SITE.socials.youtube,
-      SITE.socials.twitter,
-      SITE.socials.facebook,
-      SITE.socials.pinterest,
-      SITE.socials.whatsapp,
-    ],
+    // Same list app/layout.tsx feeds the Organization/LocalBusiness nodes —
+    // kept as Object.values() so a new profile added to SITE.socials shows up
+    // here too, instead of silently missing from this one hand-copied array.
+    sameAs: Object.values(SITE.socials),
   };
 
   const breadcrumb = {
@@ -107,10 +106,6 @@ export default function TeamPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(editorialTeam) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(manager) }}
       />
       {people.map((p) => (
         <script
@@ -167,15 +162,24 @@ export default function TeamPage() {
               <p className="mt-2 text-[15px] leading-9 text-ink-700">
                 {SITE.manager.bio}
               </p>
-              <a
-                href={SITE.socials.linkedin}
-                target="_blank"
-                rel="noopener"
-                className="mt-4 inline-flex items-center gap-2 rounded-[12px] border border-line bg-paper px-4 py-2.5 text-sm font-bold text-ink-800 transition hover:border-accent hover:text-accent"
-              >
-                <Linkedin className="h-4 w-4 text-accent" />
-                پروفایل لینکدین {SITE.brandName}
-              </a>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <Link
+                  href={`/team/${MANAGER.slug}/`}
+                  className="inline-flex items-center gap-2 rounded-[12px] border border-line bg-paper px-4 py-2.5 text-sm font-bold text-ink-800 transition hover:border-accent hover:text-accent"
+                >
+                  مشاهده پروفایل کامل
+                  <ChevronLeft className="h-4 w-4 text-accent" />
+                </Link>
+                <a
+                  href={SITE.socials.linkedin}
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex items-center gap-2 rounded-[12px] border border-line bg-paper px-4 py-2.5 text-sm font-bold text-ink-800 transition hover:border-accent hover:text-accent"
+                >
+                  <Linkedin className="h-4 w-4 text-accent" />
+                  پروفایل لینکدین {SITE.brandName}
+                </a>
+              </div>
             </div>
           </div>
 
@@ -190,11 +194,11 @@ export default function TeamPage() {
 
           <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {TECHNICIANS.map((t) => (
-              <li
-                key={t.name}
-                className="rounded-[22px] border border-line bg-white p-5 shadow-card"
-              >
-                <div className="flex items-start gap-4">
+              <li key={t.slug}>
+                <Link
+                  href={`/team/${t.slug}/`}
+                  className="card-hover flex h-full items-start gap-4 rounded-[22px] border border-line bg-white p-5 shadow-card transition hover:border-accent"
+                >
                   {t.photo ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img
@@ -237,12 +241,58 @@ export default function TeamPage() {
                       </ul>
                     ) : null}
                   </div>
-                </div>
+                </Link>
               </li>
             ))}
           </ul>
         </div>
       </section>
+
+      {WRITERS.length > 0 && (
+        <section className="border-t border-line bg-white py-12 lg:py-16">
+          <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-extrabold text-ink-900 sm:text-[32px]">
+              نویسندگان و کارشناسان محتوا
+            </h2>
+            <p className="mt-3 max-w-3xl text-[15px] leading-9 text-ink-700">
+              این افراد دستگاه تعمیر نمی کنند؛ مقاله ها و راهنماهای سایت را می
+              نویسند و روی سئوی محتوا کار می کنند.
+            </p>
+            <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {WRITERS.map((w) => (
+                <li key={w.slug}>
+                  <Link
+                    href={`/team/${w.slug}/`}
+                    className="card-hover flex h-full items-start gap-4 rounded-[22px] border border-line bg-paper p-5 shadow-card transition hover:border-accent"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="grid h-16 w-16 shrink-0 place-items-center rounded-2xl bg-white text-accent"
+                    >
+                      {w.name[0]}
+                    </span>
+                    <div className="min-w-0">
+                      <h3 className="text-[16px] font-extrabold leading-7 text-ink-900">
+                        {w.name}
+                      </h3>
+                      {w.specialty && (
+                        <p className="mt-1 text-sm leading-7 text-ink-500">
+                          {w.specialty}
+                        </p>
+                      )}
+                      {yearsLabel(w) && (
+                        <p className="mt-1 text-[13px] font-bold leading-7 text-accent">
+                          {yearsLabel(w)}
+                        </p>
+                      )}
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       <section className="border-t border-line bg-white py-12 lg:py-16">
         <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">

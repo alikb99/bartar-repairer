@@ -23,6 +23,7 @@ import { SITE } from "@/lib/data";
 import { calloutFor } from "@/lib/recovered-callouts";
 import { CARD_LABELS } from "@/lib/recovered-hub-labels";
 import { clusterContentFor } from "@/lib/cluster-content";
+import BrandSiteCard from "@/components/BrandSiteCard";
 import ContactCard from "@/components/ContactCard";
 import ClusterContent from "@/components/ClusterContent";
 import ContentEnhancer from "@/components/ContentEnhancer";
@@ -326,6 +327,8 @@ export default function BrandLanding({ post }: { post: Post }) {
           </div>
         </div>
       </header>
+
+      <BrandSiteCard path={post.path} />
 
       {calloutFor(post.path)?.slot === "top" && (
         <div className="mx-auto max-w-[1240px] px-4 sm:px-6 lg:px-8">

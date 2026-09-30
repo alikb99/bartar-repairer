@@ -84,6 +84,7 @@ export default function ServiceCenters({
                             <dd>
                               <a
                                 href={b.phoneHref}
+                                data-cta="branches"
                                 className="font-bold text-ink-900 hover:text-accent"
                               >
                                 {b.phone}
