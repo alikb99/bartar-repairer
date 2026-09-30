@@ -223,8 +223,11 @@ export default function TouchTest({ tool }: { tool: PhoneTest["tool"] }) {
 
       {inStage && (
         <div ref={stage} className="fixed inset-0 z-[1000] h-[100dvh] touch-none select-none overscroll-none">
+          {/* ltr عمدی: در راست به چپ grid ستون اول را سمت راست می چیند ولی mark() ستون را
+              از لبه چپ حساب می کند؛ بدون این، کشیدن انگشت سمت راست خانه سمت چپ را رنگ می کرد */}
           <div
             ref={grid}
+            dir="ltr"
             className="pt-grid absolute inset-0 grid bg-white"
             onPointerDown={onDown}
             onPointerMove={onMove}
