@@ -964,7 +964,8 @@ export const H1_OVERRIDES_RECOVERED: Record<string, string> = {
   "/motorola-mobile-repair-center/": "تعمیرات گوشی موتورولا در تهران",
   "/nokia/": "نمایندگی نوکیا در تهران - تعمیر گوشی نوکیا",
   "/nothingphone-repair/": "تعمیرات گوشی ناتینگ فون در تهران",
-  "/samsung/": "نمایندگی تعمیرات سامسونگ در تهران",
+  // Same move as /apple/: the brand-agency phrase belongs to samsung-repairer.ir.
+  "/samsung/": "تعمیرات لوازم خانگی و موبایل سامسونگ",
   "/samsung/mobile/": "تعمیرات گوشی سامسونگ در تهران",
   "/services/category-mobile-phone-repair/": "تعمیر موبایل در تهران",
   "/xiaomi/": "نمایندگی تعمیرات شیائومی در تهران - همه محصولات Xiaomi",

@@ -20,6 +20,7 @@ import { SITE, BRAND_SITES } from "@/lib/data";
 export default function BrandSiteCard({ path }: { path: string }) {
   const site = BRAND_SITES[path];
   if (!site) return null;
+  const href = site.linkUrl ?? site.url;
 
   return (
     <section className="border-b border-line bg-white">
@@ -31,12 +32,21 @@ export default function BrandSiteCard({ path }: { path: string }) {
           <p className="mt-3 max-w-3xl text-[15px] leading-8 text-ink-500">
             {SITE.brandName} یک مرکز تعمیر چند برندی است و این صفحه بخش{" "}
             {site.brand} آن را نشان می دهد. برای محصولات {site.brand} یک سایت
-            جداگانه داریم که قیمت به تفکیک مدل، شرح خرابی های رایج و ثبت درخواست
-            تعمیر در آن کامل تر است. هر دو مجموعه یک شرکت، یک کارگاه و همان دو
+            جداگانه داریم که قیمت به تفکیک مدل، شرح خرابی های رایج و{" "}
+            {/* In-text twin of the button below, only where the button points
+                at a specific page (linkUrl). The words are unchanged. */}
+            {site.linkUrl ? (
+              <a href={href} className="font-bold text-accent underline underline-offset-4">
+                ثبت درخواست تعمیر
+              </a>
+            ) : (
+              "ثبت درخواست تعمیر"
+            )}{" "}
+            در آن کامل تر است. هر دو مجموعه یک شرکت، یک کارگاه و همان دو
             شعبه مطهری و سعادت آباد هستند.
           </p>
           <a
-            href={site.url}
+            href={href}
             className="mt-5 inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 text-sm font-bold text-white transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
             {/* The name alone. GROUP_SITES now carries each site's own

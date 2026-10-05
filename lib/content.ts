@@ -683,6 +683,9 @@ const TITLE_REWRITES: Record<string, string> = {
   "/about/": "درباره برتر سرویس | ۱۵ سال تعمیر تخصصی موبایل و لپ تاپ در تهران",
   "/services/": "خدمات تعمیرات برتر سرویس | موبایل، لپ تاپ، تبلت و لوازم خانگی",
   "/apple-mobile-part/": "قطعات اصل موبایل اپل | تشخیص قطعه اورجینال و گارانتی تعویض",
+  // "نمایندگی تعمیرات سامسونگ" is left to samsung-repairer.ir (linked from this
+  // page); this hub targets Samsung home appliances + mobile instead.
+  "/samsung/": "تعمیرات لوازم خانگی و موبایل سامسونگ | برتر سرویس",
 };
 
 const TITLE_OVERRIDES: Record<string, string> = {

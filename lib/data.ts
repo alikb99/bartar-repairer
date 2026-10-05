@@ -111,6 +111,12 @@ export type GroupSite = {
   url: string;
   /** What the property calls itself. */
   name: string;
+  /**
+   * Where the brand-hub button and its in-text link point, when that should be
+   * a page deeper than the domain root (e.g. the property's contact page).
+   * `url` stays the root, because that is what /group/ and the schema name.
+   */
+  linkUrl?: string;
   /** Brand covered, or null for the two non-repair properties. */
   brand: string | null;
   /** Brand hub on this site, where one exists to carry the visible link. */
@@ -130,6 +136,7 @@ export const GROUP_SITES: GroupSite[] = [
   {
     url: "https://samsung-repairer.ir/",
     name: "نمایندگی تعمیرات سامسونگ",
+    linkUrl: "https://samsung-repairer.ir/contact-us/",
     brand: "سامسونگ",
     path: "/samsung/",
     blurb: "تعمیر گوشی، تبلت، لپ تاپ و ساعت هوشمند سامسونگ.",
